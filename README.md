@@ -2,6 +2,9 @@
 
 Weclome to the Atelier!
 
+[![GitHub](https://img.shields.io/github/license/feugy/atelier)][license]
+[![CI](https://github.com/feugy/atelier/actions/workflows/CI.yml/badge.svg)](https://github.com/feugy/atelier/actions/workflows/CI.yml)
+
 ## What is this?
 
 Atelier is a simple UI component explorer, like [angular-playground] [react-cosmos], [storybook], [styleguidist], [svench].
@@ -33,6 +36,7 @@ Eventually we aim at supporting all framework vite can bundle
 [cdd]: https://www.componentdriven.org/
 [chromatic]: https://github.com/meteor/chromatic/
 [create-react-app]: https://create-react-app.dev/
+[license]: https://github.com/feugy/atelier/blob/master/LICENSE
 [react-cosmos]: https://reactcosmos.org/
 [storybook]: https://storybook.js.org/
 [styleguidist]: https://react-styleguidist.js.org/
