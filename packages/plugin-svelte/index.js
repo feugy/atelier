@@ -1,0 +1,110 @@
+const { resolve } = require('path')
+const { createReadStream } = require('fs')
+const { readdir } = require('fs/promises')
+const sirv = require('sirv')
+
+const pluginName = 'vite-plugin-atelier-svelte'
+
+const defaultOptions = {
+  path: './atelier',
+  url: '/atelier',
+  toolRegexp: '\\.tools\\.svelte+$',
+  workframeHtml: resolve(__dirname, 'workframe.html'),
+  workframeId: '@atelier/workframe',
+  setupPath: null
+}
+
+async function findTools(path, detectionRegex) {
+  const paths = []
+  for (const entry of await readdir(path, {
+    withFileTypes: true
+  })) {
+    const { name } = entry
+    const fullname = resolve(path, name)
+    if (entry.isFile() && detectionRegex.test(fullname)) {
+      paths.push(fullname)
+    } else if (entry.isDirectory()) {
+      paths.push(...(await findTools(fullname, detectionRegex)))
+    }
+  }
+  return paths
+}
+
+function buildWorkframe(paths, setupPath) {
+  const tools = new Array(paths.length)
+  const imports = new Array(paths.length)
+  let i = 0
+  for (const path of paths) {
+    imports[i] = `import tool${i + 1} from '${path}'`
+    tools[i] = `tool${++i}`
+  }
+  return `import { Workbench } from '@atelier/svelte'
+${setupPath ? `import '${setupPath}'` : ''}
+${imports.join('\n')}
+
+new Workbench({ 
+  target: document.body, 
+  props: { tools: [${tools.join(', ')}] }
+})`
+}
+
+function AtelierPlugin(pluginOptions = {}) {
+  const options = { ...defaultOptions, ...pluginOptions }
+  // TODO validate options
+
+  let workframeContent
+
+  return {
+    name: pluginName,
+
+    apply: 'serve',
+
+    async configureServer(server) {
+      // automatically generates index
+      const paths = await findTools(
+        options.path,
+        new RegExp(options.toolRegexp, 'i')
+      )
+      workframeContent = buildWorkframe(paths, options.setupPath)
+
+      const hasTrailingUrl = options.url.endsWith('/')
+
+      const serve = sirv(resolve(__dirname, '..', 'ui', 'dist'), { etag: true })
+
+      // configure a middleware for serving Atelier
+      server.middlewares.use(options.url, (req, res, next) => {
+        if (req.url === `/workframe.html`) {
+          // serve our workframe.html for the iframe
+          res.writeHead(200, {
+            'Cache-Control': 'no-store',
+            'Content-Type': 'text/html'
+          })
+          createReadStream(options.workframeHtml).pipe(res)
+        } else if (!hasTrailingUrl && req.originalUrl === options.url) {
+          // append trailing slash to allows resolving <script /> with relative sources
+          res.statusCode = 301
+          res.setHeader('Location', `${options.url}/`)
+          res.end()
+        } else {
+          // all other static Atelier assets
+          serve(req, res, next)
+        }
+      })
+    },
+
+    resolveId(id) {
+      if (id === options.workframeId) {
+        return id
+      }
+    },
+
+    load(id) {
+      if (id === `${options.url}/${options.workframeId}`) {
+        return workframeContent
+      }
+    }
+  }
+}
+
+module.exports = AtelierPlugin
+AtelierPlugin['default'] = AtelierPlugin

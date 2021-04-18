@@ -1,0 +1,9 @@
+{
+  "name": "@atelier/svelte",
+  "version": "0.1.0",
+  "description": "Svelte bindings to test your svelte components",
+  "main": "index.js",
+  "peerDependencies": {
+    "svelte": "^3.37.0"
+  }
+}

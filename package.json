@@ -1,0 +1,34 @@
+{
+  "name": "atelier",
+  "version": "0.1.0",
+  "description": "Your vite-powered UI component explorer",
+  "author": {
+    "name": "Damien Simonin Feugas",
+    "email": "damien.simoninfeugas@gmail.com"
+  },
+  "license": "MIT",
+  "repository": {
+    "url": "https://github.com/feugy/atelier"
+  },
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "lint": "eslint .",
+    "format": "prettier --write .",
+    "prepare": "husky install"
+  },
+  "devDependencies": {
+    "eslint": "^7.23.0",
+    "eslint-config-prettier": "^8.1.0",
+    "eslint-plugin-svelte3": "^3.1.2",
+    "husky": "^6.0.0",
+    "lint-staged": "^10.5.4",
+    "prettier": "^2.2.1",
+    "prettier-plugin-svelte": "^2.2.0"
+  },
+  "lint-staged": {
+    "*.{js,svelte}": "eslint --cache --fix",
+    "*.{js,svelte,css,md}": "prettier --write"
+  }
+}
