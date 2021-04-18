@@ -23,3 +23,12 @@ export function registerTool(data) {
     main.postMessage({ type: 'registerTool', data }, mainOrigin)
   }
 }
+
+export function recordEvent(...args) {
+  if (mainOrigin) {
+    main.postMessage(
+      { type: 'recordEvent', args: JSON.stringify(args) },
+      mainOrigin
+    )
+  }
+}

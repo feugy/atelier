@@ -2,4 +2,9 @@ title:
   app: Atelier
 tooltip:
   background: Change the workbench background color
+  collapsible: Collapse/Expand
   viewport: Resize the workbench view port
+tab:
+  events: Events
+message:
+  no-events: No events received yet

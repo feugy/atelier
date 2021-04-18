@@ -1,5 +1,5 @@
 import { BehaviorSubject } from 'rxjs'
-import { map } from 'rxjs/operators'
+import { map, scan, tap } from 'rxjs/operators'
 import { groupByName } from '../utils'
 
 let workbench = null
@@ -23,6 +23,9 @@ export function setWorkbenchFrame(frame) {
     if (origin === workbenchOrigin) {
       if (data.type === 'registerTool') {
         registerTool(data.data)
+      } else if (data.type === 'recordEvent') {
+        const [name, ...args] = JSON.parse(data.args)
+        events$.next({ name, args, time: Date.now() })
       }
     }
   })
@@ -76,9 +79,18 @@ function registerTool(tool) {
   }
 }
 
+const events$ = new BehaviorSubject()
+
+export const events = events$.pipe(
+  // reset log when receiving null
+  tap(n => console.log(n)),
+  scan((log, event) => (event ? [event, ...log] : []), [])
+)
+
 export function selectTool(tool) {
   if (tools$.value.includes(tool)) {
-    current$.next(tool)
     updateUrl(tool.name)
+    current$.next(tool)
+    events$.next(null)
   }
 }

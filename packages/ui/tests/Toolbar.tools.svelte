@@ -3,6 +3,4 @@
   import Toolbar from '../src/components/Toolbar.svelte'
 </script>
 
-<Tool name="Components/Toolbar">
-  <Toolbar />
-</Tool>
+<Tool name="Components/Toolbar" component={Toolbar} />

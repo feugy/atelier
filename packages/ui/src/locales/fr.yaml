@@ -2,4 +2,9 @@ title:
   app: Atelier
 tooltip:
   background: Modifier la couleur de fond de l'atelier
+  collapsible: Réduire/Etendre
   viewport: Redimensionner la taille de l'atelier
+tab:
+  events: Evènements
+message:
+  no-events: Encore aucun message reçus

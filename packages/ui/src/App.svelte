@@ -1,13 +1,14 @@
 <script>
   import { onMount } from 'svelte'
   import { _ } from 'svelte-intl'
-  import { Explorer, Toolbar } from './components'
+  import { EventLogger, Explorer, PaneContainer, Toolbar } from './components'
   import './common'
   import {
-    toolsMap,
     currentTool,
+    events,
     selectTool,
-    setWorkbenchFrame
+    setWorkbenchFrame,
+    toolsMap
   } from './stores'
 
   let frame
@@ -51,4 +52,13 @@
   <div class="viewport" bind:this={viewport}>
     <iframe title="workframe" bind:this={frame} {src} />
   </div>
+  <PaneContainer
+    tabs={[
+      {
+        name: $_('tab.events'),
+        content: EventLogger,
+        props: { events: $events }
+      }
+    ]}
+  />
 </main>
