@@ -3,15 +3,11 @@
 
   export let viewport
 
-  // TODO dropdown for viewports and background colors
-
-  // TODO pre-configured viewports
   let isViewPortActive = false
   let viewPortWidth = 1112
   let viewPortHeight = 832
 
   const backgrounds = ['', 'white', 'black']
-  // TODO configurable color
   let currentBackground = 0
 
   $: if (viewport && isViewPortActive) {

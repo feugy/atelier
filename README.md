@@ -7,9 +7,46 @@ Weclome to the Atelier!
 
 ## What is this?
 
-Atelier is a simple UI component explorer, like [angular-playground] [react-cosmos], [storybook], [styleguidist], [svench].
+Atelier (French word for workbench or workshop) is a simple UI component explorer, like [angular-playground] [react-cosmos], [storybook], [styleguidist], [svench].
 
 It is a tool to implement [Component Driven User Interfaces][cdd]: a workbench on which you can craft reusable UI components in isolation.
+
+It's based on [vitejs] JavaScript bundler.
+
+## How do I use it with Svelte?
+
+1. Install the plugin for Vite and Svelte bindings.
+
+   ```shell
+   npm i -D @atelier/vite-plugin-svelte @atelier/svelte
+   ```
+
+2. Register the plugin in `vite.config.js` file:
+
+   ```js
+   import svelte from '@sveltejs/vite-plugin-svelte'
+   // other vite plugins
+   import atelier from '@atelier/vite-plugin-svelte'
+
+   export default defineConfig({
+     plugins: [svelte(), /* other plugins */ atelier()]
+   })
+   ```
+
+3. Next to your `vite.config.js` file, creates a folder named `atelier`
+
+4. Assuming the components you'd like to test is located in `src/MyComponent.svelte`, create a file names `atelier/MyComponent.tools.svelte` and set its content to:
+
+   ```js
+   <script>
+     import { Tool } from '@atelier/svelte'
+     import MyComponent from '../src/MyComponent.svelte'
+   </script>
+
+   <Tool name="Components/My component" component={MyComponent} />
+   ```
+
+5. Start vite, and navigate to http://localhost:3000/atelier!
 
 ## Why another one?
 
@@ -30,7 +67,7 @@ As we speak, Atelier supports these UI frameworks:
 
 - [svelte]
 
-Eventually we aim at supporting all framework vite can bundle
+Eventually we aim at supporting any framework Vite can bundle.
 
 [angular-playground]: https://angularplayground.it/
 [cdd]: https://www.componentdriven.org/

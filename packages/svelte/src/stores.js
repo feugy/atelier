@@ -7,6 +7,15 @@ const current = new writable()
 
 export const currentTool = derived(current, n => n)
 
+function postMessage(message) {
+  if (main) {
+    if (!mainOrigin) {
+      mainOrigin = new URL(parent.location.href).origin
+    }
+    main.postMessage(message, mainOrigin)
+  }
+}
+
 window.addEventListener('message', ({ origin, data }) => {
   if (origin === mainOrigin) {
     if (data.type === 'selectTool') {
@@ -16,19 +25,9 @@ window.addEventListener('message', ({ origin, data }) => {
 })
 
 export function registerTool(data) {
-  if (parent) {
-    if (!mainOrigin) {
-      mainOrigin = new URL(parent.location.href).origin
-    }
-    main.postMessage({ type: 'registerTool', data }, mainOrigin)
-  }
+  postMessage({ type: 'registerTool', data })
 }
 
 export function recordEvent(...args) {
-  if (mainOrigin) {
-    main.postMessage(
-      { type: 'recordEvent', args: JSON.stringify(args) },
-      mainOrigin
-    )
-  }
+  postMessage({ type: 'recordEvent', args: JSON.stringify(args) })
 }
