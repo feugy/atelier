@@ -10,7 +10,7 @@ on:
       - master
 
 jobs:
-  prepare:
+  lint-and-format:
     runs-on: ubuntu-latest
 
     strategy:
@@ -29,30 +29,6 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Save code and dependencies
-        uses: actions/upload-artifact@v2
-        with:
-          name: code-and-deps
-          path: '.'
-
-  lint-and-format:
-    runs-on: ubuntu-latest
-
-    strategy:
-      matrix:
-        node-version: [15.x]
-
-    steps:
-      - name: Set Node.js ${{ matrix.node-version }} up
-        uses: actions/setup-node@v1
-        with:
-          node-version: ${{ matrix.node-version }}
-
-      - name: Restore code and dependencies
-        uses: actions/download-artifact@v2
-        with:
-          name: code-and-deps
-
       - name: Check linter violations
         run: npm run lint
 
@@ -67,15 +43,19 @@ jobs:
         node-version: [15.x]
 
     steps:
+      - name: Check code out
+        uses: actions/checkout@v2
+
       - name: Set Node.js ${{ matrix.node-version }} up
         uses: actions/setup-node@v1
         with:
           node-version: ${{ matrix.node-version }}
 
-      - name: Restore code and dependencies
-        uses: actions/download-artifact@v2
-        with:
-          name: code-and-deps
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build UI
+        run: npm run build --workspace packages/ui
 
       - name: Run test for Vite plugin for Svelte
         run: npm run test:plugin-svelte
