@@ -2,7 +2,6 @@ name: CI
 
 on:
   workflow_dispatch: {}
-
   push:
     branches:
       - master
@@ -78,5 +77,8 @@ jobs:
         with:
           name: code-and-deps
 
+      - name: Run test for Vite plugin for Svelte
+        run: npm run test:plugin-svelte
+
       - name: Run test for Svelte bindings
-        run: npm t --workspace packages/svelte
+        run: npm run test:svelte
