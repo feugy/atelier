@@ -1,6 +1,6 @@
 <script>
   import { Tool, ToolBox } from '@atelier/svelte'
-  import Group from '../src/components/Group.svelte'
+  import Group from '../../src/components/Group.svelte'
 </script>
 
 <ToolBox name="Components/Group" events={['select']} component={Group}>

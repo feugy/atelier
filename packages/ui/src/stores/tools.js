@@ -1,14 +1,19 @@
 import { BehaviorSubject } from 'rxjs'
-import { map, scan, tap } from 'rxjs/operators'
+import { map, scan } from 'rxjs/operators'
 import { groupByName } from '../utils'
 
-let workbench = null
-let workbenchOrigin = null
+let workframe = null
+let workframeOrigin = null
+const tools$ = new BehaviorSubject([])
+const current$ = new BehaviorSubject()
+const events$ = new BehaviorSubject()
 
 function updateUrl(name) {
-  const url = new URL(window.location)
-  url.searchParams.set('tool', name)
-  window.history.pushState({ name }, '', url)
+  if (name) {
+    const url = new URL(window.location)
+    url.searchParams.set('tool', name)
+    window.history.pushState({ name }, '', url)
+  }
 }
 
 function readToolFromUrl() {
@@ -16,48 +21,16 @@ function readToolFromUrl() {
   return params.get('tool')
 }
 
-export function setWorkbenchFrame(frame) {
-  workbench = frame
-  workbenchOrigin = new URL(workbench.src).origin
-  window.addEventListener('message', ({ origin, data }) => {
-    if (origin === workbenchOrigin) {
-      if (data.type === 'registerTool') {
-        registerTool(data.data)
-      } else if (data.type === 'recordEvent') {
-        const [name, ...args] = JSON.parse(data.args)
-        events$.next({ name, args, time: Date.now() })
-      }
+function handleMessage({ origin, data }) {
+  if (origin === workframeOrigin) {
+    if (data.type === 'registerTool') {
+      registerTool(data.data)
+    } else if (data.type === 'recordEvent') {
+      const [name, ...args] = data.args
+      events$.next({ name, args, time: Date.now() })
     }
-  })
+  }
 }
-
-const tools$ = new BehaviorSubject([])
-
-export const toolsMap = tools$.pipe(map(groupByName))
-
-const current$ = new BehaviorSubject()
-
-current$.subscribe(data => {
-  if (workbench) {
-    workbench.contentWindow?.postMessage(
-      { type: 'selectTool', data },
-      workbenchOrigin
-    )
-  }
-})
-
-window.addEventListener('popstate', ({ state }) => {
-  if (state?.name) {
-    for (const tool of tools$.value) {
-      if (state.name === tool.name) {
-        current$.next(tool)
-        break
-      }
-    }
-  }
-})
-
-export const currentTool = current$.asObservable()
 
 function registerTool(tool) {
   const { value: list } = tools$
@@ -79,17 +52,47 @@ function registerTool(tool) {
   }
 }
 
-const events$ = new BehaviorSubject()
+current$.subscribe(data => {
+  if (workframe) {
+    workframe.contentWindow?.postMessage(
+      { type: 'selectTool', data },
+      workframeOrigin
+    )
+  }
+  updateUrl(data?.name)
+})
+
+window.addEventListener('popstate', ({ state }) => {
+  if (state?.name) {
+    for (const tool of tools$.value) {
+      if (state.name === tool.name) {
+        current$.next(tool)
+        break
+      }
+    }
+  }
+})
+
+export const toolsMap = tools$.pipe(map(groupByName))
+
+export const currentTool = current$.asObservable()
 
 export const events = events$.pipe(
   // reset log when receiving null
-  tap(n => console.log(n)),
   scan((log, event) => (event ? [event, ...log] : []), [])
 )
 
+export function setWorkbenchFrame(frame) {
+  workframe = frame
+  workframeOrigin = new URL(workframe.src).origin
+  current$.next()
+  tools$.next([])
+  window.removeEventListener('message', handleMessage)
+  window.addEventListener('message', handleMessage)
+}
+
 export function selectTool(tool) {
   if (tools$.value.includes(tool)) {
-    updateUrl(tool.name)
     current$.next(tool)
     events$.next(null)
   }

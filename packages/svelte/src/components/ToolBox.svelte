@@ -5,10 +5,11 @@
 <script>
   import { setContext } from 'svelte'
 
-  export let name
-  export let component
+  export let name = null
+  export let component = null
+  export let props = {}
   export let events = []
-  setContext(contextKey, { name, component, events })
+  setContext(contextKey, { name, component, props, events })
 </script>
 
 <slot />

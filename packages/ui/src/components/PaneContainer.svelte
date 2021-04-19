@@ -51,8 +51,8 @@
 
 {#if tabs?.length}
   <div class="root">
-    <nav>
-      <ul on:dblclick={toggleCollapse}>
+    <nav on:dblclick={toggleCollapse}>
+      <ul>
         {#each tabs as { name }, i}
           <li class:current={i === currentIdx} on:click={() => select(i)}>
             {name}
@@ -67,12 +67,12 @@
         </li>
       </ul>
     </nav>
-    <div class:collapsed class="tab-content">
+    <main class:collapsed class="tab-content">
       {#if typeof tabContent === 'function'}
         <svelte:component this={tabContent} {...contentProps} />
       {:else}
         {tabContent}
       {/if}
-    </div>
+    </main>
   </div>
 {/if}

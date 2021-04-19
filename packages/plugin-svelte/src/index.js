@@ -1,17 +1,32 @@
 const { resolve } = require('path')
 const { createReadStream } = require('fs')
 const { readdir } = require('fs/promises')
+const Ajv = require('ajv')
 const sirv = require('sirv')
+const { normalizePath } = require('vite')
 
-const pluginName = 'vite-plugin-atelier-svelte'
+const pluginName = '@atelier/vite-plugin-svelte'
+
+const validate = new Ajv().compile({
+  type: 'object',
+  properties: {
+    path: { type: 'string' },
+    url: { type: 'string', pattern: '^\\/.' },
+    toolRegexp: { type: 'string' },
+    workframeHtml: { type: 'string' },
+    workframeId: { type: 'string' },
+    setupPath: { type: 'string', nullable: true }
+  },
+  required: ['path', 'url', 'toolRegexp', 'workframeHtml', 'workframeId'],
+  additionalProperties: true
+})
 
 const defaultOptions = {
   path: './atelier',
   url: '/atelier',
   toolRegexp: '\\.tools\\.svelte+$',
   workframeHtml: resolve(__dirname, 'workframe.html'),
-  workframeId: '@atelier/workframe',
-  setupPath: null
+  workframeId: '@atelier/workframe'
 }
 
 async function findTools(path, detectionRegex) {
@@ -42,17 +57,23 @@ function buildWorkframe(paths, setupPath) {
 ${setupPath ? `import '${setupPath}'` : ''}
 ${imports.join('\n')}
 
-new Workbench({ 
-  target: document.body, 
+new Workbench({
+  target: document.body,
   props: { tools: [${tools.join(', ')}] }
 })`
 }
 
 function AtelierPlugin(pluginOptions = {}) {
   const options = { ...defaultOptions, ...pluginOptions }
-  // TODO validate options
+  const valid = validate(options)
+  if (!valid) {
+    const [error] = validate.errors
+    throw new Error(
+      `${pluginName} option "${error.instancePath.slice(1)}" ${error.message}`
+    )
+  }
 
-  let workframeContent
+  const toolRegexp = new RegExp(options.toolRegexp, 'i')
 
   return {
     name: pluginName,
@@ -60,16 +81,11 @@ function AtelierPlugin(pluginOptions = {}) {
     apply: 'serve',
 
     async configureServer(server) {
-      // automatically generates index
-      const paths = await findTools(
-        options.path,
-        new RegExp(options.toolRegexp, 'i')
-      )
-      workframeContent = buildWorkframe(paths, options.setupPath)
-
       const hasTrailingUrl = options.url.endsWith('/')
 
-      const serve = sirv(resolve(__dirname, '..', 'ui', 'dist'), { etag: true })
+      const serve = sirv(resolve(__dirname, '..', '..', 'ui', 'dist'), {
+        etag: true
+      })
 
       // configure a middleware for serving Atelier
       server.middlewares.use(options.url, (req, res, next) => {
@@ -90,6 +106,17 @@ function AtelierPlugin(pluginOptions = {}) {
           serve(req, res, next)
         }
       })
+
+      async function reloadTools(path, stats) {
+        if (toolRegexp.test(normalizePath(path)) || stats?.isDirectory()) {
+          server.watcher.emit('change', `${options.url}/${options.workframeId}`)
+        }
+      }
+
+      server.watcher.on('add', reloadTools)
+      server.watcher.on('addDir', reloadTools)
+      server.watcher.on('unlink', reloadTools)
+      server.watcher.on('unlinkDir', reloadTools)
     },
 
     resolveId(id) {
@@ -98,13 +125,17 @@ function AtelierPlugin(pluginOptions = {}) {
       }
     },
 
-    load(id) {
+    async load(id) {
       if (id === `${options.url}/${options.workframeId}`) {
-        return workframeContent
+        return buildWorkframe(
+          await findTools(options.path, toolRegexp),
+          options.setupPath
+        )
       }
     }
   }
 }
 
 module.exports = AtelierPlugin
+AtelierPlugin.pluginName = pluginName
 AtelierPlugin['default'] = AtelierPlugin
