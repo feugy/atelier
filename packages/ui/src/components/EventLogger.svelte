@@ -19,12 +19,12 @@
   }
 
   .log {
-    @apply grid gap-y-1 gap-x-4 items-center text-left;
+    @apply grid gap-y-1 gap-x-4 text-left;
     grid-template-columns: auto auto 1fr;
   }
 
   .time {
-    @apply text-sm;
+    @apply text-xs leading-6;
     color: theme('colors.secondary.dark');
   }
 

@@ -12,7 +12,7 @@ function postMessage(message) {
     if (!mainOrigin) {
       mainOrigin = new URL(parent.location.href).origin
     }
-    main.postMessage(message, mainOrigin)
+    main.postMessage(format(message), mainOrigin)
   }
 }
 
@@ -29,5 +29,73 @@ export function registerTool(data) {
 }
 
 export function recordEvent(...args) {
-  postMessage({ type: 'recordEvent', args: JSON.stringify(args) })
+  postMessage({ type: 'recordEvent', args })
+}
+
+// a mix of properties from Event, UIEvent, MouseEvent, TouchEvent, KeyboardEvent, WheelEvent, InputEvent
+const eventProps = [
+  'altKey',
+  'bubble',
+  'button',
+  'buttons',
+  'cancelable',
+  'clientX',
+  'clientY',
+  'code',
+  'ctrlKey',
+  'currentTarget',
+  'data',
+  'dataTransfer',
+  'defaultPrevented',
+  'deltaX',
+  'deltaY',
+  'deltaZ',
+  'deltaMode',
+  'detail',
+  'inputType',
+  'key',
+  'layerX',
+  'layerY',
+  'metaKey',
+  'movementX',
+  'movementY',
+  'offsetX',
+  'offsetY',
+  'pageX',
+  'pageY',
+  'relatedTarget',
+  'repeat',
+  'screenX',
+  'screenY',
+  'shiftKey',
+  'target',
+  'touches',
+  'type',
+  'which'
+]
+
+function format(arg) {
+  if (Array.isArray(arg)) {
+    return arg.map(format)
+  }
+  if (arg instanceof Map) {
+    return { type: 'Map', values: [...arg.entries()] }
+  }
+  if (arg instanceof Set) {
+    return { type: 'Set', values: [...arg.keys()] }
+  }
+  if (arg instanceof Function) {
+    return arg.toString()
+  }
+  if (arg instanceof Event || arg instanceof Object) {
+    const result = {}
+    const props = arg instanceof Event ? eventProps : Object.keys(arg)
+    for (const prop of props) {
+      if (prop in arg) {
+        result[prop] = format(arg[prop])
+      }
+    }
+    return result
+  }
+  return arg
 }

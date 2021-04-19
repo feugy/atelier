@@ -11,7 +11,7 @@ on:
       - master
 
 jobs:
-  lint-and-format:
+  prepare:
     runs-on: ubuntu-latest
 
     strategy:
@@ -30,8 +30,53 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      - name: Save code and dependencies
+        uses: actions/upload-artifact@v2
+        with:
+          name: code-and-deps
+          path: '.'
+
+  lint-and-format:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [15.x]
+
+    steps:
+      - name: Set Node.js ${{ matrix.node-version }} up
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: Restore code and dependencies
+        uses: actions/download-artifact@v2
+        with:
+          name: code-and-deps
+
       - name: Check linter violations
         run: npm run lint
 
       - name: Check code format
         run: npm run format -- --check
+
+  test:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [15.x]
+
+    steps:
+      - name: Set Node.js ${{ matrix.node-version }} up
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: Restore code and dependencies
+        uses: actions/download-artifact@v2
+        with:
+          name: code-and-deps
+
+      - name: Run test for Svelte bindings
+        run: npm t --workspace packages/svelte

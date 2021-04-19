@@ -15,11 +15,139 @@ describe('stores', () => {
       expect(postMessage).toHaveBeenCalledWith(
         {
           type: 'recordEvent',
-          args: `["${name}"]`
+          args: [name]
         },
         origin
       )
       expect(postMessage).toHaveBeenCalledTimes(1)
+    })
+
+    it('serializes event data', () => {
+      const name = faker.lorem.word()
+      const clickEvent = new MouseEvent('click', {
+        bubbles: true,
+        cancelable: true,
+        view: window
+      })
+      recordEvent(name, clickEvent)
+      expect(postMessage).toHaveBeenCalledWith(
+        {
+          type: 'recordEvent',
+          args: [
+            name,
+            {
+              altKey: false,
+              button: 0,
+              buttons: 0,
+              cancelable: clickEvent.cancelable,
+              clientX: 0,
+              clientY: 0,
+              ctrlKey: false,
+              currentTarget: null,
+              defaultPrevented: false,
+              detail: 0,
+              metaKey: false,
+              relatedTarget: null,
+              screenX: 0,
+              screenY: 0,
+              shiftKey: false,
+              target: null,
+              type: clickEvent.type,
+              which: 0
+            }
+          ]
+        },
+        origin
+      )
+
+      const customEvent = new CustomEvent('select', {
+        detail: { foo: faker.lorem.words() }
+      })
+      recordEvent(name, customEvent)
+      expect(postMessage).toHaveBeenCalledWith(
+        {
+          type: 'recordEvent',
+          args: [
+            name,
+            {
+              cancelable: false,
+              currentTarget: null,
+              defaultPrevented: false,
+              detail: customEvent.detail,
+              target: null,
+              type: customEvent.type
+            }
+          ]
+        },
+        origin
+      )
+      expect(postMessage).toHaveBeenCalledTimes(2)
+    })
+
+    it('serializes function and arrays', () => {
+      const name = faker.lorem.word()
+      recordEvent(name, [1, 2, 3, 4])
+      expect(postMessage).toHaveBeenCalledWith(
+        {
+          type: 'recordEvent',
+          args: [name, [1, 2, 3, 4]]
+        },
+        origin
+      )
+
+      function function1() {
+        return 'oh yeah '
+      }
+      const function2 = () => 'aw yeah!'
+
+      recordEvent(name, function1, function2)
+      expect(postMessage).toHaveBeenCalledWith(
+        {
+          type: 'recordEvent',
+          args: [name, function1.toString(), function2.toString()]
+        },
+        origin
+      )
+      expect(postMessage).toHaveBeenCalledTimes(2)
+    })
+
+    it('serializes Sets and Maps', () => {
+      const name = faker.lorem.word()
+      recordEvent(name, new Set(['a', 'b', 'c']))
+      expect(postMessage).toHaveBeenCalledWith(
+        {
+          type: 'recordEvent',
+          args: [name, { type: 'Set', values: ['a', 'b', 'c'] }]
+        },
+        origin
+      )
+
+      recordEvent(
+        name,
+        new Map([
+          ['a', 1],
+          ['b', 2],
+          ['c', 3]
+        ])
+      )
+      expect(postMessage).toHaveBeenCalledWith(
+        {
+          type: 'recordEvent',
+          args: [
+            name,
+            {
+              type: 'Map',
+              values: [
+                ['a', 1],
+                ['b', 2],
+                ['c', 3]
+              ]
+            }
+          ]
+        },
+        origin
+      )
+      expect(postMessage).toHaveBeenCalledTimes(2)
     })
   })
 

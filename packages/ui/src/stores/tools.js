@@ -24,7 +24,7 @@ export function setWorkbenchFrame(frame) {
       if (data.type === 'registerTool') {
         registerTool(data.data)
       } else if (data.type === 'recordEvent') {
-        const [name, ...args] = JSON.parse(data.args)
+        const [name, ...args] = data.args
         events$.next({ name, args, time: Date.now() })
       }
     }
