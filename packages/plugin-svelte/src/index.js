@@ -3,6 +3,7 @@ const { createReadStream } = require('fs')
 const { readdir } = require('fs/promises')
 const Ajv = require('ajv')
 const sirv = require('sirv')
+const { normalizePath } = require('vite')
 
 const pluginName = '@atelier/vite-plugin-svelte'
 
@@ -73,7 +74,6 @@ function AtelierPlugin(pluginOptions = {}) {
   }
 
   const toolRegexp = new RegExp(options.toolRegexp, 'i')
-  let workframeContent = null
 
   return {
     name: pluginName,
@@ -81,12 +81,6 @@ function AtelierPlugin(pluginOptions = {}) {
     apply: 'serve',
 
     async configureServer(server) {
-      // automatically generates index
-      workframeContent = buildWorkframe(
-        await findTools(options.path, toolRegexp),
-        options.setupPath
-      )
-
       const hasTrailingUrl = options.url.endsWith('/')
 
       const serve = sirv(resolve(__dirname, '..', '..', 'ui', 'dist'), {
@@ -112,6 +106,17 @@ function AtelierPlugin(pluginOptions = {}) {
           serve(req, res, next)
         }
       })
+
+      async function reloadTools(path, stats) {
+        if (toolRegexp.test(normalizePath(path)) || stats?.isDirectory()) {
+          server.watcher.emit('change', `${options.url}/${options.workframeId}`)
+        }
+      }
+
+      server.watcher.on('add', reloadTools)
+      server.watcher.on('addDir', reloadTools)
+      server.watcher.on('unlink', reloadTools)
+      server.watcher.on('unlinkDir', reloadTools)
     },
 
     resolveId(id) {
@@ -120,9 +125,12 @@ function AtelierPlugin(pluginOptions = {}) {
       }
     },
 
-    load(id) {
+    async load(id) {
       if (id === `${options.url}/${options.workframeId}`) {
-        return workframeContent
+        return buildWorkframe(
+          await findTools(options.path, toolRegexp),
+          options.setupPath
+        )
       }
     }
   }

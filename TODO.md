@@ -4,7 +4,8 @@
 - TODO a dropdown button to select pre-defined viewports
 - TODO a pane to set and change component props
 - TODO only inlude panes based on current tool's capabilities
-- TODO allow tool custom content with let:instance
+- allow tool custom content with let:instance
+- remove tools on updates (toolbox/tool renamal, file deletion)
 
 # Improvements
 

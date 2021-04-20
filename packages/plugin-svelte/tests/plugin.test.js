@@ -1,3 +1,4 @@
+const { EventEmitter } = require('events')
 const http = require('http')
 const { resolve } = require('path')
 const connect = require('connect')
@@ -66,29 +67,24 @@ describe('plugin builder', () => {
       })
     })
 
-    it('does not handle other ids then workframeId', () => {
+    it('does not handle other ids then workframeId', async () => {
       const plugin = builder()
       expect(plugin.resolveId(faker.lorem.word())).not.toBeDefined()
-      expect(plugin.load(faker.lorem.word())).not.toBeDefined()
+      expect(await plugin.load(faker.lorem.word())).not.toBeDefined()
       expect(plugin.resolveId(defaultWorkframeId)).toEqual(defaultWorkframeId)
-      expect(plugin.load(`${defaultPath}/${defaultWorkframeId}`)).toBeNull()
     })
 
-    it('supports custom workframeId', () => {
+    it('supports custom workframeId', async () => {
       const workframeId = faker.lorem.word()
       const plugin = builder({ workframeId })
       expect(plugin.resolveId(faker.lorem.word())).not.toBeDefined()
-      expect(plugin.load(faker.lorem.word())).not.toBeDefined()
+      expect(await plugin.load(faker.lorem.word())).not.toBeDefined()
       expect(plugin.resolveId(workframeId)).toEqual(workframeId)
-      expect(plugin.load(`${defaultPath}/${workframeId}`)).toBeNull()
     })
 
     it('finds tool files and generates workframe content', async () => {
       const plugin = builder({ path })
-      await plugin.configureServer({
-        middlewares: { use: jest.fn() }
-      })
-      expect(plugin.load(`${defaultPath}/${defaultWorkframeId}`))
+      expect(await plugin.load(`${defaultPath}/${defaultWorkframeId}`))
         .toEqual(`import { Workbench } from '@atelier/svelte'
 
 import tool1 from '${path}/a.tools.svelte'
@@ -108,10 +104,7 @@ new Workbench({
     it('finds tool files with custom regexp', async () => {
       const path = resolve(__dirname, 'fixtures', 'nested')
       const plugin = builder({ path, toolRegexp: '\\.custom\\.svelte$' })
-      await plugin.configureServer({
-        middlewares: { use: jest.fn() }
-      })
-      expect(plugin.load(`${defaultPath}/${defaultWorkframeId}`))
+      expect(await plugin.load(`${defaultPath}/${defaultWorkframeId}`))
         .toEqual(`import { Workbench } from '@atelier/svelte'
 
 import tool1 from '${path}/c.custom.svelte'
@@ -129,10 +122,7 @@ new Workbench({
     it('allows custom setup import', async () => {
       const setupPath = faker.lorem.word()
       const plugin = builder({ path, setupPath })
-      await plugin.configureServer({
-        middlewares: { use: jest.fn() }
-      })
-      expect(plugin.load(`${defaultPath}/${defaultWorkframeId}`))
+      expect(await plugin.load(`${defaultPath}/${defaultWorkframeId}`))
         .toEqual(`import { Workbench } from '@atelier/svelte'
 import '${setupPath}'
 import tool1 from '${path}/a.tools.svelte'
@@ -154,12 +144,14 @@ new Workbench({
     let plugin
     let server
     let url
+    let watcher
 
     beforeEach(async () => {
       plugin = builder({ path })
       const middlewares = connect()
       server = http.createServer(middlewares)
-      await plugin.configureServer({ middlewares })
+      watcher = new EventEmitter()
+      await plugin.configureServer({ middlewares, watcher })
       await new Promise((resolve, reject) =>
         server.listen(err => (err ? reject(err) : resolve()))
       )
@@ -212,6 +204,43 @@ new Workbench({
   </body>
 </html>
 `)
+    })
+
+    it.each([
+      ['tool file creation', 'add', 'test-added.tools.svelte', false],
+      ['folder creation', 'addDir', faker.system.fileName(), true],
+      ['tool file removal', 'unlink', 'test-removed.tools.svelte', false],
+      ['folder removal', 'unlinkDir', faker.system.fileName(), true]
+    ])(
+      'triggers workframe on %s',
+      async (test, eventName, file, isDirectory) => {
+        const emit = jest.spyOn(watcher, 'emit')
+        expect(emit).not.toHaveBeenCalled()
+
+        watcher.emit(eventName, resolve(path, file), {
+          isDirectory: () => isDirectory
+        })
+        expect(emit).toHaveBeenCalledWith(
+          'change',
+          `${defaultPath}/${defaultWorkframeId}`
+        )
+        expect(emit).toHaveBeenCalledTimes(2)
+      }
+    )
+
+    it.each([
+      ['regular file creation', 'add', faker.system.fileName()],
+      ['regular file removal', 'unlink', faker.system.fileName()]
+    ])('does not trigger workframe on %s', async (test, eventName, file) => {
+      const emit = jest.spyOn(watcher, 'emit')
+      expect(emit).not.toHaveBeenCalled()
+
+      watcher.emit(eventName, resolve(path, file), { isDirectory: () => false })
+      expect(emit).not.toHaveBeenCalledWith(
+        'change',
+        `${defaultPath}/${defaultWorkframeId}`
+      )
+      expect(emit).toHaveBeenCalledTimes(1)
     })
   })
 })
