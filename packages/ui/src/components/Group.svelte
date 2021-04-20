@@ -33,6 +33,10 @@
   li {
     @apply cursor-pointer mt-2 select-none;
 
+    & > * {
+      @apply w-full;
+    }
+
     &.current {
       @apply bg-gray-300;
     }

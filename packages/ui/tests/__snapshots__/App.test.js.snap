@@ -1,0 +1,106 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`App component displays explorer and pane container 1`] = `
+<body>
+  <div>
+     
+    <aside>
+      <h1>
+        <span
+          class="material-icons"
+        >
+          handyman
+        </span>
+         
+        <span>
+          Atelier
+        </span>
+      </h1>
+       
+      <nav>
+        <ul>
+          <li>
+            <button
+              title="Modifier la couleur de fond de l'atelier"
+            >
+              <span
+                class="material-icons"
+              >
+                wallpaper
+              </span>
+            </button>
+          </li>
+           
+          <li>
+            <button
+              title="Redimensionner la taille de l'atelier"
+            >
+              <span
+                class="material-icons"
+              >
+                devices
+              </span>
+            </button>
+             
+          </li>
+        </ul>
+      </nav>
+       
+      <ul />
+    </aside>
+     
+    <main>
+      <div
+        class="viewport"
+      >
+        <iframe
+          src="workframe.html"
+          title="workframe"
+        />
+      </div>
+       
+      <div
+        class="root"
+      >
+        <nav>
+          <ul>
+            <li
+              class="current"
+            >
+              Evènements
+            </li>
+             
+            <li>
+              <button
+                title="Réduire/Etendre"
+              >
+                <span
+                  class="material-icons"
+                >
+                  expand_more
+                </span>
+              </button>
+            </li>
+          </ul>
+        </nav>
+         
+        <main
+          class="tab-content"
+        >
+          <div
+            class="root"
+          >
+            <div
+              class="disclaimer"
+            >
+              Encore aucun message reçus
+            </div>
+          </div>
+          
+        </main>
+      </div>
+      
+    </main>
+  </div>
+</body>
+`;

@@ -19,7 +19,8 @@
     "prepare": "husky install",
     "test": "run-s -ncs test:**",
     "test:plugin-svelte": "npm t --workspace packages/plugin-svelte",
-    "test:svelte": "npm t --workspace packages/svelte"
+    "test:svelte": "npm t --workspace packages/svelte",
+    "test:ui": "npm t --workspace packages/ui"
   },
   "devDependencies": {
     "eslint": "^7.23.0",

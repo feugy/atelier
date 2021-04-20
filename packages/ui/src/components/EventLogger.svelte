@@ -46,7 +46,7 @@
     <div class="log">
       {#each events as { name, args, time }}
         <div class="time">
-          {$_('{ value, time }', { value: time })}
+          {$_('{ time, time }', { time })}
         </div>
         <div class="name">{name}</div>
         <div class="args">{format(args)}</div>

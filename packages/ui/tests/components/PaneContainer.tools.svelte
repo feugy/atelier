@@ -1,7 +1,7 @@
 <script>
   import { Tool, ToolBox } from '@atelier/svelte'
-  import PaneContainer from '../src/components/PaneContainer.svelte'
-  import EventLogger from '../src/components/EventLogger.svelte'
+  import PaneContainer from '../../src/components/PaneContainer.svelte'
+  import EventLogger from '../../src/components/EventLogger.svelte'
 </script>
 
 <ToolBox

@@ -1,6 +1,6 @@
 <script>
   import { Tool, ToolBox } from '@atelier/svelte'
-  import EventLogger from '../src/components/EventLogger.svelte'
+  import EventLogger from '../../src/components/EventLogger.svelte'
 </script>
 
 <ToolBox name="Components/Event logger" component={EventLogger}>

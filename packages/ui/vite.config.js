@@ -10,8 +10,8 @@ export default defineConfig({
     svelte(),
     yaml(),
     atelier({
-      path: './tests',
-      setupPath: resolve(__dirname, 'tests', 'setup.js')
+      path: resolve(__dirname, 'tests'),
+      setupPath: resolve(__dirname, 'tests', 'atelier-setup.js')
     })
   ],
   server: {
