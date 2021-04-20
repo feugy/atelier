@@ -20,6 +20,10 @@
 <style type="postcss">
   .root {
     @apply flex flex-col w-full h-1/4;
+
+    &.has-collapsed {
+      @apply h-auto;
+    }
   }
 
   ul {
@@ -50,7 +54,7 @@
 </style>
 
 {#if tabs?.length}
-  <div class="root">
+  <div class="root" class:has-collapsed={collapsed}>
     <nav on:dblclick={toggleCollapse}>
       <ul>
         {#each tabs as { name }, i}
