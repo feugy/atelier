@@ -1,39 +1,31 @@
 <script>
   import { Tool, ToolBox } from '@atelier/svelte'
+  import { writable } from 'svelte/store'
   import PaneContainer from '../../src/components/PaneContainer.svelte'
-  import EventLogger from '../../src/components/EventLogger.svelte'
+  import { Pane1, Pane2, Pane3 } from '../test-components'
+
+  const isEnabled = () => true
 </script>
 
 <ToolBox
   name="Components/Pane container"
   component={PaneContainer}
-  events={['click']}
+  props={{ currentTool: writable({}) }}
 >
   <Tool
     name="Multiple tabs"
     props={{
       tabs: [
-        { name: 'First tab', content: `I'm tab 1` },
-        { name: 'Another one', content: `I'm tab 2` },
-        { name: 'A third...', content: `I'm tab 3` },
-        { name: 'At last!', content: `I'm tab 4` }
-      ]
-    }}
-  />
-
-  <Tool
-    name="With components"
-    props={{
-      tabs: [
-        { name: 'component', content: EventLogger },
-        { name: 'text', content: 'Some text' }
+        { name: 'First tab', component: Pane1.default, isEnabled },
+        { name: 'Another one', component: Pane2.default, isEnabled },
+        { name: 'A third...', component: Pane3.default, isEnabled }
       ]
     }}
   />
 
   <Tool
     name="Single tab"
-    props={{ tabs: [{ name: 'tab 1', content: `I'm tab 1` }] }}
+    props={{ tabs: [{ name: 'tab 1', component: Pane1.default, isEnabled }] }}
   />
 
   <Tool name="Empty" />

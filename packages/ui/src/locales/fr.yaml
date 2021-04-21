@@ -9,3 +9,4 @@ tab:
   properties: Propriétés
 message:
   no-events: Encore aucun message reçus
+  no-pane-enabled: Cet outil n'est pas configuré pour recevoir des évènements ou pour modifier les propriétés

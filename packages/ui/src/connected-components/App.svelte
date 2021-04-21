@@ -1,27 +1,21 @@
 <script>
   import { onMount } from 'svelte'
   import { _ } from 'svelte-intl'
-  import {
-    EventLogger,
-    Explorer,
-    PaneContainer,
-    Properties,
-    Toolbar
-  } from './components'
-  import './common'
+  import * as EventsPane from './EventsPane.svelte'
+  import * as PropertiesPane from './PropertiesPane.svelte'
+  import '../common'
+  import { Explorer, PaneContainer, Toolbar } from '../components'
   import {
     currentTool,
-    events,
     selectTool,
     setWorkbenchFrame,
-    toolsMap,
-    updateProperty
-  } from './stores'
+    toolsMap
+  } from '../stores'
 
   let frame
   let viewport
 
-  const src = 'workframe.html' // new URLSearchParams(window.location.search).get('target')
+  const src = 'workframe.html'
   onMount(() => setWorkbenchFrame(frame))
 </script>
 
@@ -60,19 +54,17 @@
     <iframe title="workframe" bind:this={frame} {src} />
   </div>
   <PaneContainer
+    {currentTool}
     tabs={[
       {
         name: $_('tab.properties'),
-        content: Properties,
-        props: {
-          properties: $currentTool?.props
-        },
-        events: { 'prop-change': updateProperty }
+        isEnabled: PropertiesPane.isEnabled,
+        component: PropertiesPane.default
       },
       {
         name: $_('tab.events'),
-        content: EventLogger,
-        props: { events: $events }
+        isEnabled: EventsPane.isEnabled,
+        component: EventsPane.default
       }
     ]}
   />

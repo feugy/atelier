@@ -1,5 +1,5 @@
 import { BehaviorSubject } from 'rxjs'
-import { map, scan } from 'rxjs/operators'
+import { map, scan, shareReplay } from 'rxjs/operators'
 import { groupByName } from '../utils'
 
 let workframe = null
@@ -80,8 +80,11 @@ export const currentTool = current$.asObservable()
 
 export const events = events$.pipe(
   // reset log when receiving null
-  scan((log, event) => (event ? [event, ...log] : []), [])
+  scan((log, event) => (event ? [event, ...log] : []), []),
+  shareReplay(1)
 )
+// subscribe so we never loose any event
+events.subscribe()
 
 export function setWorkbenchFrame(frame) {
   workframe = frame
