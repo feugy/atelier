@@ -164,6 +164,82 @@ describe('stores', () => {
       )
       expect(postMessage).toHaveBeenCalledTimes(1)
     })
+
+    it('updates tool properties when receiving updateProperty message', () => {
+      const tool1 = { name: faker.lorem.word(), updateProperty: jest.fn() }
+      registerTool(tool1)
+
+      const tool2 = { name: faker.lorem.word(), updateProperty: jest.fn() }
+      registerTool(tool2)
+
+      const update2 = {
+        name: faker.lorem.word(),
+        value: faker.datatype.number()
+      }
+      window.dispatchEvent(
+        new MessageEvent('message', {
+          origin,
+          data: {
+            type: 'updateProperty',
+            data: { tool: tool2.name, ...update2 }
+          }
+        })
+      )
+      expect(tool2.updateProperty).toHaveBeenCalledWith(
+        update2.name,
+        update2.value
+      )
+      expect(tool2.updateProperty).toHaveBeenCalledTimes(1)
+      expect(tool1.updateProperty).not.toHaveBeenCalled()
+      tool2.updateProperty.mockReset()
+
+      const update1 = {
+        name: faker.lorem.word(),
+        value: faker.datatype.number()
+      }
+      window.dispatchEvent(
+        new MessageEvent('message', {
+          origin,
+          data: {
+            type: 'updateProperty',
+            data: { tool: tool1.name, ...update1 }
+          }
+        })
+      )
+      expect(tool1.updateProperty).toHaveBeenCalledWith(
+        update1.name,
+        update1.value
+      )
+      expect(tool1.updateProperty).toHaveBeenCalledTimes(1)
+      expect(tool2.updateProperty).not.toHaveBeenCalled()
+    })
+
+    it('does not update tool properties when receiving updateProperty message of unknown tool', () => {
+      const tool = { name: faker.lorem.word(), updateProperty: jest.fn() }
+      registerTool(tool)
+
+      window.dispatchEvent(
+        new MessageEvent('message', {
+          origin,
+          data: {
+            type: 'updateProperty',
+            data: { tool: faker.lorem.words(), name: 'some-prop', value: 10 }
+          }
+        })
+      )
+      expect(tool.updateProperty).not.toHaveBeenCalled()
+
+      window.dispatchEvent(
+        new MessageEvent('message', {
+          origin,
+          data: {
+            type: 'updateProperty',
+            data: { tool: faker.lorem.words() }
+          }
+        })
+      )
+      expect(tool.updateProperty).not.toHaveBeenCalled()
+    })
   })
 
   describe('currentTool', () => {

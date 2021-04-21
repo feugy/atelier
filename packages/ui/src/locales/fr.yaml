@@ -6,5 +6,6 @@ tooltip:
   viewport: Redimensionner la taille de l'atelier
 tab:
   events: Evènements
+  properties: Propriétés
 message:
   no-events: Encore aucun message reçus

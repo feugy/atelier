@@ -6,5 +6,6 @@ tooltip:
   viewport: Resize the workbench view port
 tab:
   events: Events
+  properties: Properties
 message:
   no-events: No events received yet

@@ -30,7 +30,9 @@
   const fullName = toolBox?.name ? `${toolBox.name}/${name}` : name
   const allProps = { ...(toolBox?.props || {}), ...props }
 
-  onMount(() => registerTool({ name: fullName, props: allProps }))
+  onMount(() =>
+    registerTool({ name: fullName, props: allProps, updateProperty })
+  )
 
   beforeUpdate(() => {
     if ($currentTool?.name !== fullName && instance) {
@@ -64,5 +66,9 @@
 
   function makeEventHandler(name) {
     return (...args) => recordEvent(name, ...args)
+  }
+
+  function updateProperty(name, value) {
+    instance?.$set({ [name]: value })
   }
 </script>

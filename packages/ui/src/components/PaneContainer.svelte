@@ -1,12 +1,33 @@
 <script>
+  import { beforeUpdate } from 'svelte'
   import { _ } from 'svelte-intl'
 
   export let tabs = []
   export let currentIdx = 0
+  let main
+  let content
   let collapsed = false
+  let instance = null
 
-  $: tabContent = tabs?.[currentIdx]?.content
-  $: contentProps = tabs?.[currentIdx]?.props || {}
+  beforeUpdate(() => {
+    instance?.$destroy()
+    instance = null
+    if (tabs?.[currentIdx]?.content && main) {
+      content = tabs[currentIdx].content
+      if (typeof content === 'function') {
+        instance = new content({
+          target: main,
+          props: tabs[currentIdx].props
+        })
+        for (const [event, handler] of Object.entries(
+          tabs[currentIdx].events || {}
+        )) {
+          instance.$on(event, handler)
+        }
+        content = null
+      }
+    }
+  })
 
   function select(i) {
     currentIdx = i
@@ -71,12 +92,8 @@
         </li>
       </ul>
     </nav>
-    <main class:collapsed class="tab-content">
-      {#if typeof tabContent === 'function'}
-        <svelte:component this={tabContent} {...contentProps} />
-      {:else}
-        {tabContent}
-      {/if}
+    <main class:collapsed class="tab-content" bind:this={main}>
+      {content || ''}
     </main>
   </div>
 {/if}

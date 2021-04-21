@@ -4,6 +4,7 @@ import faker from 'faker'
 import TestButton from './TestButton.svelte'
 import { Tool, ToolBox } from '../../src'
 import { currentTool, registerTool, recordEvent } from '../../src/stores'
+import { tick } from 'svelte'
 
 jest.mock('../../src/stores', () => {
   const { writable } = require('svelte/store')
@@ -30,7 +31,11 @@ describe('Tool component', () => {
       render(html`<${Tool} name=${name} component=${TestButton} />`)
 
       expect(screen.queryByRole('button')).toBeInTheDocument()
-      expect(registerTool).toHaveBeenCalledWith({ name, props: {} })
+      expect(registerTool).toHaveBeenCalledWith({
+        name,
+        props: {},
+        updateProperty: expect.any(Function)
+      })
       expect(registerTool).toHaveBeenCalledTimes(1)
       expect(recordEvent).not.toHaveBeenCalled()
     })
@@ -40,7 +45,11 @@ describe('Tool component', () => {
       render(html`<${Tool} name=${name} component=${TestButton} />`)
 
       expect(screen.queryByRole('button')).not.toBeInTheDocument()
-      expect(registerTool).toHaveBeenCalledWith({ name, props: {} })
+      expect(registerTool).toHaveBeenCalledWith({
+        name,
+        props: {},
+        updateProperty: expect.any(Function)
+      })
       expect(registerTool).toHaveBeenCalledTimes(1)
       expect(recordEvent).not.toHaveBeenCalled()
     })
@@ -50,7 +59,11 @@ describe('Tool component', () => {
       const { component } = render(
         html`<${Tool} name=${name} component=${TestButton} />`
       )
-      expect(registerTool).toHaveBeenCalledWith({ name, props: {} })
+      expect(registerTool).toHaveBeenCalledWith({
+        name,
+        props: {},
+        updateProperty: expect.any(Function)
+      })
       expect(registerTool).toHaveBeenCalledTimes(1)
 
       component.$set({ name: faker.lorem.words() })
@@ -68,13 +81,39 @@ describe('Tool component', () => {
       render(
         html`<${Tool} name=${name} component=${TestButton} props=${props} />`
       )
-      expect(registerTool).toHaveBeenCalledWith({ name, props })
+      expect(registerTool).toHaveBeenCalledWith({
+        name,
+        props,
+        updateProperty: expect.any(Function)
+      })
       expect(registerTool).toHaveBeenCalledTimes(1)
 
       const button = screen.queryByRole('button')
       expect(button).toBeInTheDocument()
       expect(button).toHaveTextContent(props.label)
       expect(button).toBeDisabled()
+    })
+
+    it('updates component props when invoking updateProperty()', async () => {
+      const name = faker.lorem.words()
+      currentTool.set({ name })
+      render(html`<${Tool} name=${name} component=${TestButton} />`)
+      expect(registerTool).toHaveBeenCalledWith({
+        name,
+        props: {},
+        updateProperty: expect.any(Function)
+      })
+
+      const button = screen.queryByRole('button')
+      expect(button).toBeInTheDocument()
+      expect(button).toHaveTextContent('Hey oh!')
+
+      const value = faker.commerce.productName()
+      registerTool.mock.calls[0][0].updateProperty('label', value)
+
+      await tick()
+      expect(screen.queryByRole('button')).toHaveTextContent(value)
+      expect(registerTool).toHaveBeenCalledTimes(1)
     })
 
     it('listens to desired events', async () => {
@@ -122,7 +161,8 @@ describe('Tool component', () => {
       expect(screen.queryByRole('button')).toBeInTheDocument()
       expect(registerTool).toHaveBeenCalledWith({
         name: `${toolBoxName}/${name}`,
-        props: {}
+        props: {},
+        updateProperty: expect.any(Function)
       })
       expect(registerTool).toHaveBeenCalledTimes(1)
       expect(recordEvent).not.toHaveBeenCalled()
@@ -141,11 +181,13 @@ describe('Tool component', () => {
       expect(screen.queryByRole('button')).not.toBeInTheDocument()
       expect(registerTool).toHaveBeenCalledWith({
         name: `${toolBoxName}/${name1}`,
-        props: {}
+        props: {},
+        updateProperty: expect.any(Function)
       })
       expect(registerTool).toHaveBeenCalledWith({
         name: `${toolBoxName}/${name2}`,
-        props: {}
+        props: {},
+        updateProperty: expect.any(Function)
       })
       expect(registerTool).toHaveBeenCalledTimes(2)
       expect(recordEvent).not.toHaveBeenCalled()
@@ -162,11 +204,13 @@ describe('Tool component', () => {
       )
       expect(registerTool).toHaveBeenCalledWith({
         name: `${toolBoxName}/${name1}`,
-        props: {}
+        props: {},
+        updateProperty: expect.any(Function)
       })
       expect(registerTool).toHaveBeenCalledWith({
         name: `${toolBoxName}/${name2}`,
-        props: {}
+        props: {},
+        updateProperty: expect.any(Function)
       })
 
       component.$set({ name: faker.lorem.words() })
@@ -177,11 +221,13 @@ describe('Tool component', () => {
     it('passes toolbox props and tool props down to the component', () => {
       const toolBox = {
         name: faker.lorem.words(),
-        props: { disabled: true, label: faker.commerce.productName() }
+        props: { disabled: true, label: faker.commerce.productName() },
+        updateProperty: expect.any(Function)
       }
       const tool = {
         name: faker.lorem.words(),
-        props: { label: faker.commerce.productName() }
+        props: { label: faker.commerce.productName() },
+        updateProperty: expect.any(Function)
       }
       currentTool.set({ name: `${toolBox.name}/${tool.name}` })
       render(
@@ -194,13 +240,49 @@ describe('Tool component', () => {
       )
       expect(registerTool).toHaveBeenCalledWith({
         name: `${toolBox.name}/${tool.name}`,
-        props: { ...toolBox.props, ...tool.props }
+        props: { ...toolBox.props, ...tool.props },
+        updateProperty: expect.any(Function)
       })
 
       const button = screen.queryByRole('button')
       expect(button).toBeInTheDocument()
       expect(button).toHaveTextContent(tool.props.label)
       expect(button).toBeDisabled()
+    })
+
+    it('updates component props when invoking updateProperty()', async () => {
+      const toolBox = {
+        name: faker.lorem.words(),
+        events: ['enter']
+      }
+      const tool = {
+        name: faker.lorem.words(),
+        events: ['click']
+      }
+      currentTool.set({ name: `${toolBox.name}/${tool.name}` })
+      render(
+        html`<${ToolBox}
+          name=${toolBox.name}
+          component=${TestButton}
+          ><${Tool} name=${tool.name}
+        /></${ToolBox}>`
+      )
+      expect(registerTool).toHaveBeenCalledWith({
+        name: `${toolBox.name}/${tool.name}`,
+        props: {},
+        updateProperty: expect.any(Function)
+      })
+
+      const button = screen.queryByRole('button')
+      expect(button).toBeInTheDocument()
+      expect(button).toHaveTextContent('Hey oh!')
+
+      const value = faker.commerce.productName()
+      registerTool.mock.calls[0][0].updateProperty('label', value)
+
+      await tick()
+      expect(screen.queryByRole('button')).toHaveTextContent(value)
+      expect(registerTool).toHaveBeenCalledTimes(1)
     })
 
     it('listens to toolbox and tool desired events', async () => {

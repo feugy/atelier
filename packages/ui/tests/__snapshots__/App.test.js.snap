@@ -67,6 +67,9 @@ exports[`App component displays explorer and pane container 1`] = `
             <li
               class="current"
             >
+              Propriétés
+            </li>
+            <li>
               Evènements
             </li>
              
@@ -87,16 +90,10 @@ exports[`App component displays explorer and pane container 1`] = `
         <main
           class="tab-content"
         >
+          
           <div
             class="root"
-          >
-            <div
-              class="disclaimer"
-            >
-              Encore aucun message reçus
-            </div>
-          </div>
-          
+          />
         </main>
       </div>
       

@@ -1,36 +1,8 @@
 import { writable, derived } from 'svelte/store'
 
 const main = window.parent
+
 let mainOrigin = null
-
-const current = new writable()
-
-export const currentTool = derived(current, n => n)
-
-function postMessage(message) {
-  if (main) {
-    if (!mainOrigin) {
-      mainOrigin = new URL(parent.location.href).origin
-    }
-    main.postMessage(format(message), mainOrigin)
-  }
-}
-
-window.addEventListener('message', ({ origin, data }) => {
-  if (origin === mainOrigin) {
-    if (data.type === 'selectTool') {
-      current.set(data.data)
-    }
-  }
-})
-
-export function registerTool(data) {
-  postMessage({ type: 'registerTool', data })
-}
-
-export function recordEvent(...args) {
-  postMessage({ type: 'recordEvent', args })
-}
 
 // a mix of properties from Event, UIEvent, MouseEvent, TouchEvent, KeyboardEvent, WheelEvent, InputEvent
 const eventProps = [
@@ -74,6 +46,19 @@ const eventProps = [
   'which'
 ]
 
+const updatePropertyByName = new Map()
+
+const current = new writable()
+
+function postMessage(message) {
+  if (main) {
+    if (!mainOrigin) {
+      mainOrigin = new URL(parent.location.href).origin
+    }
+    main.postMessage(format(message), mainOrigin)
+  }
+}
+
 function format(arg) {
   if (Array.isArray(arg)) {
     return arg.map(format)
@@ -98,4 +83,26 @@ function format(arg) {
     return result
   }
   return arg
+}
+
+window.addEventListener('message', ({ origin, data }) => {
+  if (origin === mainOrigin) {
+    if (data.type === 'selectTool') {
+      current.set(data.data)
+    } else if (data.type === 'updateProperty') {
+      const { tool, name, value } = data.data || {}
+      updatePropertyByName.get(tool)?.(name, value)
+    }
+  }
+})
+
+export const currentTool = derived(current, n => n)
+
+export function registerTool(data) {
+  updatePropertyByName.set(data.name, data.updateProperty)
+  postMessage({ type: 'registerTool', data })
+}
+
+export function recordEvent(...args) {
+  postMessage({ type: 'recordEvent', args })
 }

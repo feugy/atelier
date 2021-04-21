@@ -1,14 +1,21 @@
 <script>
   import { onMount } from 'svelte'
   import { _ } from 'svelte-intl'
-  import { EventLogger, Explorer, PaneContainer, Toolbar } from './components'
+  import {
+    EventLogger,
+    Explorer,
+    PaneContainer,
+    Properties,
+    Toolbar
+  } from './components'
   import './common'
   import {
     currentTool,
     events,
     selectTool,
     setWorkbenchFrame,
-    toolsMap
+    toolsMap,
+    updateProperty
   } from './stores'
 
   let frame
@@ -54,6 +61,14 @@
   </div>
   <PaneContainer
     tabs={[
+      {
+        name: $_('tab.properties'),
+        content: Properties,
+        props: {
+          properties: $currentTool?.props
+        },
+        events: { 'prop-change': updateProperty }
+      },
       {
         name: $_('tab.events'),
         content: EventLogger,

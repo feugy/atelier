@@ -52,13 +52,14 @@ function registerTool(tool) {
   }
 }
 
-current$.subscribe(data => {
+function postMessage(type, data) {
   if (workframe) {
-    workframe.contentWindow?.postMessage(
-      { type: 'selectTool', data },
-      workframeOrigin
-    )
+    workframe.contentWindow?.postMessage({ type, data }, workframeOrigin)
   }
+}
+
+current$.subscribe(data => {
+  postMessage('selectTool', data)
   updateUrl(data?.name)
 })
 
@@ -95,5 +96,11 @@ export function selectTool(tool) {
   if (tools$.value.includes(tool)) {
     current$.next(tool)
     events$.next(null)
+  }
+}
+
+export function updateProperty({ detail } = {}) {
+  if (current$.value && detail instanceof Object) {
+    postMessage('updateProperty', { ...detail, tool: current$.value.name })
   }
 }
