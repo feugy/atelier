@@ -34,6 +34,7 @@ describe('Tool component', () => {
       expect(registerTool).toHaveBeenCalledWith({
         name,
         props: {},
+        events: [],
         updateProperty: expect.any(Function)
       })
       expect(registerTool).toHaveBeenCalledTimes(1)
@@ -48,6 +49,7 @@ describe('Tool component', () => {
       expect(registerTool).toHaveBeenCalledWith({
         name,
         props: {},
+        events: [],
         updateProperty: expect.any(Function)
       })
       expect(registerTool).toHaveBeenCalledTimes(1)
@@ -62,6 +64,7 @@ describe('Tool component', () => {
       expect(registerTool).toHaveBeenCalledWith({
         name,
         props: {},
+        events: [],
         updateProperty: expect.any(Function)
       })
       expect(registerTool).toHaveBeenCalledTimes(1)
@@ -84,6 +87,7 @@ describe('Tool component', () => {
       expect(registerTool).toHaveBeenCalledWith({
         name,
         props,
+        events: [],
         updateProperty: expect.any(Function)
       })
       expect(registerTool).toHaveBeenCalledTimes(1)
@@ -101,6 +105,7 @@ describe('Tool component', () => {
       expect(registerTool).toHaveBeenCalledWith({
         name,
         props: {},
+        events: [],
         updateProperty: expect.any(Function)
       })
 
@@ -119,13 +124,16 @@ describe('Tool component', () => {
     it('listens to desired events', async () => {
       const name = faker.lorem.words()
       currentTool.set({ name })
+      const events = ['enter', 'click']
       render(
-        html`<${Tool}
-          name=${name}
-          component=${TestButton}
-          events=${['enter', 'click']}
-        />`
+        html`<${Tool} name=${name} component=${TestButton} events=${events} />`
       )
+      expect(registerTool).toHaveBeenCalledWith({
+        name,
+        props: {},
+        events,
+        updateProperty: expect.any(Function)
+      })
 
       const button = screen.queryByRole('button')
       expect(button).toBeInTheDocument()
@@ -162,6 +170,7 @@ describe('Tool component', () => {
       expect(registerTool).toHaveBeenCalledWith({
         name: `${toolBoxName}/${name}`,
         props: {},
+        events: [],
         updateProperty: expect.any(Function)
       })
       expect(registerTool).toHaveBeenCalledTimes(1)
@@ -182,11 +191,13 @@ describe('Tool component', () => {
       expect(registerTool).toHaveBeenCalledWith({
         name: `${toolBoxName}/${name1}`,
         props: {},
+        events: [],
         updateProperty: expect.any(Function)
       })
       expect(registerTool).toHaveBeenCalledWith({
         name: `${toolBoxName}/${name2}`,
         props: {},
+        events: [],
         updateProperty: expect.any(Function)
       })
       expect(registerTool).toHaveBeenCalledTimes(2)
@@ -205,11 +216,13 @@ describe('Tool component', () => {
       expect(registerTool).toHaveBeenCalledWith({
         name: `${toolBoxName}/${name1}`,
         props: {},
+        events: [],
         updateProperty: expect.any(Function)
       })
       expect(registerTool).toHaveBeenCalledWith({
         name: `${toolBoxName}/${name2}`,
         props: {},
+        events: [],
         updateProperty: expect.any(Function)
       })
 
@@ -241,6 +254,7 @@ describe('Tool component', () => {
       expect(registerTool).toHaveBeenCalledWith({
         name: `${toolBox.name}/${tool.name}`,
         props: { ...toolBox.props, ...tool.props },
+        events: [],
         updateProperty: expect.any(Function)
       })
 
@@ -251,14 +265,8 @@ describe('Tool component', () => {
     })
 
     it('updates component props when invoking updateProperty()', async () => {
-      const toolBox = {
-        name: faker.lorem.words(),
-        events: ['enter']
-      }
-      const tool = {
-        name: faker.lorem.words(),
-        events: ['click']
-      }
+      const toolBox = { name: faker.lorem.words() }
+      const tool = { name: faker.lorem.words() }
       currentTool.set({ name: `${toolBox.name}/${tool.name}` })
       render(
         html`<${ToolBox}
@@ -270,6 +278,7 @@ describe('Tool component', () => {
       expect(registerTool).toHaveBeenCalledWith({
         name: `${toolBox.name}/${tool.name}`,
         props: {},
+        events: [],
         updateProperty: expect.any(Function)
       })
 
@@ -303,6 +312,12 @@ describe('Tool component', () => {
           ><${Tool} name=${tool.name} events=${tool.events}
         /></${ToolBox}>`
       )
+      expect(registerTool).toHaveBeenCalledWith({
+        name: `${toolBox.name}/${tool.name}`,
+        props: {},
+        events: [...toolBox.events, ...tool.events],
+        updateProperty: expect.any(Function)
+      })
 
       const button = screen.queryByRole('button')
       expect(button).toBeInTheDocument()

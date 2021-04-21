@@ -29,9 +29,15 @@
   const Component = toolBox?.component || component
   const fullName = toolBox?.name ? `${toolBox.name}/${name}` : name
   const allProps = { ...(toolBox?.props || {}), ...props }
+  const allEvents = [...(toolBox?.events || []), ...events]
 
   onMount(() =>
-    registerTool({ name: fullName, props: allProps, updateProperty })
+    registerTool({
+      name: fullName,
+      props: allProps,
+      events: allEvents,
+      updateProperty
+    })
   )
 
   beforeUpdate(() => {
@@ -44,7 +50,7 @@
     if ($currentTool?.name === fullName && !instance && Component) {
       instance = new Component({ target, props: allProps })
       listeners = []
-      for (const eventName of [...(toolBox?.events || []), ...events]) {
+      for (const eventName of allEvents) {
         const handler = makeEventHandler(eventName)
         instance.$on(eventName, handler)
         listeners.push({ eventName, handler })
