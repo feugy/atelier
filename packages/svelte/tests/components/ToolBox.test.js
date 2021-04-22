@@ -1,14 +1,14 @@
 import { render, screen } from '@testing-library/svelte'
 import html from 'svelte-htm'
 import faker from 'faker'
-import TestTool from './TestTool.svelte'
+import { Tool } from '../test-components'
 import { ToolBox } from '../../src'
 
 describe('ToolBox component', () => {
   beforeEach(jest.resetAllMocks)
 
   it('allows no properties', async () => {
-    render(html`<${ToolBox}><${TestTool} /></${ToolBox}>`)
+    render(html`<${ToolBox}><${Tool} /></${ToolBox}>`)
     const main = screen.queryByRole('main')
     expect(main).toBeInTheDocument()
     expect(JSON.parse(main.textContent)).toEqual({
@@ -24,7 +24,7 @@ describe('ToolBox component', () => {
     const events = [faker.datatype.number(), faker.datatype.number()]
     const component = faker.datatype.uuid()
     render(
-      html`<${ToolBox} name=${name} component=${component} events=${events}><${TestTool} /></${ToolBox}>`
+      html`<${ToolBox} name=${name} component=${component} events=${events}><${Tool} /></${ToolBox}>`
     )
     const main = screen.queryByRole('main')
     expect(main).toBeInTheDocument()

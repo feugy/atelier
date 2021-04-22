@@ -5,7 +5,8 @@ import {
   events,
   toolsMap,
   currentTool,
-  selectTool
+  selectTool,
+  updateProperty
 } from '../../src/stores'
 
 describe('tools store', () => {
@@ -138,6 +139,19 @@ describe('tools store', () => {
       { name: event2[0], args: event2.slice(1), time: expect.any(Number) },
       { name: event1[0], args: event1.slice(1), time: expect.any(Number) }
     ])
+  })
+
+  it('does not send properties updates without current tool', () => {
+    const name = faker.lorem.words()
+    const value = faker.datatype.number()
+    const postMessage = jest.fn()
+
+    const src = faker.internet.url()
+    setWorkbenchFrame({ src, contentWindow: { postMessage } })
+    postMessage.mockReset()
+
+    updateProperty({ detail: { name, value } })
+    expect(postMessage).not.toHaveBeenCalled()
   })
 
   describe('given some registered tools', () => {
@@ -288,6 +302,18 @@ describe('tools store', () => {
       expect(new URLSearchParams(location.search).get('tool')).toEqual(
         tool2.name
       )
+    })
+
+    it('sends properties updates on current tool', () => {
+      const name = faker.lorem.words()
+      const value = faker.datatype.number()
+
+      updateProperty({ detail: { name, value } })
+      expect(postMessage).toHaveBeenCalledWith(
+        { type: 'updateProperty', data: { name, value, tool: tool1.name } },
+        src
+      )
+      expect(postMessage).toHaveBeenCalledTimes(1)
     })
   })
 })

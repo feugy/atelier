@@ -1,5 +1,7 @@
 <script>
   import { _ } from 'svelte-intl'
+  import PaneDisclaimer from './PaneDisclaimer.svelte'
+
   export let events = []
 
   function format(arg) {
@@ -15,11 +17,11 @@
 
 <style type="postcss">
   .root {
-    @apply p-4 overflow-auto w-full h-full text-center;
+    @apply p-4 overflow-auto w-full h-full;
   }
 
   .log {
-    @apply grid gap-y-1 gap-x-4 text-left;
+    @apply grid gap-y-1 gap-x-4;
     grid-template-columns: auto auto 1fr;
   }
 
@@ -32,16 +34,11 @@
     @apply justify-self-end;
     color: theme('colors.primary.dark');
   }
-
-  .disclaimer {
-    @apply italic;
-    color: theme('colors.secondary.dark');
-  }
 </style>
 
 <div class="root">
   {#if !events?.length}
-    <div class="disclaimer">{$_('message.no-events')}</div>
+    <PaneDisclaimer message={$_('message.no-events')} />
   {:else}
     <div class="log">
       {#each events as { name, args, time }}

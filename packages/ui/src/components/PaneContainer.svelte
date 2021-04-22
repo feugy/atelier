@@ -1,15 +1,26 @@
 <script>
   import { _ } from 'svelte-intl'
+  import PaneDisclaimer from './PaneDisclaimer.svelte'
 
   export let tabs = []
-  export let currentIdx = 0
-  let collapsed = false
+  export let currentTool
+  let main
+  let selected = 0
 
-  $: tabContent = tabs?.[currentIdx]?.content
-  $: contentProps = tabs?.[currentIdx]?.props || {}
+  // compute tab enablity statuses
+  $: tabEnability = tabs.map(
+    ({ isEnabled }) => currentTool && isEnabled($currentTool)
+  )
+  // retain selected tab if it still points at an existing, enabled tab, or find first enabled tab
+  $: selected =
+    selected >= 0 && selected < tabs.length && tabEnability[selected]
+      ? selected
+      : tabEnability.findIndex(enabled => enabled)
+  // initially collapsed when all tabs are disabled
+  $: collapsed = tabEnability.every(enabled => !enabled)
 
   function select(i) {
-    currentIdx = i
+    selected = i
   }
 
   function toggleCollapse() {
@@ -58,9 +69,11 @@
     <nav on:dblclick={toggleCollapse}>
       <ul>
         {#each tabs as { name }, i}
-          <li class:current={i === currentIdx} on:click={() => select(i)}>
-            {name}
-          </li>
+          {#if tabEnability[i]}
+            <li class:current={i === selected} on:click={() => select(i)}>
+              {name}
+            </li>
+          {/if}
         {/each}
         <li>
           <button title={$_('tooltip.collapsible')} on:click={toggleCollapse}
@@ -71,11 +84,14 @@
         </li>
       </ul>
     </nav>
-    <main class:collapsed class="tab-content">
-      {#if typeof tabContent === 'function'}
-        <svelte:component this={tabContent} {...contentProps} />
-      {:else}
-        {tabContent}
+    <main class:collapsed class="tab-content" bind:this={main}>
+      {#each tabs as { component }, i}
+        {#if i === selected}
+          <svelte:component this={component} />
+        {/if}
+      {/each}
+      {#if tabEnability.every(enabled => !enabled)}
+        <PaneDisclaimer message={$_('message.no-pane-enabled')} />
       {/if}
     </main>
   </div>

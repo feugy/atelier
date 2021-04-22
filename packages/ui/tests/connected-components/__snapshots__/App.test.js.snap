@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`App component displays explorer and pane container 1`] = `
+exports[`App connected component displays explorer and pane container 1`] = `
 <body>
   <div>
      
@@ -60,15 +60,12 @@ exports[`App component displays explorer and pane container 1`] = `
       </div>
        
       <div
-        class="root"
+        class="root has-collapsed"
       >
         <nav>
           <ul>
-            <li
-              class="current"
-            >
-              Evènements
-            </li>
+            
+            
              
             <li>
               <button
@@ -77,7 +74,7 @@ exports[`App component displays explorer and pane container 1`] = `
                 <span
                   class="material-icons"
                 >
-                  expand_more
+                  expand_less
                 </span>
               </button>
             </li>
@@ -85,18 +82,16 @@ exports[`App component displays explorer and pane container 1`] = `
         </nav>
          
         <main
-          class="tab-content"
+          class="tab-content collapsed"
         >
-          <div
-            class="root"
-          >
-            <div
-              class="disclaimer"
-            >
-              Encore aucun message reçus
-            </div>
-          </div>
           
+          
+           
+          <div
+            class="disclaimer"
+          >
+            Cet outil n'est pas configuré pour recevoir des évènements ou pour modifier les propriétés
+          </div>
         </main>
       </div>
       

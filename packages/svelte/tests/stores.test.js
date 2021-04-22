@@ -113,11 +113,14 @@ describe('stores', () => {
 
     it('serializes Sets and Maps', () => {
       const name = faker.lorem.word()
-      recordEvent(name, new Set(['a', 'b', 'c']))
+      recordEvent(name, new Set(['a', 'b', new Set(['c'])]))
       expect(postMessage).toHaveBeenCalledWith(
         {
           type: 'recordEvent',
-          args: [name, { type: 'Set', values: ['a', 'b', 'c'] }]
+          args: [
+            name,
+            { type: 'Set', values: ['a', 'b', { type: 'Set', values: ['c'] }] }
+          ]
         },
         origin
       )
@@ -126,7 +129,7 @@ describe('stores', () => {
         name,
         new Map([
           ['a', 1],
-          ['b', 2],
+          ['b', new Map([['d', 2]])],
           ['c', 3]
         ])
       )
@@ -139,7 +142,7 @@ describe('stores', () => {
               type: 'Map',
               values: [
                 ['a', 1],
-                ['b', 2],
+                ['b', { type: 'Map', values: [['d', 2]] }],
                 ['c', 3]
               ]
             }
@@ -163,6 +166,167 @@ describe('stores', () => {
         origin
       )
       expect(postMessage).toHaveBeenCalledTimes(1)
+    })
+
+    it('updates tool properties when receiving updateProperty message', () => {
+      const tool1 = { name: faker.lorem.word(), updateProperty: jest.fn() }
+      registerTool(tool1)
+
+      const tool2 = { name: faker.lorem.word(), updateProperty: jest.fn() }
+      registerTool(tool2)
+
+      const update2 = {
+        name: faker.lorem.word(),
+        value: faker.datatype.number()
+      }
+      window.dispatchEvent(
+        new MessageEvent('message', {
+          origin,
+          data: {
+            type: 'updateProperty',
+            data: { tool: tool2.name, ...update2 }
+          }
+        })
+      )
+      expect(tool2.updateProperty).toHaveBeenCalledWith(
+        update2.name,
+        update2.value
+      )
+      expect(tool2.updateProperty).toHaveBeenCalledTimes(1)
+      expect(tool1.updateProperty).not.toHaveBeenCalled()
+      tool2.updateProperty.mockReset()
+
+      const update1 = {
+        name: faker.lorem.word(),
+        value: faker.datatype.number()
+      }
+      window.dispatchEvent(
+        new MessageEvent('message', {
+          origin,
+          data: {
+            type: 'updateProperty',
+            data: { tool: tool1.name, ...update1 }
+          }
+        })
+      )
+      expect(tool1.updateProperty).toHaveBeenCalledWith(
+        update1.name,
+        update1.value
+      )
+      expect(tool1.updateProperty).toHaveBeenCalledTimes(1)
+      expect(tool2.updateProperty).not.toHaveBeenCalled()
+    })
+
+    it('does not update tool properties when receiving updateProperty message of unknown tool', () => {
+      const tool = { name: faker.lorem.word(), updateProperty: jest.fn() }
+      registerTool(tool)
+
+      window.dispatchEvent(
+        new MessageEvent('message', {
+          origin,
+          data: {
+            type: 'updateProperty',
+            data: { tool: faker.lorem.words(), name: 'some-prop', value: 10 }
+          }
+        })
+      )
+      expect(tool.updateProperty).not.toHaveBeenCalled()
+
+      window.dispatchEvent(
+        new MessageEvent('message', {
+          origin,
+          data: {
+            type: 'updateProperty',
+            data: { tool: faker.lorem.words() }
+          }
+        })
+      )
+      expect(tool.updateProperty).not.toHaveBeenCalled()
+    })
+
+    it('parse Arrays and Objects in property updates', () => {
+      const tool = { name: faker.lorem.word(), updateProperty: jest.fn() }
+      registerTool(tool)
+
+      const name = faker.lorem.word()
+      const value = {
+        a: 1,
+        b: [1, 2, { d: 4, e: 5 }],
+        c: 3
+      }
+      window.dispatchEvent(
+        new MessageEvent('message', {
+          origin,
+          data: {
+            type: 'updateProperty',
+            data: { tool: tool.name, name, value }
+          }
+        })
+      )
+      expect(tool.updateProperty).toHaveBeenCalledWith(name, value)
+      expect(tool.updateProperty).toHaveBeenCalledTimes(1)
+    })
+
+    it('parse Maps and Sets in property updates', () => {
+      const tool = { name: faker.lorem.word(), updateProperty: jest.fn() }
+      registerTool(tool)
+
+      const name = faker.lorem.word()
+      window.dispatchEvent(
+        new MessageEvent('message', {
+          origin,
+          data: {
+            type: 'updateProperty',
+            data: {
+              tool: tool.name,
+              name,
+              value: {
+                type: 'Map',
+                values: [
+                  ['a', 1],
+                  [
+                    'b',
+                    {
+                      type: 'Set',
+                      values: [
+                        1,
+                        2,
+                        {
+                          type: 'Map',
+                          values: [
+                            ['d', 4],
+                            ['e', 5]
+                          ]
+                        }
+                      ]
+                    }
+                  ],
+                  ['c', 3]
+                ]
+              }
+            }
+          }
+        })
+      )
+      expect(tool.updateProperty).toHaveBeenCalledWith(
+        name,
+        new Map([
+          ['a', 1],
+          [
+            'b',
+            new Set([
+              1,
+              2,
+              new Map([
+                ['d', 4],
+                ['e', 5]
+              ])
+            ])
+          ],
+          ['c', 3]
+        ])
+      )
+      expect(tool.updateProperty).toHaveBeenCalledTimes(1)
     })
   })
 

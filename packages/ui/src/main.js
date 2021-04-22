@@ -1,3 +1,3 @@
-import App from './App.svelte'
+import { App } from './connected-components'
 
 new App({ target: document.body })

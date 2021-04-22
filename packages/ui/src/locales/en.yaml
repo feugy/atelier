@@ -6,5 +6,7 @@ tooltip:
   viewport: Resize the workbench view port
 tab:
   events: Events
+  properties: Properties
 message:
   no-events: No events received yet
+  no-pane-enabled: This tool is not configured to receive events or tweak properties

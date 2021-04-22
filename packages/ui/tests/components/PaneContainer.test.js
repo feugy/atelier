@@ -1,7 +1,9 @@
 import { fireEvent, render, screen, within } from '@testing-library/svelte'
 import faker from 'faker'
+import { readable } from 'svelte/store'
 import html from 'svelte-htm'
-import TestButton from './TestButton.svelte'
+import { translate } from '../test-utils'
+import { Pane1, Pane2, Pane3 } from '../test-components'
 import { PaneContainer } from '../../src/components'
 
 describe('PaneContainer component', () => {
@@ -9,50 +11,111 @@ describe('PaneContainer component', () => {
     const tabs = [
       {
         name: faker.lorem.word(),
-        content: TestButton,
-        props: { label: faker.commerce.productName() }
+        component: Pane1.default,
+        isEnabled: Pane1.isEnabled
       },
       {
         name: faker.lorem.word(),
-        content: TestButton,
-        props: { label: faker.commerce.productName() }
+        component: Pane2.default,
+        isEnabled: Pane2.isEnabled
       },
       {
         name: faker.lorem.word(),
-        content: faker.commerce.productName()
+        component: Pane3.default,
+        isEnabled: Pane3.isEnabled
       }
     ]
-    render(html`<${PaneContainer} tabs=${tabs} />`)
+    const tool = readable({
+      allowPane1: true,
+      allowPane2: true,
+      allowPane3: true
+    })
+    render(html`<${PaneContainer} tabs=${tabs} currentTool=${tool} />`)
 
     const tabItems = screen.queryAllByRole('listitem')
     expect(tabItems[0]).toHaveTextContent(tabs[0].name)
     expect(tabItems[1]).toHaveTextContent(tabs[1].name)
     expect(tabItems[2]).toHaveTextContent(tabs[2].name)
+    expect(tabItems).toHaveLength(4)
     const main = screen.getByRole('main')
-    expect(within(main).queryAllByRole('button')).toHaveLength(1)
-    expect(within(main).getByRole('button')).toHaveTextContent(
-      tabs[0].props.label
-    )
+    expect(main).toHaveTextContent('This is pane #1')
 
     await fireEvent.click(tabItems[2])
-    expect(within(main).queryAllByRole('button')).toHaveLength(0)
-    expect(main).toHaveTextContent(tabs[2].content)
+    expect(main).toHaveTextContent('This is pane #3')
+  })
+
+  it('does not display disabled tabs', async () => {
+    const tabs = [
+      {
+        name: faker.lorem.word(),
+        component: Pane1.default,
+        isEnabled: Pane1.isEnabled
+      },
+      {
+        name: faker.lorem.word(),
+        component: Pane2.default,
+        isEnabled: Pane2.isEnabled
+      },
+      {
+        name: faker.lorem.word(),
+        component: Pane3.default,
+        isEnabled: Pane3.isEnabled
+      }
+    ]
+    const tool = readable({
+      allowPane2: true,
+      allowPane3: true
+    })
+    render(html`<${PaneContainer} tabs=${tabs} currentTool=${tool} />`)
+
+    const tabItems = screen.queryAllByRole('listitem')
+    expect(tabItems[0]).toHaveTextContent(tabs[1].name)
+    expect(tabItems[1]).toHaveTextContent(tabs[2].name)
+    expect(tabItems).toHaveLength(3)
+    const main = screen.getByRole('main')
+    expect(main).toHaveTextContent('This is pane #2')
+
+    await fireEvent.click(tabItems[1])
+    expect(main).toHaveTextContent('This is pane #3')
+  })
+
+  it('is collapsed when all tabs are disabled', () => {
+    const tabs = [
+      {
+        name: faker.lorem.word(),
+        component: Pane1.default,
+        isEnabled: Pane1.isEnabled
+      },
+      {
+        name: faker.lorem.word(),
+        component: Pane2.default,
+        isEnabled: Pane2.isEnabled
+      }
+    ]
+    const tool = readable({})
+    render(html`<${PaneContainer} tabs=${tabs} currentTool=${tool} />`)
+    expect(screen.queryAllByRole('listitem')).toHaveLength(1)
+
+    const main = screen.getByRole('main')
+    expect(main).toHaveClass('collapsed')
+    expect(main).toHaveTextContent(translate('message.no-pane-enabled'))
   })
 
   it('can collapse and expand', async () => {
     const tabs = [
       {
         name: faker.lorem.word(),
-        content: TestButton,
-        props: { label: faker.commerce.productName() }
+        component: Pane1.default,
+        isEnabled: Pane1.isEnabled
       },
       {
         name: faker.lorem.word(),
-        content: TestButton,
-        props: { label: faker.commerce.productName() }
+        component: Pane2.default,
+        isEnabled: Pane2.isEnabled
       }
     ]
-    render(html`<${PaneContainer} tabs=${tabs} />`)
+    const tool = readable({ allowPane1: true, allowPane2: true })
+    render(html`<${PaneContainer} tabs=${tabs} currentTool=${tool} />`)
 
     const tabBar = screen.queryByRole('navigation')
     const collapseButton = within(tabBar).getByRole('button')

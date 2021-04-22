@@ -1,5 +1,5 @@
 import { BehaviorSubject } from 'rxjs'
-import { map, scan } from 'rxjs/operators'
+import { map, scan, shareReplay } from 'rxjs/operators'
 import { groupByName } from '../utils'
 
 let workframe = null
@@ -52,13 +52,14 @@ function registerTool(tool) {
   }
 }
 
-current$.subscribe(data => {
+function postMessage(type, data) {
   if (workframe) {
-    workframe.contentWindow?.postMessage(
-      { type: 'selectTool', data },
-      workframeOrigin
-    )
+    workframe.contentWindow?.postMessage({ type, data }, workframeOrigin)
   }
+}
+
+current$.subscribe(data => {
+  postMessage('selectTool', data)
   updateUrl(data?.name)
 })
 
@@ -79,8 +80,11 @@ export const currentTool = current$.asObservable()
 
 export const events = events$.pipe(
   // reset log when receiving null
-  scan((log, event) => (event ? [event, ...log] : []), [])
+  scan((log, event) => (event ? [event, ...log] : []), []),
+  shareReplay(1)
 )
+// subscribe so we never loose any event
+events.subscribe()
 
 export function setWorkbenchFrame(frame) {
   workframe = frame
@@ -95,5 +99,11 @@ export function selectTool(tool) {
   if (tools$.value.includes(tool)) {
     current$.next(tool)
     events$.next(null)
+  }
+}
+
+export function updateProperty({ detail } = {}) {
+  if (current$.value && detail instanceof Object) {
+    postMessage('updateProperty', { ...detail, tool: current$.value.name })
   }
 }

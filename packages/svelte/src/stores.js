@@ -1,36 +1,8 @@
 import { writable, derived } from 'svelte/store'
 
 const main = window.parent
+
 let mainOrigin = null
-
-const current = new writable()
-
-export const currentTool = derived(current, n => n)
-
-function postMessage(message) {
-  if (main) {
-    if (!mainOrigin) {
-      mainOrigin = new URL(parent.location.href).origin
-    }
-    main.postMessage(format(message), mainOrigin)
-  }
-}
-
-window.addEventListener('message', ({ origin, data }) => {
-  if (origin === mainOrigin) {
-    if (data.type === 'selectTool') {
-      current.set(data.data)
-    }
-  }
-})
-
-export function registerTool(data) {
-  postMessage({ type: 'registerTool', data })
-}
-
-export function recordEvent(...args) {
-  postMessage({ type: 'recordEvent', args })
-}
 
 // a mix of properties from Event, UIEvent, MouseEvent, TouchEvent, KeyboardEvent, WheelEvent, InputEvent
 const eventProps = [
@@ -74,15 +46,28 @@ const eventProps = [
   'which'
 ]
 
+const updatePropertyByName = new Map()
+
+const current = new writable()
+
+function postMessage(message) {
+  if (main) {
+    if (!mainOrigin) {
+      mainOrigin = new URL(parent.location.href).origin
+    }
+    main.postMessage(format(message), mainOrigin)
+  }
+}
+
 function format(arg) {
   if (Array.isArray(arg)) {
     return arg.map(format)
   }
   if (arg instanceof Map) {
-    return { type: 'Map', values: [...arg.entries()] }
+    return { type: 'Map', values: format([...arg.entries()]) }
   }
   if (arg instanceof Set) {
-    return { type: 'Set', values: [...arg.keys()] }
+    return { type: 'Set', values: format([...arg.keys()]) }
   }
   if (arg instanceof Function) {
     return arg.toString()
@@ -98,4 +83,46 @@ function format(arg) {
     return result
   }
   return arg
+}
+
+function parse(arg) {
+  if (Array.isArray(arg)) {
+    return arg.map(parse)
+  }
+  if (arg instanceof Object) {
+    if (arg.type === 'Map' && Array.isArray(arg.values)) {
+      return new Map(parse(arg.values))
+    }
+    if (arg.type === 'Set' && Array.isArray(arg.values)) {
+      return new Set(parse(arg.values))
+    }
+    const result = {}
+    for (const prop in arg) {
+      result[prop] = parse(arg[prop])
+    }
+    return result
+  }
+  return arg
+}
+
+window.addEventListener('message', ({ origin, data }) => {
+  if (origin === mainOrigin) {
+    if (data.type === 'selectTool') {
+      current.set(data.data)
+    } else if (data.type === 'updateProperty') {
+      const { tool, name, value } = data.data || {}
+      updatePropertyByName.get(tool)?.(name, parse(value))
+    }
+  }
+})
+
+export const currentTool = derived(current, n => n)
+
+export function registerTool(data) {
+  updatePropertyByName.set(data.name, data.updateProperty)
+  postMessage({ type: 'registerTool', data })
+}
+
+export function recordEvent(...args) {
+  postMessage({ type: 'recordEvent', args })
 }

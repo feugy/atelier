@@ -1,9 +1,9 @@
 import { render, screen } from '@testing-library/svelte'
 import html from 'svelte-htm'
-import { translate } from './test-utils'
-import App from '../src/App.svelte'
+import { translate } from '../test-utils'
+import { App } from '../../src/connected-components'
 
-describe('App component', () => {
+describe('App connected component', () => {
   it('displays explorer and pane container', () => {
     const { container } = render(html`<${App} />`)
     expect(screen.queryByRole('heading')).toHaveTextContent(
