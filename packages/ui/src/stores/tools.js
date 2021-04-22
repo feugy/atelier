@@ -98,7 +98,7 @@ export function setWorkbenchFrame(frame) {
 export function selectTool(tool) {
   if (tools$.value.includes(tool)) {
     current$.next(tool)
-    events$.next(null)
+    clearEvents()
   }
 }
 
@@ -106,4 +106,8 @@ export function updateProperty({ detail } = {}) {
   if (current$.value && detail instanceof Object) {
     postMessage('updateProperty', { ...detail, tool: current$.value.name })
   }
+}
+
+export function clearEvents() {
+  events$.next(null)
 }

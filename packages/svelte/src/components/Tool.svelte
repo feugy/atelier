@@ -16,9 +16,10 @@
   export let props = {}
   export let events = []
   export let component = null
-  const target = document.body
   let instance
+  let target
   let listeners = []
+  $: documented = $$slots.header || $$slots.footer
 
   const toolBox = getContext(ToolBox.contextKey)
   if (toolBox?.component && component) {
@@ -78,3 +79,20 @@
     instance?.$set({ [name]: value })
   }
 </script>
+
+<style>
+  .tool {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+  .tool.invisible {
+    display: none;
+  }
+</style>
+
+<span class="tool" class:documented class:invisible={!instance}>
+  <slot name="header" />
+  <span class="tool-preview" bind:this={target} />
+  <slot name="footer" />
+</span>

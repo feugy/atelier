@@ -41,7 +41,10 @@
         ]
       ])
     }}
-  />
+  >
+    <p slot="header">This demonstrate tool documentation:</p>
+    <p slot="footer">This <code>Group</code> has nested levels.</p>
+  </Tool>
 
   <Tool name="No tabs" />
 </ToolBox>
