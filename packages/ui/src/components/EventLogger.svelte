@@ -1,8 +1,10 @@
 <script>
+  import { createEventDispatcher } from 'svelte'
   import { _ } from 'svelte-intl'
   import PaneDisclaimer from './PaneDisclaimer.svelte'
 
   export let events = []
+  const dispatch = createEventDispatcher()
 
   function format(arg) {
     if (Array.isArray(arg)) {
@@ -17,7 +19,7 @@
 
 <style type="postcss">
   .root {
-    @apply p-4 overflow-auto w-full h-full;
+    @apply p-4 overflow-auto w-full h-full relative;
   }
 
   .log {
@@ -34,6 +36,10 @@
     @apply justify-self-end;
     color: theme('colors.primary.dark');
   }
+
+  .clear-button {
+    @apply absolute top-4 right-4;
+  }
 </style>
 
 <div class="root">
@@ -49,5 +55,11 @@
         <div class="args">{format(args)}</div>
       {/each}
     </div>
+    <button
+      class="clear-button"
+      title={$_('tooltip.clear-events')}
+      on:click={() => dispatch('clear-events')}
+      ><span class="material-icons">clear_all</span></button
+    >
   {/if}
 </div>

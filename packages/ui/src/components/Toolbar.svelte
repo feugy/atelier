@@ -81,16 +81,6 @@
     }
   }
 
-  button {
-    @apply outline-none;
-    transition: transform 250ms;
-
-    &:focus,
-    &:hover {
-      transform: scale(1.2);
-    }
-  }
-
   .input-bar {
     white-space: nowrap;
   }

@@ -1,11 +1,12 @@
 import faker from 'faker'
 import { get } from 'svelte/store'
 import {
-  setWorkbenchFrame,
+  clearEvents,
   events,
   toolsMap,
   currentTool,
   selectTool,
+  setWorkbenchFrame,
   updateProperty
 } from '../../src/stores'
 
@@ -139,6 +140,38 @@ describe('tools store', () => {
       { name: event2[0], args: event2.slice(1), time: expect.any(Number) },
       { name: event1[0], args: event1.slice(1), time: expect.any(Number) }
     ])
+  })
+
+  it('can clear accumulated events', () => {
+    const event1 = ['click', { text: faker.lorem.words() }]
+    const event2 = ['input', { text: faker.lorem.words() }]
+
+    let eventLog = []
+    subscriptions.push(events.subscribe(value => (eventLog = value)))
+
+    const src = faker.internet.url()
+    setWorkbenchFrame({ src })
+    window.dispatchEvent(
+      new MessageEvent('message', {
+        origin: src,
+        data: { type: 'recordEvent', args: event1 }
+      })
+    )
+    window.dispatchEvent(
+      new MessageEvent('message', {
+        origin: src,
+        data: { type: 'recordEvent', args: event2 }
+      })
+    )
+    expect(eventLog).toEqual(
+      expect.arrayContaining([
+        { name: event2[0], args: event2.slice(1), time: expect.any(Number) },
+        { name: event1[0], args: event1.slice(1), time: expect.any(Number) }
+      ])
+    )
+
+    clearEvents()
+    expect(eventLog).toEqual([])
   })
 
   it('does not send properties updates without current tool', () => {

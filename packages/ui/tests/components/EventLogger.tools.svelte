@@ -3,7 +3,11 @@
   import EventLogger from '../../src/components/EventLogger.svelte'
 </script>
 
-<ToolBox name="Components/Event logger" component={EventLogger}>
+<ToolBox
+  name="Components/Event logger"
+  component={EventLogger}
+  events={['clear-events']}
+>
   <Tool
     name="With events"
     props={{
