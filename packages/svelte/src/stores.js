@@ -64,10 +64,10 @@ function format(arg) {
     return arg.map(format)
   }
   if (arg instanceof Map) {
-    return { type: 'Map', values: [...arg.entries()] }
+    return { type: 'Map', values: format([...arg.entries()]) }
   }
   if (arg instanceof Set) {
-    return { type: 'Set', values: [...arg.keys()] }
+    return { type: 'Set', values: format([...arg.keys()]) }
   }
   if (arg instanceof Function) {
     return arg.toString()
@@ -85,13 +85,33 @@ function format(arg) {
   return arg
 }
 
+function parse(arg) {
+  if (Array.isArray(arg)) {
+    return arg.map(parse)
+  }
+  if (arg instanceof Object) {
+    if (arg.type === 'Map' && Array.isArray(arg.values)) {
+      return new Map(parse(arg.values))
+    }
+    if (arg.type === 'Set' && Array.isArray(arg.values)) {
+      return new Set(parse(arg.values))
+    }
+    const result = {}
+    for (const prop in arg) {
+      result[prop] = parse(arg[prop])
+    }
+    return result
+  }
+  return arg
+}
+
 window.addEventListener('message', ({ origin, data }) => {
   if (origin === mainOrigin) {
     if (data.type === 'selectTool') {
       current.set(data.data)
     } else if (data.type === 'updateProperty') {
       const { tool, name, value } = data.data || {}
-      updatePropertyByName.get(tool)?.(name, value)
+      updatePropertyByName.get(tool)?.(name, parse(value))
     }
   }
 })

@@ -26,7 +26,8 @@ const defaultOptions = {
   url: '/atelier',
   toolRegexp: '\\.tools\\.svelte+$',
   workframeHtml: resolve(__dirname, 'workframe.html'),
-  workframeId: '@atelier/workframe'
+  workframeId: '@atelier/workframe',
+  bundled: true
 }
 
 async function findTools(path, detectionRegex) {
@@ -83,9 +84,11 @@ function AtelierPlugin(pluginOptions = {}) {
     async configureServer(server) {
       const hasTrailingUrl = options.url.endsWith('/')
 
-      const serve = sirv(resolve(__dirname, '..', '..', 'ui', 'dist'), {
-        etag: true
-      })
+      let uiPath = resolve(__dirname, '..', '..', 'ui')
+      if (options.bundled) {
+        uiPath = resolve(uiPath, 'dist')
+      }
+      const serve = sirv(uiPath, { etag: true })
 
       // configure a middleware for serving Atelier
       server.middlewares.use(options.url, (req, res, next) => {

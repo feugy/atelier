@@ -113,11 +113,14 @@ describe('stores', () => {
 
     it('serializes Sets and Maps', () => {
       const name = faker.lorem.word()
-      recordEvent(name, new Set(['a', 'b', 'c']))
+      recordEvent(name, new Set(['a', 'b', new Set(['c'])]))
       expect(postMessage).toHaveBeenCalledWith(
         {
           type: 'recordEvent',
-          args: [name, { type: 'Set', values: ['a', 'b', 'c'] }]
+          args: [
+            name,
+            { type: 'Set', values: ['a', 'b', { type: 'Set', values: ['c'] }] }
+          ]
         },
         origin
       )
@@ -126,7 +129,7 @@ describe('stores', () => {
         name,
         new Map([
           ['a', 1],
-          ['b', 2],
+          ['b', new Map([['d', 2]])],
           ['c', 3]
         ])
       )
@@ -139,7 +142,7 @@ describe('stores', () => {
               type: 'Map',
               values: [
                 ['a', 1],
-                ['b', 2],
+                ['b', { type: 'Map', values: [['d', 2]] }],
                 ['c', 3]
               ]
             }
@@ -239,6 +242,91 @@ describe('stores', () => {
         })
       )
       expect(tool.updateProperty).not.toHaveBeenCalled()
+    })
+
+    it('parse Arrays and Objects in property updates', () => {
+      const tool = { name: faker.lorem.word(), updateProperty: jest.fn() }
+      registerTool(tool)
+
+      const name = faker.lorem.word()
+      const value = {
+        a: 1,
+        b: [1, 2, { d: 4, e: 5 }],
+        c: 3
+      }
+      window.dispatchEvent(
+        new MessageEvent('message', {
+          origin,
+          data: {
+            type: 'updateProperty',
+            data: { tool: tool.name, name, value }
+          }
+        })
+      )
+      expect(tool.updateProperty).toHaveBeenCalledWith(name, value)
+      expect(tool.updateProperty).toHaveBeenCalledTimes(1)
+    })
+
+    it('parse Maps and Sets in property updates', () => {
+      const tool = { name: faker.lorem.word(), updateProperty: jest.fn() }
+      registerTool(tool)
+
+      const name = faker.lorem.word()
+      window.dispatchEvent(
+        new MessageEvent('message', {
+          origin,
+          data: {
+            type: 'updateProperty',
+            data: {
+              tool: tool.name,
+              name,
+              value: {
+                type: 'Map',
+                values: [
+                  ['a', 1],
+                  [
+                    'b',
+                    {
+                      type: 'Set',
+                      values: [
+                        1,
+                        2,
+                        {
+                          type: 'Map',
+                          values: [
+                            ['d', 4],
+                            ['e', 5]
+                          ]
+                        }
+                      ]
+                    }
+                  ],
+                  ['c', 3]
+                ]
+              }
+            }
+          }
+        })
+      )
+      expect(tool.updateProperty).toHaveBeenCalledWith(
+        name,
+        new Map([
+          ['a', 1],
+          [
+            'b',
+            new Set([
+              1,
+              2,
+              new Map([
+                ['d', 4],
+                ['e', 5]
+              ])
+            ])
+          ],
+          ['c', 3]
+        ])
+      )
+      expect(tool.updateProperty).toHaveBeenCalledTimes(1)
     })
   })
 

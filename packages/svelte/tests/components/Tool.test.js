@@ -1,7 +1,7 @@
 import { fireEvent, render, screen } from '@testing-library/svelte'
 import html from 'svelte-htm'
 import faker from 'faker'
-import TestButton from './TestButton.svelte'
+import { Button } from '../test-components'
 import { Tool, ToolBox } from '../../src'
 import { currentTool, registerTool, recordEvent } from '../../src/stores'
 import { tick } from 'svelte'
@@ -28,7 +28,7 @@ describe('Tool component', () => {
     it('registers tool and renders component when being current', () => {
       const name = faker.lorem.words()
       currentTool.set({ name })
-      render(html`<${Tool} name=${name} component=${TestButton} />`)
+      render(html`<${Tool} name=${name} component=${Button} />`)
 
       expect(screen.queryByRole('button')).toBeInTheDocument()
       expect(registerTool).toHaveBeenCalledWith({
@@ -43,7 +43,7 @@ describe('Tool component', () => {
 
     it('registers tools and renders nothing', () => {
       const name = faker.lorem.words()
-      render(html`<${Tool} name=${name} component=${TestButton} />`)
+      render(html`<${Tool} name=${name} component=${Button} />`)
 
       expect(screen.queryByRole('button')).not.toBeInTheDocument()
       expect(registerTool).toHaveBeenCalledWith({
@@ -59,7 +59,7 @@ describe('Tool component', () => {
     it('does not register multiple times', () => {
       const name = faker.lorem.words()
       const { component } = render(
-        html`<${Tool} name=${name} component=${TestButton} />`
+        html`<${Tool} name=${name} component=${Button} />`
       )
       expect(registerTool).toHaveBeenCalledWith({
         name,
@@ -81,9 +81,7 @@ describe('Tool component', () => {
         label: faker.commerce.productName(),
         disabled: true
       }
-      render(
-        html`<${Tool} name=${name} component=${TestButton} props=${props} />`
-      )
+      render(html`<${Tool} name=${name} component=${Button} props=${props} />`)
       expect(registerTool).toHaveBeenCalledWith({
         name,
         props,
@@ -101,7 +99,7 @@ describe('Tool component', () => {
     it('updates component props when invoking updateProperty()', async () => {
       const name = faker.lorem.words()
       currentTool.set({ name })
-      render(html`<${Tool} name=${name} component=${TestButton} />`)
+      render(html`<${Tool} name=${name} component=${Button} />`)
       expect(registerTool).toHaveBeenCalledWith({
         name,
         props: {},
@@ -126,7 +124,7 @@ describe('Tool component', () => {
       currentTool.set({ name })
       const events = ['enter', 'click']
       render(
-        html`<${Tool} name=${name} component=${TestButton} events=${events} />`
+        html`<${Tool} name=${name} component=${Button} events=${events} />`
       )
       expect(registerTool).toHaveBeenCalledWith({
         name,
@@ -161,7 +159,7 @@ describe('Tool component', () => {
       const toolBoxName = faker.lorem.words()
       currentTool.set({ name: `${toolBoxName}/${name}` })
       render(
-        html`<${ToolBox} name=${toolBoxName} component=${TestButton}
+        html`<${ToolBox} name=${toolBoxName} component=${Button}
           ><${Tool} name=${name}
         /></${ToolBox}>`
       )
@@ -182,7 +180,7 @@ describe('Tool component', () => {
       const name2 = faker.lorem.words()
       const toolBoxName = faker.lorem.words()
       render(
-        html`<${ToolBox} name=${toolBoxName} component=${TestButton}
+        html`<${ToolBox} name=${toolBoxName} component=${Button}
           ><${Tool} name=${name1} /><${Tool} name=${name2}
         /></${ToolBox}>`
       )
@@ -209,7 +207,7 @@ describe('Tool component', () => {
       const name2 = faker.lorem.words()
       const toolBoxName = faker.lorem.words()
       const { component } = render(
-        html`<${ToolBox} name=${toolBoxName} component=${TestButton}
+        html`<${ToolBox} name=${toolBoxName} component=${Button}
           ><${Tool} name=${name1} /><${Tool} name=${name2}
         /></${ToolBox}>`
       )
@@ -246,7 +244,7 @@ describe('Tool component', () => {
       render(
         html`<${ToolBox}
           name=${toolBox.name}
-          component=${TestButton}
+          component=${Button}
           props=${toolBox.props}
           ><${Tool} name=${tool.name} props=${tool.props}
         /></${ToolBox}>`
@@ -271,7 +269,7 @@ describe('Tool component', () => {
       render(
         html`<${ToolBox}
           name=${toolBox.name}
-          component=${TestButton}
+          component=${Button}
           ><${Tool} name=${tool.name}
         /></${ToolBox}>`
       )
@@ -307,7 +305,7 @@ describe('Tool component', () => {
       render(
         html`<${ToolBox}
           name=${toolBox.name}
-          component=${TestButton}
+          component=${Button}
           events=${toolBox.events}
           ><${Tool} name=${tool.name} events=${tool.events}
         /></${ToolBox}>`
@@ -339,8 +337,8 @@ describe('Tool component', () => {
         render(
           html`<${ToolBox}
             name=${toolBoxName}
-            component=${TestButton}
-            ><${Tool} name=${name} component=${TestButton}
+            component=${Button}
+            ><${Tool} name=${name} component=${Button}
           /></${ToolBox}>`
         )
       ).toThrow(
