@@ -27,4 +27,12 @@
       transform: scale(1.2);
     }
   }
+
+  .tool.documented {
+    @apply p-4;
+
+    & .tool-preview {
+      @apply my-4 bg-white p-2 shadow-md;
+    }
+  }
 </style>

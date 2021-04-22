@@ -27,7 +27,7 @@
   .viewport {
     @apply flex-grow overflow-auto text-center;
     background-image: radial-gradient(
-      theme('colors.secondary.light') 1px,
+      theme('colors.secondary.light') 0.5px,
       transparent 1px
     );
     background-size: 20px 20px;

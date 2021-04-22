@@ -144,6 +144,31 @@ describe('Tool component', () => {
       expect(recordEvent).toHaveBeenCalledWith('enter', expect.any(CustomEvent))
       expect(recordEvent).toHaveBeenCalledTimes(2)
     })
+
+    it('displays header and footer', () => {
+      const warn = jest.spyOn(console, 'warn').mockImplementation(() => {})
+      const header = faker.lorem.words()
+      const footer = faker.lorem.words()
+      const unused = faker.lorem.words()
+      const name = faker.lorem.word()
+      currentTool.set({ name })
+      render(
+        html`<${Tool} name=${name} component=${Button}>
+          <p slot="header">${header}</p>
+          ${unused}
+          <p slot="footer">${footer}</p>
+        </${Tool}>`
+      )
+
+      expect(screen.queryByText(header)).toBeInTheDocument()
+      expect(screen.queryByRole('button')).toBeInTheDocument()
+      expect(screen.queryByText(footer)).toBeInTheDocument()
+      expect(screen.queryByText(unused)).not.toBeInTheDocument()
+      expect(warn).toHaveBeenCalledWith(
+        '<Tool> received an unexpected slot "default".'
+      )
+      expect(warn).toHaveBeenCalledTimes(1)
+    })
   })
 
   describe('given a toolbox', () => {
