@@ -4,6 +4,7 @@ Weclome to the Atelier!
 
 [![GitHub](https://img.shields.io/github/license/feugy/atelier)][license]
 [![CI](https://github.com/feugy/atelier/actions/workflows/CI.yml/badge.svg)](https://github.com/feugy/atelier/actions/workflows/CI.yml)
+[![Codacy](https://app.codacy.com/project/badge/Grade/4f26d900b38547fbbb8899c853fca159)](https://www.codacy.com/gh/feugy/atelier/dashboard?utm_source=github.com&utm_medium=referral&utm_content=feugy/atelier&utm_campaign=Badge_Grade)
 
 ## What is this?
 

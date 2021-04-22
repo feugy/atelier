@@ -62,3 +62,14 @@ jobs:
 
       - name: Run test for Svelte bindings
         run: npm run test:svelte
+
+      - name: Run test for UI
+        run: npm run test:ui
+
+      - name: Send coverage to Codacy
+        if: always()
+        continue-on-error: true
+        uses: codacy/codacy-coverage-reporter-action@master
+        with:
+          project-token: ${{ secrets.CODACY_PROJECT_TOKEN }}
+          coverage-reports: packages/plugin-svelte/coverage/clover.xml,packages/svelte/coverage/clover.xml,packages/ui/coverage/clover.xml
