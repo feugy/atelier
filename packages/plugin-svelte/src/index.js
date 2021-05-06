@@ -5,7 +5,7 @@ const Ajv = require('ajv')
 const sirv = require('sirv')
 const { normalizePath } = require('vite')
 
-const pluginName = '@atelier/vite-plugin-svelte'
+const pluginName = '@atelier-wb/vite-plugin-svelte'
 
 const validate = new Ajv().compile({
   type: 'object',
@@ -26,7 +26,7 @@ const defaultOptions = {
   url: '/atelier',
   toolRegexp: '\\.tools\\.svelte+$',
   workframeHtml: resolve(__dirname, 'workframe.html'),
-  workframeId: '@atelier/workframe',
+  workframeId: '@atelier-wb/workframe',
   bundled: true
 }
 
@@ -54,7 +54,7 @@ function buildWorkframe(paths, setupPath) {
     imports[i] = `import tool${i + 1} from '${path}'`
     tools[i] = `tool${++i}`
   }
-  return `import { Workbench } from '@atelier/svelte'
+  return `import { Workbench } from '@atelier-wb/svelte'
 ${setupPath ? `import '${setupPath}'` : ''}
 ${imports.join('\n')}
 

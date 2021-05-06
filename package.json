@@ -17,6 +17,7 @@
     "lint": "eslint .",
     "format": "prettier --write .",
     "prepare": "husky install",
+    "prepublish": "npm run build --workspace packages/ui",
     "test": "run-s -ncs test:**",
     "test:plugin-svelte": "npm t --workspace packages/plugin-svelte",
     "test:svelte": "npm t --workspace packages/svelte",

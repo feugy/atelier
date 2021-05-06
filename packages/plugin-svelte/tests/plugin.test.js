@@ -6,7 +6,7 @@ const faker = require('faker')
 const got = require('got')
 const builder = require('../src')
 
-const defaultWorkframeId = '@atelier/workframe'
+const defaultWorkframeId = '@atelier-wb/workframe'
 const defaultPath = '/atelier'
 const path = resolve(__dirname, 'fixtures', 'nested')
 
@@ -85,7 +85,7 @@ describe('plugin builder', () => {
     it('finds tool files and generates workframe content', async () => {
       const plugin = builder({ path })
       expect(await plugin.load(`${defaultPath}/${defaultWorkframeId}`))
-        .toEqual(`import { Workbench } from '@atelier/svelte'
+        .toEqual(`import { Workbench } from '@atelier-wb/svelte'
 
 import tool1 from '${path}/a.tools.svelte'
 import tool2 from '${path}/b.tools.svelte'
@@ -105,7 +105,7 @@ new Workbench({
       const path = resolve(__dirname, 'fixtures', 'nested')
       const plugin = builder({ path, toolRegexp: '\\.custom\\.svelte$' })
       expect(await plugin.load(`${defaultPath}/${defaultWorkframeId}`))
-        .toEqual(`import { Workbench } from '@atelier/svelte'
+        .toEqual(`import { Workbench } from '@atelier-wb/svelte'
 
 import tool1 from '${path}/c.custom.svelte'
 import tool2 from '${path}/folder1/a.custom.svelte'
@@ -123,7 +123,7 @@ new Workbench({
       const setupPath = faker.lorem.word()
       const plugin = builder({ path, setupPath })
       expect(await plugin.load(`${defaultPath}/${defaultWorkframeId}`))
-        .toEqual(`import { Workbench } from '@atelier/svelte'
+        .toEqual(`import { Workbench } from '@atelier-wb/svelte'
 import '${setupPath}'
 import tool1 from '${path}/a.tools.svelte'
 import tool2 from '${path}/b.tools.svelte'
@@ -200,7 +200,7 @@ new Workbench({
     <script type="module" src="/@vite/client"></script>
   </head>
   <body>
-    <script type="module" src="@atelier/workframe"></script>
+    <script type="module" src="@atelier-wb/workframe"></script>
   </body>
 </html>
 `)

@@ -19,7 +19,7 @@ It's based on [vitejs] JavaScript bundler.
 1. Install the plugin for Vite and Svelte bindings.
 
    ```shell
-   npm i -D @atelier/vite-plugin-svelte @atelier/svelte
+   npm i -D @atelier-wb/vite-plugin-svelte @atelier-wb/svelte
    ```
 
 2. Register the plugin in `vite.config.js` file:
@@ -27,7 +27,7 @@ It's based on [vitejs] JavaScript bundler.
    ```js
    import svelte from '@sveltejs/vite-plugin-svelte'
    // other vite plugins
-   import atelier from '@atelier/vite-plugin-svelte'
+   import atelier from '@atelier-wb/vite-plugin-svelte'
 
    export default defineConfig({
      plugins: [svelte(), /* other plugins */ atelier()]
@@ -40,7 +40,7 @@ It's based on [vitejs] JavaScript bundler.
 
    ```js
    <script>
-     import { Tool } from '@atelier/svelte'
+     import { Tool } from '@atelier-wb/svelte'
      import MyComponent from '../src/MyComponent.svelte'
    </script>
 

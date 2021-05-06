@@ -1,5 +1,5 @@
 <script>
-  import { Tool, ToolBox } from '@atelier/svelte'
+  import { Tool, ToolBox } from '@atelier-wb/svelte'
   import Group from '../../src/components/Group.svelte'
 </script>
 
