@@ -1,5 +1,10 @@
 # Features
 
+- support slots
+- support function props
+- snapshots
+- hide all tools but current
+
 ## Plugin
 
 - `setupPath` to be considered relative to `path`
