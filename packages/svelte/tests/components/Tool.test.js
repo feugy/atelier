@@ -1,4 +1,5 @@
 import { fireEvent, render, screen } from '@testing-library/svelte'
+import { get, writable } from 'svelte/store'
 import html from 'svelte-htm'
 import faker from 'faker'
 import { Button } from '../test-components'
@@ -96,6 +97,32 @@ describe('Tool component', () => {
       expect(button).toBeDisabled()
     })
 
+    it('passes props down to the slotted component', () => {
+      const name = faker.lorem.words()
+      currentTool.set({ name })
+      const props = {
+        label: faker.commerce.productName(),
+        disabled: true
+      }
+      render(
+        html`<${Tool} name=${name} props=${props}>
+          <${Button} ...${props}/>
+        </${Tool}>`
+      )
+      expect(registerTool).toHaveBeenCalledWith({
+        name,
+        props,
+        events: [],
+        updateProperty: expect.any(Function)
+      })
+      expect(registerTool).toHaveBeenCalledTimes(1)
+
+      const button = screen.queryByRole('button')
+      expect(button).toBeInTheDocument()
+      expect(button).toHaveTextContent(props.label)
+      expect(button).toBeDisabled()
+    })
+
     it('updates component props when invoking updateProperty()', async () => {
       const name = faker.lorem.words()
       currentTool.set({ name })
@@ -117,6 +144,35 @@ describe('Tool component', () => {
       await tick()
       expect(screen.queryByRole('button')).toHaveTextContent(value)
       expect(registerTool).toHaveBeenCalledTimes(1)
+    })
+
+    it('updates slot props when invoking updateProperty()', () => {
+      const name = faker.lorem.words()
+      currentTool.set({ name })
+      const props = writable()
+      render(
+        html`<${Tool} name=${name} let:props=${props}>
+          <${Button}/>
+        </${Tool}>`
+      )
+      expect(registerTool).toHaveBeenCalledWith({
+        name,
+        props: {},
+        events: [],
+        updateProperty: expect.any(Function)
+      })
+      expect(get(props)).toEqual({})
+
+      const button = screen.queryByRole('button')
+      expect(button).toBeInTheDocument()
+      expect(button).toHaveTextContent('Hey oh!')
+
+      const value = faker.commerce.productName()
+      registerTool.mock.calls[0][0].updateProperty('label', value)
+
+      expect(get(props)).toEqual({
+        label: value
+      })
     })
 
     it('listens to desired events', async () => {
@@ -145,29 +201,46 @@ describe('Tool component', () => {
       expect(recordEvent).toHaveBeenCalledTimes(2)
     })
 
-    it('displays header and footer', () => {
-      const warn = jest.spyOn(console, 'warn').mockImplementation(() => {})
+    it('passes event handles to slot', async () => {
+      const name = faker.lorem.words()
+      currentTool.set({ name })
+      const events = ['enter', 'click']
+      const handleEvent = new writable()
+      render(
+        html`<${Tool} name=${name} events=${events} let:handleEvent=${handleEvent}>
+          <${Button}/>
+        </${Tool}>`
+      )
+      expect(registerTool).toHaveBeenCalledWith({
+        name,
+        props: {},
+        events,
+        updateProperty: expect.any(Function)
+      })
+      expect(recordEvent).not.toHaveBeenCalled()
+
+      get(handleEvent)(new MouseEvent('click'))
+      expect(recordEvent).toHaveBeenCalledWith('click', expect.any(MouseEvent))
+      expect(recordEvent).toHaveBeenCalledTimes(1)
+    })
+
+    it('supports slot extra content', () => {
       const header = faker.lorem.words()
       const footer = faker.lorem.words()
-      const unused = faker.lorem.words()
       const name = faker.lorem.word()
+      const props = new writable()
       currentTool.set({ name })
       render(
-        html`<${Tool} name=${name} component=${Button}>
-          <p slot="header">${header}</p>
-          ${unused}
-          <p slot="footer">${footer}</p>
+        html`<${Tool} name=${name} let:props=${props}>
+          <p>${header}</p>
+          <${Button} ${props}/>
+          <p>${footer}</p>
         </${Tool}>`
       )
 
       expect(screen.queryByText(header)).toBeInTheDocument()
       expect(screen.queryByRole('button')).toBeInTheDocument()
       expect(screen.queryByText(footer)).toBeInTheDocument()
-      expect(screen.queryByText(unused)).not.toBeInTheDocument()
-      expect(warn).toHaveBeenCalledWith(
-        '<Tool> received an unexpected slot "default".'
-      )
-      expect(warn).toHaveBeenCalledTimes(1)
     })
   })
 

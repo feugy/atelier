@@ -19,7 +19,8 @@
   let instance
   let target
   let listeners = []
-  $: documented = $$slots.header || $$slots.footer
+  let invisible = true
+  $: usesSlot = $$slots.default
 
   const toolBox = getContext(ToolBox.contextKey)
   if (toolBox?.component && component) {
@@ -42,20 +43,24 @@
   )
 
   beforeUpdate(() => {
-    if ($currentTool?.name !== fullName && instance) {
+    if ($currentTool?.name !== fullName) {
       destroy()
+      invisible = true
     }
   })
 
   afterUpdate(() => {
-    if ($currentTool?.name === fullName && !instance && Component) {
-      instance = new Component({ target, props: allProps })
-      listeners = []
-      for (const eventName of allEvents) {
-        const handler = makeEventHandler(eventName)
-        instance.$on(eventName, handler)
-        listeners.push({ eventName, handler })
-        target.addEventListener(eventName, handler)
+    if ($currentTool?.name === fullName) {
+      invisible = false
+      if (!usesSlot && !instance && target && Component) {
+        instance = new Component({ target, props: allProps })
+        listeners = []
+        for (const eventName of allEvents) {
+          const handler = makeEventHandler(eventName)
+          instance.$on(eventName, handler)
+          listeners.push({ eventName, handler })
+          target.addEventListener(eventName, handler)
+        }
       }
     }
   })
@@ -75,8 +80,16 @@
     return (...args) => recordEvent(name, ...args)
   }
 
+  function handleEvent(evt, ...args) {
+    recordEvent(evt.type, evt, ...args)
+  }
+
   function updateProperty(name, value) {
-    instance?.$set({ [name]: value })
+    if (instance) {
+      instance.$set({ [name]: value })
+    } else {
+      allProps[name] = value
+    }
   }
 </script>
 
@@ -91,8 +104,10 @@
   }
 </style>
 
-<span class="tool" class:documented class:invisible={!instance}>
-  <slot name="header" />
-  <span class="tool-preview" bind:this={target} />
-  <slot name="footer" />
+<span class="tool" class:invisible>
+  {#if usesSlot}
+    <slot props={allProps} {handleEvent} />
+  {:else}
+    <span bind:this={target} />
+  {/if}
 </span>

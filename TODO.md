@@ -1,9 +1,7 @@
 # Features
 
-- support slots
 - support function props
 - snapshots
-- hide all tools but current
 
 ## Plugin
 
