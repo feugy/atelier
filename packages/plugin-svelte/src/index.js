@@ -11,11 +11,14 @@ const validate = new Ajv().compile({
   type: 'object',
   properties: {
     path: { type: 'string' },
-    url: { type: 'string', pattern: '^\\/.' },
+    url: { type: 'string', pattern: '^\\/' },
     toolRegexp: { type: 'string' },
     workframeHtml: { type: 'string' },
     workframeId: { type: 'string' },
-    setupPath: { type: 'string', nullable: true }
+    setupPath: { type: 'string', nullable: true },
+    publicDir: {
+      oneOf: [{ type: 'string' }, { type: 'array', items: { type: 'string' } }]
+    }
   },
   required: ['path', 'url', 'toolRegexp', 'workframeHtml', 'workframeId'],
   additionalProperties: true
@@ -27,7 +30,8 @@ const defaultOptions = {
   toolRegexp: '\\.tools\\.svelte+$',
   workframeHtml: resolve(__dirname, 'workframe.html'),
   workframeId: '@atelier-wb/workframe',
-  bundled: true
+  bundled: true,
+  publicDirs: []
 }
 
 async function findTools(path, detectionRegex) {
@@ -73,6 +77,7 @@ function AtelierPlugin(pluginOptions = {}) {
       `${pluginName} option "${error.instancePath.slice(1)}" ${error.message}`
     )
   }
+  const hasTrailingUrl = options.url.endsWith('/')
 
   const toolRegexp = new RegExp(options.toolRegexp, 'i')
 
@@ -82,13 +87,16 @@ function AtelierPlugin(pluginOptions = {}) {
     apply: 'serve',
 
     async configureServer(server) {
-      const hasTrailingUrl = options.url.endsWith('/')
-
       let uiPath = resolve(__dirname, '..', '..', 'ui')
       if (options.bundled) {
         uiPath = resolve(uiPath, 'dist')
       }
-      const serve = sirv(uiPath, { etag: true })
+      const serves = [
+        uiPath,
+        ...(Array.isArray(options.publicDir)
+          ? options.publicDir
+          : [options.publicDir])
+      ].map(dir => sirv(dir, { etag: true }))
 
       // configure a middleware for serving Atelier
       server.middlewares.use(options.url, (req, res, next) => {
@@ -106,7 +114,15 @@ function AtelierPlugin(pluginOptions = {}) {
           res.end()
         } else {
           // all other static Atelier assets
-          serve(req, res, next)
+          let i = 0
+          const tryNext = () => {
+            if (serves[i]) {
+              serves[i++](req, res, tryNext)
+            } else {
+              next()
+            }
+          }
+          tryNext()
         }
       })
 
@@ -129,7 +145,10 @@ function AtelierPlugin(pluginOptions = {}) {
     },
 
     async load(id) {
-      if (id === `${options.url}/${options.workframeId}`) {
+      if (
+        id ===
+        `${options.url}${hasTrailingUrl ? '' : '/'}${options.workframeId}`
+      ) {
         return buildWorkframe(
           await findTools(options.path, toolRegexp),
           options.setupPath

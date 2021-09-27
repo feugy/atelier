@@ -1,6 +1,6 @@
 {
   "name": "atelier",
-  "version": "0.1.1",
+  "version": "0.2.0-alpha.0",
   "description": "Your vite-powered UI component explorer",
   "author": {
     "name": "Damien Simonin Feugas",
@@ -19,9 +19,9 @@
     "prepare": "husky install",
     "prepublish": "npm run build --workspace packages/ui",
     "test": "run-s -ncs test:**",
-    "test:plugin-svelte": "npm t --workspace packages/plugin-svelte",
-    "test:svelte": "npm t --workspace packages/svelte",
-    "test:ui": "npm t --workspace packages/ui"
+    "test:plugin-svelte": "npm t --workspace packages/plugin-svelte -- --verbose",
+    "test:svelte": "npm t --workspace packages/svelte -- --verbose",
+    "test:ui": "npm t --workspace packages/ui -- --verbose"
   },
   "devDependencies": {
     "eslint": "^7.32.0",

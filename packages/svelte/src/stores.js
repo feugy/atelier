@@ -2,6 +2,8 @@ import { writable, derived } from 'svelte/store'
 
 const main = window.parent
 
+const isJsdom = navigator.userAgent?.includes('jsdom') ?? false
+
 let mainOrigin = null
 
 // a mix of properties from Event, UIEvent, MouseEvent, TouchEvent, KeyboardEvent, WheelEvent, InputEvent
@@ -106,7 +108,8 @@ function parse(arg) {
 }
 
 window.addEventListener('message', ({ origin, data }) => {
-  if (origin === mainOrigin) {
+  // only accept message from UI workbench, or when running in JSDom (toolshot)
+  if (origin === mainOrigin || (isJsdom && origin === '')) {
     if (data.type === 'selectTool') {
       current.set(data.data)
     } else if (data.type === 'updateProperty') {

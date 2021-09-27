@@ -104,7 +104,7 @@
   }
 </style>
 
-<span class="tool" class:invisible>
+<span class="tool" class:invisible data-tool-name={fullName}>
   {#if usesSlot}
     <slot props={allProps} {handleEvent} />
   {:else}
