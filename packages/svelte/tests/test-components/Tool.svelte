@@ -1,10 +1,9 @@
 <script>
-  import { getContext } from 'svelte'
+  import { createEventDispatcher, getContext, onMount } from 'svelte'
   import * as ToolBox from '../../src/components/ToolBox.svelte'
 
-  const toolBox = getContext(ToolBox.contextKey)
-</script>
+  const context = getContext(ToolBox.contextKey)
+  const dispatch = createEventDispatcher()
 
-{#if toolBox}
-  <main>{JSON.stringify(toolBox, null, 2)}</main>
-{/if}
+  onMount(() => dispatch('context', context))
+</script>

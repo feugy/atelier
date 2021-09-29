@@ -24,7 +24,7 @@ describe('plugin builder', () => {
       `${builder.pluginName} option "url" must be string`
     )
     expect(() => builder({ url: 'toto' })).toThrow(
-      `${builder.pluginName} option "url" must match pattern "^\\/."`
+      `${builder.pluginName} option "url" must match pattern "^\\/"`
     )
   })
 
@@ -53,6 +53,18 @@ describe('plugin builder', () => {
   it('validates setupPath option', () => {
     expect(() => builder({ setupPath: new Map() })).toThrow(
       `${builder.pluginName} option "setupPath" must be string`
+    )
+  })
+
+  it('validates publicDir option', () => {
+    expect(() => builder({ publicDir: null })).toThrow(
+      `${builder.pluginName} option "publicDir" must be string`
+    )
+    expect(() => builder({ publicDir: 15 })).toThrow(
+      `${builder.pluginName} option "publicDir" must be string`
+    )
+    expect(() => builder({ publicDir: [{}] })).toThrow(
+      `${builder.pluginName} option "publicDir" must be string`
     )
   })
 
@@ -147,7 +159,13 @@ new Workbench({
     let watcher
 
     beforeEach(async () => {
-      plugin = builder({ path })
+      plugin = builder({
+        path,
+        publicDir: [
+          resolve(__dirname, 'fixtures', 'static1'),
+          resolve(__dirname, 'fixtures', 'static2')
+        ]
+      })
       const middlewares = connect()
       server = http.createServer(middlewares)
       watcher = new EventEmitter()
@@ -173,6 +191,22 @@ new Workbench({
       )
       expect(response.body).toEqual(
         expect.stringContaining('<link rel="stylesheet" href="assets/index.')
+      )
+    })
+
+    it(`serves files from public dir`, async () => {
+      let response = await got(`${url}${defaultPath}/icon-256x256.png`)
+      expect(response.statusCode).toEqual(200)
+      expect(response.headers).toEqual(
+        expect.objectContaining({ 'content-type': 'image/png' })
+      )
+      response = await got(`${url}${defaultPath}/favicon.ico`)
+      expect(response.statusCode).toEqual(200)
+      expect(response.headers).toEqual(
+        expect.objectContaining({ 'content-length': '1150' })
+      )
+      await expect(got(`${url}${defaultPath}/unknown.jpeg`)).rejects.toThrow(
+        '404'
       )
     })
 

@@ -1,0 +1,103 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Toolshot components/PaneContainer.tools.svelte 1`] = `
+<span>
+  <div
+    class="root"
+  >
+    <nav>
+      <ul>
+        <li
+          class="current"
+        >
+          First tab
+        </li>
+        
+        <li>
+          Another one
+        </li>
+        
+        <li>
+          A third...
+        </li>
+        
+         
+        <li>
+          <button
+            title="tooltip.collapsible"
+          >
+            <span
+              class="material-icons"
+            >
+              expand_more
+            </span>
+          </button>
+        </li>
+      </ul>
+    </nav>
+     
+    <main
+      class="tab-content"
+    >
+      <h1>
+        This is pane #1
+      </h1>
+      
+      
+      
+      
+       
+    </main>
+  </div>
+  
+</span>
+`;
+
+exports[`Toolshot components/PaneContainer.tools.svelte 2`] = `
+<span>
+  <div
+    class="root"
+  >
+    <nav>
+      <ul>
+        <li
+          class="current"
+        >
+          tab 1
+        </li>
+        
+         
+        <li>
+          <button
+            title="tooltip.collapsible"
+          >
+            <span
+              class="material-icons"
+            >
+              expand_more
+            </span>
+          </button>
+        </li>
+      </ul>
+    </nav>
+     
+    <main
+      class="tab-content"
+    >
+      <h1>
+        This is pane #1
+      </h1>
+      
+      
+       
+    </main>
+  </div>
+  
+</span>
+`;
+
+exports[`Toolshot components/PaneContainer.tools.svelte 3`] = `
+<span>
+  
+</span>
+`;

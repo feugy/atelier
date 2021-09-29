@@ -1,0 +1,34 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Toolshot components/Toolbar.tools.svelte 1`] = `
+<span>
+  <nav>
+    <ul>
+      <li>
+        <button
+          title="tooltip.background"
+        >
+          <span
+            class="material-icons"
+          >
+            wallpaper
+          </span>
+        </button>
+      </li>
+       
+      <li>
+        <button
+          title="tooltip.viewport"
+        >
+          <span
+            class="material-icons"
+          >
+            devices
+          </span>
+        </button>
+         
+      </li>
+    </ul>
+  </nav>
+</span>
+`;

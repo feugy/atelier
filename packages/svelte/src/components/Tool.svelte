@@ -7,7 +7,12 @@
     onMount
   } from 'svelte'
   import * as ToolBox from './ToolBox.svelte'
-  import { registerTool, recordEvent, currentTool } from '../stores'
+  import {
+    registerTool,
+    recordEvent,
+    currentTool,
+    recordVisibility
+  } from '../stores'
 
   export let name
   if (!name) {
@@ -16,10 +21,14 @@
   export let props = {}
   export let events = []
   export let component = null
+  export let setup = null
+  export let teardown = null
+
   let instance
   let target
   let listeners = []
-  $: documented = $$slots.header || $$slots.footer
+  let visible = false
+  $: usesSlot = $$slots.default
 
   const toolBox = getContext(ToolBox.contextKey)
   if (toolBox?.component && component) {
@@ -42,57 +51,80 @@
   )
 
   beforeUpdate(() => {
-    if ($currentTool?.name !== fullName && instance) {
+    if (visible && $currentTool?.name !== fullName) {
       destroy()
     }
   })
 
-  afterUpdate(() => {
-    if ($currentTool?.name === fullName && !instance && Component) {
-      instance = new Component({ target, props: allProps })
-      listeners = []
-      for (const eventName of allEvents) {
-        const handler = makeEventHandler(eventName)
-        instance.$on(eventName, handler)
-        listeners.push({ eventName, handler })
-        target.addEventListener(eventName, handler)
+  afterUpdate(async () => {
+    if ($currentTool?.name === fullName && !visible) {
+      await toolBox?.setup?.(fullName)
+      await setup?.(fullName)
+      visible = true
+      if (!usesSlot && !instance && target && Component) {
+        instance = new Component({ target, props: allProps })
+        listeners = []
+        for (const eventName of allEvents) {
+          const handler = makeEventHandler(eventName)
+          instance.$on(eventName, handler)
+          listeners.push({ eventName, handler })
+          target.addEventListener(eventName, handler)
+        }
       }
+      recordVisibility({ name: fullName, visible })
     }
   })
 
   onDestroy(destroy)
 
-  function destroy() {
+  async function destroy() {
     for (const { eventName, handler } of listeners) {
       target.removeEventListener(eventName, handler)
     }
     instance?.$destroy()
     instance = null
     listeners = []
+    visible = false
+    await teardown?.(fullName)
+    await toolBox?.teardown?.(fullName)
+    recordVisibility({ name: fullName, visible })
   }
 
   function makeEventHandler(name) {
     return (...args) => recordEvent(name, ...args)
   }
 
+  function handleEvent(evt, ...args) {
+    recordEvent(evt.type, evt, ...args)
+  }
+
   function updateProperty(name, value) {
-    instance?.$set({ [name]: value })
+    if (instance) {
+      instance.$set({ [name]: value })
+    } else {
+      allProps[name] = value
+    }
   }
 </script>
 
 <style>
   .tool {
+    display: none;
     width: 100%;
     display: flex;
     flex-direction: column;
   }
-  .tool.invisible {
-    display: none;
+  .tool.visible {
+    display: inherit;
   }
 </style>
 
-<span class="tool" class:documented class:invisible={!instance}>
-  <slot name="header" />
-  <span class="tool-preview" bind:this={target} />
-  <slot name="footer" />
+<span class="tool" class:visible data-tool-name={fullName}>
+  {#if usesSlot}
+    {#if visible}
+      <slot props={allProps} {handleEvent} />
+    {/if}
+  {:else}
+    <span bind:this={target} />
+  {/if}
 </span>

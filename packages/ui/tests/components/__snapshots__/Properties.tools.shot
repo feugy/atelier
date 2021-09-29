@@ -1,0 +1,120 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Toolshot components/Properties.tools.svelte 1`] = `
+<span>
+  <div
+    class="root"
+  >
+    <label
+      for="name"
+    >
+      name
+    </label>
+     
+    <input
+      id="name"
+    />
+    
+    <label
+      for="age"
+    >
+      age
+    </label>
+     
+    <input
+      id="age"
+      type="number"
+    />
+    
+    <label
+      for="hasSigned"
+    >
+      hasSigned
+    </label>
+     
+    <input
+      id="hasSigned"
+      type="checkbox"
+    />
+    
+  </div>
+</span>
+`;
+
+exports[`Toolshot components/Properties.tools.svelte 2`] = `
+<span>
+  <div
+    class="root"
+  >
+    <label
+      for="numbers"
+    >
+      numbers
+    </label>
+     
+    <textarea
+      id="numbers"
+    />
+    
+    <label
+      for="strings"
+    >
+      strings
+    </label>
+     
+    <textarea
+      id="strings"
+    />
+    
+    <label
+      for="empty"
+    >
+      empty
+    </label>
+     
+    <textarea
+      id="empty"
+    />
+    
+  </div>
+</span>
+`;
+
+exports[`Toolshot components/Properties.tools.svelte 3`] = `
+<span>
+  <div
+    class="root"
+  >
+    <label
+      for="numbers"
+    >
+      numbers
+    </label>
+     
+    <textarea
+      id="numbers"
+    />
+    
+    <label
+      for="strings"
+    >
+      strings
+    </label>
+     
+    <textarea
+      id="strings"
+    />
+    
+    <label
+      for="empty"
+    >
+      empty
+    </label>
+     
+    <textarea
+      id="empty"
+    />
+    
+  </div>
+</span>
+`;
