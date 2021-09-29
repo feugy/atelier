@@ -7,6 +7,12 @@
   const isEnabled = () => true
 </script>
 
+<style type="postcss">
+  span {
+    @apply h-full;
+  }
+</style>
+
 <ToolBox
   name="Components/Pane container"
   component={PaneContainer}
@@ -21,12 +27,24 @@
         { name: 'A third...', component: Pane3.default, isEnabled }
       ]
     }}
-  />
+    let:props
+  >
+    <span>
+      <PaneContainer {...props} />
+    </span>
+  </Tool>
 
   <Tool
     name="Single tab"
-    props={{ tabs: [{ name: 'tab 1', component: Pane1.default, isEnabled }] }}
-  />
+    props={{
+      tabs: [{ name: 'tab 1', component: Pane1.default, isEnabled }]
+    }}
+    let:props
+  >
+    <span>
+      <PaneContainer {...props} />
+    </span>
+  </Tool>
 
   <Tool name="Empty" />
 </ToolBox>

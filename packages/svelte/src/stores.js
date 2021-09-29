@@ -129,3 +129,7 @@ export function registerTool(data) {
 export function recordEvent(...args) {
   postMessage({ type: 'recordEvent', args })
 }
+
+export function recordVisibility(data) {
+  postMessage({ type: 'recordVisibility', data })
+}

@@ -7,7 +7,12 @@
     onMount
   } from 'svelte'
   import * as ToolBox from './ToolBox.svelte'
-  import { registerTool, recordEvent, currentTool } from '../stores'
+  import {
+    registerTool,
+    recordEvent,
+    currentTool,
+    recordVisibility
+  } from '../stores'
 
   export let name
   if (!name) {
@@ -16,10 +21,13 @@
   export let props = {}
   export let events = []
   export let component = null
+  export let setup = null
+  export let teardown = null
+
   let instance
   let target
   let listeners = []
-  let invisible = true
+  let visible = false
   $: usesSlot = $$slots.default
 
   const toolBox = getContext(ToolBox.contextKey)
@@ -43,15 +51,16 @@
   )
 
   beforeUpdate(() => {
-    if ($currentTool?.name !== fullName) {
+    if (visible && $currentTool?.name !== fullName) {
       destroy()
-      invisible = true
     }
   })
 
-  afterUpdate(() => {
-    if ($currentTool?.name === fullName) {
-      invisible = false
+  afterUpdate(async () => {
+    if ($currentTool?.name === fullName && !visible) {
+      await toolBox?.setup?.(fullName)
+      await setup?.(fullName)
+      visible = true
       if (!usesSlot && !instance && target && Component) {
         instance = new Component({ target, props: allProps })
         listeners = []
@@ -62,18 +71,23 @@
           target.addEventListener(eventName, handler)
         }
       }
+      recordVisibility({ name: fullName, visible })
     }
   })
 
   onDestroy(destroy)
 
-  function destroy() {
+  async function destroy() {
     for (const { eventName, handler } of listeners) {
       target.removeEventListener(eventName, handler)
     }
     instance?.$destroy()
     instance = null
     listeners = []
+    visible = false
+    await teardown?.(fullName)
+    await toolBox?.teardown?.(fullName)
+    recordVisibility({ name: fullName, visible })
   }
 
   function makeEventHandler(name) {
@@ -95,18 +109,21 @@
 
 <style>
   .tool {
+    display: none;
     width: 100%;
     display: flex;
     flex-direction: column;
   }
-  .tool.invisible {
-    display: none;
+  .tool.visible {
+    display: inherit;
   }
 </style>
 
-<span class="tool" class:invisible data-tool-name={fullName}>
+<span class="tool" class:visible data-tool-name={fullName}>
   {#if usesSlot}
-    <slot props={allProps} {handleEvent} />
+    {#if visible}
+      <slot props={allProps} {handleEvent} />
+    {/if}
   {:else}
     <span bind:this={target} />
   {/if}

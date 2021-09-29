@@ -1,12 +1,33 @@
 import faker from 'faker'
 import { get } from 'svelte/store'
-import { recordEvent, registerTool, currentTool } from '../src/stores'
+import {
+  recordEvent,
+  recordVisibility,
+  registerTool,
+  currentTool
+} from '../src/stores'
 
 describe('stores', () => {
   const postMessage = jest.spyOn(window.parent, 'postMessage')
   const origin = new URL(window.parent.location.href).origin
 
   beforeEach(jest.resetAllMocks)
+
+  describe('recordVisibility()', () => {
+    it('records visibility change through postMessage', () => {
+      const name = faker.lorem.word()
+      const visible = faker.datatype.boolean()
+      recordVisibility({ name, visible })
+      expect(postMessage).toHaveBeenCalledWith(
+        {
+          type: 'recordVisibility',
+          data: { name, visible }
+        },
+        origin
+      )
+      expect(postMessage).toHaveBeenCalledTimes(1)
+    })
+  })
 
   describe('recordEvent()', () => {
     it('records event without data through postMessage', () => {

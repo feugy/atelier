@@ -12,6 +12,18 @@ import html from 'svelte-htm'
  * @param {string} [snapshotFolder='__snapshots__'] - folder name used to contain generated snapshots.
  */
 
+const visibilityEvent = 'visibility'
+
+function isVisible() {
+  return new Promise(resolve => {
+    function handleVisibility() {
+      window.removeEventListener(visibilityEvent, handleVisibility)
+      resolve()
+    }
+    window.addEventListener(visibilityEvent, handleVisibility)
+  })
+}
+
 /**
  * Creates a Jest test suite to render Atelier tools/toolboxes, and compare them with snapshots.
  * You can provide sensible options to indicates where your tools/toolboxes are.
@@ -50,31 +62,37 @@ export function configureToolshot({
         function handleMessage({ data }) {
           if (data.type === 'registerTool') {
             registered.push(data.data)
+          } else if (data.type === 'recordVisibility' && data.data?.visible) {
+            window.dispatchEvent(new CustomEvent(visibilityEvent))
           }
         }
 
         window.addEventListener('message', handleMessage)
 
-        const { default: Toolbox } = await import(
-          /* @vite-ignore */ toolbox.path
-        )
-        render(html`<${Toolbox} />`)
+        try {
+          const { default: Toolbox } = await import(
+            /* @vite-ignore */ toolbox.path
+          )
+          render(html`<${Toolbox} />`)
 
-        // since postmessage is asynchronous, we must wait before knowing registered tools
-        await new Promise(resolve => setTimeout(resolve, 0))
-        window.removeEventListener('message', handleMessage)
-
-        for (const tool of registered) {
-          // select tools one by one...
-          window.postMessage({ type: 'selectTool', data: tool }, '*')
+          // since postmessage is asynchronous, we must wait before knowing registered tools
           await new Promise(resolve => setTimeout(resolve, 0))
 
-          // ...and assert their rendering
-          expect(
-            document.querySelector(`[data-tool-name="${tool.name}"]`).firstChild
-          ).toMatchSpecificSnapshot(
-            `${toolboxFolder}/${snapshotFolder}/${toolboxName}.shot`
-          )
+          for (const tool of registered) {
+            // select tools one by one...
+            window.postMessage({ type: 'selectTool', data: tool }, '*')
+            await isVisible()
+
+            // ...and assert their rendering
+            expect(
+              document.querySelector(`[data-tool-name="${tool.name}"]`)
+                .firstChild
+            ).toMatchSpecificSnapshot(
+              `${toolboxFolder}/${snapshotFolder}/${toolboxName}.shot`
+            )
+          }
+        } finally {
+          window.removeEventListener('message', handleMessage)
         }
       })
     }

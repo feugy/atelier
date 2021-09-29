@@ -1,10 +1,15 @@
-import { fireEvent, render, screen } from '@testing-library/svelte'
+import { fireEvent, render, screen, waitFor } from '@testing-library/svelte'
 import { get, writable } from 'svelte/store'
 import html from 'svelte-htm'
 import faker from 'faker'
 import { Button } from '../test-components'
 import { Tool, ToolBox } from '../../src'
-import { currentTool, registerTool, recordEvent } from '../../src/stores'
+import {
+  currentTool,
+  registerTool,
+  recordEvent,
+  recordVisibility
+} from '../../src/stores'
 import { tick } from 'svelte'
 
 jest.mock('../../src/stores', () => {
@@ -12,7 +17,8 @@ jest.mock('../../src/stores', () => {
   return {
     currentTool: new writable(),
     registerTool: jest.fn(),
-    recordEvent: jest.fn()
+    recordEvent: jest.fn(),
+    recordVisibility: jest.fn()
   }
 })
 
@@ -26,10 +32,13 @@ describe('Tool component', () => {
       )
     })
 
-    it('registers tool and renders component when being current', () => {
+    it('registers tool and renders component when being current', async () => {
       const name = faker.lorem.words()
       currentTool.set({ name })
       render(html`<${Tool} name=${name} component=${Button} />`)
+      await waitFor(() =>
+        expect(recordVisibility).toHaveBeenCalledWith({ name, visible: true })
+      )
 
       expect(screen.queryByRole('button')).toBeInTheDocument()
       expect(registerTool).toHaveBeenCalledWith({
@@ -42,22 +51,23 @@ describe('Tool component', () => {
       expect(recordEvent).not.toHaveBeenCalled()
     })
 
-    it('registers tools and renders nothing', () => {
+    it('registers tools and renders nothing', async () => {
       const name = faker.lorem.words()
       render(html`<${Tool} name=${name} component=${Button} />`)
-
-      expect(screen.queryByRole('button')).not.toBeInTheDocument()
       expect(registerTool).toHaveBeenCalledWith({
         name,
         props: {},
         events: [],
         updateProperty: expect.any(Function)
       })
+      await tick()
+      expect(screen.queryByRole('button')).not.toBeInTheDocument()
+      expect(recordVisibility).not.toHaveBeenCalled()
       expect(registerTool).toHaveBeenCalledTimes(1)
       expect(recordEvent).not.toHaveBeenCalled()
     })
 
-    it('does not register multiple times', () => {
+    it('does not register multiple times', async () => {
       const name = faker.lorem.words()
       const { component } = render(
         html`<${Tool} name=${name} component=${Button} />`
@@ -71,11 +81,13 @@ describe('Tool component', () => {
       expect(registerTool).toHaveBeenCalledTimes(1)
 
       component.$set({ name: faker.lorem.words() })
+      await tick()
+      expect(recordVisibility).not.toHaveBeenCalled()
       expect(registerTool).toHaveBeenCalledTimes(1)
       expect(recordEvent).not.toHaveBeenCalled()
     })
 
-    it('passes props down to the component', () => {
+    it('passes props down to the component', async () => {
       const name = faker.lorem.words()
       currentTool.set({ name })
       const props = {
@@ -91,13 +103,16 @@ describe('Tool component', () => {
       })
       expect(registerTool).toHaveBeenCalledTimes(1)
 
+      await waitFor(() =>
+        expect(recordVisibility).toHaveBeenCalledWith({ name, visible: true })
+      )
+      expect(screen.queryByRole('button')).toBeInTheDocument()
       const button = screen.queryByRole('button')
-      expect(button).toBeInTheDocument()
       expect(button).toHaveTextContent(props.label)
       expect(button).toBeDisabled()
     })
 
-    it('passes props down to the slotted component', () => {
+    it('passes props down to the slotted component', async () => {
       const name = faker.lorem.words()
       currentTool.set({ name })
       const props = {
@@ -106,7 +121,7 @@ describe('Tool component', () => {
       }
       render(
         html`<${Tool} name=${name} props=${props}>
-          <${Button} ...${props}/>
+          <${Button} ...${props} />
         </${Tool}>`
       )
       expect(registerTool).toHaveBeenCalledWith({
@@ -117,6 +132,10 @@ describe('Tool component', () => {
       })
       expect(registerTool).toHaveBeenCalledTimes(1)
 
+      await waitFor(() =>
+        expect(recordVisibility).toHaveBeenCalledWith({ name, visible: true })
+      )
+      expect(screen.queryByRole('button')).toBeInTheDocument()
       const button = screen.queryByRole('button')
       expect(button).toBeInTheDocument()
       expect(button).toHaveTextContent(props.label)
@@ -134,6 +153,10 @@ describe('Tool component', () => {
         updateProperty: expect.any(Function)
       })
 
+      await waitFor(() =>
+        expect(recordVisibility).toHaveBeenCalledWith({ name, visible: true })
+      )
+      expect(screen.queryByRole('button')).toBeInTheDocument()
       const button = screen.queryByRole('button')
       expect(button).toBeInTheDocument()
       expect(button).toHaveTextContent('Hey oh!')
@@ -146,13 +169,13 @@ describe('Tool component', () => {
       expect(registerTool).toHaveBeenCalledTimes(1)
     })
 
-    it('updates slot props when invoking updateProperty()', () => {
+    it('updates slot props when invoking updateProperty()', async () => {
       const name = faker.lorem.words()
       currentTool.set({ name })
       const props = writable()
       render(
         html`<${Tool} name=${name} let:props=${props}>
-          <${Button}/>
+          <${Button} />
         </${Tool}>`
       )
       expect(registerTool).toHaveBeenCalledWith({
@@ -161,8 +184,11 @@ describe('Tool component', () => {
         events: [],
         updateProperty: expect.any(Function)
       })
+      await waitFor(() =>
+        expect(recordVisibility).toHaveBeenCalledWith({ name, visible: true })
+      )
+      expect(screen.queryByRole('button')).toBeInTheDocument()
       expect(get(props)).toEqual({})
-
       const button = screen.queryByRole('button')
       expect(button).toBeInTheDocument()
       expect(button).toHaveTextContent('Hey oh!')
@@ -188,6 +214,10 @@ describe('Tool component', () => {
         events,
         updateProperty: expect.any(Function)
       })
+      await waitFor(() =>
+        expect(recordVisibility).toHaveBeenCalledWith({ name, visible: true })
+      )
+      expect(screen.queryByRole('button')).toBeInTheDocument()
 
       const button = screen.queryByRole('button')
       expect(button).toBeInTheDocument()
@@ -207,8 +237,12 @@ describe('Tool component', () => {
       const events = ['enter', 'click']
       const handleEvent = new writable()
       render(
-        html`<${Tool} name=${name} events=${events} let:handleEvent=${handleEvent}>
-          <${Button}/>
+        html`<${Tool}
+          name=${name}
+          events=${events}
+          let:handleEvent=${handleEvent}
+        >
+          <${Button} />
         </${Tool}>`
       )
       expect(registerTool).toHaveBeenCalledWith({
@@ -218,13 +252,17 @@ describe('Tool component', () => {
         updateProperty: expect.any(Function)
       })
       expect(recordEvent).not.toHaveBeenCalled()
+      await waitFor(() =>
+        expect(recordVisibility).toHaveBeenCalledWith({ name, visible: true })
+      )
+      expect(screen.queryByRole('button')).toBeInTheDocument()
 
       get(handleEvent)(new MouseEvent('click'))
       expect(recordEvent).toHaveBeenCalledWith('click', expect.any(MouseEvent))
       expect(recordEvent).toHaveBeenCalledTimes(1)
     })
 
-    it('supports slot extra content', () => {
+    it('supports slot extra content', async () => {
       const header = faker.lorem.words()
       const footer = faker.lorem.words()
       const name = faker.lorem.word()
@@ -233,14 +271,121 @@ describe('Tool component', () => {
       render(
         html`<${Tool} name=${name} let:props=${props}>
           <p>${header}</p>
-          <${Button} ${props}/>
+          <${Button} ${props} />
           <p>${footer}</p>
         </${Tool}>`
       )
-
+      await waitFor(() =>
+        expect(recordVisibility).toHaveBeenCalledWith({ name, visible: true })
+      )
       expect(screen.queryByText(header)).toBeInTheDocument()
       expect(screen.queryByRole('button')).toBeInTheDocument()
       expect(screen.queryByText(footer)).toBeInTheDocument()
+    })
+
+    it('calls tool setup before displaying it', async () => {
+      const name = faker.lorem.words()
+      const setup = jest.fn().mockResolvedValue()
+      render(html`<${Tool} name=${name} component=${Button} setup=${setup} />`)
+      await tick()
+
+      expect(screen.queryByRole('button')).not.toBeInTheDocument()
+      expect(setup).not.toHaveBeenCalled()
+
+      currentTool.set({ name })
+      await tick()
+      await tick()
+      expect(setup).toHaveBeenCalledTimes(1)
+      await waitFor(() =>
+        expect(recordVisibility).toHaveBeenCalledWith({ name, visible: true })
+      )
+      expect(screen.queryByRole('button')).toBeInTheDocument()
+    })
+
+    it('calls tool setup before displaying within a slot', async () => {
+      const name = faker.lorem.words()
+      const setup = jest.fn().mockResolvedValue()
+      render(html`<${Tool} name=${name} setup=${setup}><${Button} /></${Tool}>`)
+      await tick()
+      await tick()
+
+      expect(screen.queryByRole('button')).not.toBeInTheDocument()
+      expect(setup).not.toHaveBeenCalled()
+
+      currentTool.set({ name })
+      await tick()
+      await tick()
+      expect(setup).toHaveBeenCalledTimes(1)
+      await waitFor(() =>
+        expect(recordVisibility).toHaveBeenCalledWith({ name, visible: true })
+      )
+      expect(screen.queryByRole('button')).toBeInTheDocument()
+    })
+
+    it('calls tool teardown after destroying it', async () => {
+      const name = faker.lorem.words()
+      const teardown = jest.fn().mockResolvedValue()
+      render(
+        html`<${Tool} name=${name} component=${Button} teardown=${teardown} />`
+      )
+      await tick()
+
+      expect(screen.queryByRole('button')).not.toBeInTheDocument()
+      expect(teardown).not.toHaveBeenCalled()
+
+      currentTool.set({ name })
+      await waitFor(() =>
+        expect(recordVisibility).toHaveBeenNthCalledWith(1, {
+          name,
+          visible: true
+        })
+      )
+      expect(screen.queryByRole('button')).toBeInTheDocument()
+      expect(teardown).not.toHaveBeenCalled()
+
+      currentTool.set({ name: 'whatever' })
+      await waitFor(() =>
+        expect(recordVisibility).toHaveBeenNthCalledWith(2, {
+          name,
+          visible: false
+        })
+      )
+      expect(screen.queryByRole('button')).not.toBeInTheDocument()
+      expect(teardown).toHaveBeenCalledTimes(1)
+      expect(recordVisibility).toHaveBeenCalledTimes(2)
+    })
+
+    it('calls tool teardown after destroying it within a slot', async () => {
+      const name = faker.lorem.words()
+      const teardown = jest.fn().mockResolvedValue()
+      render(
+        html`<${Tool} name=${name} teardown=${teardown}><${Button} /></${Tool}>`
+      )
+      await tick()
+
+      expect(screen.queryByRole('button')).not.toBeInTheDocument()
+      expect(teardown).not.toHaveBeenCalled()
+
+      currentTool.set({ name })
+      await waitFor(() =>
+        expect(recordVisibility).toHaveBeenNthCalledWith(1, {
+          name,
+          visible: true
+        })
+      )
+      expect(screen.queryByRole('button')).toBeInTheDocument()
+      expect(teardown).not.toHaveBeenCalled()
+
+      currentTool.set({ name: 'whatever' })
+      await waitFor(() =>
+        expect(recordVisibility).toHaveBeenNthCalledWith(2, {
+          name,
+          visible: false
+        })
+      )
+      expect(screen.queryByRole('button')).not.toBeInTheDocument()
+      expect(teardown).toHaveBeenCalledTimes(1)
+      expect(recordVisibility).toHaveBeenCalledTimes(2)
     })
   })
 
@@ -248,20 +393,25 @@ describe('Tool component', () => {
     it('needs a name', () => {
       const name = faker.lorem.words()
       expect(() =>
-        render(html`<${ToolBox} name=${name}><${Tool} /></${ToolBox}>`)
+        render(html`<${ToolBox} name=${name}><${Tool} /></`)
       ).toThrow('Tool needs a name property')
     })
 
-    it('registers tool and renders component when being current', () => {
+    it('registers tool and renders component when being current', async () => {
       const name = faker.lorem.words()
       const toolBoxName = faker.lorem.words()
       currentTool.set({ name: `${toolBoxName}/${name}` })
       render(
-        html`<${ToolBox} name=${toolBoxName} component=${Button}
-          ><${Tool} name=${name}
-        /></${ToolBox}>`
+        html`<${ToolBox} name=${toolBoxName} component=${Button}>
+          <${Tool} name=${name} />
+        </${ToolBox}>`
       )
-
+      await waitFor(() =>
+        expect(recordVisibility).toHaveBeenCalledWith({
+          name: `${toolBoxName}/${name}`,
+          visible: true
+        })
+      )
       expect(screen.queryByRole('button')).toBeInTheDocument()
       expect(registerTool).toHaveBeenCalledWith({
         name: `${toolBoxName}/${name}`,
@@ -273,17 +423,16 @@ describe('Tool component', () => {
       expect(recordEvent).not.toHaveBeenCalled()
     })
 
-    it('registers tool and renders nothing', () => {
+    it('registers tool and renders nothing', async () => {
       const name1 = faker.lorem.words()
       const name2 = faker.lorem.words()
       const toolBoxName = faker.lorem.words()
       render(
-        html`<${ToolBox} name=${toolBoxName} component=${Button}
-          ><${Tool} name=${name1} /><${Tool} name=${name2}
-        /></${ToolBox}>`
+        html`<${ToolBox} name=${toolBoxName} component=${Button}>
+          <${Tool} name=${name1} />
+          <${Tool} name=${name2} />
+        </${ToolBox}>`
       )
-
-      expect(screen.queryByRole('button')).not.toBeInTheDocument()
       expect(registerTool).toHaveBeenCalledWith({
         name: `${toolBoxName}/${name1}`,
         props: {},
@@ -296,18 +445,21 @@ describe('Tool component', () => {
         events: [],
         updateProperty: expect.any(Function)
       })
+      await tick()
       expect(registerTool).toHaveBeenCalledTimes(2)
       expect(recordEvent).not.toHaveBeenCalled()
+      expect(recordVisibility).not.toHaveBeenCalled()
     })
 
-    it('does not register multiple times', () => {
+    it('does not register multiple times', async () => {
       const name1 = faker.lorem.words()
       const name2 = faker.lorem.words()
       const toolBoxName = faker.lorem.words()
       const { component } = render(
-        html`<${ToolBox} name=${toolBoxName} component=${Button}
-          ><${Tool} name=${name1} /><${Tool} name=${name2}
-        /></${ToolBox}>`
+        html`<${ToolBox} name=${toolBoxName} component=${Button}>
+          <${Tool} name=${name1} />
+          <${Tool} name=${name2} />
+        </${ToolBox}>`
       )
       expect(registerTool).toHaveBeenCalledWith({
         name: `${toolBoxName}/${name1}`,
@@ -323,11 +475,13 @@ describe('Tool component', () => {
       })
 
       component.$set({ name: faker.lorem.words() })
+      await tick()
       expect(registerTool).toHaveBeenCalledTimes(2)
       expect(recordEvent).not.toHaveBeenCalled()
+      expect(recordVisibility).not.toHaveBeenCalled()
     })
 
-    it('passes toolbox props and tool props down to the component', () => {
+    it('passes toolbox props and tool props down to the component', async () => {
       const toolBox = {
         name: faker.lorem.words(),
         props: { disabled: true, label: faker.commerce.productName() },
@@ -344,8 +498,9 @@ describe('Tool component', () => {
           name=${toolBox.name}
           component=${Button}
           props=${toolBox.props}
-          ><${Tool} name=${tool.name} props=${tool.props}
-        /></${ToolBox}>`
+        >
+          <${Tool} name=${tool.name} props=${tool.props} />
+        </${ToolBox}>`
       )
       expect(registerTool).toHaveBeenCalledWith({
         name: `${toolBox.name}/${tool.name}`,
@@ -353,6 +508,13 @@ describe('Tool component', () => {
         events: [],
         updateProperty: expect.any(Function)
       })
+      await waitFor(() =>
+        expect(recordVisibility).toHaveBeenCalledWith({
+          name: `${toolBox.name}/${tool.name}`,
+          visible: true
+        })
+      )
+      expect(screen.queryByRole('button')).toBeInTheDocument()
 
       const button = screen.queryByRole('button')
       expect(button).toBeInTheDocument()
@@ -365,11 +527,9 @@ describe('Tool component', () => {
       const tool = { name: faker.lorem.words() }
       currentTool.set({ name: `${toolBox.name}/${tool.name}` })
       render(
-        html`<${ToolBox}
-          name=${toolBox.name}
-          component=${Button}
-          ><${Tool} name=${tool.name}
-        /></${ToolBox}>`
+        html`<${ToolBox} name=${toolBox.name} component=${Button}>
+          <${Tool} name=${tool.name} />
+        </${ToolBox}>`
       )
       expect(registerTool).toHaveBeenCalledWith({
         name: `${toolBox.name}/${tool.name}`,
@@ -377,6 +537,13 @@ describe('Tool component', () => {
         events: [],
         updateProperty: expect.any(Function)
       })
+      await waitFor(() =>
+        expect(recordVisibility).toHaveBeenCalledWith({
+          name: `${toolBox.name}/${tool.name}`,
+          visible: true
+        })
+      )
+      expect(screen.queryByRole('button')).toBeInTheDocument()
 
       const button = screen.queryByRole('button')
       expect(button).toBeInTheDocument()
@@ -405,8 +572,9 @@ describe('Tool component', () => {
           name=${toolBox.name}
           component=${Button}
           events=${toolBox.events}
-          ><${Tool} name=${tool.name} events=${tool.events}
-        /></${ToolBox}>`
+        >
+          <${Tool} name=${tool.name} events=${tool.events} />
+        </${ToolBox}>`
       )
       expect(registerTool).toHaveBeenCalledWith({
         name: `${toolBox.name}/${tool.name}`,
@@ -414,6 +582,13 @@ describe('Tool component', () => {
         events: [...toolBox.events, ...tool.events],
         updateProperty: expect.any(Function)
       })
+      await waitFor(() =>
+        expect(recordVisibility).toHaveBeenCalledWith({
+          name: `${toolBox.name}/${tool.name}`,
+          visible: true
+        })
+      )
+      expect(screen.queryByRole('button')).toBeInTheDocument()
 
       const button = screen.queryByRole('button')
       expect(button).toBeInTheDocument()
@@ -433,15 +608,198 @@ describe('Tool component', () => {
 
       expect(() =>
         render(
-          html`<${ToolBox}
-            name=${toolBoxName}
-            component=${Button}
-            ><${Tool} name=${name} component=${Button}
-          /></${ToolBox}>`
+          html`<${ToolBox} name=${toolBoxName} component=${Button}>
+            <${Tool} name=${name} component=${Button} />
+          </${ToolBox}>`
         )
       ).toThrow(
         `Tool "${name}" does not support component property since its ToolBox "${toolBoxName}" already have one`
       )
+    })
+
+    it('calls toolbox setup, then tool setup before displaying it', async () => {
+      const toolBoxName = faker.lorem.words()
+      const name = faker.lorem.words()
+      const setup = jest.fn().mockResolvedValue()
+      const toolSetup = jest.fn().mockResolvedValue()
+      render(html`<${ToolBox}
+        name=${toolBoxName}
+        component=${Button}
+        setup=${setup}
+      >
+        <${Tool} name=${name} setup=${toolSetup} />
+      </${ToolBox}>`)
+      await tick()
+
+      expect(setup).not.toHaveBeenCalled()
+      expect(toolSetup).not.toHaveBeenCalled()
+
+      currentTool.set({ name: `${toolBoxName}/${name}` })
+      await tick()
+      expect(setup).toHaveBeenCalledTimes(1)
+      expect(toolSetup).not.toHaveBeenCalled()
+      await waitFor(() => expect(toolSetup).toHaveBeenCalledTimes(1))
+      await waitFor(() =>
+        expect(recordVisibility).toHaveBeenCalledWith({
+          name: `${toolBoxName}/${name}`,
+          visible: true
+        })
+      )
+    })
+
+    it('calls setups on every tool change', async () => {
+      const toolBoxName = faker.lorem.words()
+      const name1 = faker.lorem.words()
+      const name2 = faker.lorem.words()
+      const setup = jest.fn().mockResolvedValue()
+      const toolSetup1 = jest.fn().mockResolvedValue()
+      const toolSetup2 = jest.fn().mockResolvedValue()
+      render(html`<${ToolBox}
+        name=${toolBoxName}
+        component=${Button}
+        setup=${setup}
+      >
+        <${Tool} name=${name1} setup=${toolSetup1} />
+        <${Tool} name=${name2} setup=${toolSetup2} />
+      </${ToolBox}>`)
+      await tick()
+
+      expect(setup).not.toHaveBeenCalled()
+      expect(toolSetup1).not.toHaveBeenCalled()
+      expect(toolSetup2).not.toHaveBeenCalled()
+
+      currentTool.set({ name: `${toolBoxName}/${name1}` })
+      await tick()
+      expect(setup).toHaveBeenCalledTimes(1)
+      expect(toolSetup1).not.toHaveBeenCalled()
+      await waitFor(() => expect(toolSetup1).toHaveBeenCalledTimes(1))
+      expect(toolSetup2).not.toHaveBeenCalled()
+      expect(recordVisibility).toHaveBeenNthCalledWith(1, {
+        name: `${toolBoxName}/${name1}`,
+        visible: true
+      })
+
+      setup.mockClear()
+      toolSetup1.mockClear()
+
+      currentTool.set({ name: `${toolBoxName}/${name2}` })
+      await tick()
+      expect(setup).toHaveBeenCalledTimes(1)
+      expect(toolSetup2).not.toHaveBeenCalled()
+      await waitFor(() => expect(toolSetup2).toHaveBeenCalledTimes(1))
+      expect(recordVisibility).toHaveBeenNthCalledWith(2, {
+        name: `${toolBoxName}/${name1}`,
+        visible: false
+      })
+      expect(toolSetup1).not.toHaveBeenCalled()
+      expect(recordVisibility).toHaveBeenNthCalledWith(3, {
+        name: `${toolBoxName}/${name2}`,
+        visible: true
+      })
+    })
+
+    it('calls tool teardown, then toolbox teardown after destroying it', async () => {
+      const toolBoxName = faker.lorem.words()
+      const name = faker.lorem.words()
+      const teardown = jest.fn().mockResolvedValue()
+      const toolTeardown = jest.fn().mockResolvedValue()
+      currentTool.set({ name: `${toolBoxName}/${name}` })
+      render(html`<${ToolBox}
+        name=${toolBoxName}
+        component=${Button}
+        teardown=${teardown}
+      >
+        <${Tool} name=${name} teardown=${toolTeardown} />
+      </${ToolBox}>`)
+      await waitFor(() =>
+        expect(recordVisibility).toHaveBeenNthCalledWith(1, {
+          name: `${toolBoxName}/${name}`,
+          visible: true
+        })
+      )
+      expect(screen.queryByRole('button')).toBeInTheDocument()
+
+      expect(teardown).not.toHaveBeenCalled()
+      expect(toolTeardown).not.toHaveBeenCalled()
+
+      currentTool.set({ name: 'whatever' })
+      await waitFor(() =>
+        expect(screen.queryByRole('button')).not.toBeInTheDocument()
+      )
+      expect(toolTeardown).toHaveBeenCalledTimes(1)
+      expect(teardown).not.toHaveBeenCalled()
+      await waitFor(() =>
+        expect(recordVisibility).toHaveBeenNthCalledWith(2, {
+          name: `${toolBoxName}/${name}`,
+          visible: false
+        })
+      )
+      expect(teardown).toHaveBeenCalledTimes(1)
+      expect(recordVisibility).toHaveBeenCalledTimes(2)
+    })
+
+    it('calls teardowns on every tool change', async () => {
+      const toolBoxName = faker.lorem.words()
+      const name1 = faker.lorem.words()
+      const name2 = faker.lorem.words()
+      const teardown = jest.fn().mockResolvedValue()
+      const toolTeardown1 = jest.fn().mockResolvedValue()
+      const toolTeardown2 = jest.fn().mockResolvedValue()
+      currentTool.set({ name: `${toolBoxName}/${name1}` })
+      render(html`<${ToolBox}
+        name=${toolBoxName}
+        component=${Button}
+        teardown=${teardown}
+      >
+        <${Tool} name=${name1} teardown=${toolTeardown1} />
+        <${Tool} name=${name2} teardown=${toolTeardown2} />
+      </${ToolBox}>`)
+      await waitFor(() =>
+        expect(recordVisibility).toHaveBeenNthCalledWith(1, {
+          name: `${toolBoxName}/${name1}`,
+          visible: true
+        })
+      )
+      expect(screen.queryByRole('button')).toBeInTheDocument()
+      expect(teardown).not.toHaveBeenCalled()
+      expect(toolTeardown1).not.toHaveBeenCalled()
+      expect(toolTeardown2).not.toHaveBeenCalled()
+
+      currentTool.set({ name: `${toolBoxName}/${name2}` })
+      await waitFor(() => expect(toolTeardown1).toHaveBeenCalledTimes(1))
+      expect(teardown).not.toHaveBeenCalled()
+      await waitFor(() => expect(teardown).toHaveBeenCalledTimes(1))
+      expect(toolTeardown2).not.toHaveBeenCalled()
+      expect(recordVisibility).toHaveBeenNthCalledWith(2, {
+        name: `${toolBoxName}/${name2}`,
+        visible: true
+      })
+      await waitFor(() =>
+        expect(recordVisibility).toHaveBeenNthCalledWith(3, {
+          name: `${toolBoxName}/${name1}`,
+          visible: false
+        })
+      )
+
+      teardown.mockClear()
+      toolTeardown1.mockClear()
+
+      currentTool.set({ name: `${toolBoxName}/${name1}` })
+      await waitFor(() => expect(toolTeardown2).toHaveBeenCalledTimes(1))
+      expect(teardown).not.toHaveBeenCalled()
+      await waitFor(() => expect(teardown).toHaveBeenCalledTimes(1))
+      expect(toolTeardown1).not.toHaveBeenCalled()
+      expect(recordVisibility).toHaveBeenNthCalledWith(4, {
+        name: `${toolBoxName}/${name1}`,
+        visible: true
+      })
+      await waitFor(() =>
+        expect(recordVisibility).toHaveBeenNthCalledWith(5, {
+          name: `${toolBoxName}/${name2}`,
+          visible: false
+        })
+      )
+      expect(recordVisibility).toHaveBeenCalledTimes(5)
     })
   })
 })

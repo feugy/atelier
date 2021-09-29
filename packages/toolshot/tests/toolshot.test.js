@@ -155,21 +155,15 @@ describe('toolshot builder', () => {
       expect(testSpy).toHaveBeenCalledTimes(1)
       await testSpy.mock.calls[0][1]()
       await sleep(100)
-      expect(matchSpecificSnapshot).toHaveBeenNthCalledWith(
-        1,
-        document.querySelector('h1'),
-        snapshotFile
-      )
-      expect(matchSpecificSnapshot).toHaveBeenNthCalledWith(
-        2,
-        document.querySelector('h2'),
-        snapshotFile
-      )
-      expect(matchSpecificSnapshot).toHaveBeenNthCalledWith(
-        3,
-        document.querySelector('h3'),
-        snapshotFile
-      )
+      const h1 = document.createElement('h1')
+      h1.innerHTML = 'first'
+      const h2 = document.createElement('h2')
+      h2.innerHTML = 'second'
+      const h3 = document.createElement('h3')
+      h3.innerHTML = 'third'
+      expect(matchSpecificSnapshot).toHaveBeenNthCalledWith(1, h1, snapshotFile)
+      expect(matchSpecificSnapshot).toHaveBeenNthCalledWith(2, h2, snapshotFile)
+      expect(matchSpecificSnapshot).toHaveBeenNthCalledWith(3, h3, snapshotFile)
       expect(matchSpecificSnapshot).toHaveBeenCalledTimes(3)
     })
 

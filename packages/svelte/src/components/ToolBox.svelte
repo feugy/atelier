@@ -9,7 +9,9 @@
   export let component = null
   export let props = {}
   export let events = []
-  setContext(contextKey, { name, component, props, events })
+  export let setup = null
+  export let teardown = null
+  setContext(contextKey, { name, component, props, events, setup, teardown })
 </script>
 
 <slot />
