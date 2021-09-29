@@ -1,6 +1,6 @@
 {
   "name": "@atelier-wb/vite-plugin-svelte",
-  "version": "0.2.0-alpha.1",
+  "version": "0.2.0",
   "description": "Vite plugin to process your svelte components",
   "main": "src/index.js",
   "scripts": {
@@ -8,7 +8,7 @@
     "test:dev": "jest --watch"
   },
   "dependencies": {
-    "@atelier-wb/ui": "^0.2.0-alpha.0",
+    "@atelier-wb/ui": "^0.2.0",
     "ajv": "^8.6.3",
     "sirv": "^1.0.17"
   },
