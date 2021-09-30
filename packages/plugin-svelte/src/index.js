@@ -26,12 +26,12 @@ const validate = new Ajv().compile({
 
 const defaultOptions = {
   path: './atelier',
-  url: '/atelier',
+  url: '/',
   toolRegexp: '\\.tools\\.svelte+$',
   workframeHtml: resolve(__dirname, 'workframe.html'),
   workframeId: '@atelier-wb/workframe',
   bundled: true,
-  publicDirs: []
+  publicDir: []
 }
 
 async function findTools(path, detectionRegex) {
@@ -77,7 +77,10 @@ function AtelierPlugin(pluginOptions = {}) {
       `${pluginName} option "${error.instancePath.slice(1)}" ${error.message}`
     )
   }
-  const hasTrailingUrl = options.url.endsWith('/')
+  const hasTrailingSlash = options.url.endsWith('/')
+  const workframeUrl = `${options.url}${hasTrailingSlash ? '' : '/'}${
+    options.workframeId
+  }`
 
   const toolRegexp = new RegExp(options.toolRegexp, 'i')
 
@@ -91,12 +94,14 @@ function AtelierPlugin(pluginOptions = {}) {
       if (options.bundled) {
         uiPath = resolve(uiPath, 'dist')
       }
-      const serves = [
+      const statics = [
         uiPath,
         ...(Array.isArray(options.publicDir)
           ? options.publicDir
-          : [options.publicDir])
-      ].map(dir => sirv(dir, { etag: true }))
+          : [options.publicDir]
+        ).filter(Boolean)
+      ]
+      const serves = statics.map(dir => sirv(dir, { etag: true }))
 
       // configure a middleware for serving Atelier
       server.middlewares.use(options.url, (req, res, next) => {
@@ -107,7 +112,7 @@ function AtelierPlugin(pluginOptions = {}) {
             'Content-Type': 'text/html'
           })
           createReadStream(options.workframeHtml).pipe(res)
-        } else if (!hasTrailingUrl && req.originalUrl === options.url) {
+        } else if (!hasTrailingSlash && req.originalUrl === options.url) {
           // append trailing slash to allows resolving <script /> with relative sources
           res.statusCode = 301
           res.setHeader('Location', `${options.url}/`)
@@ -128,7 +133,7 @@ function AtelierPlugin(pluginOptions = {}) {
 
       async function reloadTools(path, stats) {
         if (toolRegexp.test(normalizePath(path)) || stats?.isDirectory()) {
-          server.watcher.emit('change', `${options.url}/${options.workframeId}`)
+          server.watcher.emit('change', workframeUrl)
         }
       }
 
@@ -139,16 +144,13 @@ function AtelierPlugin(pluginOptions = {}) {
     },
 
     resolveId(id) {
-      if (id === options.workframeId) {
+      if (id === workframeUrl) {
         return id
       }
     },
 
     async load(id) {
-      if (
-        id ===
-        `${options.url}${hasTrailingUrl ? '' : '/'}${options.workframeId}`
-      ) {
+      if (id === workframeUrl) {
         return buildWorkframe(
           await findTools(options.path, toolRegexp),
           options.setupPath
