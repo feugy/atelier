@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.2.1](https://github.com/feugy/atelier/compare/v0.2.0...v0.2.1) (2021-09-30)
+
+### Bug Fixes
+
+- **plugin-svelte:** fails when path is '/' ([b4bfb28](https://github.com/feugy/atelier/commit/b4bfb2882774638b929ff0ffc36c8bcec2b2a104))
+- **svelte:** invisible tools are aligned on a row ([7594a7e](https://github.com/feugy/atelier/commit/7594a7e938a1cb66f45266f229c0b970dfaa60f0))
+- **toolshot:** non-source files are published ([3ab1041](https://github.com/feugy/atelier/commit/3ab10416c75214f19a224f80e84700898c3f2fb9))
+
 ## 0.2.0 (2021-09-29)
 
 ### Features
