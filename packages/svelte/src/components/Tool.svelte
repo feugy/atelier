@@ -111,11 +111,10 @@
   .tool {
     display: none;
     width: 100%;
-    display: flex;
     flex-direction: column;
   }
   .tool.visible {
-    display: inherit;
+    display: flex;
   }
 </style>
 
