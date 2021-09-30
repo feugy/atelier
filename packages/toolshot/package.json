@@ -25,5 +25,8 @@
     "faker": "^5.5.3",
     "jest-transform-svelte": "^2.1.1",
     "jest-watch-typeahead": "^0.6.4"
-  }
+  },
+  "files": [
+    "src/**/*"
+  ]
 }
