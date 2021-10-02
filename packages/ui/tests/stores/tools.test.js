@@ -101,9 +101,9 @@ describe('tools store', () => {
   })
 
   it('accumulates events', () => {
-    const event1 = ['click', { text: faker.lorem.words() }]
-    const event2 = ['input', { text: faker.lorem.words() }]
-    const event3 = ['select', { text: faker.lorem.words() }]
+    const event1 = { name: 'click', args: [{ text: faker.lorem.words() }] }
+    const event2 = { name: 'input', args: [{ text: faker.lorem.words() }] }
+    const event3 = { name: 'select', args: [{ text: faker.lorem.words() }] }
 
     let eventLog = []
     subscriptions.push(events.subscribe(value => (eventLog = value)))
@@ -113,40 +113,40 @@ describe('tools store', () => {
     window.dispatchEvent(
       new MessageEvent('message', {
         origin: src,
-        data: { type: 'recordEvent', args: event1 }
+        data: { type: 'recordEvent', ...event1 }
       })
     )
     expect(eventLog).toEqual([
-      { name: event1[0], args: event1.slice(1), time: expect.any(Number) }
+      { ...event1, type: 'recordEvent', time: expect.any(Number) }
     ])
 
     window.dispatchEvent(
       new MessageEvent('message', {
         origin: src,
-        data: { type: 'recordEvent', args: event2 }
+        data: { type: 'recordEvent', ...event2 }
       })
     )
     expect(eventLog).toEqual([
-      { name: event2[0], args: event2.slice(1), time: expect.any(Number) },
-      { name: event1[0], args: event1.slice(1), time: expect.any(Number) }
+      { ...event2, type: 'recordEvent', time: expect.any(Number) },
+      { ...event1, type: 'recordEvent', time: expect.any(Number) }
     ])
 
     window.dispatchEvent(
       new MessageEvent('message', {
         origin: src,
-        data: { type: 'recordEvent', args: event3 }
+        data: { type: 'recordEvent', ...event3 }
       })
     )
     expect(eventLog).toEqual([
-      { name: event3[0], args: event3.slice(1), time: expect.any(Number) },
-      { name: event2[0], args: event2.slice(1), time: expect.any(Number) },
-      { name: event1[0], args: event1.slice(1), time: expect.any(Number) }
+      { ...event3, type: 'recordEvent', time: expect.any(Number) },
+      { ...event2, type: 'recordEvent', time: expect.any(Number) },
+      { ...event1, type: 'recordEvent', time: expect.any(Number) }
     ])
   })
 
   it('can clear accumulated events', () => {
-    const event1 = ['click', { text: faker.lorem.words() }]
-    const event2 = ['input', { text: faker.lorem.words() }]
+    const event1 = { name: 'click', args: [{ text: faker.lorem.words() }] }
+    const event2 = { name: 'input', args: [{ text: faker.lorem.words() }] }
 
     let eventLog = []
     subscriptions.push(events.subscribe(value => (eventLog = value)))
@@ -156,19 +156,19 @@ describe('tools store', () => {
     window.dispatchEvent(
       new MessageEvent('message', {
         origin: src,
-        data: { type: 'recordEvent', args: event1 }
+        data: { type: 'recordEvent', ...event1 }
       })
     )
     window.dispatchEvent(
       new MessageEvent('message', {
         origin: src,
-        data: { type: 'recordEvent', args: event2 }
+        data: { type: 'recordEvent', ...event2 }
       })
     )
     expect(eventLog).toEqual(
       expect.arrayContaining([
-        { name: event2[0], args: event2.slice(1), time: expect.any(Number) },
-        { name: event1[0], args: event1.slice(1), time: expect.any(Number) }
+        { ...event2, type: 'recordEvent', time: expect.any(Number) },
+        { ...event1, type: 'recordEvent', time: expect.any(Number) }
       ])
     )
 
