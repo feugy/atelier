@@ -1,6 +1,45 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Toolshot components/Properties.tools.svelte 1`] = `
+exports[`Toolshot components/Properties.tools.svelte: Arrays 1`] = `
+<span>
+  <div
+    class="root"
+  >
+    <label
+      for="numbers"
+    >
+      numbers
+    </label>
+     
+    <textarea
+      id="numbers"
+    />
+    
+    <label
+      for="strings"
+    >
+      strings
+    </label>
+     
+    <textarea
+      id="strings"
+    />
+    
+    <label
+      for="empty"
+    >
+      empty
+    </label>
+     
+    <textarea
+      id="empty"
+    />
+    
+  </div>
+</span>
+`;
+
+exports[`Toolshot components/Properties.tools.svelte: Native types 1`] = `
 <span>
   <div
     class="root"
@@ -41,46 +80,7 @@ exports[`Toolshot components/Properties.tools.svelte 1`] = `
 </span>
 `;
 
-exports[`Toolshot components/Properties.tools.svelte 2`] = `
-<span>
-  <div
-    class="root"
-  >
-    <label
-      for="numbers"
-    >
-      numbers
-    </label>
-     
-    <textarea
-      id="numbers"
-    />
-    
-    <label
-      for="strings"
-    >
-      strings
-    </label>
-     
-    <textarea
-      id="strings"
-    />
-    
-    <label
-      for="empty"
-    >
-      empty
-    </label>
-     
-    <textarea
-      id="empty"
-    />
-    
-  </div>
-</span>
-`;
-
-exports[`Toolshot components/Properties.tools.svelte 3`] = `
+exports[`Toolshot components/Properties.tools.svelte: Objects 1`] = `
 <span>
   <div
     class="root"

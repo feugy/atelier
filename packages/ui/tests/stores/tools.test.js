@@ -52,9 +52,9 @@ describe('tools store', () => {
 
   it('registers new tools', () => {
     const src = faker.internet.url()
-    const tool1 = { name: faker.commerce.productName() }
-    const tool2 = { name: faker.commerce.productName() }
-    const tool3 = { name: faker.commerce.productName() }
+    const tool1 = { fullName: faker.commerce.productName() }
+    const tool2 = { fullName: faker.commerce.productName() }
+    const tool3 = { fullName: faker.commerce.productName() }
     setWorkbenchFrame({ src })
     expect(get(currentTool)).not.toBeDefined()
 
@@ -65,7 +65,7 @@ describe('tools store', () => {
       })
     )
     expect(get(currentTool)).toEqual(tool1)
-    expect(get(toolsMap)).toEqual(new Map([[tool1.name, tool1]]))
+    expect(get(toolsMap)).toEqual(new Map([[tool1.fullName, tool1]]))
 
     window.dispatchEvent(
       new MessageEvent('message', {
@@ -76,8 +76,8 @@ describe('tools store', () => {
     expect(get(currentTool)).toEqual(tool1)
     expect(get(toolsMap)).toEqual(
       new Map([
-        [tool1.name, tool1],
-        [tool2.name, tool2]
+        [tool1.fullName, tool1],
+        [tool2.fullName, tool2]
       ])
     )
 
@@ -90,12 +90,14 @@ describe('tools store', () => {
     expect(get(currentTool)).toEqual(tool1)
     expect(get(toolsMap)).toEqual(
       new Map([
-        [tool1.name, tool1],
-        [tool2.name, tool2],
-        [tool3.name, tool3]
+        [tool1.fullName, tool1],
+        [tool2.fullName, tool2],
+        [tool3.fullName, tool3]
       ])
     )
-    expect(new URLSearchParams(location.search).get('tool')).toEqual(tool1.name)
+    expect(new URLSearchParams(location.search).get('tool')).toEqual(
+      tool1.fullName
+    )
   })
 
   it('accumulates events', () => {
@@ -190,9 +192,9 @@ describe('tools store', () => {
   describe('given some registered tools', () => {
     const postMessage = jest.fn()
     const src = faker.internet.url()
-    const tool1 = { name: faker.commerce.productName() }
-    const tool2 = { name: faker.commerce.productName() }
-    const tool3 = { name: faker.commerce.productName() }
+    const tool1 = { fullName: faker.commerce.productName() }
+    const tool2 = { fullName: faker.commerce.productName() }
+    const tool3 = { fullName: faker.commerce.productName() }
 
     beforeEach(() => {
       window.history.pushState({}, '', 'http://localhost')
@@ -229,9 +231,9 @@ describe('tools store', () => {
       expect(get(currentTool)).toEqual(tool1)
       expect(get(toolsMap)).toEqual(
         new Map([
-          [tool1.name, tool1],
-          [tool2.name, updatedTool2],
-          [tool3.name, tool3]
+          [tool1.fullName, tool1],
+          [tool2.fullName, updatedTool2],
+          [tool3.fullName, tool3]
         ])
       )
 
@@ -245,9 +247,9 @@ describe('tools store', () => {
       expect(get(currentTool)).toEqual(updatedTool1)
       expect(get(toolsMap)).toEqual(
         new Map([
-          [tool1.name, updatedTool1],
-          [tool2.name, updatedTool2],
-          [tool3.name, tool3]
+          [tool1.fullName, updatedTool1],
+          [tool2.fullName, updatedTool2],
+          [tool3.fullName, tool3]
         ])
       )
     })
@@ -263,18 +265,18 @@ describe('tools store', () => {
       )
       expect(postMessage).toHaveBeenCalledTimes(1)
       expect(new URLSearchParams(location.search).get('tool')).toEqual(
-        tool3.name
+        tool3.fullName
       )
     })
 
     it('can not select unknown tool', () => {
       expect(get(currentTool)).toEqual(tool1)
 
-      selectTool({ name: faker.commerce.productName() })
+      selectTool({ fullName: faker.commerce.productName() })
       expect(get(currentTool)).toEqual(tool1)
       expect(postMessage).not.toHaveBeenCalled()
       expect(new URLSearchParams(location.search).get('tool')).toEqual(
-        tool1.name
+        tool1.fullName
       )
     })
 
@@ -289,7 +291,7 @@ describe('tools store', () => {
       )
       expect(postMessage).toHaveBeenCalledTimes(1)
       expect(new URLSearchParams(location.search).get('tool')).toEqual(
-        tool2.name
+        tool2.fullName
       )
       postMessage.mockReset()
 
@@ -301,7 +303,7 @@ describe('tools store', () => {
       )
       expect(postMessage).toHaveBeenCalledTimes(1)
       expect(new URLSearchParams(location.search).get('tool')).toEqual(
-        tool1.name
+        tool1.fullName
       )
     })
 
@@ -316,7 +318,7 @@ describe('tools store', () => {
       )
       expect(postMessage).toHaveBeenCalledTimes(1)
       expect(new URLSearchParams(location.search).get('tool')).toEqual(
-        tool2.name
+        tool2.fullName
       )
       postMessage.mockReset()
 
@@ -326,14 +328,14 @@ describe('tools store', () => {
 
       window.dispatchEvent(
         new PopStateEvent('popstate', {
-          state: { name: faker.commerce.productName() }
+          state: { fullName: faker.commerce.productName() }
         })
       )
       await Promise.resolve()
       expect(postMessage).not.toHaveBeenCalled()
 
       expect(new URLSearchParams(location.search).get('tool')).toEqual(
-        tool2.name
+        tool2.fullName
       )
     })
 
@@ -343,7 +345,7 @@ describe('tools store', () => {
 
       updateProperty({ detail: { name, value } })
       expect(postMessage).toHaveBeenCalledWith(
-        { type: 'updateProperty', data: { name, value, tool: tool1.name } },
+        { type: 'updateProperty', data: { name, value, tool: tool1 } },
         src
       )
       expect(postMessage).toHaveBeenCalledTimes(1)

@@ -1,61 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Toolshot components/Group.tools.svelte 1`] = `
-<span>
-  <ul>
-    <li>
-      <div
-        class="tool"
-        style="--increment: 0.5rem;"
-      >
-        <span
-          class="material-icons symbol"
-        >
-          architecture
-        </span>
-        <span>
-          Component #1
-        </span>
-      </div>
-       
-    </li>
-    <li>
-      <div
-        class="tool"
-        style="--increment: 0.5rem;"
-      >
-        <span
-          class="material-icons symbol"
-        >
-          architecture
-        </span>
-        <span>
-          Component #2
-        </span>
-      </div>
-       
-    </li>
-    <li>
-      <div
-        class="tool"
-        style="--increment: 0.5rem;"
-      >
-        <span
-          class="material-icons symbol"
-        >
-          architecture
-        </span>
-        <span>
-          Component #3
-        </span>
-      </div>
-       
-    </li>
-  </ul>
-</span>
-`;
-
-exports[`Toolshot components/Group.tools.svelte 2`] = `
+exports[`Toolshot components/Group.tools.svelte: Multiple level 1`] = `
 <span>
   <ul>
     <li>
@@ -211,8 +156,63 @@ exports[`Toolshot components/Group.tools.svelte 2`] = `
 </span>
 `;
 
-exports[`Toolshot components/Group.tools.svelte 3`] = `
+exports[`Toolshot components/Group.tools.svelte: No tabs 1`] = `
 <span>
   <ul />
+</span>
+`;
+
+exports[`Toolshot components/Group.tools.svelte: Single level 1`] = `
+<span>
+  <ul>
+    <li>
+      <div
+        class="tool"
+        style="--increment: 0.5rem;"
+      >
+        <span
+          class="material-icons symbol"
+        >
+          architecture
+        </span>
+        <span>
+          Component #1
+        </span>
+      </div>
+       
+    </li>
+    <li>
+      <div
+        class="tool"
+        style="--increment: 0.5rem;"
+      >
+        <span
+          class="material-icons symbol"
+        >
+          architecture
+        </span>
+        <span>
+          Component #2
+        </span>
+      </div>
+       
+    </li>
+    <li>
+      <div
+        class="tool"
+        style="--increment: 0.5rem;"
+      >
+        <span
+          class="material-icons symbol"
+        >
+          architecture
+        </span>
+        <span>
+          Component #3
+        </span>
+      </div>
+       
+    </li>
+  </ul>
 </span>
 `;

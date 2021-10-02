@@ -6,10 +6,10 @@ import { groupByName } from '../../src/utils'
 
 describe('Explorer and Group components', () => {
   const tools = [
-    { name: 'a/tool1' },
-    { name: 'tool2' },
-    { name: 'a/c/tool3' },
-    { name: 'b/tool4' }
+    { fullName: 'a/tool1' },
+    { fullName: 'tool2' },
+    { fullName: 'a/c/tool3' },
+    { fullName: 'b/tool4' }
   ]
 
   it('displays title and tools', () => {

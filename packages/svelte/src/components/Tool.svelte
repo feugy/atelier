@@ -43,7 +43,8 @@
 
   onMount(() =>
     registerTool({
-      name: fullName,
+      name,
+      fullName,
       props: allProps,
       events: allEvents,
       updateProperty
@@ -51,13 +52,13 @@
   )
 
   beforeUpdate(() => {
-    if (visible && $currentTool?.name !== fullName) {
+    if (visible && $currentTool?.fullName !== fullName) {
       destroy()
     }
   })
 
   afterUpdate(async () => {
-    if ($currentTool?.name === fullName && !visible) {
+    if ($currentTool?.fullName === fullName && !visible) {
       await toolBox?.setup?.(fullName)
       await setup?.(fullName)
       visible = true
@@ -71,7 +72,7 @@
           target.addEventListener(eventName, handler)
         }
       }
-      recordVisibility({ name: fullName, visible })
+      recordVisibility({ name, fullName, visible })
     }
   })
 
@@ -87,7 +88,7 @@
     visible = false
     await teardown?.(fullName)
     await toolBox?.teardown?.(fullName)
-    recordVisibility({ name: fullName, visible })
+    recordVisibility({ name, fullName, visible })
   }
 
   function makeEventHandler(name) {
@@ -118,7 +119,7 @@
   }
 </style>
 
-<span class="tool" class:visible data-tool-name={fullName}>
+<span class="tool" class:visible data-full-name={encodeURIComponent(fullName)}>
   {#if usesSlot}
     {#if visible}
       <slot props={allProps} {handleEvent} />

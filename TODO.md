@@ -1,8 +1,5 @@
 # Features
 
-- loading indicators
-- support function props
-
 ## Plugin
 
 - `setupPath` to be considered relative to `path`
@@ -10,11 +7,45 @@
 
 ## UI
 
+- layouts
+- programmatically send event
+- loading indicator
+- hide some props from pane
+- color picker
 - a dropdown button to select background colors
 - a dropdown button to select pre-defined viewports
 - warn on tool name collisions
 - graceful unhandled-rejection/uncaught-exception handling in Workbench
-- plugins?
+
+## Svelte
+
+- warn when neither ToolBox nor Tool has a component (and there are no slots)
+- pass props+events to setup/teardown
+- pass setup result as context/props?
+- ToolBox template?
+- issue with updating slot props :
+  ```svelte
+  <Tool
+    name="Components/Dialogue"
+    props={{ title: 'This is a title', open: true, noClose: false }}
+    events={['close', 'open']}
+    let:props
+    let:handleEvent
+  >
+    <Dialogue {...props} on:close={handleEvent} on:open={handleEvent}>
+      <div slot="content">
+        Here is an important message, that you absolutely need to be aware of.
+      </div>
+      <span slot="buttons">
+        <Button
+          on:click={() => (props.open = false)}
+          text={'Close'}
+          icon={'close'}
+        />
+      </span>
+    </Dialogue>
+  </Tool>
+  ```
 
 # Documentation
 

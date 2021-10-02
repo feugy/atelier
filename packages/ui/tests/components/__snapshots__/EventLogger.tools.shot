@@ -1,6 +1,20 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Toolshot components/EventLogger.tools.svelte 1`] = `
+exports[`Toolshot components/EventLogger.tools.svelte: Empty 1`] = `
+<span>
+  <div
+    class="root"
+  >
+    <div
+      class="disclaimer"
+    >
+      message.no-events
+    </div>
+  </div>
+</span>
+`;
+
+exports[`Toolshot components/EventLogger.tools.svelte: With events 1`] = `
 <div
   class="root"
 >
@@ -107,18 +121,4 @@ exports[`Toolshot components/EventLogger.tools.svelte 1`] = `
     </span>
   </button>
 </div>
-`;
-
-exports[`Toolshot components/EventLogger.tools.svelte 2`] = `
-<span>
-  <div
-    class="root"
-  >
-    <div
-      class="disclaimer"
-    >
-      message.no-events
-    </div>
-  </div>
-</span>
 `;

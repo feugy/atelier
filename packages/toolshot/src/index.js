@@ -85,10 +85,12 @@ export function configureToolshot({
 
             // ...and assert their rendering
             expect(
-              document.querySelector(`[data-tool-name="${tool.name}"]`)
-                .firstChild
+              document.querySelector(
+                `[data-full-name="${encodeURIComponent(tool.fullName)}"]`
+              ).firstChild
             ).toMatchSpecificSnapshot(
-              `${toolboxFolder}/${snapshotFolder}/${toolboxName}.shot`
+              `${toolboxFolder}/${snapshotFolder}/${toolboxName}.shot`,
+              tool.name
             )
           }
         } finally {
