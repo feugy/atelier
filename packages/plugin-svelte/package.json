@@ -1,6 +1,6 @@
 {
   "name": "@atelier-wb/vite-plugin-svelte",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "Vite plugin to process your svelte components",
   "main": "src/index.js",
   "scripts": {

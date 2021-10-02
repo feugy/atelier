@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.3.1](https://github.com/feugy/atelier/compare/v0.3.0...v0.3.1) (2021-10-02)
+
+### Bug Fixes
+
+- **plugin-svelte:** no such file or directory, scandir '@atelier-wb/ui/dist' ([cec03c0](https://github.com/feugy/atelier/commit/cec03c032058e8f7bfd0ce0f228e343fe2357928))
+
 ## [0.3.0](https://github.com/feugy/atelier/compare/v0.2.1...v0.3.0) (2021-10-02)
 
 ### Features
