@@ -53,5 +53,6 @@
 - How to develop plugins
 - How to release
   ```shell
+  npm run release:bump -- --release-as major|minor|patch
   npm publish --workspaces packages/* --access public
   ```

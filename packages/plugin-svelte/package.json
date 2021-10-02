@@ -8,6 +8,7 @@
     "test:dev": "jest --watch"
   },
   "dependencies": {
+    "@atelier-wb/ui": "^0.3.0",
     "ajv": "^8.6.3",
     "sirv": "^1.0.17"
   },
