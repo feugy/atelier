@@ -114,7 +114,7 @@ window.addEventListener('message', ({ origin, data }) => {
       current.set(data.data)
     } else if (data.type === 'updateProperty') {
       const { tool, name, value } = data.data || {}
-      updatePropertyByName.get(tool)?.(name, parse(value))
+      updatePropertyByName.get(tool.fullName)?.(name, parse(value))
     }
   }
 })
@@ -122,7 +122,7 @@ window.addEventListener('message', ({ origin, data }) => {
 export const currentTool = derived(current, n => n)
 
 export function registerTool(data) {
-  updatePropertyByName.set(data.name, data.updateProperty)
+  updatePropertyByName.set(data.fullName, data.updateProperty)
   postMessage({ type: 'registerTool', data })
 }
 

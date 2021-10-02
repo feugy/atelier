@@ -177,12 +177,12 @@ describe('stores', () => {
 
   describe('registerTool()', () => {
     it('sends tool details through postMessage', () => {
-      const name = faker.lorem.word()
-      registerTool({ name })
+      const fullName = faker.lorem.word()
+      registerTool({ fullName })
       expect(postMessage).toHaveBeenCalledWith(
         {
           type: 'registerTool',
-          data: { name }
+          data: { fullName }
         },
         origin
       )
@@ -190,10 +190,10 @@ describe('stores', () => {
     })
 
     it('updates tool properties when receiving updateProperty message', () => {
-      const tool1 = { name: faker.lorem.word(), updateProperty: jest.fn() }
+      const tool1 = { fullName: faker.lorem.word(), updateProperty: jest.fn() }
       registerTool(tool1)
 
-      const tool2 = { name: faker.lorem.word(), updateProperty: jest.fn() }
+      const tool2 = { fullName: faker.lorem.word(), updateProperty: jest.fn() }
       registerTool(tool2)
 
       const update2 = {
@@ -205,7 +205,7 @@ describe('stores', () => {
           origin,
           data: {
             type: 'updateProperty',
-            data: { tool: tool2.name, ...update2 }
+            data: { tool: tool2, ...update2 }
           }
         })
       )
@@ -226,7 +226,7 @@ describe('stores', () => {
           origin,
           data: {
             type: 'updateProperty',
-            data: { tool: tool1.name, ...update1 }
+            data: { tool: tool1, ...update1 }
           }
         })
       )
@@ -239,7 +239,7 @@ describe('stores', () => {
     })
 
     it('does not update tool properties when receiving updateProperty message of unknown tool', () => {
-      const tool = { name: faker.lorem.word(), updateProperty: jest.fn() }
+      const tool = { fullName: faker.lorem.word(), updateProperty: jest.fn() }
       registerTool(tool)
 
       window.dispatchEvent(
@@ -247,7 +247,11 @@ describe('stores', () => {
           origin,
           data: {
             type: 'updateProperty',
-            data: { tool: faker.lorem.words(), name: 'some-prop', value: 10 }
+            data: {
+              tool: { fullName: faker.lorem.words() },
+              name: 'some-prop',
+              value: 10
+            }
           }
         })
       )
@@ -258,7 +262,7 @@ describe('stores', () => {
           origin,
           data: {
             type: 'updateProperty',
-            data: { tool: faker.lorem.words() }
+            data: { tool: { fullName: faker.lorem.words() } }
           }
         })
       )
@@ -266,7 +270,7 @@ describe('stores', () => {
     })
 
     it('parse Arrays and Objects in property updates', () => {
-      const tool = { name: faker.lorem.word(), updateProperty: jest.fn() }
+      const tool = { fullName: faker.lorem.word(), updateProperty: jest.fn() }
       registerTool(tool)
 
       const name = faker.lorem.word()
@@ -280,7 +284,7 @@ describe('stores', () => {
           origin,
           data: {
             type: 'updateProperty',
-            data: { tool: tool.name, name, value }
+            data: { tool: tool, name, value }
           }
         })
       )
@@ -289,7 +293,7 @@ describe('stores', () => {
     })
 
     it('parse Maps and Sets in property updates', () => {
-      const tool = { name: faker.lorem.word(), updateProperty: jest.fn() }
+      const tool = { fullName: faker.lorem.word(), updateProperty: jest.fn() }
       registerTool(tool)
 
       const name = faker.lorem.word()
@@ -299,7 +303,7 @@ describe('stores', () => {
           data: {
             type: 'updateProperty',
             data: {
-              tool: tool.name,
+              tool: tool,
               name,
               value: {
                 type: 'Map',

@@ -1,6 +1,12 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Toolshot components/PaneContainer.tools.svelte 1`] = `
+exports[`Toolshot components/PaneContainer.tools.svelte: Empty 1`] = `
+<span>
+  
+</span>
+`;
+
+exports[`Toolshot components/PaneContainer.tools.svelte: Multiple tabs 1`] = `
 <span>
   <div
     class="root"
@@ -53,7 +59,7 @@ exports[`Toolshot components/PaneContainer.tools.svelte 1`] = `
 </span>
 `;
 
-exports[`Toolshot components/PaneContainer.tools.svelte 2`] = `
+exports[`Toolshot components/PaneContainer.tools.svelte: Single tab 1`] = `
 <span>
   <div
     class="root"
@@ -92,12 +98,6 @@ exports[`Toolshot components/PaneContainer.tools.svelte 2`] = `
        
     </main>
   </div>
-  
-</span>
-`;
-
-exports[`Toolshot components/PaneContainer.tools.svelte 3`] = `
-<span>
   
 </span>
 `;

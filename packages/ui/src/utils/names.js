@@ -26,7 +26,7 @@ function addToLevel(tool, level, legs) {
 export function groupByName(tools = []) {
   const level = new Map()
   for (const tool of tools) {
-    const legs = tool.name.split('/')
+    const legs = tool.fullName.split('/')
     addToLevel(tool, level, legs)
   }
   return level

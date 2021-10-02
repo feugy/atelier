@@ -137,7 +137,8 @@ describe('toolshot builder', () => {
       await sleep(100)
       expect(matchSpecificSnapshot).toHaveBeenCalledWith(
         document.querySelector('p'),
-        join(fixtures, '__snapshots__', 'single.tools.shot')
+        join(fixtures, '__snapshots__', 'single.tools.shot'),
+        'single tool'
       )
       expect(matchSpecificSnapshot).toHaveBeenCalledTimes(1)
     })
@@ -161,9 +162,24 @@ describe('toolshot builder', () => {
       h2.innerHTML = 'second'
       const h3 = document.createElement('h3')
       h3.innerHTML = 'third'
-      expect(matchSpecificSnapshot).toHaveBeenNthCalledWith(1, h1, snapshotFile)
-      expect(matchSpecificSnapshot).toHaveBeenNthCalledWith(2, h2, snapshotFile)
-      expect(matchSpecificSnapshot).toHaveBeenNthCalledWith(3, h3, snapshotFile)
+      expect(matchSpecificSnapshot).toHaveBeenNthCalledWith(
+        1,
+        h1,
+        snapshotFile,
+        'first tool'
+      )
+      expect(matchSpecificSnapshot).toHaveBeenNthCalledWith(
+        2,
+        h2,
+        snapshotFile,
+        'second tool'
+      )
+      expect(matchSpecificSnapshot).toHaveBeenNthCalledWith(
+        3,
+        h3,
+        snapshotFile,
+        'third tool'
+      )
       expect(matchSpecificSnapshot).toHaveBeenCalledTimes(3)
     })
 
@@ -178,7 +194,8 @@ describe('toolshot builder', () => {
       await sleep(100)
       expect(matchSpecificSnapshot).toHaveBeenCalledWith(
         document.querySelector('p'),
-        join(fixtures, '__custom__', 'single.tools.shot')
+        join(fixtures, '__custom__', 'single.tools.shot'),
+        'single tool'
       )
       expect(matchSpecificSnapshot).toHaveBeenCalledTimes(1)
     })

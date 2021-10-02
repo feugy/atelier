@@ -8,11 +8,11 @@ const tools$ = new BehaviorSubject([])
 const current$ = new BehaviorSubject()
 const events$ = new BehaviorSubject()
 
-function updateUrl(name) {
-  if (name) {
+function updateUrl(fullName) {
+  if (fullName) {
     const url = new URL(window.location)
-    url.searchParams.set('tool', name)
-    window.history.pushState({ name }, '', url)
+    url.searchParams.set('tool', fullName)
+    window.history.pushState({ fullName }, '', url)
   }
 }
 
@@ -35,7 +35,7 @@ function handleMessage({ origin, data }) {
 function registerTool(tool) {
   const { value: list } = tools$
 
-  const idx = list.findIndex(({ name }) => name === tool.name)
+  const idx = list.findIndex(({ fullName }) => fullName === tool.fullName)
 
   tools$.next([
     ...(idx === -1 ? list : [...list.slice(0, idx), ...list.slice(idx + 1)]),
@@ -46,7 +46,7 @@ function registerTool(tool) {
   const urlName = readToolFromUrl()
   if (
     (idx >= 0 && current$.value === list[idx]) ||
-    (!current$.value && (urlName === tool.name || !urlName))
+    (!current$.value && (urlName === tool.fullName || !urlName))
   ) {
     current$.next(tool)
   }
@@ -60,13 +60,13 @@ function postMessage(type, data) {
 
 current$.subscribe(data => {
   postMessage('selectTool', data)
-  updateUrl(data?.name)
+  updateUrl(data?.fullName)
 })
 
 window.addEventListener('popstate', ({ state }) => {
-  if (state?.name) {
+  if (state?.fullName) {
     for (const tool of tools$.value) {
-      if (state.name === tool.name) {
+      if (state.fullName === tool.fullName) {
         current$.next(tool)
         break
       }
@@ -104,7 +104,7 @@ export function selectTool(tool) {
 
 export function updateProperty({ detail } = {}) {
   if (current$.value && detail instanceof Object) {
-    postMessage('updateProperty', { ...detail, tool: current$.value.name })
+    postMessage('updateProperty', { ...detail, tool: current$.value })
   }
 }
 

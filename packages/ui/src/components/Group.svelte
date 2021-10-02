@@ -15,7 +15,9 @@
   )
   $: if (current && entries) {
     // automatically expand ancestors of the current tool
-    const ancestor = entries.find(([leg]) => current.name.includes(`${leg}/`))
+    const ancestor = entries.find(([leg]) =>
+      current.fullName.includes(`${leg}/`)
+    )
     if (ancestor) {
       expanded[ancestor[0]] = true
     }
@@ -23,7 +25,7 @@
 
   function toggleExpansion(name) {
     // can collapse and expand any node but current tool's ancestors
-    if (!current?.name.includes(`${name}/`)) {
+    if (!current?.fullName.includes(`${name}/`)) {
       expanded = { ...expanded, [name]: !expanded[name] }
     }
   }

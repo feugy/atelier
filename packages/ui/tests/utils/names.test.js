@@ -8,17 +8,21 @@ describe('groupByName() utility', () => {
   })
 
   it('does not group tools without parents', () => {
-    const tools = [{ name: 'tool1' }, { name: 'tool2' }, { name: 'tool3' }]
+    const tools = [
+      { fullName: 'tool1' },
+      { fullName: 'tool2' },
+      { fullName: 'tool3' }
+    ]
     expect(groupByName(tools)).toEqual(
-      new Map(tools.map(tool => [tool.name, tool]))
+      new Map(tools.map(tool => [tool.fullName, tool]))
     )
   })
 
   it('splits parents', () => {
     const tools = [
-      { name: 'a/tool1' },
-      { name: 'tool2' },
-      { name: 'b/c/tool3' }
+      { fullName: 'a/tool1' },
+      { fullName: 'tool2' },
+      { fullName: 'b/c/tool3' }
     ]
     expect(groupByName(tools)).toEqual(
       new Map([
@@ -31,9 +35,9 @@ describe('groupByName() utility', () => {
 
   it('group parents', () => {
     const tools = [
-      { name: 'a/tool1' },
-      { name: 'tool2' },
-      { name: 'a/c/tool3' }
+      { fullName: 'a/tool1' },
+      { fullName: 'tool2' },
+      { fullName: 'a/c/tool3' }
     ]
     expect(groupByName(tools)).toEqual(
       new Map([
@@ -51,11 +55,11 @@ describe('groupByName() utility', () => {
 
   it('can group without name', () => {
     const tools = [
-      { name: 'a/tool1' },
-      { name: 'a' },
-      { name: 'a/c/tool3' },
-      { name: 'b' },
-      { name: 'b/tool2' }
+      { fullName: 'a/tool1' },
+      { fullName: 'a' },
+      { fullName: 'a/c/tool3' },
+      { fullName: 'b' },
+      { fullName: 'b/tool2' }
     ]
     expect(groupByName(tools)).toEqual(
       new Map([
