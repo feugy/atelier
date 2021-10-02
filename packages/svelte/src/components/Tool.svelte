@@ -38,7 +38,7 @@
   }
   const Component = toolBox?.component || component
   const fullName = toolBox?.name ? `${toolBox.name}/${name}` : name
-  const allProps = { ...(toolBox?.props || {}), ...props }
+  let allProps = { ...(toolBox?.props || {}), ...props }
   const allEvents = [...(toolBox?.events || []), ...events]
 
   onMount(() =>
@@ -59,8 +59,19 @@
 
   afterUpdate(async () => {
     if ($currentTool?.fullName === fullName && !visible) {
-      await toolBox?.setup?.(fullName)
-      await setup?.(fullName)
+      let overrides = await toolBox?.setup?.({
+        name,
+        fullName,
+        props: allProps
+      })
+      overrides = await setup?.({
+        name,
+        fullName,
+        props: overrides || allProps
+      })
+      if (overrides) {
+        allProps = overrides
+      }
       visible = true
       if (!usesSlot && !instance && target && Component) {
         instance = new Component({ target, props: allProps })

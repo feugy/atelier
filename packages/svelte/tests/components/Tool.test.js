@@ -327,7 +327,15 @@ describe('Tool component', () => {
     it('calls tool setup before displaying it', async () => {
       const name = faker.lorem.words()
       const setup = jest.fn().mockResolvedValue()
-      render(html`<${Tool} name=${name} component=${Button} setup=${setup} />`)
+      const props = { label: 'Aww yeah' }
+      render(
+        html`<${Tool}
+          name=${name}
+          component=${Button}
+          props=${props}
+          setup=${setup}
+        />`
+      )
       await tick()
 
       expect(screen.queryByRole('button')).not.toBeInTheDocument()
@@ -336,6 +344,7 @@ describe('Tool component', () => {
       currentTool.set({ fullName: name, name })
       await tick()
       await tick()
+      expect(setup).toHaveBeenCalledWith({ name, fullName: name, props })
       expect(setup).toHaveBeenCalledTimes(1)
       await waitFor(() =>
         expect(recordVisibility).toHaveBeenCalledWith({
@@ -344,13 +353,46 @@ describe('Tool component', () => {
           visible: true
         })
       )
-      expect(screen.queryByRole('button')).toBeInTheDocument()
+      const button = screen.queryByRole('button')
+      expect(button).toBeInTheDocument()
+      expect(button).toHaveTextContent(props.label)
+    })
+
+    it('overrides props with setup results', async () => {
+      const name = faker.lorem.words()
+      const props = { label: 'Aww yeah' }
+      const finalProps = { label: 'overridden' }
+      const setup = jest.fn().mockResolvedValue(finalProps)
+      currentTool.set({ fullName: name, name })
+      render(
+        html`<${Tool}
+          name=${name}
+          component=${Button}
+          props=${props}
+          setup=${setup}
+        />`
+      )
+      await waitFor(() =>
+        expect(recordVisibility).toHaveBeenCalledWith({
+          name,
+          fullName: name,
+          visible: true
+        })
+      )
+      expect(setup).toHaveBeenCalledWith({ name, fullName: name, props })
+      expect(setup).toHaveBeenCalledTimes(1)
+      const button = screen.queryByRole('button')
+      expect(button).toBeInTheDocument()
+      expect(button).toHaveTextContent(finalProps.label)
     })
 
     it('calls tool setup before displaying within a slot', async () => {
       const name = faker.lorem.words()
       const setup = jest.fn().mockResolvedValue()
-      render(html`<${Tool} name=${name} setup=${setup}><${Button} /></${Tool}>`)
+      const props = { label: 'Aww yeah' }
+      render(
+        html`<${Tool} name=${name} props=${props} setup=${setup}><${Button} /></${Tool}>`
+      )
       await tick()
       await tick()
 
@@ -360,6 +402,7 @@ describe('Tool component', () => {
       currentTool.set({ fullName: name, name })
       await tick()
       await tick()
+      expect(setup).toHaveBeenCalledWith({ name, fullName: name, props })
       expect(setup).toHaveBeenCalledTimes(1)
       await waitFor(() =>
         expect(recordVisibility).toHaveBeenCalledWith({
@@ -694,48 +737,106 @@ describe('Tool component', () => {
     it('calls toolbox setup, then tool setup before displaying it', async () => {
       const toolBoxName = faker.lorem.words()
       const name = faker.lorem.words()
+      const fullName = `${toolBoxName}/${name}`
       const setup = jest.fn().mockResolvedValue()
       const toolSetup = jest.fn().mockResolvedValue()
+      const props = { label: 'Aww yeah', disabled: true }
       render(html`<${ToolBox}
         name=${toolBoxName}
         component=${Button}
+        props=${{ label: props.label }}
         setup=${setup}
       >
-        <${Tool} name=${name} setup=${toolSetup} />
+        <${Tool} name=${name} props=${{
+        disabled: props.disabled
+      }} setup=${toolSetup} />
       </${ToolBox}>`)
       await tick()
 
       expect(setup).not.toHaveBeenCalled()
       expect(toolSetup).not.toHaveBeenCalled()
 
-      currentTool.set({ name, fullName: `${toolBoxName}/${name}` })
+      currentTool.set({ name, fullName })
       await tick()
+      expect(setup).toHaveBeenCalledWith({ name, fullName, props })
       expect(setup).toHaveBeenCalledTimes(1)
       expect(toolSetup).not.toHaveBeenCalled()
-      await waitFor(() => expect(toolSetup).toHaveBeenCalledTimes(1))
+      await waitFor(() =>
+        expect(toolSetup).toHaveBeenCalledWith({ name, fullName, props })
+      )
+      expect(toolSetup).toHaveBeenCalledTimes(1)
       await waitFor(() =>
         expect(recordVisibility).toHaveBeenCalledWith({
           name,
-          fullName: `${toolBoxName}/${name}`,
+          fullName,
           visible: true
         })
       )
     })
 
+    it('overrides props with setup results', async () => {
+      const toolBoxName = faker.lorem.words()
+      const name = faker.lorem.words()
+      const fullName = `${toolBoxName}/${name}`
+      const props = { label: 'Aww yeah', disabled: true }
+      const intermediateProps = { label: 'intermediate' }
+      const finalProps = { label: 'overridden' }
+      const setup = jest.fn().mockResolvedValue(intermediateProps)
+      const toolSetup = jest.fn().mockResolvedValue(finalProps)
+      currentTool.set({ fullName, name })
+      render(html`<${ToolBox}
+        name=${toolBoxName}
+        component=${Button}
+        props=${{ label: props.label }}
+        setup=${setup}
+      >
+        <${Tool} name=${name} props=${{
+        disabled: props.disabled
+      }} setup=${toolSetup} />
+      </${ToolBox}>`)
+      await waitFor(() =>
+        expect(recordVisibility).toHaveBeenCalledWith({
+          name,
+          fullName,
+          visible: true
+        })
+      )
+      expect(setup).toHaveBeenCalledWith({ name, fullName, props })
+      expect(setup).toHaveBeenCalledTimes(1)
+      expect(toolSetup).toHaveBeenCalledWith({
+        name,
+        fullName,
+        props: intermediateProps
+      })
+      expect(toolSetup).toHaveBeenCalledTimes(1)
+      const button = screen.queryByRole('button')
+      expect(button).toBeInTheDocument()
+      expect(button).toHaveTextContent(finalProps.label)
+    })
+
     it('calls setups on every tool change', async () => {
       const toolBoxName = faker.lorem.words()
       const name1 = faker.lorem.words()
+      const fullName1 = `${toolBoxName}/${name1}`
+      const props1 = { label: 'Aww yeah', disabled: true }
       const name2 = faker.lorem.words()
+      const fullName2 = `${toolBoxName}/${name2}`
+      const props2 = { label: 'Aww yeah', disabled: false }
       const setup = jest.fn().mockResolvedValue()
       const toolSetup1 = jest.fn().mockResolvedValue()
       const toolSetup2 = jest.fn().mockResolvedValue()
       render(html`<${ToolBox}
         name=${toolBoxName}
         component=${Button}
+        props=${{ label: props1.label }}
         setup=${setup}
       >
-        <${Tool} name=${name1} setup=${toolSetup1} />
-        <${Tool} name=${name2} setup=${toolSetup2} />
+        <${Tool} name=${name1} props=${{
+        disabled: props1.disabled
+      }} setup=${toolSetup1} />
+        <${Tool} name=${name2} props=${{
+        disabled: props2.disabled
+      }} setup=${toolSetup2} />
       </${ToolBox}>`)
       await tick()
 
@@ -743,35 +844,59 @@ describe('Tool component', () => {
       expect(toolSetup1).not.toHaveBeenCalled()
       expect(toolSetup2).not.toHaveBeenCalled()
 
-      currentTool.set({ name: name1, fullName: `${toolBoxName}/${name1}` })
+      currentTool.set({ name: name1, fullName: fullName1 })
       await tick()
+      expect(setup).toHaveBeenCalledWith({
+        name: name1,
+        fullName: fullName1,
+        props: props1
+      })
       expect(setup).toHaveBeenCalledTimes(1)
       expect(toolSetup1).not.toHaveBeenCalled()
-      await waitFor(() => expect(toolSetup1).toHaveBeenCalledTimes(1))
+      await waitFor(() =>
+        expect(toolSetup1).toHaveBeenCalledWith({
+          name: name1,
+          fullName: fullName1,
+          props: props1
+        })
+      )
+      expect(toolSetup1).toHaveBeenCalledTimes(1)
       expect(toolSetup2).not.toHaveBeenCalled()
       expect(recordVisibility).toHaveBeenNthCalledWith(1, {
         name: name1,
-        fullName: `${toolBoxName}/${name1}`,
+        fullName: fullName1,
         visible: true
       })
 
       setup.mockClear()
       toolSetup1.mockClear()
 
-      currentTool.set({ name: name2, fullName: `${toolBoxName}/${name2}` })
+      currentTool.set({ name: name2, fullName: fullName2 })
       await tick()
+      expect(setup).toHaveBeenCalledWith({
+        name: name2,
+        fullName: fullName2,
+        props: props2
+      })
       expect(setup).toHaveBeenCalledTimes(1)
       expect(toolSetup2).not.toHaveBeenCalled()
-      await waitFor(() => expect(toolSetup2).toHaveBeenCalledTimes(1))
+      await waitFor(() =>
+        expect(toolSetup2).toHaveBeenCalledWith({
+          name: name2,
+          fullName: fullName2,
+          props: props2
+        })
+      )
+      expect(toolSetup2).toHaveBeenCalledTimes(1)
       expect(recordVisibility).toHaveBeenNthCalledWith(2, {
         name: name1,
-        fullName: `${toolBoxName}/${name1}`,
+        fullName: fullName1,
         visible: false
       })
       expect(toolSetup1).not.toHaveBeenCalled()
       expect(recordVisibility).toHaveBeenNthCalledWith(3, {
         name: name2,
-        fullName: `${toolBoxName}/${name2}`,
+        fullName: fullName2,
         visible: true
       })
     })

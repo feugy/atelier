@@ -19,8 +19,6 @@
 ## Svelte
 
 - warn when neither ToolBox nor Tool has a component (and there are no slots)
-- pass props+events to setup/teardown
-- pass setup result as context/props?
 - ToolBox template?
 - issue with updating slot props :
   ```svelte
