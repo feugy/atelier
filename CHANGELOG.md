@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.3.0](https://github.com/feugy/atelier/compare/v0.2.1...v0.3.0) (2021-10-02)
+
+### Features
+
+- **svelte:** allows to programmatically record events ([#7](https://github.com/feugy/atelier/issues/7)) ([b71c34d](https://github.com/feugy/atelier/commit/b71c34da66403f4d4365a546f27b35759e13c654))
+- **svelte:** passes and overrides tool props with setup functions ([#8](https://github.com/feugy/atelier/issues/8)) ([4d38fdd](https://github.com/feugy/atelier/commit/4d38fdd31f73e02d7a3dd59e68f67468e0414ac5))
+- **toolshot:** uses tool short name in snapshot ([#6](https://github.com/feugy/atelier/issues/6)) ([ef4b55d](https://github.com/feugy/atelier/commit/ef4b55db32d2fed0ca5f6674378f514a26c4e994))
+
 ### [0.2.1](https://github.com/feugy/atelier/compare/v0.2.0...v0.2.1) (2021-09-30)
 
 ### Bug Fixes
