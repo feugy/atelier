@@ -59,8 +59,8 @@
 
   afterUpdate(async () => {
     if ($currentTool?.fullName === fullName && !visible) {
-      await toolBox?.setup?.(fullName)
-      await setup?.(fullName)
+      await toolBox?.setup?.({ name, fullName, props: allProps })
+      await setup?.({ name, fullName, props: allProps })
       visible = true
       if (!usesSlot && !instance && target && Component) {
         instance = new Component({ target, props: allProps })
