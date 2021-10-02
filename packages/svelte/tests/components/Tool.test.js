@@ -353,7 +353,37 @@ describe('Tool component', () => {
           visible: true
         })
       )
-      expect(screen.queryByRole('button')).toBeInTheDocument()
+      const button = screen.queryByRole('button')
+      expect(button).toBeInTheDocument()
+      expect(button).toHaveTextContent(props.label)
+    })
+
+    it('overrides props with setup results', async () => {
+      const name = faker.lorem.words()
+      const props = { label: 'Aww yeah' }
+      const finalProps = { label: 'overridden' }
+      const setup = jest.fn().mockResolvedValue(finalProps)
+      currentTool.set({ fullName: name, name })
+      render(
+        html`<${Tool}
+          name=${name}
+          component=${Button}
+          props=${props}
+          setup=${setup}
+        />`
+      )
+      await waitFor(() =>
+        expect(recordVisibility).toHaveBeenCalledWith({
+          name,
+          fullName: name,
+          visible: true
+        })
+      )
+      expect(setup).toHaveBeenCalledWith({ name, fullName: name, props })
+      expect(setup).toHaveBeenCalledTimes(1)
+      const button = screen.queryByRole('button')
+      expect(button).toBeInTheDocument()
+      expect(button).toHaveTextContent(finalProps.label)
     })
 
     it('calls tool setup before displaying within a slot', async () => {
@@ -742,6 +772,46 @@ describe('Tool component', () => {
           visible: true
         })
       )
+    })
+
+    it('overrides props with setup results', async () => {
+      const toolBoxName = faker.lorem.words()
+      const name = faker.lorem.words()
+      const fullName = `${toolBoxName}/${name}`
+      const props = { label: 'Aww yeah', disabled: true }
+      const intermediateProps = { label: 'intermediate' }
+      const finalProps = { label: 'overridden' }
+      const setup = jest.fn().mockResolvedValue(intermediateProps)
+      const toolSetup = jest.fn().mockResolvedValue(finalProps)
+      currentTool.set({ fullName, name })
+      render(html`<${ToolBox}
+        name=${toolBoxName}
+        component=${Button}
+        props=${{ label: props.label }}
+        setup=${setup}
+      >
+        <${Tool} name=${name} props=${{
+        disabled: props.disabled
+      }} setup=${toolSetup} />
+      </${ToolBox}>`)
+      await waitFor(() =>
+        expect(recordVisibility).toHaveBeenCalledWith({
+          name,
+          fullName,
+          visible: true
+        })
+      )
+      expect(setup).toHaveBeenCalledWith({ name, fullName, props })
+      expect(setup).toHaveBeenCalledTimes(1)
+      expect(toolSetup).toHaveBeenCalledWith({
+        name,
+        fullName,
+        props: intermediateProps
+      })
+      expect(toolSetup).toHaveBeenCalledTimes(1)
+      const button = screen.queryByRole('button')
+      expect(button).toBeInTheDocument()
+      expect(button).toHaveTextContent(finalProps.label)
     })
 
     it('calls setups on every tool change', async () => {
