@@ -8,7 +8,6 @@
 ## UI
 
 - layouts
-- programmatically send event
 - loading indicator
 - hide some props from pane
 - color picker

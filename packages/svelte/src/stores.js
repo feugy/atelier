@@ -126,8 +126,13 @@ export function registerTool(data) {
   postMessage({ type: 'registerTool', data })
 }
 
-export function recordEvent(...args) {
-  postMessage({ type: 'recordEvent', args })
+/**
+ * Records a DOM or custom event into the UI.
+ * @param {string} name - the event name
+ * @param {...any} args - optional argument recorded in the UI
+ */
+export function recordEvent(name, ...args) {
+  postMessage({ type: 'recordEvent', name, args })
 }
 
 export function recordVisibility(data) {

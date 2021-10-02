@@ -26,8 +26,7 @@ function handleMessage({ origin, data }) {
     if (data.type === 'registerTool') {
       registerTool(data.data)
     } else if (data.type === 'recordEvent') {
-      const [name, ...args] = data.args
-      events$.next({ name, args, time: Date.now() })
+      events$.next({ ...data, time: Date.now() })
     }
   }
 }

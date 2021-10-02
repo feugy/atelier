@@ -36,7 +36,8 @@ describe('stores', () => {
       expect(postMessage).toHaveBeenCalledWith(
         {
           type: 'recordEvent',
-          args: [name]
+          name,
+          args: []
         },
         origin
       )
@@ -54,8 +55,8 @@ describe('stores', () => {
       expect(postMessage).toHaveBeenCalledWith(
         {
           type: 'recordEvent',
+          name,
           args: [
-            name,
             {
               altKey: false,
               button: 0,
@@ -88,8 +89,8 @@ describe('stores', () => {
       expect(postMessage).toHaveBeenCalledWith(
         {
           type: 'recordEvent',
+          name,
           args: [
-            name,
             {
               cancelable: false,
               currentTarget: null,
@@ -111,7 +112,8 @@ describe('stores', () => {
       expect(postMessage).toHaveBeenCalledWith(
         {
           type: 'recordEvent',
-          args: [name, [1, 2, 3, 4]]
+          name,
+          args: [[1, 2, 3, 4]]
         },
         origin
       )
@@ -125,7 +127,8 @@ describe('stores', () => {
       expect(postMessage).toHaveBeenCalledWith(
         {
           type: 'recordEvent',
-          args: [name, function1.toString(), function2.toString()]
+          name,
+          args: [function1.toString(), function2.toString()]
         },
         origin
       )
@@ -138,8 +141,8 @@ describe('stores', () => {
       expect(postMessage).toHaveBeenCalledWith(
         {
           type: 'recordEvent',
+          name,
           args: [
-            name,
             { type: 'Set', values: ['a', 'b', { type: 'Set', values: ['c'] }] }
           ]
         },
@@ -157,8 +160,8 @@ describe('stores', () => {
       expect(postMessage).toHaveBeenCalledWith(
         {
           type: 'recordEvent',
+          name,
           args: [
-            name,
             {
               type: 'Map',
               values: [

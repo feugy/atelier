@@ -95,8 +95,8 @@
     return (...args) => recordEvent(name, ...args)
   }
 
-  function handleEvent(evt, ...args) {
-    recordEvent(evt.type, evt, ...args)
+  function handleEvent(...args) {
+    recordEvent(args[0].type, ...args)
   }
 
   function updateProperty(name, value) {
