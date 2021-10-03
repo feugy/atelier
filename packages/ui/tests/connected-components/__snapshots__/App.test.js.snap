@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`App connected component displays explorer and pane container 1`] = `
+exports[`App connected component displays explorer, pane container and loader 1`] = `
 <body>
   <div>
      
@@ -53,6 +53,19 @@ exports[`App connected component displays explorer and pane container 1`] = `
       <div
         class="viewport"
       >
+        <svg
+          role="progress"
+          viewBox="22 22 44 44"
+        >
+          <circle
+            cx="44"
+            cy="44"
+            fill="none"
+            r="20.2"
+            stroke-width="3.6"
+          />
+        </svg>
+         
         <iframe
           class="fullscreen"
           src="workframe.html"

@@ -1,0 +1,18 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Toolshot components/Loader.tools.svelte: Components/Loader 1`] = `
+<span>
+  <svg
+    role="progress"
+    viewBox="22 22 44 44"
+  >
+    <circle
+      cx="44"
+      cy="44"
+      fill="none"
+      r="20.2"
+      stroke-width="3.6"
+    />
+  </svg>
+</span>
+`;

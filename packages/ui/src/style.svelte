@@ -2,6 +2,7 @@
   @import 'material-design-icons-iconfont';
 
   @tailwind base;
+  @tailwind utilities;
 
   .material-icons {
     vertical-align: -0.2em;

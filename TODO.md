@@ -7,7 +7,6 @@
 
 ## UI
 
-- loading indicator
 - hide some props from pane
 - color picker
 - a dropdown button to select background colors

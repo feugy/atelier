@@ -4,7 +4,13 @@
   import * as EventsPane from './EventsPane.svelte'
   import * as PropertiesPane from './PropertiesPane.svelte'
   import '../common'
-  import { Explorer, Frame, PaneContainer, Toolbar } from '../components'
+  import {
+    Explorer,
+    Frame,
+    Loader,
+    PaneContainer,
+    Toolbar
+  } from '../components'
   import {
     currentTool,
     events,
@@ -15,6 +21,11 @@
 
   let frame
   let viewport
+  let loading = true
+  $: if ($currentTool) {
+    loading = false
+  }
+  $: console.log('loading', loading)
 
   onMount(() => setWorkbenchFrame(frame))
 </script>
@@ -47,6 +58,7 @@
 </Explorer>
 <main>
   <div class="viewport" bind:this={viewport}>
+    {#if loading}<Loader />{/if}
     <Frame bind:frame layout={$currentTool?.data?.layout} />
   </div>
   <PaneContainer
