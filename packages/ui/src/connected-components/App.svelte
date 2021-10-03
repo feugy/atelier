@@ -22,9 +22,10 @@
   let frame
   let viewport
   let loading = true
-  $: if ($currentTool !== null) {
+  $: if ($currentTool) {
     loading = false
   }
+  $: console.log('loading', loading)
 
   onMount(() => setWorkbenchFrame(frame))
 </script>
