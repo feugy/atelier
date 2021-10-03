@@ -3,13 +3,14 @@
   import PaneDisclaimer from './PaneDisclaimer.svelte'
 
   export let tabs = []
-  export let currentTool
+  export let currentTool = null
+  export let events = null
   let main
   let selected = 0
 
   // compute tab enablity statuses
   $: tabEnability = tabs.map(
-    ({ isEnabled }) => currentTool && isEnabled($currentTool)
+    ({ isEnabled }) => currentTool && isEnabled($currentTool, $events)
   )
   // retain selected tab if it still points at an existing, enabled tab, or find first enabled tab
   $: selected =

@@ -7,6 +7,7 @@
   import { Explorer, Frame, PaneContainer, Toolbar } from '../components'
   import {
     currentTool,
+    events,
     selectTool,
     setWorkbenchFrame,
     toolsMap
@@ -50,6 +51,7 @@
   </div>
   <PaneContainer
     {currentTool}
+    {events}
     tabs={[
       {
         name: $_('tab.properties'),
