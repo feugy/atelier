@@ -7,6 +7,7 @@
 
 ## UI
 
+- automatically shows event panel when receiving event
 - layouts
 - loading indicator
 - hide some props from pane

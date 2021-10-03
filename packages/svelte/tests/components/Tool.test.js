@@ -35,7 +35,16 @@ describe('Tool component', () => {
     it('registers tool and renders component when being current', async () => {
       const name = faker.lorem.words()
       currentTool.set({ fullName: name, name })
-      render(html`<${Tool} name=${name} component=${Button} />`)
+      const data = { foo: faker.datatype.uuid() }
+      const custom = [faker.datatype.number(), faker.datatype.number()]
+      render(
+        html`<${Tool}
+          name=${name}
+          component=${Button}
+          custom=${custom}
+          data=${data}
+        />`
+      )
       await waitFor(() =>
         expect(recordVisibility).toHaveBeenCalledWith({
           name,
@@ -50,7 +59,8 @@ describe('Tool component', () => {
         fullName: name,
         props: {},
         events: [],
-        updateProperty: expect.any(Function)
+        updateProperty: expect.any(Function),
+        data: { data, custom }
       })
       expect(registerTool).toHaveBeenCalledTimes(1)
       expect(recordEvent).not.toHaveBeenCalled()
@@ -64,7 +74,8 @@ describe('Tool component', () => {
         fullName: name,
         props: {},
         events: [],
-        updateProperty: expect.any(Function)
+        updateProperty: expect.any(Function),
+        data: {}
       })
       await tick()
       expect(screen.queryByRole('button')).not.toBeInTheDocument()
@@ -83,7 +94,8 @@ describe('Tool component', () => {
         fullName: name,
         props: {},
         events: [],
-        updateProperty: expect.any(Function)
+        updateProperty: expect.any(Function),
+        data: {}
       })
       expect(registerTool).toHaveBeenCalledTimes(1)
 
@@ -107,7 +119,8 @@ describe('Tool component', () => {
         fullName: name,
         props,
         events: [],
-        updateProperty: expect.any(Function)
+        updateProperty: expect.any(Function),
+        data: {}
       })
       expect(registerTool).toHaveBeenCalledTimes(1)
 
@@ -141,7 +154,8 @@ describe('Tool component', () => {
         fullName: name,
         props,
         events: [],
-        updateProperty: expect.any(Function)
+        updateProperty: expect.any(Function),
+        data: {}
       })
       expect(registerTool).toHaveBeenCalledTimes(1)
 
@@ -168,7 +182,8 @@ describe('Tool component', () => {
         fullName: name,
         props: {},
         events: [],
-        updateProperty: expect.any(Function)
+        updateProperty: expect.any(Function),
+        data: {}
       })
 
       await waitFor(() =>
@@ -205,7 +220,8 @@ describe('Tool component', () => {
         fullName: name,
         props: {},
         events: [],
-        updateProperty: expect.any(Function)
+        updateProperty: expect.any(Function),
+        data: {}
       })
       await waitFor(() =>
         expect(recordVisibility).toHaveBeenCalledWith({
@@ -240,7 +256,8 @@ describe('Tool component', () => {
         fullName: name,
         props: {},
         events,
-        updateProperty: expect.any(Function)
+        updateProperty: expect.any(Function),
+        data: {}
       })
       await waitFor(() =>
         expect(recordVisibility).toHaveBeenCalledWith({
@@ -282,7 +299,8 @@ describe('Tool component', () => {
         fullName: name,
         props: {},
         events,
-        updateProperty: expect.any(Function)
+        updateProperty: expect.any(Function),
+        data: {}
       })
       expect(recordEvent).not.toHaveBeenCalled()
       await waitFor(() =>
@@ -496,10 +514,13 @@ describe('Tool component', () => {
     it('registers tool and renders component when being current', async () => {
       const name = faker.lorem.words()
       const toolBoxName = faker.lorem.words()
+      const data = { foo: faker.datatype.uuid() }
+      const toolData = { bar: faker.datatype.uuid() }
+      const custom = [faker.datatype.number(), faker.datatype.number()]
       currentTool.set({ name, fullName: `${toolBoxName}/${name}` })
       render(
-        html`<${ToolBox} name=${toolBoxName} component=${Button}>
-          <${Tool} name=${name} />
+        html`<${ToolBox} name=${toolBoxName} component=${Button} data=${data} custom=${custom}>
+          <${Tool} name=${name} data=${toolData}/>
         </${ToolBox}>`
       )
       await waitFor(() =>
@@ -515,7 +536,8 @@ describe('Tool component', () => {
         fullName: `${toolBoxName}/${name}`,
         props: {},
         events: [],
-        updateProperty: expect.any(Function)
+        updateProperty: expect.any(Function),
+        data: { data: toolData, custom }
       })
       expect(registerTool).toHaveBeenCalledTimes(1)
       expect(recordEvent).not.toHaveBeenCalled()
@@ -525,10 +547,14 @@ describe('Tool component', () => {
       const name1 = faker.lorem.words()
       const name2 = faker.lorem.words()
       const toolBoxName = faker.lorem.words()
+      const data = { foo: faker.lorem.words() }
+      const toolData = { bar: faker.lorem.words() }
+      const custom = [faker.datatype.uuid()]
+      const other = faker.commerce.productName()
       render(
-        html`<${ToolBox} name=${toolBoxName} component=${Button}>
-          <${Tool} name=${name1} />
-          <${Tool} name=${name2} />
+        html`<${ToolBox} name=${toolBoxName} component=${Button} data=${data} custom=${custom}>
+          <${Tool} name=${name1} data=${toolData} />
+          <${Tool} name=${name2} other=${other} />
         </${ToolBox}>`
       )
       expect(registerTool).toHaveBeenCalledWith({
@@ -536,14 +562,23 @@ describe('Tool component', () => {
         fullName: `${toolBoxName}/${name1}`,
         props: {},
         events: [],
-        updateProperty: expect.any(Function)
+        updateProperty: expect.any(Function),
+        data: {
+          data: toolData,
+          custom: custom
+        }
       })
       expect(registerTool).toHaveBeenCalledWith({
         name: name2,
         fullName: `${toolBoxName}/${name2}`,
         props: {},
         events: [],
-        updateProperty: expect.any(Function)
+        updateProperty: expect.any(Function),
+        data: {
+          data: data,
+          custom: custom,
+          other: other
+        }
       })
       await tick()
       expect(registerTool).toHaveBeenCalledTimes(2)
@@ -566,14 +601,16 @@ describe('Tool component', () => {
         fullName: `${toolBoxName}/${name1}`,
         props: {},
         events: [],
-        updateProperty: expect.any(Function)
+        updateProperty: expect.any(Function),
+        data: {}
       })
       expect(registerTool).toHaveBeenCalledWith({
         name: name2,
         fullName: `${toolBoxName}/${name2}`,
         props: {},
         events: [],
-        updateProperty: expect.any(Function)
+        updateProperty: expect.any(Function),
+        data: {}
       })
 
       component.$set({ name: faker.lorem.words() })
@@ -612,7 +649,8 @@ describe('Tool component', () => {
         fullName: `${toolBox.name}/${tool.name}`,
         props: { ...toolBox.props, ...tool.props },
         events: [],
-        updateProperty: expect.any(Function)
+        updateProperty: expect.any(Function),
+        data: {}
       })
       await waitFor(() =>
         expect(recordVisibility).toHaveBeenCalledWith({
@@ -646,7 +684,8 @@ describe('Tool component', () => {
         fullName: `${toolBox.name}/${tool.name}`,
         props: {},
         events: [],
-        updateProperty: expect.any(Function)
+        updateProperty: expect.any(Function),
+        data: {}
       })
       await waitFor(() =>
         expect(recordVisibility).toHaveBeenCalledWith({
@@ -696,7 +735,8 @@ describe('Tool component', () => {
         fullName: `${toolBox.name}/${tool.name}`,
         props: {},
         events: [...toolBox.events, ...tool.events],
-        updateProperty: expect.any(Function)
+        updateProperty: expect.any(Function),
+        data: {}
       })
       await waitFor(() =>
         expect(recordVisibility).toHaveBeenCalledWith({
