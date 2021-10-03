@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.4.0](https://github.com/feugy/atelier/compare/v0.3.1...v0.4.0) (2021-10-03)
+
+### Features
+
+- **ui:** adds loading indicator ([#11](https://github.com/feugy/atelier/issues/11)) ([b50ef73](https://github.com/feugy/atelier/commit/b50ef731b65b53b9f499f150e22ff32c2cf2f1c4))
+- **ui:** automatically shows event panel when receiving event ([#10](https://github.com/feugy/atelier/issues/10)) ([fde7f6b](https://github.com/feugy/atelier/commit/fde7f6bde65ed25ecfd769b2a3b548cd049802b4))
+- **ui:** introduces layouts ([#9](https://github.com/feugy/atelier/issues/9)) ([9583e7f](https://github.com/feugy/atelier/commit/9583e7f8b695bc6becb14e3a81a2602a880b184f))
+
 ### [0.3.1](https://github.com/feugy/atelier/compare/v0.3.0...v0.3.1) (2021-10-02)
 
 ### Bug Fixes
