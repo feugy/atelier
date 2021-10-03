@@ -53,6 +53,7 @@ exports[`App connected component displays explorer and pane container 1`] = `
       <div
         class="viewport"
       >
+         
         <iframe
           class="fullscreen"
           src="workframe.html"
