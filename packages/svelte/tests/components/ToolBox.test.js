@@ -24,7 +24,8 @@ describe('ToolBox component', () => {
       events: [],
       props: {},
       setup: null,
-      teardown: null
+      teardown: null,
+      data: {}
     })
   })
 
@@ -34,8 +35,10 @@ describe('ToolBox component', () => {
     const component = faker.datatype.uuid()
     const setup = function () {}
     const teardown = function () {}
+    const data = { foo: faker.datatype.uuid() }
+    const custom = [faker.datatype.number(), faker.datatype.number()]
     render(
-      html`<${ToolBox} name=${name} component=${component} events=${events} setup=${setup} teardown=${teardown}>
+      html`<${ToolBox} name=${name} component=${component} events=${events} setup=${setup} teardown=${teardown} data=${data} custom=${custom}>
         <${Tool} on:context=${setContext}/>
       </${ToolBox}>`
     )
@@ -45,7 +48,8 @@ describe('ToolBox component', () => {
       events,
       props: {},
       setup,
-      teardown
+      teardown,
+      data: { data, custom }
     })
   })
 })

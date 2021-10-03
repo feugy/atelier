@@ -11,7 +11,15 @@
   export let events = []
   export let setup = null
   export let teardown = null
-  setContext(contextKey, { name, component, props, events, setup, teardown })
+  setContext(contextKey, {
+    name,
+    component,
+    props,
+    events,
+    setup,
+    teardown,
+    data: $$restProps
+  })
 </script>
 
 <slot />

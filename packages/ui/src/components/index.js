@@ -1,5 +1,6 @@
 export { default as EventLogger } from './EventLogger.svelte'
 export { default as Explorer } from './Explorer.svelte'
+export { default as Frame } from './Frame.svelte'
 export { default as Group } from './Group.svelte'
 export { default as PaneContainer } from './PaneContainer.svelte'
 export { default as PaneDisclaimer } from './PaneDisclaimer.svelte'

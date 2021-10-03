@@ -4,7 +4,7 @@
   import * as EventsPane from './EventsPane.svelte'
   import * as PropertiesPane from './PropertiesPane.svelte'
   import '../common'
-  import { Explorer, PaneContainer, Toolbar } from '../components'
+  import { Explorer, Frame, PaneContainer, Toolbar } from '../components'
   import {
     currentTool,
     selectTool,
@@ -15,7 +15,6 @@
   let frame
   let viewport
 
-  const src = 'workframe.html'
   onMount(() => setWorkbenchFrame(frame))
 </script>
 
@@ -32,10 +31,6 @@
     );
     background-size: 20px 20px;
   }
-
-  iframe {
-    @apply inline-block w-full h-full border-none;
-  }
 </style>
 
 <svelte:head>
@@ -51,7 +46,7 @@
 </Explorer>
 <main>
   <div class="viewport" bind:this={viewport}>
-    <iframe title="workframe" bind:this={frame} {src} />
+    <Frame bind:frame layout={$currentTool?.data?.layout} />
   </div>
   <PaneContainer
     {currentTool}

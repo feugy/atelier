@@ -47,7 +47,8 @@
       fullName,
       props: allProps,
       events: allEvents,
-      updateProperty
+      updateProperty,
+      data: { ...(toolBox?.data ?? {}), ...$$restProps }
     })
   )
 
