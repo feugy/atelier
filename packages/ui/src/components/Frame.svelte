@@ -1,6 +1,6 @@
 <script>
   export let layout = 'fullscreen'
-  export let frame
+  export let frame = null
   export let src = 'workframe.html'
 </script>
 

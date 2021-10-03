@@ -1,5 +1,6 @@
 <script context="module">
-  export const isEnabled = tool => (tool?.events || []).length > 0
+  export const isEnabled = (tool, events) =>
+    Boolean(tool?.events?.length || events?.length)
 </script>
 
 <script>

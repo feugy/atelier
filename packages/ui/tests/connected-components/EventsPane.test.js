@@ -2,7 +2,10 @@ import { fireEvent, render, screen } from '@testing-library/svelte'
 import html from 'svelte-htm'
 import faker from 'faker'
 import { translate } from '../test-utils'
-import { EventsPane } from '../../src/connected-components'
+import {
+  default as EventsPane,
+  isEnabled
+} from '../../src/connected-components/EventsPane'
 import { events, clearEvents } from '../../src/stores'
 
 jest.mock('../../src/stores/tools', () => ({
@@ -51,5 +54,19 @@ describe('EventLogger connected component', () => {
 
     await fireEvent.click(screen.queryByRole('button'))
     expect(clearEvents).toHaveBeenCalledTimes(1)
+  })
+
+  it('is disabled when current tool has no events', () => {
+    expect(isEnabled({})).toBe(false)
+    expect(isEnabled(null, [])).toBe(false)
+    expect(isEnabled({ events: [] })).toBe(false)
+  })
+
+  it('is enabled when current tool has events, even empty', () => {
+    expect(isEnabled({ events: ['test'] })).toBe(true)
+  })
+
+  it('is enabled when some events were recorded', () => {
+    expect(isEnabled(null, [{}])).toBe(true)
   })
 })

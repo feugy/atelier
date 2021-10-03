@@ -16,7 +16,7 @@
 <ToolBox
   name="Components/Pane container"
   component={PaneContainer}
-  props={{ currentTool: writable({}) }}
+  props={{ currentTool: writable({}), events: writable([]) }}
 >
   <Tool
     name="Multiple tabs"

@@ -1,7 +1,7 @@
 <script>
   import { _ } from 'svelte-intl'
 
-  export let viewport
+  export let viewport = null
 
   let isViewPortActive = false
   let viewPortWidth = 1112

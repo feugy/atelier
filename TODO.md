@@ -7,7 +7,6 @@
 
 ## UI
 
-- automatically shows event panel when receiving event
 - loading indicator
 - hide some props from pane
 - color picker
