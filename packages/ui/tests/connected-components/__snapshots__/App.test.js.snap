@@ -50,28 +50,35 @@ exports[`App connected component displays explorer, pane container and loader 1`
     </aside>
      
     <main>
-      <div
-        class="viewport"
+      <span
+        class="viewport-container"
       >
-        <svg
-          role="progress"
-          viewBox="22 22 44 44"
+        <div
+          class="viewport"
         >
-          <circle
-            cx="44"
-            cy="44"
-            fill="none"
-            r="20.2"
-            stroke-width="3.6"
+          <div
+            class="loader"
+          >
+            <svg
+              role="progressbar"
+              viewBox="22 22 44 44"
+            >
+              <circle
+                cx="44"
+                cy="44"
+                fill="none"
+                r="20.2"
+                stroke-width="3.6"
+              />
+            </svg>
+          </div>
+           
+          <iframe
+            src="workframe.html"
+            title="workframe"
           />
-        </svg>
-         
-        <iframe
-          class="fullscreen"
-          src="workframe.html"
-          title="workframe"
-        />
-      </div>
+        </div>
+      </span>
        
       <div
         class="root has-collapsed"

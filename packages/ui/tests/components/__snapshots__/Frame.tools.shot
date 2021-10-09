@@ -1,24 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Toolshot components/Frame.tools.svelte: Centered 1`] = `
+exports[`Toolshot components/Frame.tools.svelte: Components/Frame 1`] = `
 <iframe
-  class="centered"
-  src="index.html"
-  title="workframe"
-/>
-`;
-
-exports[`Toolshot components/Frame.tools.svelte: Full screen 1`] = `
-<iframe
-  class="fullscreen"
-  src="index.html"
-  title="workframe"
-/>
-`;
-
-exports[`Toolshot components/Frame.tools.svelte: Padded 1`] = `
-<iframe
-  class="padded"
   src="index.html"
   title="workframe"
 />

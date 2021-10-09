@@ -13,6 +13,6 @@ describe('App connected component', () => {
     // toolbar + pane containers
     expect(navs).toHaveLength(2)
     expect(container).toMatchSnapshot()
-    expect(screen.queryByRole('progress')).toBeInTheDocument()
+    expect(screen.queryByRole('progressbar')).toBeInTheDocument()
   })
 })

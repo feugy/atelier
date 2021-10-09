@@ -1,5 +1,5 @@
 import { locale, translations, getBrowserLocale } from 'svelte-intl'
-import './style.svelte'
+import './styles.css'
 import fr from './locales/fr.yaml'
 import en from './locales/fr.yaml'
 

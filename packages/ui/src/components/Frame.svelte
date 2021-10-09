@@ -1,30 +1,23 @@
 <script>
-  export let layout = 'fullscreen'
+  import { createEventDispatcher } from 'svelte'
+
   export let frame = null
   export let src = 'workframe.html'
+
+  const dispatch = createEventDispatcher()
 </script>
 
 <style type="postcss">
   iframe {
-    @apply inline-block border-none;
-
-    &.fullscreen {
-      @apply w-full h-full;
-    }
-
-    &.padded {
-      @apply p-8 w-full;
-    }
-
-    &.centered {
-      @apply inline-flex justify-center;
-    }
+    @apply inline-block border-none h-full w-full;
   }
 </style>
 
 <iframe
   title="workframe"
-  class={layout ?? 'fullscreen'}
   bind:this={frame}
+  on:load
+  on:abort={() => dispatch('error', new Error('aborted'))}
+  on:error={evt => dispatch('error', evt.error)}
   {src}
 />

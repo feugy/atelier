@@ -22,26 +22,44 @@
   let frame
   let viewport
   let loading = true
-  $: if ($currentTool) {
-    loading = false
-  }
-  $: console.log('loading', loading)
 
   onMount(() => setWorkbenchFrame(frame))
+
+  function handleFrameLoaded() {
+    loading = false
+  }
 </script>
 
 <style type="postcss">
   main {
-    @apply flex-grow flex flex-col overflow-hidden;
+    @apply flex-grow flex flex-col overflow-auto;
+  }
+
+  .viewport-container {
+    @apply flex overflow-auto flex-grow items-center;
   }
 
   .viewport {
-    @apply flex-grow overflow-auto text-center;
+    @apply relative flex-grow h-full;
     background-image: radial-gradient(
       theme('colors.secondary.light') 0.5px,
       transparent 1px
     );
     background-size: 20px 20px;
+  }
+
+  :global(.viewport-container.frame) {
+    @apply p-8;
+  }
+
+  :global(.viewport-container.frame > .viewport) {
+    @apply border flex-none m-auto;
+    border-color: theme('colors.primary.main');
+    border-style: solid !important;
+  }
+
+  .loader {
+    @apply absolute invert-0 h-full w-full flex items-center justify-center;
   }
 </style>
 
@@ -57,10 +75,16 @@
   <Toolbar {viewport} />
 </Explorer>
 <main>
-  <div class="viewport" bind:this={viewport}>
-    {#if loading}<Loader />{/if}
-    <Frame bind:frame layout={$currentTool?.data?.layout} />
-  </div>
+  <span class="viewport-container">
+    <div class="viewport" bind:this={viewport}>
+      {#if loading}<div class="loader"><Loader /></div>{/if}
+      <Frame
+        bind:frame
+        on:error={handleFrameLoaded}
+        on:load={handleFrameLoaded}
+      />
+    </div>
+  </span>
   <PaneContainer
     {currentTool}
     {events}

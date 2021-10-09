@@ -541,6 +541,8 @@ describe('Tool component', () => {
       })
       expect(registerTool).toHaveBeenCalledTimes(1)
       expect(recordEvent).not.toHaveBeenCalled()
+      const tool = screen.getByRole('button').parentElement.parentElement
+      expect(tool).toHaveClass('tool')
     })
 
     it('registers tool and renders nothing', async () => {

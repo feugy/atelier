@@ -230,17 +230,21 @@ new Workbench({
       expect(response.headers).toEqual(
         expect.objectContaining({ 'content-type': 'text/html' })
       )
-      expect(response.body).toEqual(`<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <script type="module" src="/@vite/client"></script>
-  </head>
-  <body>
-    <script type="module" src="@atelier-wb/workframe"></script>
-  </body>
-</html>
+      expect(response.body).toMatchInlineSnapshot(`
+"<!DOCTYPE html>
+<html lang=\\"en\\">
+
+<head>
+  <meta charset=\\"utf-8\\" />
+  <meta name=\\"viewport\\" content=\\"width=device-width, initial-scale=1\\" />
+  <script type=\\"module\\" src=\\"/@vite/client\\"></script>
+</head>
+
+<body>
+  <script type=\\"module\\" src=\\"@atelier-wb/workframe\\"></script>
+</body>
+
+</html>"
 `)
     })
 

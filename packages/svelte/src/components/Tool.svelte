@@ -40,6 +40,7 @@
   const fullName = toolBox?.name ? `${toolBox.name}/${name}` : name
   let allProps = { ...(toolBox?.props || {}), ...props }
   const allEvents = [...(toolBox?.events || []), ...events]
+  const data = { ...(toolBox?.data ?? {}), ...$$restProps }
 
   onMount(() =>
     registerTool({
@@ -48,7 +49,7 @@
       props: allProps,
       events: allEvents,
       updateProperty,
-      data: { ...(toolBox?.data ?? {}), ...$$restProps }
+      data
     })
   )
 
@@ -123,7 +124,6 @@
 <style>
   .tool {
     display: none;
-    width: 100%;
     flex-direction: column;
   }
   .tool.visible {

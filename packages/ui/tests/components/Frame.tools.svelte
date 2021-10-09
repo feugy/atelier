@@ -1,5 +1,5 @@
 <script>
-  import { Tool, ToolBox } from '@atelier-wb/svelte'
+  import { Tool } from '@atelier-wb/svelte'
   import Frame from '../../src/components/Frame.svelte'
 
   let frame
@@ -15,14 +15,6 @@
   }
 </script>
 
-<ToolBox name="Components/Frame" props={{ src: 'index.html' }}>
-  <Tool name="Full screen" let:props>
-    <Frame bind:frame {...props} />
-  </Tool>
-  <Tool name="Centered" let:props>
-    <Frame bind:frame layout="centered" {...props} />
-  </Tool>
-  <Tool name="Padded" let:props>
-    <Frame bind:frame layout="padded" {...props} />
-  </Tool>
-</ToolBox>
+<Tool name="Components/Frame" props={{ src: 'index.html' }} let:props>
+  <Frame bind:frame {...props} />
+</Tool>

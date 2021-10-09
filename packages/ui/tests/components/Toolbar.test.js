@@ -6,11 +6,8 @@ import { translate } from '../test-utils'
 describe('Toolbar component', () => {
   it('cycle through backgrounds', async () => {
     const viewport = {
-      firstChild: {
-        style: {},
-        classList: { add: jest.fn(), remove: jest.fn() }
-      },
-      style: {}
+      style: {},
+      parentElement: { classList: { add: jest.fn(), remove: jest.fn() } }
     }
     render(html`<${Toolbar} viewport=${viewport} />`)
     expect(viewport.style.backgroundColor).toBeUndefined()
@@ -33,11 +30,8 @@ describe('Toolbar component', () => {
 
   it('toggle viewport mode', async () => {
     const viewport = {
-      firstChild: {
-        style: {},
-        classList: { add: jest.fn(), remove: jest.fn() }
-      },
-      style: {}
+      style: {},
+      parentElement: { classList: { add: jest.fn(), remove: jest.fn() } }
     }
     render(html`<${Toolbar} viewport=${viewport} />`)
     expect(viewport.style.backgroundColor).toBeUndefined()
@@ -46,30 +40,25 @@ describe('Toolbar component', () => {
       name: translate('tooltip.viewport')
     })
     await fireEvent.click(viewPortButton)
-    expect(viewport.firstChild.style.width).toEqual('1112px')
-    expect(viewport.firstChild.style.height).toEqual('832px')
-    expect(viewport.firstChild.classList.add).toHaveBeenCalledWith(
-      'viewport-frame'
-    )
+    expect(viewport.style.width).toEqual('1112px')
+    expect(viewport.style.height).toEqual('832px')
+    expect(viewport.parentElement.classList.add).toHaveBeenCalledWith('frame')
 
     await fireEvent.click(viewPortButton)
-    expect(viewport.firstChild.style.width).toEqual('100%')
-    expect(viewport.firstChild.style.height).toEqual('100%')
-    expect(viewport.firstChild.classList.remove).toHaveBeenCalledWith(
-      'viewport-frame'
+    expect(viewport.style.width).toEqual('100%')
+    expect(viewport.style.height).toEqual('100%')
+    expect(viewport.parentElement.classList.remove).toHaveBeenCalledWith(
+      'frame'
     )
 
-    expect(viewport.firstChild.classList.add).toHaveBeenCalledTimes(1)
-    expect(viewport.firstChild.classList.remove).toHaveBeenCalledTimes(1)
+    expect(viewport.parentElement.classList.add).toHaveBeenCalledTimes(1)
+    expect(viewport.parentElement.classList.remove).toHaveBeenCalledTimes(1)
   })
 
   it('can set custom viewport dimension', async () => {
     const viewport = {
-      firstChild: {
-        style: {},
-        classList: { add: jest.fn(), remove: jest.fn() }
-      },
-      style: {}
+      style: {},
+      parentElement: { classList: { add: jest.fn(), remove: jest.fn() } }
     }
     render(html`<${Toolbar} viewport=${viewport} />`)
     expect(viewport.style.backgroundColor).toBeUndefined()
@@ -78,32 +67,27 @@ describe('Toolbar component', () => {
       name: translate('tooltip.viewport')
     })
     await fireEvent.click(viewPortButton)
-    expect(viewport.firstChild.style.width).toEqual('1112px')
-    expect(viewport.firstChild.style.height).toEqual('832px')
-    expect(viewport.firstChild.classList.add).toHaveBeenCalledWith(
-      'viewport-frame'
-    )
+    expect(viewport.style.width).toEqual('1112px')
+    expect(viewport.style.height).toEqual('832px')
+    expect(viewport.parentElement.classList.add).toHaveBeenCalledWith('frame')
     const [widthTextbox, heightTextbox] = screen.queryAllByRole('textbox')
 
     await fireEvent.input(widthTextbox, { target: { value: '500' } })
-    expect(viewport.firstChild.style.width).toEqual('500px')
-    expect(viewport.firstChild.style.height).toEqual('832px')
+    expect(viewport.style.width).toEqual('500px')
+    expect(viewport.style.height).toEqual('832px')
 
     await fireEvent.input(heightTextbox, { target: { value: '300' } })
-    expect(viewport.firstChild.style.width).toEqual('500px')
-    expect(viewport.firstChild.style.height).toEqual('300px')
+    expect(viewport.style.width).toEqual('500px')
+    expect(viewport.style.height).toEqual('300px')
 
-    expect(viewport.firstChild.classList.add).toHaveBeenCalledTimes(1)
-    expect(viewport.firstChild.classList.remove).not.toHaveBeenCalled()
+    expect(viewport.parentElement.classList.add).toHaveBeenCalledTimes(1)
+    expect(viewport.parentElement.classList.remove).not.toHaveBeenCalled()
   })
 
   it('can invert viewport dimensions', async () => {
     const viewport = {
-      firstChild: {
-        style: {},
-        classList: { add: jest.fn(), remove: jest.fn() }
-      },
-      style: {}
+      style: {},
+      parentElement: { classList: { add: jest.fn(), remove: jest.fn() } }
     }
     render(html`<${Toolbar} viewport=${viewport} />`)
     expect(viewport.style.backgroundColor).toBeUndefined()
@@ -112,19 +96,17 @@ describe('Toolbar component', () => {
       name: translate('tooltip.viewport')
     })
     await fireEvent.click(viewPortButton)
-    expect(viewport.firstChild.style.width).toEqual('1112px')
-    expect(viewport.firstChild.style.height).toEqual('832px')
-    expect(viewport.firstChild.classList.add).toHaveBeenCalledWith(
-      'viewport-frame'
-    )
+    expect(viewport.style.width).toEqual('1112px')
+    expect(viewport.style.height).toEqual('832px')
+    expect(viewport.parentElement.classList.add).toHaveBeenCalledWith('frame')
 
     const invertButton = screen.queryByRole('button', { name: 'swap_horiz' })
     await fireEvent.click(invertButton)
-    expect(viewport.firstChild.style.height).toEqual('1112px')
-    expect(viewport.firstChild.style.width).toEqual('832px')
+    expect(viewport.style.height).toEqual('1112px')
+    expect(viewport.style.width).toEqual('832px')
 
     await fireEvent.click(invertButton)
-    expect(viewport.firstChild.style.width).toEqual('1112px')
-    expect(viewport.firstChild.style.height).toEqual('832px')
+    expect(viewport.style.width).toEqual('1112px')
+    expect(viewport.style.height).toEqual('832px')
   })
 })
