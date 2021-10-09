@@ -85,14 +85,7 @@
           target.addEventListener(eventName, handler)
         }
       }
-      document.body.classList.add(data.layout ?? 'fullscreen')
-      recordVisibility({
-        name,
-        fullName,
-        visible,
-        height: document.body.offsetHeight,
-        width: document.body.offsetWidth
-      })
+      recordVisibility({ name, fullName, visible })
     }
   })
 
@@ -106,7 +99,6 @@
     instance = null
     listeners = []
     visible = false
-    document.body.classList.remove(data.layout ?? 'fullscreen')
     await teardown?.(fullName)
     await toolBox?.teardown?.(fullName)
     recordVisibility({ name, fullName, visible })
@@ -137,22 +129,9 @@
   .tool.visible {
     display: flex;
   }
-  :global(body.centered) {
-    height: auto;
-    width: max-content;
-  }
-  :global(body) {
-    height: 100%;
-    width: 100%;
-  }
 </style>
 
-<span
-  class="tool"
-  style="width: {data.layout === 'centered' ? 'auto' : '100%'}"
-  class:visible
-  data-full-name={encodeURIComponent(fullName)}
->
+<span class="tool" class:visible data-full-name={encodeURIComponent(fullName)}>
   {#if usesSlot}
     {#if visible}
       <slot props={allProps} {handleEvent} />
