@@ -49,7 +49,9 @@ describe('Tool component', () => {
         expect(recordVisibility).toHaveBeenCalledWith({
           name,
           fullName: name,
-          visible: true
+          visible: true,
+          height: 0,
+          width: 0
         })
       )
 
@@ -128,7 +130,9 @@ describe('Tool component', () => {
         expect(recordVisibility).toHaveBeenCalledWith({
           name,
           fullName: name,
-          visible: true
+          visible: true,
+          height: 0,
+          width: 0
         })
       )
       expect(screen.queryByRole('button')).toBeInTheDocument()
@@ -163,7 +167,9 @@ describe('Tool component', () => {
         expect(recordVisibility).toHaveBeenCalledWith({
           name,
           fullName: name,
-          visible: true
+          visible: true,
+          height: 0,
+          width: 0
         })
       )
       expect(screen.queryByRole('button')).toBeInTheDocument()
@@ -190,7 +196,9 @@ describe('Tool component', () => {
         expect(recordVisibility).toHaveBeenCalledWith({
           name,
           fullName: name,
-          visible: true
+          visible: true,
+          height: 0,
+          width: 0
         })
       )
       expect(screen.queryByRole('button')).toBeInTheDocument()
@@ -227,7 +235,9 @@ describe('Tool component', () => {
         expect(recordVisibility).toHaveBeenCalledWith({
           name,
           fullName: name,
-          visible: true
+          visible: true,
+          height: 0,
+          width: 0
         })
       )
       expect(screen.queryByRole('button')).toBeInTheDocument()
@@ -263,7 +273,9 @@ describe('Tool component', () => {
         expect(recordVisibility).toHaveBeenCalledWith({
           name,
           fullName: name,
-          visible: true
+          visible: true,
+          height: 0,
+          width: 0
         })
       )
       expect(screen.queryByRole('button')).toBeInTheDocument()
@@ -307,7 +319,9 @@ describe('Tool component', () => {
         expect(recordVisibility).toHaveBeenCalledWith({
           name,
           fullName: name,
-          visible: true
+          visible: true,
+          height: 0,
+          width: 0
         })
       )
       expect(screen.queryByRole('button')).toBeInTheDocument()
@@ -334,7 +348,9 @@ describe('Tool component', () => {
         expect(recordVisibility).toHaveBeenCalledWith({
           name,
           fullName: name,
-          visible: true
+          visible: true,
+          height: 0,
+          width: 0
         })
       )
       expect(screen.queryByText(header)).toBeInTheDocument()
@@ -368,7 +384,9 @@ describe('Tool component', () => {
         expect(recordVisibility).toHaveBeenCalledWith({
           name,
           fullName: name,
-          visible: true
+          visible: true,
+          height: 0,
+          width: 0
         })
       )
       const button = screen.queryByRole('button')
@@ -394,7 +412,9 @@ describe('Tool component', () => {
         expect(recordVisibility).toHaveBeenCalledWith({
           name,
           fullName: name,
-          visible: true
+          visible: true,
+          height: 0,
+          width: 0
         })
       )
       expect(setup).toHaveBeenCalledWith({ name, fullName: name, props })
@@ -426,7 +446,9 @@ describe('Tool component', () => {
         expect(recordVisibility).toHaveBeenCalledWith({
           name,
           fullName: name,
-          visible: true
+          visible: true,
+          height: 0,
+          width: 0
         })
       )
       expect(screen.queryByRole('button')).toBeInTheDocument()
@@ -448,7 +470,9 @@ describe('Tool component', () => {
         expect(recordVisibility).toHaveBeenNthCalledWith(1, {
           name,
           fullName: name,
-          visible: true
+          visible: true,
+          height: 0,
+          width: 0
         })
       )
       expect(screen.queryByRole('button')).toBeInTheDocument()
@@ -483,7 +507,9 @@ describe('Tool component', () => {
         expect(recordVisibility).toHaveBeenNthCalledWith(1, {
           name,
           fullName: name,
-          visible: true
+          visible: true,
+          height: 0,
+          width: 0
         })
       )
       expect(screen.queryByRole('button')).toBeInTheDocument()
@@ -499,6 +525,74 @@ describe('Tool component', () => {
       )
       expect(screen.queryByRole('button')).not.toBeInTheDocument()
       expect(teardown).toHaveBeenCalledTimes(1)
+      expect(recordVisibility).toHaveBeenCalledTimes(2)
+    })
+
+    it('assigns layout class when becoming visible', async () => {
+      const name = faker.lorem.words()
+      const layout = 'centered'
+      render(
+        html`<${Tool} name=${name} layout=${layout} component=${Button} />`
+      )
+      await tick()
+
+      expect(screen.queryByRole('button')).not.toBeInTheDocument()
+      expect(document.body).not.toHaveClass(layout)
+
+      currentTool.set({ fullName: name, name })
+      await waitFor(() =>
+        expect(recordVisibility).toHaveBeenNthCalledWith(1, {
+          name,
+          fullName: name,
+          visible: true,
+          height: 0,
+          width: 0
+        })
+      )
+      expect(document.body).toHaveClass(layout)
+
+      currentTool.set({ fullName: 'whatever', name: 'whatever' })
+      await waitFor(() =>
+        expect(recordVisibility).toHaveBeenNthCalledWith(2, {
+          name,
+          fullName: name,
+          visible: false
+        })
+      )
+      expect(document.body).not.toHaveClass(layout)
+      expect(recordVisibility).toHaveBeenCalledTimes(2)
+    })
+
+    it('assigns fullscreen class by default', async () => {
+      const name = faker.lorem.words()
+      const layout = 'fullscreen'
+      render(html`<${Tool} name=${name} component=${Button} />`)
+      await tick()
+
+      expect(screen.queryByRole('button')).not.toBeInTheDocument()
+      expect(document.body).not.toHaveClass(layout)
+
+      currentTool.set({ fullName: name, name })
+      await waitFor(() =>
+        expect(recordVisibility).toHaveBeenNthCalledWith(1, {
+          name,
+          fullName: name,
+          visible: true,
+          height: 0,
+          width: 0
+        })
+      )
+      expect(document.body).toHaveClass(layout)
+
+      currentTool.set({ fullName: 'whatever', name: 'whatever' })
+      await waitFor(() =>
+        expect(recordVisibility).toHaveBeenNthCalledWith(2, {
+          name,
+          fullName: name,
+          visible: false
+        })
+      )
+      expect(document.body).not.toHaveClass(layout)
       expect(recordVisibility).toHaveBeenCalledTimes(2)
     })
   })
@@ -527,7 +621,9 @@ describe('Tool component', () => {
         expect(recordVisibility).toHaveBeenCalledWith({
           name,
           fullName: `${toolBoxName}/${name}`,
-          visible: true
+          visible: true,
+          height: 0,
+          width: 0
         })
       )
       expect(screen.queryByRole('button')).toBeInTheDocument()
@@ -541,6 +637,8 @@ describe('Tool component', () => {
       })
       expect(registerTool).toHaveBeenCalledTimes(1)
       expect(recordEvent).not.toHaveBeenCalled()
+      const tool = screen.getByRole('button').parentElement.parentElement
+      expect(tool).toHaveClass('tool')
     })
 
     it('registers tool and renders nothing', async () => {
@@ -656,7 +754,9 @@ describe('Tool component', () => {
         expect(recordVisibility).toHaveBeenCalledWith({
           name: tool.name,
           fullName: `${toolBox.name}/${tool.name}`,
-          visible: true
+          visible: true,
+          height: 0,
+          width: 0
         })
       )
       expect(screen.queryByRole('button')).toBeInTheDocument()
@@ -691,7 +791,9 @@ describe('Tool component', () => {
         expect(recordVisibility).toHaveBeenCalledWith({
           name: tool.name,
           fullName: `${toolBox.name}/${tool.name}`,
-          visible: true
+          visible: true,
+          height: 0,
+          width: 0
         })
       )
       expect(screen.queryByRole('button')).toBeInTheDocument()
@@ -742,7 +844,9 @@ describe('Tool component', () => {
         expect(recordVisibility).toHaveBeenCalledWith({
           name: tool.name,
           fullName: `${toolBox.name}/${tool.name}`,
-          visible: true
+          visible: true,
+          height: 0,
+          width: 0
         })
       )
       expect(screen.queryByRole('button')).toBeInTheDocument()
@@ -809,7 +913,9 @@ describe('Tool component', () => {
         expect(recordVisibility).toHaveBeenCalledWith({
           name,
           fullName,
-          visible: true
+          visible: true,
+          height: 0,
+          width: 0
         })
       )
     })
@@ -838,7 +944,9 @@ describe('Tool component', () => {
         expect(recordVisibility).toHaveBeenCalledWith({
           name,
           fullName,
-          visible: true
+          visible: true,
+          height: 0,
+          width: 0
         })
       )
       expect(setup).toHaveBeenCalledWith({ name, fullName, props })
@@ -905,7 +1013,9 @@ describe('Tool component', () => {
       expect(recordVisibility).toHaveBeenNthCalledWith(1, {
         name: name1,
         fullName: fullName1,
-        visible: true
+        visible: true,
+        height: 0,
+        width: 0
       })
 
       setup.mockClear()
@@ -937,7 +1047,9 @@ describe('Tool component', () => {
       expect(recordVisibility).toHaveBeenNthCalledWith(3, {
         name: name2,
         fullName: fullName2,
-        visible: true
+        visible: true,
+        height: 0,
+        width: 0
       })
     })
 
@@ -958,7 +1070,9 @@ describe('Tool component', () => {
         expect(recordVisibility).toHaveBeenNthCalledWith(1, {
           name,
           fullName: `${toolBoxName}/${name}`,
-          visible: true
+          visible: true,
+          height: 0,
+          width: 0
         })
       )
       expect(screen.queryByRole('button')).toBeInTheDocument()
@@ -1003,7 +1117,9 @@ describe('Tool component', () => {
         expect(recordVisibility).toHaveBeenNthCalledWith(1, {
           name: name1,
           fullName: `${toolBoxName}/${name1}`,
-          visible: true
+          visible: true,
+          height: 0,
+          width: 0
         })
       )
       expect(screen.queryByRole('button')).toBeInTheDocument()
@@ -1019,7 +1135,9 @@ describe('Tool component', () => {
       expect(recordVisibility).toHaveBeenNthCalledWith(2, {
         name: name2,
         fullName: `${toolBoxName}/${name2}`,
-        visible: true
+        visible: true,
+        height: 0,
+        width: 0
       })
       await waitFor(() =>
         expect(recordVisibility).toHaveBeenNthCalledWith(3, {
@@ -1040,7 +1158,9 @@ describe('Tool component', () => {
       expect(recordVisibility).toHaveBeenNthCalledWith(4, {
         name: name1,
         fullName: `${toolBoxName}/${name1}`,
-        visible: true
+        visible: true,
+        height: 0,
+        width: 0
       })
       await waitFor(() =>
         expect(recordVisibility).toHaveBeenNthCalledWith(5, {

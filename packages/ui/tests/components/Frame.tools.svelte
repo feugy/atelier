@@ -15,14 +15,15 @@
   }
 </script>
 
-<ToolBox name="Components/Frame" props={{ src: 'index.html' }}>
+<ToolBox
+  name="Components/Frame"
+  props={{ width: null, height: null, layout: 'fullscreen', src: 'index.html' }}
+>
   <Tool name="Full screen" let:props>
     <Frame bind:frame {...props} />
   </Tool>
-  <Tool name="Centered" let:props>
-    <Frame bind:frame layout="centered" {...props} />
-  </Tool>
-  <Tool name="Padded" let:props>
-    <Frame bind:frame layout="padded" {...props} />
+
+  <Tool name="Centered and constrained" let:props>
+    <Frame bind:frame {...props} width={500} height={200} layout="centered" />
   </Tool>
 </ToolBox>

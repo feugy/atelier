@@ -7,6 +7,7 @@ let workframeOrigin = null
 const tools$ = new BehaviorSubject([])
 const current$ = new BehaviorSubject()
 const events$ = new BehaviorSubject()
+const workbenchDim$ = new BehaviorSubject(null)
 
 function updateUrl(fullName) {
   if (fullName) {
@@ -27,6 +28,9 @@ function handleMessage({ origin, data }) {
       registerTool(data.data)
     } else if (data.type === 'recordEvent') {
       events$.next({ ...data, time: Date.now() })
+    } else if (data.type === 'recordVisibility' && data.data.visible) {
+      const { height, width } = data.data
+      workbenchDim$.next({ height, width })
     }
   }
 }
@@ -76,6 +80,8 @@ window.addEventListener('popstate', ({ state }) => {
 export const toolsMap = tools$.pipe(map(groupByName))
 
 export const currentTool = current$.asObservable()
+
+export const workbenchDim = workbenchDim$.asObservable()
 
 export const events = events$.pipe(
   // reset log when receiving null

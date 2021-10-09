@@ -13,6 +13,7 @@
   } from '../components'
   import {
     currentTool,
+    workbenchDim,
     events,
     selectTool,
     setWorkbenchFrame,
@@ -22,12 +23,12 @@
   let frame
   let viewport
   let loading = true
-  $: if ($currentTool) {
-    loading = false
-  }
-  $: console.log('loading', loading)
 
   onMount(() => setWorkbenchFrame(frame))
+
+  function handleFrameLoaded() {
+    loading = false
+  }
 </script>
 
 <style type="postcss">
@@ -36,12 +37,16 @@
   }
 
   .viewport {
-    @apply flex-grow overflow-auto text-center;
+    @apply flex-grow flex justify-center items-center overflow-auto relative;
     background-image: radial-gradient(
       theme('colors.secondary.light') 0.5px,
       transparent 1px
     );
     background-size: 20px 20px;
+  }
+
+  .loader {
+    @apply absolute invert-0 h-full w-full flex items-center justify-center;
   }
 </style>
 
@@ -58,8 +63,15 @@
 </Explorer>
 <main>
   <div class="viewport" bind:this={viewport}>
-    {#if loading}<Loader />{/if}
-    <Frame bind:frame layout={$currentTool?.data?.layout} />
+    {#if loading}<div class="loader"><Loader /></div>{/if}
+    <Frame
+      bind:frame
+      layout={$currentTool?.data?.layout}
+      height={$workbenchDim?.height}
+      width={$workbenchDim?.width}
+      on:error={handleFrameLoaded}
+      on:load={handleFrameLoaded}
+    />
   </div>
   <PaneContainer
     {currentTool}

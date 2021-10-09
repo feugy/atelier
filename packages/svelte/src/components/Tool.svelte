@@ -40,6 +40,7 @@
   const fullName = toolBox?.name ? `${toolBox.name}/${name}` : name
   let allProps = { ...(toolBox?.props || {}), ...props }
   const allEvents = [...(toolBox?.events || []), ...events]
+  const data = { ...(toolBox?.data ?? {}), ...$$restProps }
 
   onMount(() =>
     registerTool({
@@ -48,7 +49,7 @@
       props: allProps,
       events: allEvents,
       updateProperty,
-      data: { ...(toolBox?.data ?? {}), ...$$restProps }
+      data
     })
   )
 
@@ -84,7 +85,14 @@
           target.addEventListener(eventName, handler)
         }
       }
-      recordVisibility({ name, fullName, visible })
+      document.body.classList.add(data.layout ?? 'fullscreen')
+      recordVisibility({
+        name,
+        fullName,
+        visible,
+        height: document.body.offsetHeight,
+        width: document.body.offsetWidth
+      })
     }
   })
 
@@ -98,6 +106,7 @@
     instance = null
     listeners = []
     visible = false
+    document.body.classList.remove(data.layout ?? 'fullscreen')
     await teardown?.(fullName)
     await toolBox?.teardown?.(fullName)
     recordVisibility({ name, fullName, visible })
@@ -123,15 +132,27 @@
 <style>
   .tool {
     display: none;
-    width: 100%;
     flex-direction: column;
   }
   .tool.visible {
     display: flex;
   }
+  :global(body.centered) {
+    height: auto;
+    width: max-content;
+  }
+  :global(body) {
+    height: 100%;
+    width: 100%;
+  }
 </style>
 
-<span class="tool" class:visible data-full-name={encodeURIComponent(fullName)}>
+<span
+  class="tool"
+  style="width: {data.layout === 'centered' ? 'auto' : '100%'}"
+  class:visible
+  data-full-name={encodeURIComponent(fullName)}
+>
   {#if usesSlot}
     {#if visible}
       <slot props={allProps} {handleEvent} />
