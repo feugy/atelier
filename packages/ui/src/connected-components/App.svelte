@@ -13,7 +13,6 @@
   } from '../components'
   import {
     currentTool,
-    workbenchDim,
     events,
     selectTool,
     setWorkbenchFrame,
@@ -33,16 +32,30 @@
 
 <style type="postcss">
   main {
-    @apply flex-grow flex flex-col overflow-hidden;
+    @apply flex-grow flex flex-col overflow-auto;
+  }
+
+  .viewport-container {
+    @apply flex overflow-auto flex-grow items-center;
   }
 
   .viewport {
-    @apply flex-grow flex justify-center items-center overflow-auto relative;
+    @apply relative flex-grow h-full;
     background-image: radial-gradient(
       theme('colors.secondary.light') 0.5px,
       transparent 1px
     );
     background-size: 20px 20px;
+  }
+
+  :global(.viewport-container.frame) {
+    @apply p-8;
+  }
+
+  :global(.viewport-container.frame > .viewport) {
+    @apply border flex-none m-auto;
+    border-color: theme('colors.primary.main');
+    border-style: solid !important;
   }
 
   .loader {
@@ -62,17 +75,16 @@
   <Toolbar {viewport} />
 </Explorer>
 <main>
-  <div class="viewport" bind:this={viewport}>
-    {#if loading}<div class="loader"><Loader /></div>{/if}
-    <Frame
-      bind:frame
-      layout={$currentTool?.data?.layout}
-      height={$workbenchDim?.height}
-      width={$workbenchDim?.width}
-      on:error={handleFrameLoaded}
-      on:load={handleFrameLoaded}
-    />
-  </div>
+  <span class="viewport-container">
+    <div class="viewport" bind:this={viewport}>
+      {#if loading}<div class="loader"><Loader /></div>{/if}
+      <Frame
+        bind:frame
+        on:error={handleFrameLoaded}
+        on:load={handleFrameLoaded}
+      />
+    </div>
+  </span>
   <PaneContainer
     {currentTool}
     {events}

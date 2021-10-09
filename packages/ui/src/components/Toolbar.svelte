@@ -16,8 +16,8 @@
     if (!isNaN(width) && !isNaN(height) && width > 10 && height > 10) {
       viewPortWidth = width
       viewPortHeight = height
-      viewport.firstChild.style.width = `${viewPortWidth}px`
-      viewport.firstChild.style.height = `${viewPortHeight}px`
+      viewport.style.width = `${viewPortWidth}px`
+      viewport.style.height = `${viewPortHeight}px`
     }
   }
 
@@ -26,15 +26,15 @@
       return
     }
     isViewPortActive = !isViewPortActive
-    const { style, classList } = viewport.firstChild
+    const { style, parentElement } = viewport
     if (isViewPortActive) {
       style.width = `${viewPortWidth}px`
       style.height = `${viewPortHeight}px`
-      classList.add('viewport-frame')
+      parentElement.classList.add('frame')
     } else {
       style.width = '100%'
       style.height = '100%'
-      classList.remove('viewport-frame')
+      parentElement.classList.remove('frame')
     }
   }
 
@@ -53,12 +53,6 @@
 </script>
 
 <style type="postcss">
-  :global(.viewport-frame) {
-    @apply border m-8;
-    border-color: theme('colors.primary.main');
-    border-style: solid !important;
-  }
-
   nav {
     @apply w-full py-2 px-4 border-b text-center;
     border-color: theme('colors.primary.main');

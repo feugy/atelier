@@ -2,7 +2,6 @@ import faker from 'faker'
 import { get } from 'svelte/store'
 import {
   clearEvents,
-  workbenchDim,
   events,
   toolsMap,
   currentTool,
@@ -350,34 +349,6 @@ describe('tools store', () => {
         src
       )
       expect(postMessage).toHaveBeenCalledTimes(1)
-    })
-
-    it('updates workbench dimensions from visible tool', () => {
-      const height = faker.datatype.number()
-      const width = faker.datatype.number()
-      expect(get(workbenchDim)).toBeNull()
-
-      window.dispatchEvent(
-        new MessageEvent('message', {
-          origin: src,
-          data: {
-            type: 'recordVisibility',
-            data: { visible: false, width, height }
-          }
-        })
-      )
-      expect(get(workbenchDim)).toBeNull()
-
-      window.dispatchEvent(
-        new MessageEvent('message', {
-          origin: src,
-          data: {
-            type: 'recordVisibility',
-            data: { visible: true, width, height }
-          }
-        })
-      )
-      expect(get(workbenchDim)).toEqual({ width, height })
     })
   })
 })

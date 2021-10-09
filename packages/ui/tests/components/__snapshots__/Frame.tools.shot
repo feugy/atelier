@@ -1,49 +1,8 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Toolshot components/Frame.tools.svelte: Centered and constrained 1`] = `
-<div
-  class="centered"
->
-  <iframe
-    src="index.html"
-    style="height: 200px; width: 500px;"
-    title="workframe"
-  />
-</div>
-`;
-
-exports[`Toolshot components/Frame.tools.svelte: Constrained 1`] = `
-<div
-  class="padded"
->
-  <iframe
-    src="index.html"
-    style="height: 100%; width: 100%;"
-    title="workframe"
-  />
-</div>
-`;
-
-exports[`Toolshot components/Frame.tools.svelte: Default 1`] = `
-<div
-  class="fullscreen"
->
-  <iframe
-    src="index.html"
-    style="height: 100%; width: 100%;"
-    title="workframe"
-  />
-</div>
-`;
-
-exports[`Toolshot components/Frame.tools.svelte: Full screen 1`] = `
-<div
-  class="fullscreen"
->
-  <iframe
-    src="index.html"
-    style="height: 100%; width: 100%;"
-    title="workframe"
-  />
-</div>
+exports[`Toolshot components/Frame.tools.svelte: Components/Frame 1`] = `
+<iframe
+  src="index.html"
+  title="workframe"
+/>
 `;
