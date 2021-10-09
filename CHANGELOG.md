@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.5.0](https://github.com/feugy/atelier/compare/v0.4.1...v0.5.0) (2021-10-09)
+
+### Features
+
+- improves layout management and supports toolshot timeouts ([#12](https://github.com/feugy/atelier/issues/12)) ([30b0be0](https://github.com/feugy/atelier/commit/30b0be00a76d3d9d919c4a70ecbce23b355d68b8))
+
 ### [0.4.1](https://github.com/feugy/atelier/compare/v0.4.0...v0.4.1) (2021-10-03)
 
 ### Bug Fixes
