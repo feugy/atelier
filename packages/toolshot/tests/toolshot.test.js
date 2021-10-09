@@ -1,4 +1,5 @@
 import { jest } from '@jest/globals'
+import faker from 'faker'
 import { join, resolve } from 'path'
 import { configureToolshot } from '../src'
 
@@ -69,31 +70,38 @@ describe('toolshot builder', () => {
       configureToolshot({ folder: nestedFixtures })
       expect(testSpy).toHaveBeenCalledWith(
         'a.tools.svelte',
-        expect.any(Function)
+        expect.any(Function),
+        5000
       )
       expect(testSpy).toHaveBeenCalledWith(
         'b.tools.svelte',
-        expect.any(Function)
+        expect.any(Function),
+        5000
       )
       expect(testSpy).toHaveBeenCalledWith(
         join('folder1', 'b.tools.svelte'),
-        expect.any(Function)
+        expect.any(Function),
+        5000
       )
       expect(testSpy).toHaveBeenCalledWith(
         join('folder1', 'd.tools.svelte'),
-        expect.any(Function)
+        expect.any(Function),
+        5000
       )
       expect(testSpy).toHaveBeenCalledWith(
         join('folder1', 'folder1', 'b.tools.svelte'),
-        expect.any(Function)
+        expect.any(Function),
+        5000
       )
       expect(testSpy).toHaveBeenCalledWith(
         join('folder2', 'c.tools.svelte'),
-        expect.any(Function)
+        expect.any(Function),
+        5000
       )
       expect(testSpy).toHaveBeenCalledWith(
         join('folder2', 'folder1', 'a.tools.svelte'),
-        expect.any(Function)
+        expect.any(Function),
+        5000
       )
       expect(testSpy).toHaveBeenCalledTimes(7)
     })
@@ -106,25 +114,45 @@ describe('toolshot builder', () => {
       })
       expect(testSpy).toHaveBeenCalledWith(
         'c.custom.svelte',
-        expect.any(Function)
+        expect.any(Function),
+        5000
       )
       expect(testSpy).toHaveBeenCalledWith(
         join('folder1', 'a.custom.svelte'),
-        expect.any(Function)
+        expect.any(Function),
+        5000
       )
       expect(testSpy).toHaveBeenCalledWith(
         join('folder1', 'folder1', 'c.custom.svelte'),
-        expect.any(Function)
+        expect.any(Function),
+        5000
       )
       expect(testSpy).toHaveBeenCalledWith(
         join('folder2', 'b.custom.svelte'),
-        expect.any(Function)
+        expect.any(Function),
+        5000
       )
       expect(testSpy).toHaveBeenCalledWith(
         join('folder2', 'folder2', 'a.custom.svelte'),
-        expect.any(Function)
+        expect.any(Function),
+        5000
       )
       expect(testSpy).toHaveBeenCalledTimes(5)
+    })
+
+    it('can configure the test timeout', () => {
+      const timeout = faker.datatype.number()
+      configureToolshot({
+        folder: fixtures,
+        include: 'single.tools.svelte',
+        timeout
+      })
+      expect(testSpy).toHaveBeenCalledTimes(1)
+      expect(testSpy).toHaveBeenCalledWith(
+        'single.tools.svelte',
+        expect.any(Function),
+        timeout
+      )
     })
 
     it('loads tool file and assert single result', async () => {

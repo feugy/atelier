@@ -10,6 +10,7 @@ import html from 'svelte-htm'
  * @param {string} [folder='.'] - base folder containing tool files.
  * @param {string} [include='\.tools\.svelte$'] - regular expression tested against file name to detect tool files.
  * @param {string} [snapshotFolder='__snapshots__'] - folder name used to contain generated snapshots.
+ * @param {number} [timeout=5000] - individual test timeout, in milliseconds.
  */
 
 const visibilityEvent = 'visibility'
@@ -35,7 +36,8 @@ export function configureToolshot({
   suite = 'Toolshot',
   folder = '.',
   include = '\\.tools\\.svelte$',
-  snapshotFolder = '__snapshots__'
+  snapshotFolder = '__snapshots__',
+  timeout = 5000
 } = {}) {
   if (typeof describe !== 'function' || typeof test !== 'function') {
     throw new Error('configureToolshot() must run within Jest context')
@@ -56,47 +58,51 @@ export function configureToolshot({
       const toolboxFolder = dirname(toolbox.path)
       const toolboxName = basename(toolbox.path, extname(toolbox.path))
 
-      test(toolboxPath, async () => {
-        const registered = []
+      test(
+        toolboxPath,
+        async () => {
+          const registered = []
 
-        function handleMessage({ data }) {
-          if (data.type === 'registerTool') {
-            registered.push(data.data)
-          } else if (data.type === 'recordVisibility' && data.data?.visible) {
-            window.dispatchEvent(new CustomEvent(visibilityEvent))
+          function handleMessage({ data }) {
+            if (data.type === 'registerTool') {
+              registered.push(data.data)
+            } else if (data.type === 'recordVisibility' && data.data?.visible) {
+              window.dispatchEvent(new CustomEvent(visibilityEvent))
+            }
           }
-        }
 
-        window.addEventListener('message', handleMessage)
+          window.addEventListener('message', handleMessage)
 
-        try {
-          const { default: Toolbox } = await import(
-            /* @vite-ignore */ toolbox.path
-          )
-          render(html`<${Toolbox} />`)
-
-          // since postmessage is asynchronous, we must wait before knowing registered tools
-          await new Promise(resolve => setTimeout(resolve, 0))
-
-          for (const tool of registered) {
-            // select tools one by one...
-            window.postMessage({ type: 'selectTool', data: tool }, '*')
-            await isVisible()
-
-            // ...and assert their rendering
-            expect(
-              document.querySelector(
-                `[data-full-name="${encodeURIComponent(tool.fullName)}"]`
-              ).firstChild
-            ).toMatchSpecificSnapshot(
-              `${toolboxFolder}/${snapshotFolder}/${toolboxName}.shot`,
-              tool.name
+          try {
+            const { default: Toolbox } = await import(
+              /* @vite-ignore */ toolbox.path
             )
+            render(html`<${Toolbox} />`)
+
+            // since postmessage is asynchronous, we must wait before knowing registered tools
+            await new Promise(resolve => setTimeout(resolve, 0))
+
+            for (const tool of registered) {
+              // select tools one by one...
+              window.postMessage({ type: 'selectTool', data: tool }, '*')
+              await isVisible()
+
+              // ...and assert their rendering
+              expect(
+                document.querySelector(
+                  `[data-full-name="${encodeURIComponent(tool.fullName)}"]`
+                ).firstChild
+              ).toMatchSpecificSnapshot(
+                `${toolboxFolder}/${snapshotFolder}/${toolboxName}.shot`,
+                tool.name
+              )
+            }
+          } finally {
+            window.removeEventListener('message', handleMessage)
           }
-        } finally {
-          window.removeEventListener('message', handleMessage)
-        }
-      })
+        },
+        timeout
+      )
     }
   })
 }
