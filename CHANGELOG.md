@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.5.1](https://github.com/feugy/atelier/compare/v0.5.0...v0.5.1) (2021-10-10)
+
+### Bug Fixes
+
+- **plugin-svelte:** wrong UI version referenced ([57770be](https://github.com/feugy/atelier/commit/57770bec8422724a91243a922fda0f6cb83adeb1))
+
 ## [0.5.0](https://github.com/feugy/atelier/compare/v0.4.1...v0.5.0) (2021-10-09)
 
 ### Features
