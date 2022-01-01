@@ -8,7 +8,7 @@ import html from 'svelte-htm'
  * @typedef {object} ToolshotOptions - toolshot options, including:
  * @param {string} [suite='Toolshot'] - Jest suite name used.
  * @param {string} [folder='.'] - base folder containing tool files.
- * @param {string} [include='\.tools\.svelte$'] - regular expression tested against file name to detect tool files.
+ * @param {string} [include='\\.tools(?!\\.shot$).+$'] - regular expression tested against file name to detect tool files.
  * @param {string} [snapshotFolder='__snapshots__'] - folder name used to contain generated snapshots.
  * @param {number} [timeout=5000] - individual test timeout, in milliseconds.
  */
@@ -35,7 +35,7 @@ function isVisible() {
 export function configureToolshot({
   suite = 'Toolshot',
   folder = '.',
-  include = '\\.tools\\.svelte$',
+  include = '\\.tools(?!\\.shot$).+$',
   snapshotFolder = '__snapshots__',
   timeout = 5000
 } = {}) {
