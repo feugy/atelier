@@ -7,6 +7,7 @@ import { Tool, ToolBox } from '../../src'
 import {
   currentTool,
   registerTool,
+  recordError,
   recordEvent,
   recordVisibility
 } from '../../src/stores'
@@ -17,6 +18,7 @@ jest.mock('../../src/stores', () => {
   return {
     currentTool: new writable(),
     registerTool: jest.fn(),
+    recordError: jest.fn(),
     recordEvent: jest.fn(),
     recordVisibility: jest.fn()
   }
@@ -27,8 +29,11 @@ describe('Tool component', () => {
 
   describe('given no toolbox', () => {
     it('needs a name', () => {
-      expect(() => render(html`<${Tool} />`)).toThrow(
-        'Tool needs a name property'
+      const message = 'Tool needs a name property'
+      render(html`<${Tool} />`)
+      expect(screen.getByRole('generic')).toHaveTextContent(message)
+      expect(recordError).toHaveBeenCalledWith(
+        expect.objectContaining({ message })
       )
     })
 
@@ -506,9 +511,12 @@ describe('Tool component', () => {
   describe('given a toolbox', () => {
     it('needs a name', () => {
       const name = faker.lorem.words()
-      expect(() =>
-        render(html`<${ToolBox} name=${name}><${Tool} /></`)
-      ).toThrow('Tool needs a name property')
+      const message = 'Tool needs a name property'
+      render(html`<${ToolBox} name=${name}><${Tool} /></`)
+      expect(screen.getByRole('generic')).toHaveTextContent(message)
+      expect(recordError).toHaveBeenCalledWith(
+        expect.objectContaining({ message })
+      )
     })
 
     it('registers tool and renders component when being current', async () => {
@@ -764,15 +772,16 @@ describe('Tool component', () => {
     it('does not allow component override', () => {
       const toolBoxName = faker.lorem.words()
       const name = faker.lorem.words()
+      const message = `Tool "${name}" does not support component property since its ToolBox "${toolBoxName}" already have one`
 
-      expect(() =>
-        render(
-          html`<${ToolBox} name=${toolBoxName} component=${Button}>
+      render(
+        html`<${ToolBox} name=${toolBoxName} component=${Button}>
             <${Tool} name=${name} component=${Button} />
           </${ToolBox}>`
-        )
-      ).toThrow(
-        `Tool "${name}" does not support component property since its ToolBox "${toolBoxName}" already have one`
+      )
+      expect(screen.getByRole('generic')).toHaveTextContent(message)
+      expect(recordError).toHaveBeenCalledWith(
+        expect.objectContaining({ message })
       )
     })
 

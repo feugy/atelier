@@ -138,3 +138,11 @@ export function recordEvent(name, ...args) {
 export function recordVisibility(data) {
   postMessage({ type: 'recordVisibility', data })
 }
+
+export function recordError(error) {
+  postMessage({
+    type: 'recordError',
+    message: error.message,
+    stack: error.stack
+  })
+}
