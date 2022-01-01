@@ -20,7 +20,11 @@ export default defineConfig({
         }
       },
       background: {
-        page: '#e5e7eb'
+        page: '#e5e7eb',
+        overlay: 'rgba(0, 0, 0, 0.66)'
+      },
+      shadow: {
+        overlay: '#996100'
       }
     }
   }

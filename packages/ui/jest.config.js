@@ -12,6 +12,7 @@ module.exports = {
     '^.+\\.svelte$': 'jest-transform-svelte',
     '^.+\\.ya?ml$': 'jest-yaml-transform'
   },
+  transformIgnorePatterns: ['node_modules\\/(?!svelte-portal)'],
   moduleNameMapper: {
     '^.+\\.(post)?css$': 'identity-obj-proxy'
   },
