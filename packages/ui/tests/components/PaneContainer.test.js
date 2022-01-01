@@ -94,7 +94,7 @@ describe('PaneContainer component', () => {
     ]
     const tool = readable({})
     render(html`<${PaneContainer} tabs=${tabs} currentTool=${tool} />`)
-    expect(screen.queryAllByRole('listitem')).toHaveLength(1)
+    expect(screen.getByRole('listitem')).toBeInTheDocument()
 
     const main = screen.getByRole('main')
     expect(main).toHaveClass('collapsed')

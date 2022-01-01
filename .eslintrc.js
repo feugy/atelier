@@ -1,5 +1,9 @@
 module.exports = {
-  extends: ['eslint:recommended'],
+  extends: [
+    'eslint:recommended',
+    'plugin:testing-library/dom',
+    'plugin:jest-dom/recommended'
+  ],
   env: {
     browser: true,
     es2020: true,
@@ -11,6 +15,10 @@ module.exports = {
     {
       files: ['*.svelte'],
       processor: 'svelte3/svelte3'
+    },
+    {
+      files: ['*.js'],
+      extends: ['prettier']
     }
   ],
   parserOptions: {

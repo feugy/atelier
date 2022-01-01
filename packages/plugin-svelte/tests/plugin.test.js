@@ -234,7 +234,7 @@ new Workbench({
       const response = await got(`${address}${url}`)
       expect(response.statusCode).toEqual(200)
       expect(response.headers).toEqual(
-        expect.objectContaining({ 'content-type': 'text/html' })
+        expect.objectContaining({ 'content-type': 'text/html;charset=utf-8' })
       )
       expect(response.body).toEqual(
         expect.stringContaining(
@@ -266,7 +266,7 @@ new Workbench({
       })
       expect(response.statusCode).toEqual(200)
       expect(response.headers).toEqual(
-        expect.objectContaining({ 'content-type': 'text/html' })
+        expect.objectContaining({ 'content-type': 'text/html;charset=utf-8' })
       )
     })
 

@@ -30,7 +30,7 @@
   }
 </script>
 
-<style type="postcss">
+<style lang="postcss">
   main {
     @apply flex-grow flex flex-col overflow-auto;
   }

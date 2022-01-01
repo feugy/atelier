@@ -13,7 +13,7 @@ module.exports = {
     '^.+\\.ya?ml$': 'jest-yaml-transform'
   },
   moduleNameMapper: {
-    '^.+\\.css$': 'identity-obj-proxy'
+    '^.+\\.(post)?css$': 'identity-obj-proxy'
   },
   setupFilesAfterEnv: ['<rootDir>/tests/jest-setup.js'],
   moduleFileExtensions: ['js', 'svelte'],

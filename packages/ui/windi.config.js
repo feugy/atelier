@@ -1,5 +1,7 @@
-module.exports = {
-  purge: ['./src/**/*.svelte'],
+// @ts-check - enable TS check for js file
+import { defineConfig } from 'windicss/helpers'
+
+export default defineConfig({
   theme: {
     // https://paletton.com/#uid=30R0u0ku-uK9vRwkO-pyAkqQr7t
     extend: {
@@ -21,7 +23,5 @@ module.exports = {
         page: '#e5e7eb'
       }
     }
-  },
-  variants: {},
-  plugins: []
-}
+  }
+})

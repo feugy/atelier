@@ -24,7 +24,9 @@
   "devDependencies": {
     "eslint": "^8.6.0",
     "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-jest-dom": "^4.0.0",
     "eslint-plugin-svelte3": "^3.2.1",
+    "eslint-plugin-testing-library": "^5.0.1",
     "husky": "^7.0.4",
     "lint-staged": "^12.1.4",
     "prettier": "^2.5.1",

@@ -7,7 +7,7 @@
   const dispatch = createEventDispatcher()
 </script>
 
-<style type="postcss">
+<style lang="postcss">
   iframe {
     @apply inline-block border-none h-full w-full;
   }

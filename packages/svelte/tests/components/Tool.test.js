@@ -53,7 +53,7 @@ describe('Tool component', () => {
         })
       )
 
-      expect(screen.queryByRole('button')).toBeInTheDocument()
+      expect(screen.getByRole('button')).toBeInTheDocument()
       expect(registerTool).toHaveBeenCalledWith({
         name,
         fullName: name,
@@ -131,7 +131,7 @@ describe('Tool component', () => {
           visible: true
         })
       )
-      expect(screen.queryByRole('button')).toBeInTheDocument()
+      expect(screen.getByRole('button')).toBeInTheDocument()
       const button = screen.queryByRole('button')
       expect(button).toHaveTextContent(props.label)
       expect(button).toBeDisabled()
@@ -166,7 +166,7 @@ describe('Tool component', () => {
           visible: true
         })
       )
-      expect(screen.queryByRole('button')).toBeInTheDocument()
+      expect(screen.getByRole('button')).toBeInTheDocument()
       const button = screen.queryByRole('button')
       expect(button).toBeInTheDocument()
       expect(button).toHaveTextContent(props.label)
@@ -193,7 +193,7 @@ describe('Tool component', () => {
           visible: true
         })
       )
-      expect(screen.queryByRole('button')).toBeInTheDocument()
+      expect(screen.getByRole('button')).toBeInTheDocument()
       const button = screen.queryByRole('button')
       expect(button).toBeInTheDocument()
       expect(button).toHaveTextContent('Hey oh!')
@@ -230,7 +230,7 @@ describe('Tool component', () => {
           visible: true
         })
       )
-      expect(screen.queryByRole('button')).toBeInTheDocument()
+      expect(screen.getByRole('button')).toBeInTheDocument()
       expect(get(props)).toEqual({})
       const button = screen.queryByRole('button')
       expect(button).toBeInTheDocument()
@@ -266,7 +266,7 @@ describe('Tool component', () => {
           visible: true
         })
       )
-      expect(screen.queryByRole('button')).toBeInTheDocument()
+      expect(screen.getByRole('button')).toBeInTheDocument()
 
       const button = screen.queryByRole('button')
       expect(button).toBeInTheDocument()
@@ -310,7 +310,7 @@ describe('Tool component', () => {
           visible: true
         })
       )
-      expect(screen.queryByRole('button')).toBeInTheDocument()
+      expect(screen.getByRole('button')).toBeInTheDocument()
 
       get(handleEvent)(new MouseEvent('click'))
       expect(recordEvent).toHaveBeenCalledWith('click', expect.any(MouseEvent))
@@ -337,9 +337,9 @@ describe('Tool component', () => {
           visible: true
         })
       )
-      expect(screen.queryByText(header)).toBeInTheDocument()
-      expect(screen.queryByRole('button')).toBeInTheDocument()
-      expect(screen.queryByText(footer)).toBeInTheDocument()
+      expect(screen.getByText(header)).toBeInTheDocument()
+      expect(screen.getByRole('button')).toBeInTheDocument()
+      expect(screen.getByText(footer)).toBeInTheDocument()
     })
 
     it('calls tool setup before displaying it', async () => {
@@ -429,7 +429,7 @@ describe('Tool component', () => {
           visible: true
         })
       )
-      expect(screen.queryByRole('button')).toBeInTheDocument()
+      expect(screen.getByRole('button')).toBeInTheDocument()
     })
 
     it('calls tool teardown after destroying it', async () => {
@@ -451,7 +451,7 @@ describe('Tool component', () => {
           visible: true
         })
       )
-      expect(screen.queryByRole('button')).toBeInTheDocument()
+      expect(screen.getByRole('button')).toBeInTheDocument()
       expect(teardown).not.toHaveBeenCalled()
 
       currentTool.set({ fullName: 'whatever', name: 'whatever' })
@@ -486,7 +486,7 @@ describe('Tool component', () => {
           visible: true
         })
       )
-      expect(screen.queryByRole('button')).toBeInTheDocument()
+      expect(screen.getByRole('button')).toBeInTheDocument()
       expect(teardown).not.toHaveBeenCalled()
 
       currentTool.set({ fullName: 'whatever', name: 'whatever' })
@@ -530,7 +530,7 @@ describe('Tool component', () => {
           visible: true
         })
       )
-      expect(screen.queryByRole('button')).toBeInTheDocument()
+      expect(screen.getByRole('button')).toBeInTheDocument()
       expect(registerTool).toHaveBeenCalledWith({
         name,
         fullName: `${toolBoxName}/${name}`,
@@ -661,7 +661,7 @@ describe('Tool component', () => {
           visible: true
         })
       )
-      expect(screen.queryByRole('button')).toBeInTheDocument()
+      expect(screen.getByRole('button')).toBeInTheDocument()
 
       const button = screen.queryByRole('button')
       expect(button).toBeInTheDocument()
@@ -696,7 +696,7 @@ describe('Tool component', () => {
           visible: true
         })
       )
-      expect(screen.queryByRole('button')).toBeInTheDocument()
+      expect(screen.getByRole('button')).toBeInTheDocument()
 
       const button = screen.queryByRole('button')
       expect(button).toBeInTheDocument()
@@ -747,7 +747,7 @@ describe('Tool component', () => {
           visible: true
         })
       )
-      expect(screen.queryByRole('button')).toBeInTheDocument()
+      expect(screen.getByRole('button')).toBeInTheDocument()
 
       const button = screen.queryByRole('button')
       expect(button).toBeInTheDocument()
@@ -963,7 +963,7 @@ describe('Tool component', () => {
           visible: true
         })
       )
-      expect(screen.queryByRole('button')).toBeInTheDocument()
+      expect(screen.getByRole('button')).toBeInTheDocument()
 
       expect(teardown).not.toHaveBeenCalled()
       expect(toolTeardown).not.toHaveBeenCalled()
@@ -1008,7 +1008,7 @@ describe('Tool component', () => {
           visible: true
         })
       )
-      expect(screen.queryByRole('button')).toBeInTheDocument()
+      expect(screen.getByRole('button')).toBeInTheDocument()
       expect(teardown).not.toHaveBeenCalled()
       expect(toolTeardown1).not.toHaveBeenCalled()
       expect(toolTeardown2).not.toHaveBeenCalled()

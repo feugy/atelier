@@ -60,6 +60,7 @@ exports[`App connected component displays explorer, pane container and loader 1`
             class="loader"
           >
             <svg
+              class="animate-spin"
               role="progressbar"
               viewBox="22 22 44 44"
             >

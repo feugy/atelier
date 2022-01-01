@@ -52,7 +52,7 @@
   }
 </script>
 
-<style type="postcss">
+<style lang="postcss">
   nav {
     @apply w-full py-2 px-4 border-b text-center;
     border-color: theme('colors.primary.main');

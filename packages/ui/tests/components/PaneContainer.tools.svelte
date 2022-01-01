@@ -7,7 +7,7 @@
   const isEnabled = () => true
 </script>
 
-<style type="postcss">
+<style lang="postcss">
   span {
     @apply h-full;
   }
