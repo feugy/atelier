@@ -1,5 +1,6 @@
 title:
   app: Atelier
+  error: Erreur fatale!
 tooltip:
   background: Modifier la couleur de fond de l'atelier
   collapsible: Réduire/Etendre
@@ -9,4 +10,5 @@ tab:
   properties: Propriétés
 message:
   no-events: Encore aucun message reçus
-  no-pane-enabled: Cet outil n'est pas configuré pour recevoir des évènements ou pour modifier les propriétés
+  no-pane-enabled: Cet outil n'est pas configuré pour recevoir des évènements ou pour modifier les propriétés.
+  fix-and-reload: Veuillez corriger l'erreur avant de recharger la page.

@@ -1,0 +1,46 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ErrorDialogue connected component displays error message 1`] = `
+<body>
+  <div>
+    
+  </div>
+  <div>
+    <div
+      class="filter open"
+    />
+     
+    <div
+      class="backdrop open"
+    >
+      <article
+        role="dialog"
+      >
+        <header
+          aria-level="1"
+          role="heading"
+        >
+          title.error
+        </header>
+         
+        <div
+          class="content"
+        >
+          <main>
+            some random error text
+          </main>
+        </div>
+         
+        <footer>
+          <div
+            class="text-sm"
+            slot="footer"
+          >
+            message.fix-and-reload
+          </div>
+        </footer>
+      </article>
+    </div>
+  </div>
+</body>
+`;
