@@ -83,10 +83,7 @@ function AtelierPlugin(pluginOptions = {}) {
       `${pluginName} option "${error.instancePath.slice(1)}" ${error.message}`
     )
   }
-  const hasTrailingSlash = options.url.endsWith('/')
-  const workframeUrl = `${options.url}${hasTrailingSlash ? '' : '/'}${
-    options.workframeId
-  }`
+  const workframeUrl = `${options.url}${options.workframeId}`
 
   const toolRegexp = new RegExp(options.toolRegexp, 'i')
 
@@ -118,10 +115,10 @@ function AtelierPlugin(pluginOptions = {}) {
             'Content-Type': 'text/html'
           })
           createReadStream(options.workframeHtml).pipe(res)
-        } else if (!hasTrailingSlash && req.originalUrl === options.url) {
+        } else if (`${req.originalUrl}/` === options.url) {
           // append trailing slash to allows resolving <script /> with relative sources
           res.statusCode = 301
-          res.setHeader('Location', `${options.url}/`)
+          res.setHeader('Location', options.url)
           res.end()
         } else {
           // all other static Atelier assets

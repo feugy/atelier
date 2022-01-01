@@ -260,13 +260,13 @@ new Workbench({
       await expect(got(`${address}${url}unknown.jpeg`)).rejects.toThrow('404')
     })
 
-    it(`serves atelier's main html file without trailing /`, async () => {
+    it(`redirects to atelier's main html file without trailing /`, async () => {
       const response = await got(`${address}${url.slice(0, -1)}`, {
         followRedirect: false
       })
-      expect(response.statusCode).toEqual(200)
+      expect(response.statusCode).toEqual(301)
       expect(response.headers).toEqual(
-        expect.objectContaining({ 'content-type': 'text/html;charset=utf-8' })
+        expect.objectContaining({ location: url })
       )
     })
 
