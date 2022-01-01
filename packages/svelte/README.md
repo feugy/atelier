@@ -208,5 +208,5 @@ Now that you know everything, you may want some real examples.
 You'll find some in Atelier's [UI tests][ui-tests]
 
 [svelte]: https://svelte.dev
-[vite-plugin]: https://github.com/feugy/atelier/tree/master/packages/plugin-svelte
-[ui-tests]: https://github.com/feugy/atelier/blob/master/packages/ui/tests/components
+[vite-plugin]: https://github.com/feugy/atelier/tree/main/packages/plugin-svelte
+[ui-tests]: https://github.com/feugy/atelier/blob/main/packages/ui/tests/components

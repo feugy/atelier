@@ -77,13 +77,13 @@ Atlier seamlessly integrates with [Vite] bundler, and give you back control.
 [cdd]: https://www.componentdriven.org/
 [chromatic]: https://github.com/meteor/chromatic/
 [create-react-app]: https://create-react-app.dev/
-[license]: https://github.com/feugy/atelier/blob/master/LICENSE
-[plugin-api]: https://github.com/feugy/atelier/tree/master/packages/plugin-svelte
+[license]: https://github.com/feugy/atelier/blob/main/LICENSE
+[plugin-api]: https://github.com/feugy/atelier/tree/main/packages/plugin-svelte
 [react-cosmos]: https://reactcosmos.org/
 [storybook]: https://storybook.js.org/
 [styleguidist]: https://react-styleguidist.js.org/
 [svelte]: https://svelte.dev
-[svelte-api]: https://github.com/feugy/atelier/tree/master/packages/svelte
+[svelte-api]: https://github.com/feugy/atelier/tree/main/packages/svelte
 [svench]: https://svench-docs.vercel.app
-[toolshot-api]: https://github.com/feugy/atelier/tree/master/packages/toolshot
+[toolshot-api]: https://github.com/feugy/atelier/tree/main/packages/toolshot
 [vitejs]: https://vitejs.dev/

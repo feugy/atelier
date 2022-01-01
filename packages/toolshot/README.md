@@ -62,5 +62,5 @@ configureToolshot({
 ```
 
 [jest]: https://jestjs.io
-[svelte-bindings]: https://github.com/feugy/atelier/tree/master/packages/svelte
+[svelte-bindings]: https://github.com/feugy/atelier/tree/main/packages/svelte
 [snapshot-testing]: https://jestjs.io/docs/snapshot-testing#snapshot-testing-with-jest

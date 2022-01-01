@@ -76,5 +76,5 @@ atelier({
 ```
 
 [vite]: https://vitejs.dev
-[svelte-bindings]: https://github.com/feugy/atelier/tree/master/packages/svelte
+[svelte-bindings]: https://github.com/feugy/atelier/tree/main/packages/svelte
 [vite-getting-started]: https://vitejs.dev/guide/#scaffolding-your-first-vite-project
