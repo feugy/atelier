@@ -156,12 +156,6 @@ exports[`Toolshot components/Group.tools.svelte: Multiple level 1`] = `
 </span>
 `;
 
-exports[`Toolshot components/Group.tools.svelte: No tabs 1`] = `
-<span>
-  <ul />
-</span>
-`;
-
 exports[`Toolshot components/Group.tools.svelte: Single level 1`] = `
 <span>
   <ul>

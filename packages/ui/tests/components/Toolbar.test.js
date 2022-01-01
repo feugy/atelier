@@ -3,6 +3,9 @@ import html from 'svelte-htm'
 import { Toolbar } from '../../src/components'
 import { translate } from '../test-utils'
 
+// we're not testing DOM elements, but svelte bindings.
+/* eslint-disable jest-dom/prefer-to-have-style */
+
 describe('Toolbar component', () => {
   it('cycle through backgrounds', async () => {
     const viewport = {

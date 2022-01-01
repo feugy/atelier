@@ -2,7 +2,6 @@
 
 ## Plugin
 
-- `setupPath` to be considered relative to `path`
 - remove tools on updates (toolbox/tool renamal, file deletion)
 
 ## UI
@@ -44,10 +43,8 @@
 
 # Documentation
 
-- Deep dive how-to write tools
+- Deep dive how-to write UI bindings
 - Deep dive how-to write toolboxes
-- Deep dive how-to configure vite
-- Deep dive how-to configure toolshot
 - How to develop plugins
 - How to release
   ```shell

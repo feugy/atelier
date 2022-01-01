@@ -6,7 +6,7 @@
   export let current = null
 </script>
 
-<style type="postcss">
+<style lang="postcss">
   aside {
     @apply py-4 w-56 overflow-auto border-r flex-shrink-0;
     border-color: theme('colors.primary.main');

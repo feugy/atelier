@@ -29,7 +29,7 @@
   }
 </script>
 
-<style type="postcss">
+<style lang="postcss">
   .root {
     @apply flex flex-col w-full h-1/4;
 

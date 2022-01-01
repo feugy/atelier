@@ -5,7 +5,7 @@
   let viewport
 </script>
 
-<style type="postcss">
+<style lang="postcss">
   .container {
     @apply h-full w-full;
   }

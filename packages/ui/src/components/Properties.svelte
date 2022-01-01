@@ -48,7 +48,7 @@
   }
 </script>
 
-<style type="postcss">
+<style lang="postcss">
   .root {
     @apply p-4 overflow-auto w-full h-full grid auto-rows-min gap-y-2 gap-x-4 text-left;
     grid-template-columns: auto 1fr;

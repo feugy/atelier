@@ -3,6 +3,7 @@
 exports[`Toolshot components/Loader.tools.svelte: Components/Loader 1`] = `
 <span>
   <svg
+    class="animate-spin"
     role="progressbar"
     viewBox="22 22 44 44"
   >

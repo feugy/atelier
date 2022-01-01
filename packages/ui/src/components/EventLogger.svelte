@@ -17,7 +17,7 @@
   }
 </script>
 
-<style type="postcss">
+<style lang="postcss">
   .root {
     @apply p-4 overflow-auto w-full h-full relative;
   }

@@ -7,7 +7,7 @@ const got = require('got')
 const builder = require('../src')
 
 const defaultWorkframeId = '@atelier-wb/workframe'
-const defaultPath = '/'
+const defaultUrl = '/atelier/'
 const path = resolve(__dirname, 'fixtures', 'nested')
 
 describe('plugin builder', () => {
@@ -23,9 +23,15 @@ describe('plugin builder', () => {
     expect(() => builder({ url: null })).toThrow(
       `${builder.pluginName} option "url" must be string`
     )
-    expect(() => builder({ url: 'toto' })).toThrow(
-      `${builder.pluginName} option "url" must match pattern "^\\/"`
+    expect(() => builder({ url: '/foo' })).toThrow(
+      `${builder.pluginName} option "url" must match pattern "^\\/(?:|.+\\/)$"`
     )
+    expect(() => builder({ url: 'bar/' })).toThrow(
+      `${builder.pluginName} option "url" must match pattern "^\\/(?:|.+\\/)$"`
+    )
+    expect(() => builder({ url: '/' })).not.toThrow()
+    expect(() => builder({ url: '/foo/' })).not.toThrow()
+    expect(() => builder({ url: '/foo/bar/' })).not.toThrow()
   })
 
   it('validates toolRegexp option', () => {
@@ -79,12 +85,12 @@ describe('plugin builder', () => {
       })
     })
 
-    it('does not handle other ids then workframeId', async () => {
+    it('does not handle other ids than workframeId', async () => {
       const plugin = builder()
       expect(plugin.resolveId(faker.lorem.word())).not.toBeDefined()
       expect(await plugin.load(faker.lorem.word())).not.toBeDefined()
-      expect(plugin.resolveId(`${defaultPath}${defaultWorkframeId}`)).toEqual(
-        `${defaultPath}${defaultWorkframeId}`
+      expect(plugin.resolveId(`${defaultUrl}${defaultWorkframeId}`)).toEqual(
+        `${defaultUrl}${defaultWorkframeId}`
       )
     })
 
@@ -93,14 +99,14 @@ describe('plugin builder', () => {
       const plugin = builder({ workframeId })
       expect(plugin.resolveId(faker.lorem.word())).not.toBeDefined()
       expect(await plugin.load(faker.lorem.word())).not.toBeDefined()
-      expect(plugin.resolveId(`${defaultPath}${workframeId}`)).toEqual(
-        `${defaultPath}${workframeId}`
+      expect(plugin.resolveId(`${defaultUrl}${workframeId}`)).toEqual(
+        `${defaultUrl}${workframeId}`
       )
     })
 
     it('finds tool files and generates workframe content', async () => {
       const plugin = builder({ path })
-      expect(await plugin.load(`${defaultPath}${defaultWorkframeId}`))
+      expect(await plugin.load(`${defaultUrl}${defaultWorkframeId}`))
         .toEqual(`import { Workbench } from '@atelier-wb/svelte'
 
 import tool1 from '${path}/a.tools.svelte'
@@ -120,7 +126,7 @@ new Workbench({
     it('finds tool files with custom regexp', async () => {
       const path = resolve(__dirname, 'fixtures', 'nested')
       const plugin = builder({ path, toolRegexp: '\\.custom\\.svelte$' })
-      expect(await plugin.load(`${defaultPath}${defaultWorkframeId}`))
+      expect(await plugin.load(`${defaultUrl}${defaultWorkframeId}`))
         .toEqual(`import { Workbench } from '@atelier-wb/svelte'
 
 import tool1 from '${path}/c.custom.svelte'
@@ -135,10 +141,50 @@ new Workbench({
 })`)
     })
 
-    it('allows custom setup import', async () => {
+    it('allows setup import from node_modules', async () => {
       const setupPath = faker.lorem.word()
       const plugin = builder({ path, setupPath })
-      expect(await plugin.load(`${defaultPath}${defaultWorkframeId}`))
+      expect(await plugin.load(`${defaultUrl}${defaultWorkframeId}`))
+        .toEqual(`import { Workbench } from '@atelier-wb/svelte'
+import '${setupPath}'
+import tool1 from '${path}/a.tools.svelte'
+import tool2 from '${path}/b.tools.svelte'
+import tool3 from '${path}/folder1/b.tools.svelte'
+import tool4 from '${path}/folder1/d.tools.svelte'
+import tool5 from '${path}/folder1/folder1/b.tools.svelte'
+import tool6 from '${path}/folder2/c.tools.svelte'
+import tool7 from '${path}/folder2/folder1/a.tools.svelte'
+
+new Workbench({
+  target: document.body,
+  props: { tools: [tool1, tool2, tool3, tool4, tool5, tool6, tool7] }
+})`)
+    })
+
+    it('allows relative setup import', async () => {
+      const setupPath = faker.lorem.word()
+      const plugin = builder({ path, setupPath: `./${setupPath}` })
+      expect(await plugin.load(`${defaultUrl}${defaultWorkframeId}`))
+        .toEqual(`import { Workbench } from '@atelier-wb/svelte'
+import '${resolve(path, setupPath)}'
+import tool1 from '${path}/a.tools.svelte'
+import tool2 from '${path}/b.tools.svelte'
+import tool3 from '${path}/folder1/b.tools.svelte'
+import tool4 from '${path}/folder1/d.tools.svelte'
+import tool5 from '${path}/folder1/folder1/b.tools.svelte'
+import tool6 from '${path}/folder2/c.tools.svelte'
+import tool7 from '${path}/folder2/folder1/a.tools.svelte'
+
+new Workbench({
+  target: document.body,
+  props: { tools: [tool1, tool2, tool3, tool4, tool5, tool6, tool7] }
+})`)
+    })
+
+    it('allows absolute setup import', async () => {
+      const setupPath = resolve(path, faker.lorem.word())
+      const plugin = builder({ path, setupPath })
+      expect(await plugin.load(`${defaultUrl}${defaultWorkframeId}`))
         .toEqual(`import { Workbench } from '@atelier-wb/svelte'
 import '${setupPath}'
 import tool1 from '${path}/a.tools.svelte'
@@ -159,13 +205,13 @@ new Workbench({
   describe('given a configured and started server', () => {
     let plugin
     let server
-    let url
+    let address
     let watcher
-    let prefix = '/atelier'
+    let url = '/atelier/'
 
     beforeEach(async () => {
       plugin = builder({
-        url: prefix,
+        url: url,
         path,
         publicDir: [
           resolve(__dirname, 'fixtures', 'static1'),
@@ -179,16 +225,16 @@ new Workbench({
       await new Promise((resolve, reject) =>
         server.listen(err => (err ? reject(err) : resolve()))
       )
-      url = `http://localhost:${server.address().port}`
+      address = `http://localhost:${server.address().port}`
     })
 
     afterEach(() => server.close())
 
     it(`serves atelier's main html file`, async () => {
-      const response = await got(`${url}${prefix}/`)
+      const response = await got(`${address}${url}`)
       expect(response.statusCode).toEqual(200)
       expect(response.headers).toEqual(
-        expect.objectContaining({ 'content-type': 'text/html' })
+        expect.objectContaining({ 'content-type': 'text/html;charset=utf-8' })
       )
       expect(response.body).toEqual(
         expect.stringContaining(
@@ -201,31 +247,31 @@ new Workbench({
     })
 
     it(`serves files from public dir`, async () => {
-      let response = await got(`${url}${prefix}/icon-256x256.png`)
+      let response = await got(`${address}${url}icon-256x256.png`)
       expect(response.statusCode).toEqual(200)
       expect(response.headers).toEqual(
         expect.objectContaining({ 'content-type': 'image/png' })
       )
-      response = await got(`${url}${prefix}/favicon.ico`)
+      response = await got(`${address}${url}favicon.ico`)
       expect(response.statusCode).toEqual(200)
       expect(response.headers).toEqual(
         expect.objectContaining({ 'content-length': '1150' })
       )
-      await expect(got(`${url}${prefix}/unknown.jpeg`)).rejects.toThrow('404')
+      await expect(got(`${address}${url}unknown.jpeg`)).rejects.toThrow('404')
     })
 
-    it(`redirects to atelier's main html file without leading /`, async () => {
-      const response = await got(`${url}${prefix}`, {
+    it(`redirects to atelier's main html file without trailing /`, async () => {
+      const response = await got(`${address}${url.slice(0, -1)}`, {
         followRedirect: false
       })
       expect(response.statusCode).toEqual(301)
       expect(response.headers).toEqual(
-        expect.objectContaining({ location: `${prefix}/` })
+        expect.objectContaining({ location: url })
       )
     })
 
     it(`serves atelier's workframe`, async () => {
-      const response = await got(`${url}${prefix}/workframe.html`)
+      const response = await got(`${address}${url}workframe.html`)
       expect(response.statusCode).toEqual(200)
       expect(response.headers).toEqual(
         expect.objectContaining({ 'content-type': 'text/html' })
@@ -264,7 +310,7 @@ new Workbench({
         })
         expect(emit).toHaveBeenCalledWith(
           'change',
-          `${prefix}/${defaultWorkframeId}`
+          `${url}${defaultWorkframeId}`
         )
         expect(emit).toHaveBeenCalledTimes(2)
       }
@@ -280,7 +326,7 @@ new Workbench({
       watcher.emit(eventName, resolve(path, file), { isDirectory: () => false })
       expect(emit).not.toHaveBeenCalledWith(
         'change',
-        `${prefix}/${defaultWorkframeId}`
+        `${url}/${defaultWorkframeId}`
       )
       expect(emit).toHaveBeenCalledTimes(1)
     })

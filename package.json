@@ -1,1 +1,40 @@
-{"name":"atelier","version":"0.5.1","description":"Your vite-powered UI component explorer","author":{"name":"Damien Simonin Feugas","email":"damien.simoninfeugas@gmail.com"},"license":"MIT","repository":{"url":"https://github.com/feugy/atelier"},"workspaces":["packages/*"],"scripts":{"lint":"eslint .","format":"prettier --write .","prepare":"husky install","prepublish":"npm run build --workspace packages/ui","release:bump":"standard-version -s","test":"run-s -ncs test:**","test:plugin-svelte":"npm t --workspace packages/plugin-svelte -- --verbose","test:svelte":"npm t --workspace packages/svelte -- --verbose","test:ui":"npm t --workspace packages/ui -- --verbose"},"devDependencies":{"eslint":"^7.32.0","eslint-config-prettier":"^8.3.0","eslint-plugin-svelte3":"^3.2.1","husky":"^7.0.2","lint-staged":"^11.1.2","npm-run-all":"^4.1.5","prettier":"^2.4.1","prettier-plugin-svelte":"^2.4.0","standard-version":"^9.3.1"},"lint-staged":{"*.{js,svelte}":"eslint --cache --fix","*.{js,svelte,css,md}":"prettier --write"}}
+{
+  "name": "atelier",
+  "version": "0.5.1",
+  "description": "Your vite-powered UI component explorer",
+  "author": {
+    "name": "Damien Simonin Feugas",
+    "email": "damien.simoninfeugas@gmail.com"
+  },
+  "license": "MIT",
+  "repository": {
+    "url": "https://github.com/feugy/atelier"
+  },
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "lint": "eslint .",
+    "format": "prettier --write .",
+    "prepare": "husky install",
+    "prepublish": "npm -w packages/ui run build ",
+    "release:bump": "standard-version -s",
+    "test": "npm --workspaces --if-present test -- --verbose"
+  },
+  "devDependencies": {
+    "eslint": "^8.6.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-jest-dom": "^4.0.0",
+    "eslint-plugin-svelte3": "^3.2.1",
+    "eslint-plugin-testing-library": "^5.0.1",
+    "husky": "^7.0.4",
+    "lint-staged": "^12.1.4",
+    "prettier": "^2.5.1",
+    "prettier-plugin-svelte": "^2.5.1",
+    "standard-version": "^9.3.2"
+  },
+  "lint-staged": {
+    "*.{js,svelte}": "eslint --cache --fix",
+    "*.{js,svelte,css,md}": "prettier --write"
+  }
+}

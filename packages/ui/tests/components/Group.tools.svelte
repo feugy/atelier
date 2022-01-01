@@ -42,6 +42,4 @@
       ])
     }}
   />
-
-  <Tool name="No tabs" />
 </ToolBox>

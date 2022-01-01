@@ -5,6 +5,7 @@ import {
   events,
   toolsMap,
   currentTool,
+  lastError,
   selectTool,
   setWorkbenchFrame,
   updateProperty
@@ -98,6 +99,37 @@ describe('tools store', () => {
     expect(new URLSearchParams(location.search).get('tool')).toEqual(
       tool1.fullName
     )
+  })
+
+  it('records last error', () => {
+    const src = faker.internet.url()
+    const error1 = new Error('first error')
+    const error2 = new Error('second error')
+    setWorkbenchFrame({ src })
+
+    window.dispatchEvent(
+      new MessageEvent('message', {
+        origin: src,
+        data: {
+          type: 'recordError',
+          message: error1.message,
+          stack: error1.stack
+        }
+      })
+    )
+    expect(get(lastError)).toMatchObject(error1)
+
+    window.dispatchEvent(
+      new MessageEvent('message', {
+        origin: src,
+        data: {
+          type: 'recordError',
+          message: error2.message,
+          stack: error2.stack
+        }
+      })
+    )
+    expect(get(lastError)).toMatchObject(error2)
   })
 
   it('accumulates events', () => {

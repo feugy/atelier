@@ -1,6 +1,7 @@
 import faker from 'faker'
 import { get } from 'svelte/store'
 import {
+  recordError,
   recordEvent,
   recordVisibility,
   registerTool,
@@ -22,6 +23,23 @@ describe('stores', () => {
         {
           type: 'recordVisibility',
           data: { name, visible }
+        },
+        origin
+      )
+      expect(postMessage).toHaveBeenCalledTimes(1)
+    })
+  })
+
+  describe('recordError()', () => {
+    it('serializes error message and stack trace', () => {
+      const message = faker.lorem.word()
+      const error = new Error(message)
+      recordError(error)
+      expect(postMessage).toHaveBeenCalledWith(
+        {
+          type: 'recordError',
+          message,
+          stack: expect.any(String)
         },
         origin
       )

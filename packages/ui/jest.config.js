@@ -12,8 +12,9 @@ module.exports = {
     '^.+\\.svelte$': 'jest-transform-svelte',
     '^.+\\.ya?ml$': 'jest-yaml-transform'
   },
+  transformIgnorePatterns: ['node_modules\\/(?!svelte-portal)'],
   moduleNameMapper: {
-    '^.+\\.css$': 'identity-obj-proxy'
+    '^.+\\.(post)?css$': 'identity-obj-proxy'
   },
   setupFilesAfterEnv: ['<rootDir>/tests/jest-setup.js'],
   moduleFileExtensions: ['js', 'svelte'],

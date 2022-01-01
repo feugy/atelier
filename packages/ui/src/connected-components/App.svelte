@@ -3,6 +3,7 @@
   import { _ } from 'svelte-intl'
   import * as EventsPane from './EventsPane.svelte'
   import * as PropertiesPane from './PropertiesPane.svelte'
+  import ErrorDialogue from './ErrorDialogue.svelte'
   import '../common'
   import {
     Explorer,
@@ -30,7 +31,7 @@
   }
 </script>
 
-<style type="postcss">
+<style lang="postcss">
   main {
     @apply flex-grow flex flex-col overflow-auto;
   }
@@ -102,3 +103,4 @@
     ]}
   />
 </main>
+<ErrorDialogue />

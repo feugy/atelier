@@ -11,7 +11,7 @@ const validate = new Ajv().compile({
   type: 'object',
   properties: {
     path: { type: 'string' },
-    url: { type: 'string', pattern: '^\\/' },
+    url: { type: 'string', pattern: '^\\/(?:|.+\\/)$' },
     toolRegexp: { type: 'string' },
     workframeHtml: { type: 'string' },
     workframeId: { type: 'string' },
@@ -26,8 +26,8 @@ const validate = new Ajv().compile({
 
 const defaultOptions = {
   path: './atelier',
-  url: '/',
-  toolRegexp: '\\.tools\\.svelte+$',
+  url: '/atelier/',
+  toolRegexp: '\\.tools(?!\\.shot$).+$',
   workframeHtml: resolve(__dirname, 'workframe.html'),
   workframeId: '@atelier-wb/workframe',
   bundled: true,
@@ -50,16 +50,22 @@ async function findTools(path, detectionRegex) {
   return paths
 }
 
-function buildWorkframe(paths, setupPath) {
+function buildWorkframe(paths, { path, setupPath }) {
   const tools = new Array(paths.length)
   const imports = new Array(paths.length)
   let i = 0
-  for (const path of paths) {
-    imports[i] = `import tool${i + 1} from '${path}'`
+  for (const toolPath of paths) {
+    imports[i] = `import tool${i + 1} from '${toolPath}'`
     tools[i] = `tool${++i}`
   }
   return `import { Workbench } from '@atelier-wb/svelte'
-${setupPath ? `import '${setupPath}'` : ''}
+${
+  setupPath
+    ? `import '${
+        setupPath.startsWith('.') ? resolve(path, setupPath) : setupPath
+      }'`
+    : ''
+}
 ${imports.join('\n')}
 
 new Workbench({
@@ -77,10 +83,7 @@ function AtelierPlugin(pluginOptions = {}) {
       `${pluginName} option "${error.instancePath.slice(1)}" ${error.message}`
     )
   }
-  const hasTrailingSlash = options.url.endsWith('/')
-  const workframeUrl = `${options.url}${hasTrailingSlash ? '' : '/'}${
-    options.workframeId
-  }`
+  const workframeUrl = `${options.url}${options.workframeId}`
 
   const toolRegexp = new RegExp(options.toolRegexp, 'i')
 
@@ -112,10 +115,10 @@ function AtelierPlugin(pluginOptions = {}) {
             'Content-Type': 'text/html'
           })
           createReadStream(options.workframeHtml).pipe(res)
-        } else if (!hasTrailingSlash && req.originalUrl === options.url) {
+        } else if (`${req.originalUrl}/` === options.url) {
           // append trailing slash to allows resolving <script /> with relative sources
           res.statusCode = 301
-          res.setHeader('Location', `${options.url}/`)
+          res.setHeader('Location', options.url)
           res.end()
         } else {
           // all other static Atelier assets
@@ -151,10 +154,11 @@ function AtelierPlugin(pluginOptions = {}) {
 
     async load(id) {
       if (id === workframeUrl) {
-        return buildWorkframe(
+        const workframe = buildWorkframe(
           await findTools(options.path, toolRegexp),
-          options.setupPath
+          options
         )
+        return workframe
       }
     }
   }

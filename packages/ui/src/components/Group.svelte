@@ -10,7 +10,7 @@
   const dispatch = createEventDispatcher()
 
   $: collator = new Intl.Collator($locale || undefined, { numeric: true })
-  $: entries = [...toolsGroup?.entries()].sort(([name1], [name2]) =>
+  $: entries = [...(toolsGroup?.entries() ?? [])].sort(([name1], [name2]) =>
     collator.compare(name1, name2)
   )
   $: if (current && entries) {
@@ -31,7 +31,7 @@
   }
 </script>
 
-<style type="postcss">
+<style lang="postcss">
   li {
     @apply cursor-pointer mt-2 select-none;
 

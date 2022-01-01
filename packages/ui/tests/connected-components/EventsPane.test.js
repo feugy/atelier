@@ -20,7 +20,7 @@ describe('EventLogger connected component', () => {
     events.next([])
     render(html`<${EventsPane} />`)
     expect(screen.getByText(translate('message.no-events'))).toBeInTheDocument()
-    expect(screen.queryAllByRole('button')).toHaveLength(0)
+    expect(screen.queryByRole('button')).not.toBeInTheDocument()
     expect(clearEvents).not.toHaveBeenCalled()
   })
 
@@ -39,7 +39,7 @@ describe('EventLogger connected component', () => {
     expect(
       screen.getByText(translate('{ time, time }', eventData[1]))
     ).toBeInTheDocument()
-    expect(screen.queryAllByRole('button')).toHaveLength(1)
+    expect(screen.getByRole('button')).toBeInTheDocument()
     expect(clearEvents).not.toHaveBeenCalled()
   })
 

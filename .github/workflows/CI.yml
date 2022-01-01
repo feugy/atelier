@@ -15,7 +15,7 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [15.x]
+        node-version: [17.x]
 
     steps:
       - name: Check code out
@@ -40,7 +40,7 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [15.x]
+        node-version: [17.x]
 
     steps:
       - name: Check code out
@@ -57,14 +57,8 @@ jobs:
       - name: Build UI
         run: npm run build --workspace packages/ui
 
-      - name: Run test for Vite plugin for Svelte
-        run: npm run test:plugin-svelte
-
-      - name: Run test for Svelte bindings
-        run: npm run test:svelte
-
-      - name: Run test for UI
-        run: npm run test:ui
+      - name: Run tests
+        run: npm test
 
       - name: Send coverage to Codacy
         if: always()
@@ -72,4 +66,4 @@ jobs:
         uses: codacy/codacy-coverage-reporter-action@master
         with:
           project-token: ${{ secrets.CODACY_PROJECT_TOKEN }}
-          coverage-reports: packages/plugin-svelte/coverage/clover.xml,packages/svelte/coverage/clover.xml,packages/ui/coverage/clover.xml
+          coverage-reports: packages/plugin-svelte/coverage/clover.xml,packages/svelte/coverage/clover.xml,packages/toolshot/coverage/clover.xml,packages/ui/coverage/clover.xml
