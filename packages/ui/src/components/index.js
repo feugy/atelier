@@ -1,3 +1,4 @@
+export { default as Button } from './Button.svelte'
 export { default as Dialogue } from './Dialogue.svelte'
 export { default as EventLogger } from './EventLogger.svelte'
 export { default as Explorer } from './Explorer.svelte'

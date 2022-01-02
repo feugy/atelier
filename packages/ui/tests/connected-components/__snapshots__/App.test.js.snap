@@ -21,25 +21,31 @@ exports[`App connected component displays explorer, pane container and loader 1`
         <ul>
           <li>
             <button
+              class="primary iconOnly noColor"
               title="Modifier la couleur de fond de l'atelier"
             >
-              <span
+              <i
                 class="material-icons"
               >
                 wallpaper
-              </span>
+              </i>
+               
+               
             </button>
           </li>
            
           <li>
             <button
+              class="primary iconOnly noColor"
               title="Redimensionner la taille de l'atelier"
             >
-              <span
+              <i
                 class="material-icons"
               >
                 devices
-              </span>
+              </i>
+               
+               
             </button>
              
           </li>

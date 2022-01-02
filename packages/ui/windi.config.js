@@ -17,6 +17,9 @@ export default defineConfig({
           light: '#3db099',
           dark: '#006854',
           text: '#f3f4f6'
+        },
+        disabled: {
+          main: '#919191'
         }
       },
       background: {

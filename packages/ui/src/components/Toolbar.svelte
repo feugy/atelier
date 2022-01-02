@@ -1,5 +1,6 @@
 <script>
   import { _ } from 'svelte-intl'
+  import Button from './Button.svelte'
 
   export let viewport = null
 
@@ -83,14 +84,22 @@
 <nav>
   <ul>
     <li>
-      <button title={$_('tooltip.background')} on:click={cycleBackgrounds}
-        ><span class="material-icons">wallpaper</span></button
-      >
+      <Button
+        title={$_('tooltip.background')}
+        icon="wallpaper"
+        primary={true}
+        noColor={true}
+        on:click={cycleBackgrounds}
+      />
     </li>
     <li>
-      <button title={$_('tooltip.viewport')} on:click={toggleViewPort}
-        ><span class="material-icons">devices</span></button
-      >
+      <Button
+        title={$_('tooltip.viewport')}
+        icon="devices"
+        primary={true}
+        noColor={true}
+        on:click={toggleViewPort}
+      />
       {#if isViewPortActive}
         <span class="input-bar">
           <input class="width" bind:value={viewPortWidth} />
