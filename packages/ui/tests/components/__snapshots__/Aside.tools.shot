@@ -1,0 +1,64 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Toolshot components/Aside.tools.svelte: Components/Aside 1`] = `
+<span>
+  <aside>
+    <h1>
+      <span
+        class="material-icons"
+      >
+        handyman
+      </span>
+       
+      <span>
+        title.app
+      </span>
+    </h1>
+     
+     
+    <nav>
+      <ol />
+    </nav>
+     
+    <ul>
+      <li>
+        <div>
+          <span
+            class="material-icons symbol"
+          >
+            architecture
+          </span>
+          Component #3
+        </div>
+         
+      </li>
+      <li>
+        <div
+          class="folder"
+        >
+          <span
+            class="material-icons symbol"
+          >
+            folder_open
+          </span>
+          Folder A
+        </div>
+         
+      </li>
+      <li>
+        <div
+          class="folder"
+        >
+          <span
+            class="material-icons symbol"
+          >
+            folder_open
+          </span>
+          Folder D
+        </div>
+         
+      </li>
+    </ul>
+  </aside>
+</span>
+`;

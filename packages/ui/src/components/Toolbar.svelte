@@ -55,17 +55,12 @@
 
 <style lang="postcss">
   nav {
-    @apply w-full py-2 px-4 border-b text-center;
-    border-color: theme('colors.primary.main');
+    @apply w-full px-4 text-center;
   }
   ul {
     @apply inline-flex;
     & > li {
       @apply px-2;
-      & + li {
-        @apply border-l;
-        border-color: theme('colors.primary.main');
-      }
     }
   }
   input {

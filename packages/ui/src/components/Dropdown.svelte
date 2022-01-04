@@ -182,9 +182,7 @@
   }
 
   ul {
-    @apply absolute my-3 rounded z-20 text-sm border;
-    background-color: theme('background.page');
-    border-color: theme('colors.primary.main');
+    @apply absolute my-3 rounded z-20 text-sm bg-$base shadow-xl;
   }
 
   li {
@@ -193,13 +191,10 @@
     &:not(.disabled) {
       &:hover,
       &:focus {
-        @apply cursor-pointer outline-none;
-        color: theme('colors.secondary.text');
-        background-color: theme('colors.secondary.main');
+        @apply cursor-pointer outline-none bg-$secondary;
       }
       &.current {
-        color: theme('colors.primary.text');
-        background-color: theme('colors.primary.main');
+        @apply bg-$primary;
       }
     }
 

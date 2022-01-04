@@ -7,7 +7,7 @@
   name="Components/Button"
   component={Button}
   events={['click']}
-  layout="padded"
+  layout="centered"
 >
   <Tool name="Default" props={{ text: 'Default' }} />
 

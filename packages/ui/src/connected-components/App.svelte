@@ -5,19 +5,13 @@
   import * as PropertiesPane from './PropertiesPane.svelte'
   import ErrorDialogue from './ErrorDialogue.svelte'
   import '../common'
-  import {
-    Explorer,
-    Frame,
-    Loader,
-    PaneContainer,
-    Toolbar
-  } from '../components'
+  import { Aside, Frame, Loader, PaneContainer, Toolbar } from '../components'
   import {
     currentTool,
     events,
     selectTool,
     setWorkbenchFrame,
-    toolsMap
+    tools
   } from '../stores'
 
   let frame
@@ -37,26 +31,15 @@
   }
 
   .viewport-container {
-    @apply flex overflow-auto flex-grow items-center;
+    @apply flex p-4 overflow-auto flex-grow items-center;
   }
 
   .viewport {
-    @apply relative flex-grow h-full;
-    background-image: radial-gradient(
-      theme('colors.secondary.light') 0.5px,
-      transparent 1px
-    );
-    background-size: 20px 20px;
-  }
-
-  :global(.viewport-container.frame) {
-    @apply p-8;
+    @apply relative flex-grow h-full shadow-xl transition-all border border-$base-dark;
   }
 
   :global(.viewport-container.frame > .viewport) {
-    @apply border flex-none m-auto;
-    border-color: theme('colors.primary.main');
-    border-style: solid !important;
+    @apply flex-none m-auto;
   }
 
   .loader {
@@ -68,13 +51,13 @@
   <title>{$_('title.app')}</title>
 </svelte:head>
 
-<Explorer
-  toolsGroup={$toolsMap}
+<Aside
+  tools={$tools}
   current={$currentTool}
   on:select={({ detail }) => selectTool(detail)}
 >
   <Toolbar {viewport} />
-</Explorer>
+</Aside>
 <main>
   <span class="viewport-container">
     <div class="viewport" bind:this={viewport}>

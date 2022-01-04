@@ -4,7 +4,7 @@
   }
 
   circle {
-    stroke: theme('colors.primary.main');
+    stroke: var(--primary);
     stroke-dasharray: 80px, 200px;
     stroke-dashoffset: 0px;
   }

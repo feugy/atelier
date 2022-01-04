@@ -10,8 +10,8 @@ describe('App connected component', () => {
       translate('title.app')
     )
     const navs = screen.queryAllByRole('navigation')
-    // toolbar + pane containers
-    expect(navs).toHaveLength(2)
+    // toolbar + container + pane containers
+    expect(navs).toHaveLength(3)
     expect(container).toMatchSnapshot()
     expect(screen.getByRole('progressbar')).toBeInTheDocument()
   })

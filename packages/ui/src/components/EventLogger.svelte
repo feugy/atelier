@@ -1,6 +1,7 @@
 <script>
   import { createEventDispatcher } from 'svelte'
   import { _ } from 'svelte-intl'
+  import Button from './Button.svelte'
   import PaneDisclaimer from './PaneDisclaimer.svelte'
 
   export let events = []
@@ -28,13 +29,11 @@
   }
 
   .time {
-    @apply text-xs leading-6;
-    color: theme('colors.secondary.dark');
+    @apply text-xs leading-6 text-$secondary-light;
   }
 
   .name {
-    @apply justify-self-end;
-    color: theme('colors.primary.dark');
+    @apply justify-self-end text-$base-light;
   }
 
   .clear-button {
@@ -55,11 +54,12 @@
         <div class="args">{format(args)}</div>
       {/each}
     </div>
-    <button
-      class="clear-button"
-      title={$_('tooltip.clear-events')}
-      on:click={() => dispatch('clear-events')}
-      ><span class="material-icons">clear_all</span></button
+    <span class="clear-button">
+      <Button
+        icon="clear_all"
+        title={$_('tooltip.clear-events')}
+        on:click={() => dispatch('clear-events')}
+      /></span
     >
   {/if}
 </div>

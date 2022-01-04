@@ -52,6 +52,10 @@ exports[`App connected component displays explorer, pane container and loader 1`
         </ul>
       </nav>
        
+      <nav>
+        <ol />
+      </nav>
+       
       <ul />
     </aside>
      

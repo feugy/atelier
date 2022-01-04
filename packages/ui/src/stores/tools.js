@@ -78,7 +78,7 @@ window.addEventListener('popstate', ({ state }) => {
   }
 })
 
-export const toolsMap = tools$.pipe(map(groupByName))
+export const tools = tools$.pipe(map(groupByName))
 
 export const currentTool = current$.asObservable()
 

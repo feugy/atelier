@@ -8,30 +8,27 @@
 <style lang="postcss">
   .backdrop,
   .filter {
-    @apply fixed flex items-center justify-center inset-0 m-0 z-10 p-10;
-    visibility: hidden;
-  }
-
-  .filter.open {
-    @apply visible;
-    backdrop-filter: blur(2px);
-  }
-
-  .backdrop {
-    opacity: 0;
-    transition: all 0.35s ease;
-    background-color: theme('background.overlay');
+    @apply fixed flex items-center justify-center 
+           inset-0 m-0 z-10 p-10
+           opacity-0 transition duration-400 pointer-events-none;
 
     &.open {
-      @apply opacity-100 visible;
+      @apply opacity-100 pointer-events-auto;
+    }
+  }
+
+  .filter {
+    @apply bg-$base-darkest duration-100;
+    &.open {
+      @apply opacity-90 backdrop-filter backdrop-blur-sm;
     }
   }
 
   article {
-    @apply flex flex-col text-center w-full md:w-8/10 lg:w-7/10 xl:w-1/2 max-h-full md:max-h-8/10 shadow-xl;
-    background-color: theme('background.page');
-    --tw-shadow: var(--tw-shadow-colored);
-    --tw-shadow-color: theme('shadow.overlay');
+    @apply flex flex-col text-center 
+           w-full md:w-8/10 lg:w-7/10 xl:w-1/2 
+           max-h-full md:max-h-8/10 
+           shadow-xl bg-$base-dark;
   }
 
   .content {
@@ -39,8 +36,7 @@
   }
 
   header {
-    @apply m-4 mt-0 p-4 text-2xl border-b;
-    border-bottom-color: theme('colors.primary.main');
+    @apply m-4 mt-0 p-4 text-2xl border-b border-$primary text-$primary-light;
   }
 
   footer {

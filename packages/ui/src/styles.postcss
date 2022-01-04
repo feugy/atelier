@@ -1,14 +1,56 @@
 @import 'material-design-icons-iconfont';
 
+:root {
+  /* light 300 */
+  --ink: #f8f9fa;
+  /* sky 200~300, 500~900 */
+  --base-lightest: #bae6fd;
+  --base-lighter: #7dd3fc;
+  --base-light: #0ea5e9;
+  --base: #0284c7;
+  --base-dark: #075985;
+  --base-darker: #0c4a6e;
+  /* blue-gray 600 */
+  --base-darkest: #475569;
+  /* teal 100~200 400~800 */
+  --primary-lightest: #ccfbf1;
+  --primary-lighter: #99f6e4;
+  --primary-light: #2dd4bf;
+  --primary: #14b8a6;
+  --primary-dark: #0d9488;
+  --primary-darker: #0f766e;
+  --primary-darkest: #115e59;
+  /* lime 400 */
+  --primary-vivid: #a3e635;
+  /* amber 50, 200, 400~800 */
+  --secondary-lightest: #fffbeb;
+  --secondary-lighter: #fde68a;
+  --secondary-light: #fbbf24;
+  --secondary: #f59e0b;
+  --secondary-dark: #d97706;
+  --secondary-darker: #b45309;
+  --secondary-darkest: #92400e;
+  /* yellow 300 */
+  --secondary-vivid: #fde047;
+  /* blue-gray 100~400, 700~900 */
+  --disabled-lightest: #f1f5f9;
+  --disabled-lighter: #e5e7eb;
+  --disabled-light: #d1d5db;
+  --disabled: #9ca3af;
+  --disabled-dark: #374151;
+  --disabled-darker: #1f2937;
+  --disabled-darkest: #111827;
+}
+
 .material-icons {
   vertical-align: -0.2em;
 }
 
 html,
 body {
-  @apply font-sans h-full overflow-hidden m-0;
-  color: theme('colors.primary.text');
-  background-color: theme('background.page');
+  @apply font-sans h-full overflow-hidden m-0 bg-gradient-to-b from-transparent text-$ink;
+  --tw-gradient-from: var(--base-darker) 60%;
+  --tw-gradient-to: var(--disabled-dark);
 }
 
 body {

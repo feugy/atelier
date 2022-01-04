@@ -9,17 +9,17 @@
 
 <style lang="postcss">
   button {
-    @apply inline-flex border-none cursor-pointer px-6 py-2 capitalize text-base
-  font-semibold bg-transparent flex-row items-center rounded whitespace-nowrap transition;
+    @apply inline-flex cursor-pointer px-6 py-2 
+      flex-row items-center transition transform
+      rounded border-none bg-transparent 
+      capitalize text-base whitespace-nowrap;
 
     &:not(.noColor) {
-      background-color: theme('colors.secondary.main');
-      color: theme('colors.secondary.text');
+      @apply bg-$base;
     }
 
     &:disabled {
-      @apply cursor-default;
-      background-color: theme('colors.disabled.main');
+      @apply cursor-default bg-$disabled;
     }
 
     & > i {
@@ -34,66 +34,39 @@
       &:hover,
       &:focus,
       &:active {
-        transform: scale(1.03);
+        @apply scale-105;
         &:not(.noColor) {
-          background-color: theme('colors.secondary.dark');
+          @apply bg-$base-light;
         }
       }
     }
 
-    &.primary {
-      color: theme('colors.primary.text');
+    &.primary:not(:disabled):not(.noColor) {
+      @apply bg-$primary;
 
-      &:not(:disabled):not(.noColor) {
-        background-color: theme('colors.primary.main');
-
-        &:hover,
-        &:focus,
-        &:active {
-          background-color: theme('colors.primary.light');
-        }
+      &:hover,
+      &:focus,
+      &:active {
+        @apply bg-$primary-light;
       }
     }
 
     &.iconOnly {
       @apply p-2 rounded-full;
 
-      & > i {
-        font-size: 'inherit';
-      }
-
       &:not(:disabled) {
         &:hover,
         &:focus {
-          transform: scale(1.1);
+          @apply scale-110;
         }
         &:active {
-          transform: scale(0.95);
+          @apply scale-110;
         }
       }
     }
 
     &:not(.iconOnly) > i {
-      margin-left: -0.3em;
-      margin-right: 0.3em;
-    }
-  }
-
-  @keyframes ripple {
-    0% {
-      height: 100%;
-      width: 100%;
-      opacity: 0;
-    }
-    75% {
-      height: 500%;
-      width: 500%;
-      opacity: 0.75;
-    }
-    100% {
-      height: 1000%;
-      width: 1000%;
-      opacity: 0;
+      @apply -ml-1 mr-1;
     }
   }
 </style>
