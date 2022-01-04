@@ -63,10 +63,8 @@ exports[`App connected component displays explorer, pane container and loader 1`
       <span
         class="viewport-container"
       >
-        <div
-          class="viewport"
-        >
-          <div
+        <div>
+          <span
             class="loader"
           >
             <svg
@@ -82,7 +80,7 @@ exports[`App connected component displays explorer, pane container and loader 1`
                 stroke-width="3.6"
               />
             </svg>
-          </div>
+          </span>
            
           <iframe
             src="workframe.html"

@@ -1,8 +1,32 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Toolshot components/Frame.tools.svelte: Components/Frame 1`] = `
-<iframe
-  src="index.html"
-  title="workframe"
-/>
+<span
+  class="viewport-container"
+>
+  <div>
+    <span
+      class="loader"
+    >
+      <svg
+        class="animate-spin"
+        role="progressbar"
+        viewBox="22 22 44 44"
+      >
+        <circle
+          cx="44"
+          cy="44"
+          fill="none"
+          r="20.2"
+          stroke-width="3.6"
+        />
+      </svg>
+    </span>
+     
+    <iframe
+      src="index.html"
+      title="workframe"
+    />
+  </div>
+</span>
 `;

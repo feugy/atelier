@@ -5,7 +5,7 @@
   import * as PropertiesPane from './PropertiesPane.svelte'
   import ErrorDialogue from './ErrorDialogue.svelte'
   import '../common'
-  import { Aside, Frame, Loader, PaneContainer, Toolbar } from '../components'
+  import { Aside, Frame, PaneContainer, Toolbar } from '../components'
   import {
     currentTool,
     events,
@@ -16,34 +16,13 @@
 
   let frame
   let viewport
-  let loading = true
 
   onMount(() => setWorkbenchFrame(frame))
-
-  function handleFrameLoaded() {
-    loading = false
-  }
 </script>
 
 <style lang="postcss">
   main {
     @apply flex-grow flex flex-col overflow-auto;
-  }
-
-  .viewport-container {
-    @apply flex p-4 overflow-auto flex-grow items-center;
-  }
-
-  .viewport {
-    @apply relative flex-grow h-full shadow-xl transition-all border border-$base-dark;
-  }
-
-  :global(.viewport-container.frame > .viewport) {
-    @apply flex-none m-auto;
-  }
-
-  .loader {
-    @apply absolute invert-0 h-full w-full flex items-center justify-center;
   }
 </style>
 
@@ -59,16 +38,7 @@
   <Toolbar {viewport} />
 </Aside>
 <main>
-  <span class="viewport-container">
-    <div class="viewport" bind:this={viewport}>
-      {#if loading}<div class="loader"><Loader /></div>{/if}
-      <Frame
-        bind:frame
-        on:error={handleFrameLoaded}
-        on:load={handleFrameLoaded}
-      />
-    </div>
-  </span>
+  <Frame bind:frame bind:viewport />
   <PaneContainer
     {currentTool}
     {events}
