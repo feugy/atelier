@@ -1,0 +1,21 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Toolshot components/Aside.tools.svelte: Components/Aside 1`] = `
+<span>
+  <aside>
+    <span />
+     
+    <div>
+      <span
+        class="material-icons"
+      >
+        handyman
+      </span>
+       
+      <h1>
+        title.app
+      </h1>
+    </div>
+  </aside>
+</span>
+`;

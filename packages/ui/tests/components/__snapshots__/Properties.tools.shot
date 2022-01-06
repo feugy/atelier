@@ -5,36 +5,42 @@ exports[`Toolshot components/Properties.tools.svelte: Arrays 1`] = `
   <div
     class="root"
   >
-    <label
-      for="numbers"
-    >
-      numbers
-    </label>
-     
-    <textarea
-      id="numbers"
-    />
-    
-    <label
-      for="strings"
-    >
-      strings
-    </label>
-     
-    <textarea
-      id="strings"
-    />
-    
-    <label
-      for="empty"
-    >
-      empty
-    </label>
-     
-    <textarea
-      id="empty"
-    />
-    
+    <span>
+      <label
+        for="numbers"
+      >
+        numbers
+      </label>
+       
+      <textarea
+        id="numbers"
+      />
+       
+    </span>
+    <span>
+      <label
+        for="strings"
+      >
+        strings
+      </label>
+       
+      <textarea
+        id="strings"
+      />
+       
+    </span>
+    <span>
+      <label
+        for="empty"
+      >
+        empty
+      </label>
+       
+      <textarea
+        id="empty"
+      />
+       
+    </span>
   </div>
 </span>
 `;
@@ -44,38 +50,44 @@ exports[`Toolshot components/Properties.tools.svelte: Native types 1`] = `
   <div
     class="root"
   >
-    <label
-      for="name"
-    >
-      name
-    </label>
-     
-    <input
-      id="name"
-    />
-    
-    <label
-      for="age"
-    >
-      age
-    </label>
-     
-    <input
-      id="age"
-      type="number"
-    />
-    
-    <label
-      for="hasSigned"
-    >
-      hasSigned
-    </label>
-     
-    <input
-      id="hasSigned"
-      type="checkbox"
-    />
-    
+    <span>
+      <label
+        for="name"
+      >
+        name
+      </label>
+       
+      <input
+        id="name"
+      />
+       
+    </span>
+    <span>
+      <label
+        for="age"
+      >
+        age
+      </label>
+       
+      <input
+        id="age"
+        type="number"
+      />
+       
+    </span>
+    <span>
+      <label
+        for="hasSigned"
+      >
+        hasSigned
+      </label>
+       
+      <input
+        id="hasSigned"
+        type="checkbox"
+      />
+       
+    </span>
   </div>
 </span>
 `;
@@ -85,36 +97,42 @@ exports[`Toolshot components/Properties.tools.svelte: Objects 1`] = `
   <div
     class="root"
   >
-    <label
-      for="numbers"
-    >
-      numbers
-    </label>
-     
-    <textarea
-      id="numbers"
-    />
-    
-    <label
-      for="strings"
-    >
-      strings
-    </label>
-     
-    <textarea
-      id="strings"
-    />
-    
-    <label
-      for="empty"
-    >
-      empty
-    </label>
-     
-    <textarea
-      id="empty"
-    />
-    
+    <span>
+      <label
+        for="numbers"
+      >
+        numbers
+      </label>
+       
+      <textarea
+        id="numbers"
+      />
+       
+    </span>
+    <span>
+      <label
+        for="strings"
+      >
+        strings
+      </label>
+       
+      <textarea
+        id="strings"
+      />
+       
+    </span>
+    <span>
+      <label
+        for="empty"
+      >
+        empty
+      </label>
+       
+      <textarea
+        id="empty"
+      />
+       
+    </span>
   </div>
 </span>
 `;

@@ -110,15 +110,21 @@ exports[`Toolshot components/EventLogger.tools.svelte: With events 1`] = `
     </div>
   </div>
    
-  <button
+  <span
     class="clear-button"
-    title="tooltip.clear-events"
   >
-    <span
-      class="material-icons"
+    <button
+      class="iconOnly"
+      title="tooltip.clear-events"
     >
-      clear_all
-    </span>
-  </button>
+      <i
+        class="material-icons"
+      >
+        clear_all
+      </i>
+       
+       
+    </button>
+  </span>
 </div>
 `;

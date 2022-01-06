@@ -5,62 +5,24 @@
   import * as PropertiesPane from './PropertiesPane.svelte'
   import ErrorDialogue from './ErrorDialogue.svelte'
   import '../common'
-  import {
-    Explorer,
-    Frame,
-    Loader,
-    PaneContainer,
-    Toolbar
-  } from '../components'
+  import { Aside, Explorer, Frame, PaneContainer, Toolbar } from '../components'
   import {
     currentTool,
     events,
     selectTool,
     setWorkbenchFrame,
-    toolsMap
+    tools
   } from '../stores'
 
   let frame
   let viewport
-  let loading = true
 
   onMount(() => setWorkbenchFrame(frame))
-
-  function handleFrameLoaded() {
-    loading = false
-  }
 </script>
 
 <style lang="postcss">
   main {
-    @apply flex-grow flex flex-col overflow-auto;
-  }
-
-  .viewport-container {
-    @apply flex overflow-auto flex-grow items-center;
-  }
-
-  .viewport {
-    @apply relative flex-grow h-full;
-    background-image: radial-gradient(
-      theme('colors.secondary.light') 0.5px,
-      transparent 1px
-    );
-    background-size: 20px 20px;
-  }
-
-  :global(.viewport-container.frame) {
-    @apply p-8;
-  }
-
-  :global(.viewport-container.frame > .viewport) {
-    @apply border flex-none m-auto;
-    border-color: theme('colors.primary.main');
-    border-style: solid !important;
-  }
-
-  .loader {
-    @apply absolute invert-0 h-full w-full flex items-center justify-center;
+    @apply flex-grow flex flex-col overflow-auto z-0;
   }
 </style>
 
@@ -68,24 +30,15 @@
   <title>{$_('title.app')}</title>
 </svelte:head>
 
-<Explorer
-  toolsGroup={$toolsMap}
-  current={$currentTool}
-  on:select={({ detail }) => selectTool(detail)}
->
-  <Toolbar {viewport} />
-</Explorer>
+<Aside>
+  <Explorer
+    tools={$tools}
+    current={$currentTool}
+    on:select={({ detail }) => selectTool(detail)}
+  />
+</Aside>
 <main>
-  <span class="viewport-container">
-    <div class="viewport" bind:this={viewport}>
-      {#if loading}<div class="loader"><Loader /></div>{/if}
-      <Frame
-        bind:frame
-        on:error={handleFrameLoaded}
-        on:load={handleFrameLoaded}
-      />
-    </div>
-  </span>
+  <Frame bind:frame bind:viewport />
   <PaneContainer
     {currentTool}
     {events}
@@ -101,6 +54,8 @@
         component: EventsPane.default
       }
     ]}
-  />
+  >
+    <Toolbar {viewport} />
+  </PaneContainer>
 </main>
 <ErrorDialogue />

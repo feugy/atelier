@@ -1,0 +1,170 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Toolshot components/Button.tools.svelte: Default 1`] = `
+<span>
+  <button>
+     
+    <span>
+      Default
+    </span>
+     
+  </button>
+</span>
+`;
+
+exports[`Toolshot components/Button.tools.svelte: Disabled 1`] = `
+<span>
+  <button
+    disabled=""
+  >
+     
+    <span>
+      Disabled
+    </span>
+     
+  </button>
+</span>
+`;
+
+exports[`Toolshot components/Button.tools.svelte: Icon only 1`] = `
+<span>
+  <button
+    class="iconOnly"
+  >
+    <i
+      class="material-icons"
+    >
+      face
+    </i>
+     
+     
+  </button>
+</span>
+`;
+
+exports[`Toolshot components/Button.tools.svelte: Icon only, no color 1`] = `
+<span>
+  <button
+    class="iconOnly noColor"
+  >
+    <i
+      class="material-icons"
+    >
+      face
+    </i>
+     
+     
+  </button>
+</span>
+`;
+
+exports[`Toolshot components/Button.tools.svelte: No color 1`] = `
+<span>
+  <button
+    class="noColor"
+  >
+     
+    <span>
+      Text only
+    </span>
+     
+  </button>
+</span>
+`;
+
+exports[`Toolshot components/Button.tools.svelte: Primary 1`] = `
+<span>
+  <button
+    class="primary"
+  >
+     
+    <span>
+      Primary
+    </span>
+     
+  </button>
+</span>
+`;
+
+exports[`Toolshot components/Button.tools.svelte: Primary disabled 1`] = `
+<span>
+  <button
+    class="primary"
+    disabled=""
+  >
+     
+    <span>
+      Primary
+    </span>
+     
+  </button>
+</span>
+`;
+
+exports[`Toolshot components/Button.tools.svelte: Primary with icon only 1`] = `
+<span>
+  <button
+    class="primary iconOnly"
+  >
+    <i
+      class="material-icons"
+    >
+      volume_up
+    </i>
+     
+     
+  </button>
+</span>
+`;
+
+exports[`Toolshot components/Button.tools.svelte: Primary with icon only, no color 1`] = `
+<span>
+  <button
+    class="primary iconOnly noColor"
+  >
+    <i
+      class="material-icons"
+    >
+      volume_up
+    </i>
+     
+     
+  </button>
+</span>
+`;
+
+exports[`Toolshot components/Button.tools.svelte: Primary with text and icon 1`] = `
+<span>
+  <button
+    class="primary"
+  >
+    <i
+      class="material-icons"
+    >
+      person
+    </i>
+     
+    <span>
+      Hey!
+    </span>
+     
+  </button>
+</span>
+`;
+
+exports[`Toolshot components/Button.tools.svelte: Text and icon 1`] = `
+<span>
+  <button>
+    <i
+      class="material-icons"
+    >
+      face
+    </i>
+     
+    <span>
+      Hello
+    </span>
+     
+  </button>
+</span>
+`;

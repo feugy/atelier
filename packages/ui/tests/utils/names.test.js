@@ -4,7 +4,7 @@ beforeEach(jest.resetAllMocks)
 
 describe('groupByName() utility', () => {
   it('handles no tools', () => {
-    expect(groupByName()).toEqual(new Map())
+    expect(groupByName()).toEqual([])
   })
 
   it('does not group tools without parents', () => {
@@ -13,9 +13,7 @@ describe('groupByName() utility', () => {
       { fullName: 'tool2' },
       { fullName: 'tool3' }
     ]
-    expect(groupByName(tools)).toEqual(
-      new Map(tools.map(tool => [tool.fullName, tool]))
-    )
+    expect(groupByName(tools)).toEqual(tools)
   })
 
   it('splits parents', () => {
@@ -24,13 +22,11 @@ describe('groupByName() utility', () => {
       { fullName: 'tool2' },
       { fullName: 'b/c/tool3' }
     ]
-    expect(groupByName(tools)).toEqual(
-      new Map([
-        ['a', new Map([['tool1', tools[0]]])],
-        ['tool2', tools[1]],
-        ['b', new Map([['c', new Map([['tool3', tools[2]]])]])]
-      ])
-    )
+    expect(groupByName(tools)).toEqual([
+      { fullName: 'a', children: [tools[0]] },
+      tools[1],
+      { fullName: 'b', children: [{ fullName: 'b/c', children: [tools[2]] }] }
+    ])
   })
 
   it('group parents', () => {
@@ -39,18 +35,13 @@ describe('groupByName() utility', () => {
       { fullName: 'tool2' },
       { fullName: 'a/c/tool3' }
     ]
-    expect(groupByName(tools)).toEqual(
-      new Map([
-        [
-          'a',
-          new Map([
-            ['tool1', tools[0]],
-            ['c', new Map([['tool3', tools[2]]])]
-          ])
-        ],
-        ['tool2', tools[1]]
-      ])
-    )
+    expect(groupByName(tools)).toEqual([
+      {
+        fullName: 'a',
+        children: [tools[0], { fullName: 'a/c', children: [tools[2]] }]
+      },
+      tools[1]
+    ])
   })
 
   it('can group without name', () => {
@@ -61,24 +52,37 @@ describe('groupByName() utility', () => {
       { fullName: 'b' },
       { fullName: 'b/tool2' }
     ]
-    expect(groupByName(tools)).toEqual(
-      new Map([
-        [
-          'a',
-          new Map([
-            ['tool1', tools[0]],
-            ['no-name', tools[1]],
-            ['c', new Map([['tool3', tools[2]]])]
-          ])
-        ],
-        [
-          'b',
-          new Map([
-            ['no-name', tools[3]],
-            ['tool2', tools[4]]
-          ])
+    expect(groupByName(tools)).toEqual([
+      {
+        fullName: 'a',
+        children: [
+          tools[0],
+          tools[1],
+          { fullName: 'a/c', children: [tools[2]] }
         ]
-      ])
-    )
+      },
+      { fullName: 'b', children: [tools[3], tools[4]] }
+    ])
+  })
+
+  it('can group without name, different order', () => {
+    const tools = [
+      { fullName: 'a' },
+      { fullName: 'a/tool1' },
+      { fullName: 'a/c/tool3' },
+      { fullName: 'b/tool2' },
+      { fullName: 'b' }
+    ]
+    expect(groupByName(tools)).toEqual([
+      {
+        fullName: 'a',
+        children: [
+          tools[0],
+          tools[1],
+          { fullName: 'a/c', children: [tools[2]] }
+        ]
+      },
+      { fullName: 'b', children: [tools[3], tools[4]] }
+    ])
   })
 })

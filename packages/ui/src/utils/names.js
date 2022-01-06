@@ -1,30 +1,31 @@
-const unnamed = 'no-name'
-
-function addToLevel(tool, level, legs) {
-  const leg = legs.shift()
-  let items = level.get(leg)
-  if (legs.length === 0) {
-    if (items) {
-      // user mixed named & unnamed tools for this level
-      items.set(unnamed, tool)
+function addToLevel(tool, level, legs, legRank = 1) {
+  const fullName = legs.slice(0, legRank).join('/')
+  const index = level.findIndex(child => fullName === child.fullName)
+  if (legRank > legs.length - 1) {
+    if (index < 0) {
+      level.push(tool)
     } else {
-      level.set(leg, tool)
+      // user mixed named & unnamed tools for this level
+      level[index].children.push(tool)
     }
   } else {
-    if (!items) {
-      items = new Map()
-      level.set(leg, items)
-    } else if (!(items instanceof Map)) {
-      // user mixed named & unnamed tools for this level
-      items = new Map([[unnamed, items]])
-      level.set(leg, items)
+    let child = { fullName, children: [] }
+    if (index < 0) {
+      level.push(child)
+    } else {
+      child = level[index]
+      if (!Array.isArray(child.children)) {
+        // user mixed named & unnamed tools for this level
+        child = { fullName, children: [child] }
+        level[index] = child
+      }
     }
-    addToLevel(tool, items, legs)
+    addToLevel(tool, child.children, legs, legRank + 1)
   }
 }
 
 export function groupByName(tools = []) {
-  const level = new Map()
+  const level = []
   for (const tool of tools) {
     const legs = tool.fullName.split('/')
     addToLevel(tool, level, legs)

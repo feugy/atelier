@@ -2,14 +2,17 @@
 
 ## Plugin
 
+- configure viewports as plugin settings
+- configure background colors as plugin settings
 - remove tools on updates (toolbox/tool renamal, file deletion)
+- can it be framework agnostic?
 
 ## UI
 
+- 'Slider' to select pre-defined viewports
+- 'Slider' to select background colors
 - hide some props from pane
 - color picker
-- a dropdown button to select background colors
-- a dropdown button to select pre-defined viewports
 - warn on tool name collisions
 - graceful unhandled-rejection/uncaught-exception handling in Workbench
 
@@ -43,6 +46,7 @@
 
 # Documentation
 
+- degit recipe
 - Deep dive how-to write UI bindings
 - Deep dive how-to write toolboxes
 - How to develop plugins

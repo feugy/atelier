@@ -1,115 +1,158 @@
-import { fireEvent, render, screen } from '@testing-library/svelte'
+import { fireEvent, render, screen, within } from '@testing-library/svelte'
 import html from 'svelte-htm'
-import { translate } from '../test-utils'
 import { Explorer } from '../../src/components'
 import { groupByName } from '../../src/utils'
 
-describe('Explorer and Group components', () => {
+describe('Explorer components', () => {
   const tools = [
     { fullName: 'a/tool1' },
     { fullName: 'tool2' },
     { fullName: 'a/c/tool3' },
-    { fullName: 'b/tool4' }
+    { fullName: 'b/tool4' },
+    { fullName: 'b/tool5' }
   ]
 
-  it('displays title and tools', () => {
-    render(html`<${Explorer} toolsGroup=${groupByName(tools)} />`)
+  it('handles no data', () => {
+    render(html`<${Explorer} />`)
 
-    expect(screen.getByText(translate('title.app'))).toBeInTheDocument()
-    expect(screen.getByText('tool1')).toBeInTheDocument()
+    expect(screen.getByRole('navigation')).toHaveTextContent('')
+    expect(screen.getAllByRole('list')[1]).toHaveTextContent('')
+  })
+
+  it('displays first level only', () => {
+    render(html`<${Explorer} tools=${groupByName(tools)} />`)
+
+    expect(screen.queryByText('tool1')).not.toBeInTheDocument()
     expect(screen.getByText('tool2')).toBeInTheDocument()
-    expect(screen.getByText('tool3')).toBeInTheDocument()
-    expect(screen.getByText('tool4')).toBeInTheDocument()
+    expect(screen.queryByText('tool3')).not.toBeInTheDocument()
+    expect(screen.queryByText('tool4')).not.toBeInTheDocument()
+    expect(screen.queryByText('tool5')).not.toBeInTheDocument()
     expect(screen.getByText('a')).toBeInTheDocument()
     expect(screen.getByText('b')).toBeInTheDocument()
-    expect(screen.getByText('c')).toBeInTheDocument()
+    expect(screen.queryByText('c')).not.toBeInTheDocument()
   })
 
-  it('can expand and collapse nodes', async () => {
-    render(html`<${Explorer} toolsGroup=${groupByName(tools)} />`)
+  it('navigates to deeper level and shows breadcrumb', async () => {
+    render(html`<${Explorer} tools=${groupByName(tools)} />`)
 
-    expect(screen.getByText('tool1').closest('.nested')).toHaveClass(
-      'collapsed'
-    )
-    expect(screen.getByText('c').closest('.nested')).toHaveClass('collapsed')
-    expect(screen.getByText('tool3').closest('.nested')).toHaveClass(
-      'collapsed'
-    )
+    const breadcrumb = screen.getByRole('navigation')
+    const tree = screen.getAllByRole('list')[1]
+    expect(within(breadcrumb).queryByText('home')).not.toBeInTheDocument()
+    expect(within(breadcrumb).queryByText('a')).not.toBeInTheDocument()
 
-    await fireEvent.click(screen.getByText('a'))
-    expect(screen.getByText('tool1').closest('.nested')).not.toHaveClass(
-      'collapsed'
-    )
-    expect(screen.getByText('c').closest('.nested')).not.toHaveClass(
-      'collapsed'
-    )
-    expect(screen.getByText('tool3').closest('.nested')).toHaveClass(
-      'collapsed'
-    )
+    await fireEvent.click(within(tree).getByText('a'))
+    expect(within(tree).getByText('tool1')).toBeInTheDocument()
+    expect(within(tree).getByText('c')).toBeInTheDocument()
 
-    await fireEvent.click(screen.getByText('c'))
-    expect(screen.getByText('tool3').closest('.nested')).not.toHaveClass(
-      'collapsed'
-    )
+    expect(within(breadcrumb).getByText('home')).toBeInTheDocument()
+    expect(within(breadcrumb).getByText('a')).toBeInTheDocument()
+    expect(within(breadcrumb).queryByText('c')).not.toBeInTheDocument()
+    expect(within(tree).queryByText('a')).not.toBeInTheDocument()
 
-    await fireEvent.click(screen.getByText('c'))
-    expect(screen.getByText('tool3').closest('.nested')).toHaveClass(
-      'collapsed'
-    )
+    await fireEvent.click(within(tree).getByText('c'))
+    expect(within(tree).getByText('tool3')).toBeInTheDocument()
+
+    expect(within(breadcrumb).getByText('home')).toBeInTheDocument()
+    expect(within(breadcrumb).getByText('a')).toBeInTheDocument()
+    expect(within(breadcrumb).getByText('c')).toBeInTheDocument()
+    expect(within(tree).queryByText('c')).not.toBeInTheDocument()
   })
 
-  it('highlights and expand current tool', () => {
+  it('navigates to parent', async () => {
+    render(html`<${Explorer} tools=${groupByName(tools)} />`)
+
+    const breadcrumb = screen.getByRole('navigation')
+    const tree = screen.getAllByRole('list')[1]
+
+    await fireEvent.click(within(tree).getByText('a'))
+    await fireEvent.click(within(tree).getByText('c'))
+    expect(within(tree).getByText('tool3')).toBeInTheDocument()
+    expect(within(tree).queryByText('tool1')).not.toBeInTheDocument()
+    expect(within(tree).queryByText('c')).not.toBeInTheDocument()
+    expect(within(breadcrumb).getByText('home')).toBeInTheDocument()
+    expect(within(breadcrumb).getByText('a')).toBeInTheDocument()
+    expect(within(breadcrumb).getByText('c')).toBeInTheDocument()
+
+    await fireEvent.click(within(breadcrumb).getByText('a'))
+    expect(within(tree).getByText('tool1')).toBeInTheDocument()
+    expect(within(tree).getByText('c')).toBeInTheDocument()
+    expect(within(tree).queryByText('a')).not.toBeInTheDocument()
+    expect(within(tree).queryByText('tool2')).not.toBeInTheDocument()
+    expect(within(tree).queryByText('b')).not.toBeInTheDocument()
+    expect(within(breadcrumb).queryByText('c')).not.toBeInTheDocument()
+
+    await fireEvent.click(within(breadcrumb).getByText('home'))
+    expect(screen.getByText('a')).toBeInTheDocument()
+    expect(screen.getByText('tool2')).toBeInTheDocument()
+    expect(screen.getByText('b')).toBeInTheDocument()
+    expect(within(breadcrumb).queryByText('home')).not.toBeInTheDocument()
+  })
+
+  it('navigates to ancestor', async () => {
+    render(html`<${Explorer} tools=${groupByName(tools)} />`)
+    const breadcrumb = screen.getByRole('navigation')
+    const tree = screen.getAllByRole('list')[1]
+
+    await fireEvent.click(within(tree).getByText('a'))
+    await fireEvent.click(within(tree).getByText('c'))
+    expect(within(tree).getByText('tool3')).toBeInTheDocument()
+    expect(within(tree).queryByText('tool1')).not.toBeInTheDocument()
+    expect(within(tree).queryByText('c')).not.toBeInTheDocument()
+    expect(within(breadcrumb).getByText('home')).toBeInTheDocument()
+    expect(within(breadcrumb).getByText('a')).toBeInTheDocument()
+    expect(within(breadcrumb).getByText('c')).toBeInTheDocument()
+
+    await fireEvent.click(within(breadcrumb).getByText('home'))
+    expect(screen.getByText('a')).toBeInTheDocument()
+    expect(screen.getByText('tool2')).toBeInTheDocument()
+    expect(screen.getByText('b')).toBeInTheDocument()
+    expect(within(breadcrumb).queryByText('home')).not.toBeInTheDocument()
+  })
+
+  it('highlights current tool', () => {
     render(
-      html`<${Explorer} toolsGroup=${groupByName(tools)} current=${tools[3]} />`
+      html`<${Explorer} tools=${groupByName(tools)} current=${tools[1]} />`
     )
-
-    expect(screen.getByText('tool1').closest('.nested')).toHaveClass(
-      'collapsed'
-    )
-    expect(screen.getByText('tool4').closest('.nested')).not.toHaveClass(
-      'collapsed'
-    )
-    expect(screen.getByText('tool4').closest('li')).toHaveClass('current')
+    expect(screen.getByText('a')).not.toHaveClass('current')
+    expect(screen.getByText('tool2')).toHaveClass('current')
+    expect(screen.getByText('b')).not.toHaveClass('current')
   })
 
-  it('can not collapse ancestor of current tool', async () => {
+  it('highlights nested and navigates current tool', () => {
     render(
-      html`<${Explorer} toolsGroup=${groupByName(tools)} current=${tools[2]} />`
+      html`<${Explorer} tools=${groupByName(tools)} current=${tools[2]} />`
     )
 
-    expect(screen.getByText('tool3').closest('.nested')).not.toHaveClass(
-      'collapsed'
-    )
-    expect(screen.getByText('c').closest('.nested')).not.toHaveClass(
-      'collapsed'
-    )
+    const breadcrumb = screen.getByRole('navigation')
+    const tree = screen.getAllByRole('list')[1]
 
-    await fireEvent.click(screen.getByText('a'))
-    expect(screen.getByText('c').closest('.nested')).not.toHaveClass(
-      'collapsed'
-    )
-
-    await fireEvent.click(screen.getByText('c'))
-    expect(screen.getByText('tool3').closest('.nested')).not.toHaveClass(
-      'collapsed'
-    )
+    expect(within(tree).getByText('tool3')).toHaveClass('current')
+    expect(within(tree).queryByText('tool1')).not.toBeInTheDocument()
+    expect(within(tree).queryByText('c')).not.toBeInTheDocument()
+    expect(within(breadcrumb).getByText('home')).toBeInTheDocument()
+    expect(within(breadcrumb).getByText('a')).toBeInTheDocument()
+    expect(within(breadcrumb).getByText('c')).toBeInTheDocument()
   })
 
-  it('can select different toolsl', async () => {
+  it('selects a different tool', async () => {
     const handleSelect = jest.fn()
-    render(
-      html`<${Explorer}
-        toolsGroup=${groupByName(tools)}
-        current=${tools[3]}
-        on:select=${handleSelect}
-      />`
-    )
+    render(html`<${Explorer}
+      tools=${groupByName(tools)}
+      current=${tools[3]}
+      on:select=${handleSelect}
+    />`)
+
+    const tree = screen.getAllByRole('list')[1]
+    expect(within(tree).getByText('tool4')).toHaveClass('current')
+    expect(within(tree).getByText('tool5')).not.toHaveClass('current')
     expect(handleSelect).not.toHaveBeenCalled()
 
-    await fireEvent.click(screen.getByText('tool3'))
+    await fireEvent.click(within(tree).getByText('tool5'))
     expect(handleSelect).toHaveBeenCalledWith(
-      expect.objectContaining({ detail: tools[2] })
+      expect.objectContaining({ detail: tools[4] })
     )
     expect(handleSelect).toHaveBeenCalledTimes(1)
+    expect(within(tree).getByText('tool4')).not.toHaveClass('current')
+    expect(within(tree).getByText('tool5')).toHaveClass('current')
   })
 })

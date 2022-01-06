@@ -1,6 +1,8 @@
 <script>
   import { createEventDispatcher } from 'svelte'
+  import { fade } from 'svelte/transition'
   import { _ } from 'svelte-intl'
+  import Button from './Button.svelte'
   import PaneDisclaimer from './PaneDisclaimer.svelte'
 
   export let events = []
@@ -28,13 +30,11 @@
   }
 
   .time {
-    @apply text-xs leading-6;
-    color: theme('colors.secondary.dark');
+    @apply text-xs leading-6 text-$secondary-light;
   }
 
   .name {
-    @apply justify-self-end;
-    color: theme('colors.primary.dark');
+    @apply justify-self-end text-$base-lighter;
   }
 
   .clear-button {
@@ -47,19 +47,20 @@
     <PaneDisclaimer message={$_('message.no-events')} />
   {:else}
     <div class="log">
-      {#each events as { name, args, time }}
-        <div class="time">
+      {#each events as { name, args, time } (time)}
+        <div in:fade|local class="time">
           {$_('{ time, time }', { time })}
         </div>
-        <div class="name">{name}</div>
-        <div class="args">{format(args)}</div>
+        <div in:fade|local class="name">{name}</div>
+        <div in:fade|local class="args">{format(args)}</div>
       {/each}
     </div>
-    <button
-      class="clear-button"
-      title={$_('tooltip.clear-events')}
-      on:click={() => dispatch('clear-events')}
-      ><span class="material-icons">clear_all</span></button
+    <span class="clear-button">
+      <Button
+        icon="clear_all"
+        title={$_('tooltip.clear-events')}
+        on:click={() => dispatch('clear-events')}
+      /></span
     >
   {/if}
 </div>

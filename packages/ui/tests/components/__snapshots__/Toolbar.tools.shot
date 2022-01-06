@@ -5,25 +5,33 @@ exports[`Toolshot components/Toolbar.tools.svelte: Components/Toolbar 1`] = `
   <ul>
     <li>
       <button
+        class="primary iconOnly noColor"
         title="tooltip.background"
       >
-        <span
+        <i
           class="material-icons"
         >
           wallpaper
-        </span>
+        </i>
+         
+         
       </button>
     </li>
      
-    <li>
+    <li
+      class="viewport-container"
+    >
       <button
+        class="primary iconOnly noColor"
         title="tooltip.viewport"
       >
-        <span
+        <i
           class="material-icons"
         >
           devices
-        </span>
+        </i>
+         
+         
       </button>
        
     </li>

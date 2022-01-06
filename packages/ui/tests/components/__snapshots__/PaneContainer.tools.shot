@@ -29,22 +29,24 @@ exports[`Toolshot components/PaneContainer.tools.svelte: Multiple tabs 1`] = `
         
          
         <li>
+           
           <button
+            class="iconOnly noColor"
             title="tooltip.collapsible"
           >
-            <span
+            <i
               class="material-icons"
             >
               expand_more
-            </span>
+            </i>
+             
+             
           </button>
         </li>
       </ul>
     </nav>
      
-    <main
-      class="tab-content"
-    >
+    <main>
       <h1>
         This is pane #1
       </h1>
@@ -74,22 +76,24 @@ exports[`Toolshot components/PaneContainer.tools.svelte: Single tab 1`] = `
         
          
         <li>
+           
           <button
+            class="iconOnly noColor"
             title="tooltip.collapsible"
           >
-            <span
+            <i
               class="material-icons"
             >
               expand_more
-            </span>
+            </i>
+             
+             
           </button>
         </li>
       </ul>
     </nav>
      
-    <main
-      class="tab-content"
-    >
+    <main>
       <h1>
         This is pane #1
       </h1>

@@ -1,5 +1,6 @@
 <script>
   import { _ } from 'svelte-intl'
+  import Button from './Button.svelte'
   import PaneDisclaimer from './PaneDisclaimer.svelte'
 
   export let tabs = []
@@ -20,6 +21,8 @@
   // initially collapsed when all tabs are disabled
   $: collapsed = tabEnability.every(enabled => !enabled)
 
+  $: allDisabled = tabEnability.every(enabled => !enabled)
+
   function select(i) {
     selected = i
   }
@@ -31,37 +34,37 @@
 
 <style lang="postcss">
   .root {
-    @apply flex flex-col w-full h-1/4;
+    @apply px-4 pb-4;
+  }
 
-    &.has-collapsed {
-      @apply h-auto;
-    }
+  nav {
+    @apply select-none;
   }
 
   ul {
-    @apply flex border-b w-full cursor-pointer;
-    border-bottom-color: theme('colors.primary.main');
+    @apply flex gap-6 w-full items-end cursor-pointer border-b border-$base;
   }
 
   li {
-    @apply px-4 py-2;
+    @apply py-2;
 
     &:last-child {
-      @apply flex-grow text-right;
+      @apply flex-grow text-right px-2;
     }
   }
 
   .current {
-    color: theme('colors.secondary.text');
-    background-color: theme('colors.primary.main');
+    @apply text-$primary;
   }
 
-  .collapsed {
-    @apply hidden;
-  }
+  main {
+    @apply m-2 pr-2 overflow-auto transition-all duration-300;
+    max-height: 15vh;
+    height: 15vh;
 
-  .tab-content {
-    @apply overflow-hidden;
+    &.collapsed {
+      @apply max-h-0;
+    }
   }
 </style>
 
@@ -77,21 +80,23 @@
           {/if}
         {/each}
         <li>
-          <button title={$_('tooltip.collapsible')} on:click={toggleCollapse}
-            ><span class="material-icons"
-              >{collapsed ? 'expand_less' : 'expand_more'}</span
-            ></button
-          >
+          <slot />
+          <Button
+            noColor
+            title={$_('tooltip.collapsible')}
+            on:click={toggleCollapse}
+            icon={collapsed ? 'expand_less' : 'expand_more'}
+          />
         </li>
       </ul>
     </nav>
-    <main class:collapsed class="tab-content" bind:this={main}>
+    <main class:collapsed bind:this={main}>
       {#each tabs as { component }, i}
         {#if i === selected}
           <svelte:component this={component} />
         {/if}
       {/each}
-      {#if tabEnability.every(enabled => !enabled)}
+      {#if allDisabled}
         <PaneDisclaimer message={$_('message.no-pane-enabled')} />
       {/if}
     </main>

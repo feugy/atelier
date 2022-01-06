@@ -3,7 +3,7 @@ import { get } from 'svelte/store'
 import {
   clearEvents,
   events,
-  toolsMap,
+  tools,
   currentTool,
   lastError,
   selectTool,
@@ -33,7 +33,7 @@ describe('tools store', () => {
       })
     )
     expect(get(currentTool)).not.toBeDefined()
-    expect(get(toolsMap)).toEqual(new Map())
+    expect(get(tools)).toEqual([])
     expect(get(events)).toEqual([])
   })
 
@@ -47,7 +47,7 @@ describe('tools store', () => {
       })
     )
     expect(get(currentTool)).not.toBeDefined()
-    expect(get(toolsMap)).toEqual(new Map())
+    expect(get(tools)).toEqual([])
     expect(get(events)).toEqual([])
   })
 
@@ -66,7 +66,7 @@ describe('tools store', () => {
       })
     )
     expect(get(currentTool)).toEqual(tool1)
-    expect(get(toolsMap)).toEqual(new Map([[tool1.fullName, tool1]]))
+    expect(get(tools)).toEqual([tool1])
 
     window.dispatchEvent(
       new MessageEvent('message', {
@@ -75,12 +75,7 @@ describe('tools store', () => {
       })
     )
     expect(get(currentTool)).toEqual(tool1)
-    expect(get(toolsMap)).toEqual(
-      new Map([
-        [tool1.fullName, tool1],
-        [tool2.fullName, tool2]
-      ])
-    )
+    expect(get(tools)).toEqual([tool1, tool2])
 
     window.dispatchEvent(
       new MessageEvent('message', {
@@ -89,13 +84,7 @@ describe('tools store', () => {
       })
     )
     expect(get(currentTool)).toEqual(tool1)
-    expect(get(toolsMap)).toEqual(
-      new Map([
-        [tool1.fullName, tool1],
-        [tool2.fullName, tool2],
-        [tool3.fullName, tool3]
-      ])
-    )
+    expect(get(tools)).toEqual([tool1, tool2, tool3])
     expect(new URLSearchParams(location.search).get('tool')).toEqual(
       tool1.fullName
     )
@@ -261,13 +250,7 @@ describe('tools store', () => {
         })
       )
       expect(get(currentTool)).toEqual(tool1)
-      expect(get(toolsMap)).toEqual(
-        new Map([
-          [tool1.fullName, tool1],
-          [tool2.fullName, updatedTool2],
-          [tool3.fullName, tool3]
-        ])
-      )
+      expect(get(tools)).toEqual([tool1, tool3, updatedTool2])
 
       const updatedTool1 = { ...tool1, count: 1 }
       window.dispatchEvent(
@@ -277,13 +260,7 @@ describe('tools store', () => {
         })
       )
       expect(get(currentTool)).toEqual(updatedTool1)
-      expect(get(toolsMap)).toEqual(
-        new Map([
-          [tool1.fullName, updatedTool1],
-          [tool2.fullName, updatedTool2],
-          [tool3.fullName, tool3]
-        ])
-      )
+      expect(get(tools)).toEqual([tool3, updatedTool2, updatedTool1])
     })
 
     it('send newly selected tool to the frame and location', () => {
