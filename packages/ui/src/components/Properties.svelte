@@ -1,5 +1,6 @@
 <script>
   import { createEventDispatcher } from 'svelte'
+  import { fade } from 'svelte/transition'
 
   export let properties = {}
   let entries = []
@@ -50,55 +51,58 @@
 
 <style lang="postcss">
   .root {
-    @apply p-4 overflow-auto w-full h-full grid auto-rows-min gap-y-2 gap-x-4 text-left;
-    grid-template-columns: auto 1fr;
+    @apply grid overflow-y-auto overflow-x-hidden gap-4 h-full;
+    grid-template-columns: repeat(auto-fill, 300px);
   }
 
   label {
-    @apply text-right p-1;
-    color: theme('colors.secondary.dark');
+    @apply capitalize text-$base-lightest py-2 pr-2;
+  }
+
+  span {
+    @apply flex items-start;
   }
 
   input,
   textarea {
-    @apply px-2 py-1;
+    @apply p-2 bg-transparent border border-$base flex-grow min-w-0;
   }
 
   input[type='number'] {
-    @apply justify-self-start;
-    width: 4rem;
   }
 
   input[type='checkbox'] {
-    @apply justify-self-start;
+    @apply cursor-pointer mt-3 flex-grow-0;
   }
 
   textarea {
-    min-height: 150px;
+    @apply resize-y h-full;
   }
 </style>
 
 <div class="root">
   {#each entries as { name, value, type }}
-    <label for={name}>{name}</label>
-    {#if type === 'number'}
-      <input
-        type="number"
-        id={name}
-        {value}
-        on:change={makeNumberChangeHandler(name)}
-      />
-    {:else if type === 'boolean'}
-      <input
-        type="checkbox"
-        id={name}
-        checked={value}
-        on:change={makeBooleanChangeHandler(name)}
-      />
-    {:else if type === 'object'}
-      <textarea id={name} {value} on:input={makeObjectChangeHandler(name)} />
-    {:else}
-      <input id={name} {value} on:input={makeStringChangeHandler(name)} />
-    {/if}
+    <span in:fade|local>
+      <label for={name}>{name}</label>
+      {#if type === 'number'}
+        <input
+          type="number"
+          id={name}
+          {value}
+          on:change={makeNumberChangeHandler(name)}
+        />
+      {:else if type === 'boolean'}
+        <input
+          type="checkbox"
+          id={name}
+          checked={value}
+          on:change={makeBooleanChangeHandler(name)}
+        />
+      {:else if type === 'object'}
+        <textarea id={name} {value} on:input={makeObjectChangeHandler(name)} />
+      {:else}
+        <input id={name} {value} on:input={makeStringChangeHandler(name)} />
+      {/if}</span
+    >
   {/each}
 </div>

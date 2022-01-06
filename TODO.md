@@ -2,19 +2,15 @@
 
 ## Plugin
 
-- remove tools on updates (toolbox/tool renamal, file deletion)
 - configure viewports as plugin settings
 - configure background colors as plugin settings
+- remove tools on updates (toolbox/tool renamal, file deletion)
+- can it be framework agnostic?
 
 ## UI
 
-- revamp UI
-  - icon & title as watermark, bottom right corner
-  - isolate Frame styling in a component
-  - display properties pane below explorer
-  - display Event pane at the bottom
-  - 'Slider' to select background colors, below Frame
-  - 'Slider' to select pre-defined viewports, below Frame
+- 'Slider' to select pre-defined viewports
+- 'Slider' to select background colors
 - hide some props from pane
 - color picker
 - warn on tool name collisions
@@ -50,6 +46,7 @@
 
 # Documentation
 
+- degit recipe
 - Deep dive how-to write UI bindings
 - Deep dive how-to write toolboxes
 - How to develop plugins

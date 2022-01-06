@@ -38,5 +38,4 @@
     ]
   }}
   events={['select']}
-  layout="padded"
 />

@@ -1,5 +1,6 @@
 <script>
   import { createEventDispatcher } from 'svelte'
+  import { fade } from 'svelte/transition'
   import { _ } from 'svelte-intl'
   import Button from './Button.svelte'
   import PaneDisclaimer from './PaneDisclaimer.svelte'
@@ -33,7 +34,7 @@
   }
 
   .name {
-    @apply justify-self-end text-$base-light;
+    @apply justify-self-end text-$base-lighter;
   }
 
   .clear-button {
@@ -46,12 +47,12 @@
     <PaneDisclaimer message={$_('message.no-events')} />
   {:else}
     <div class="log">
-      {#each events as { name, args, time }}
-        <div class="time">
+      {#each events as { name, args, time } (time)}
+        <div in:fade|local class="time">
           {$_('{ time, time }', { time })}
         </div>
-        <div class="name">{name}</div>
-        <div class="args">{format(args)}</div>
+        <div in:fade|local class="name">{name}</div>
+        <div in:fade|local class="args">{format(args)}</div>
       {/each}
     </div>
     <span class="clear-button">

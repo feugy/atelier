@@ -199,7 +199,7 @@
     }
 
     &.disabled {
-      color: theme('colors.disabled.main');
+      @apply text-$disabled;
     }
 
     & > i {

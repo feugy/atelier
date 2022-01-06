@@ -5,7 +5,7 @@
   import * as PropertiesPane from './PropertiesPane.svelte'
   import ErrorDialogue from './ErrorDialogue.svelte'
   import '../common'
-  import { Aside, Frame, PaneContainer, Toolbar } from '../components'
+  import { Aside, Explorer, Frame, PaneContainer, Toolbar } from '../components'
   import {
     currentTool,
     events,
@@ -22,7 +22,7 @@
 
 <style lang="postcss">
   main {
-    @apply flex-grow flex flex-col overflow-auto;
+    @apply flex-grow flex flex-col overflow-auto z-0;
   }
 </style>
 
@@ -30,12 +30,12 @@
   <title>{$_('title.app')}</title>
 </svelte:head>
 
-<Aside
-  tools={$tools}
-  current={$currentTool}
-  on:select={({ detail }) => selectTool(detail)}
->
-  <Toolbar {viewport} />
+<Aside>
+  <Explorer
+    tools={$tools}
+    current={$currentTool}
+    on:select={({ detail }) => selectTool(detail)}
+  />
 </Aside>
 <main>
   <Frame bind:frame bind:viewport />
@@ -54,6 +54,8 @@
         component: EventsPane.default
       }
     ]}
-  />
+  >
+    <Toolbar {viewport} />
+  </PaneContainer>
 </main>
 <ErrorDialogue />

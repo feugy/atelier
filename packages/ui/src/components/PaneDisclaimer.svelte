@@ -4,7 +4,7 @@
 
 <style lang="postcss">
   .disclaimer {
-    @apply italic text-center m-8 text-$primary-light;
+    @apply italic text-center m-8 text-$secondary-lighter;
   }
 </style>
 

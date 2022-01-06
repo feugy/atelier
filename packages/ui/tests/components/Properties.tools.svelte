@@ -21,7 +21,6 @@
 
   <Tool
     name="Arrays"
-    layout="padded"
     props={{
       properties: {
         numbers: [1, 2],
@@ -33,7 +32,6 @@
 
   <Tool
     name="Objects"
-    layout="centered"
     props={{
       properties: {
         numbers: { foo: 1, bar: 2 },

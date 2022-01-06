@@ -55,13 +55,10 @@
 
 <style lang="postcss">
   nav {
-    @apply w-full px-4 text-center;
+    @apply inline-block;
   }
   ul {
-    @apply inline-flex;
-    & > li {
-      @apply px-2;
-    }
+    @apply inline-flex gap-2;
   }
   input {
     @apply w-10 border bg-transparent outline-none;
@@ -73,6 +70,10 @@
 
   .input-bar {
     white-space: nowrap;
+  }
+
+  .viewport-container {
+    @apply flex items-center;
   }
 </style>
 
@@ -87,7 +88,7 @@
         on:click={cycleBackgrounds}
       />
     </li>
-    <li>
+    <li class="viewport-container">
       <Button
         title={$_('tooltip.viewport')}
         icon="devices"

@@ -23,15 +23,21 @@
     @apply cursor-pointer mt-2 select-none;
 
     & .current {
-      @apply bg-$primary;
+      @apply text-$primary;
+
+      & .symbol {
+        @apply text-$primary;
+      }
     }
 
     & .symbol {
+      /* @apply text-$base-lighter mr-2; */
       @apply text-$secondary mr-2;
     }
 
     & .folder .symbol {
-      @apply text-$primary;
+      /* @apply text-$secondary-light; */
+      @apply text-$base;
     }
   }
 </style>

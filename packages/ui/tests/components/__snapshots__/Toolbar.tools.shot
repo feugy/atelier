@@ -18,7 +18,9 @@ exports[`Toolshot components/Toolbar.tools.svelte: Components/Toolbar 1`] = `
       </button>
     </li>
      
-    <li>
+    <li
+      class="viewport-container"
+    >
       <button
         class="primary iconOnly noColor"
         title="tooltip.viewport"

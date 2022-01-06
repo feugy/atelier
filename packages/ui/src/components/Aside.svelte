@@ -1,29 +1,35 @@
 <script>
   import { _ } from 'svelte-intl'
-  import Explorer from './Explorer/Explorer.svelte'
-
-  export let tools = []
-  export let current = null
 </script>
 
 <style lang="postcss">
   aside {
-    @apply p-4 w-1/6 overflow-auto flex-shrink-0;
-    h1 {
-      @apply px-4 text-2xl text-center mb-2;
+    @apply relative p-4 w-1/5 h-screen flex flex-col flex-shrink-0;
+  }
 
-      & .material-icons {
-        @apply text-4xl text-$primary;
-      }
+  span {
+    @apply z-1;
+  }
+
+  div {
+    @apply absolute bottom-5 
+            text-$base-dark text-center opacity-30 
+            select-none pointer-events-none;
+    font-size: 8vw;
+
+    .material-icons {
+      @apply text-$primary-darker;
+      font-size: 25vw;
     }
   }
 </style>
 
 <aside>
-  <h1>
+  <span>
+    <slot />
+  </span>
+  <div>
     <span class="material-icons">handyman</span>
-    <span>{$_('title.app')}</span>
-  </h1>
-  <slot />
-  <Explorer {tools} {current} on:select />
+    <h1>{$_('title.app')}</h1>
+  </div>
 </aside>

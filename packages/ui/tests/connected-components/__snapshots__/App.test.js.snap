@@ -5,58 +5,25 @@ exports[`App connected component displays explorer, pane container and loader 1`
   <div>
      
     <aside>
-      <h1>
+      <span>
+        <nav>
+          <ol />
+        </nav>
+         
+        <ul />
+      </span>
+       
+      <div>
         <span
           class="material-icons"
         >
           handyman
         </span>
          
-        <span>
+        <h1>
           Atelier
-        </span>
-      </h1>
-       
-      <nav>
-        <ul>
-          <li>
-            <button
-              class="primary iconOnly noColor"
-              title="Modifier la couleur de fond de l'atelier"
-            >
-              <i
-                class="material-icons"
-              >
-                wallpaper
-              </i>
-               
-               
-            </button>
-          </li>
-           
-          <li>
-            <button
-              class="primary iconOnly noColor"
-              title="Redimensionner la taille de l'atelier"
-            >
-              <i
-                class="material-icons"
-              >
-                devices
-              </i>
-               
-               
-            </button>
-             
-          </li>
-        </ul>
-      </nav>
-       
-      <nav>
-        <ol />
-      </nav>
-       
-      <ul />
+        </h1>
+      </div>
     </aside>
      
     <main>
@@ -98,21 +65,61 @@ exports[`App connected component displays explorer, pane container and loader 1`
             
              
             <li>
+              <nav>
+                <ul>
+                  <li>
+                    <button
+                      class="primary iconOnly noColor"
+                      title="Modifier la couleur de fond de l'atelier"
+                    >
+                      <i
+                        class="material-icons"
+                      >
+                        wallpaper
+                      </i>
+                       
+                       
+                    </button>
+                  </li>
+                   
+                  <li
+                    class="viewport-container"
+                  >
+                    <button
+                      class="primary iconOnly noColor"
+                      title="Redimensionner la taille de l'atelier"
+                    >
+                      <i
+                        class="material-icons"
+                      >
+                        devices
+                      </i>
+                       
+                       
+                    </button>
+                     
+                  </li>
+                </ul>
+              </nav>
+               
               <button
+                class="iconOnly noColor"
                 title="Réduire/Etendre"
               >
-                <span
+                <i
                   class="material-icons"
                 >
                   expand_less
-                </span>
+                </i>
+                 
+                 
               </button>
             </li>
           </ul>
         </nav>
          
         <main
-          class="tab-content collapsed"
+          class="collapsed"
         >
           
           
