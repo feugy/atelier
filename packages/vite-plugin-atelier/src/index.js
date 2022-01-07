@@ -62,7 +62,7 @@ async function findTools(path, detectionRegex) {
 async function buildWorkframe(paths, { framework, path, setupPath }) {
   let bindings
   try {
-    bindings = require(`@atelier-wb/${framework}`)
+    bindings = require(`@atelier-wb/${framework}/workframe-content.cjs`)
   } catch (err) {
     throw new Error(
       `Could not load framework bindings for ${framework}. Please add to your dependencies: npm i -D @atelier-wb/${framework}`
