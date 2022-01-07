@@ -55,15 +55,10 @@ Then, assuming you already [installed vite and configured it][vite-getting-start
 The atelier plugin function takes the following settings:
 
 - `framework` (detaults to `svelte`): your UI framework of choice. To this day, only [Svelte][svelte] is supported.
-
 - `url` (detaults to `/atelier/`): the url root under which Atelier's UI will be available. Must have leading and trailing `/`.
-
 - `path` (defaults to `./atelier`): the path to the top level folder containing your `*.tools.*` files. It could be either absolute, or relative to your vite configuration file.
-
 - `toolRegexp` (defaults to `/\.tools(?!\.shot$).+$/`, any files endinf with `.tools.` but `.tools.shot`): the regular expression used to find your tool files.
-
 - `setupPath`: optional path to a file **imported** prior to any of your tool files. It can be absolute, from node_modules, or relative to `path`.
-
 - `publicDir`: optional path, or list of paths, to folders containing static assets your tools may use.
 
 For example:
