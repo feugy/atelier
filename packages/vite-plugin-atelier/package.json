@@ -1,7 +1,7 @@
 {
-  "name": "@atelier-wb/vite-plugin-svelte",
+  "name": "@atelier-wb/vite-plugin-atelier",
   "version": "0.5.1",
-  "description": "Vite plugin to process your svelte components",
+  "description": "Helps you buildind Component Driven UIs with Atelier and Vite",
   "main": "src/index.js",
   "scripts": {
     "test": "jest --coverage",

@@ -74,6 +74,18 @@ describe('plugin builder', () => {
     )
   })
 
+  it('validates framework option', () => {
+    expect(() => builder({ framework: 'jquery' })).toThrow(
+      `${builder.pluginName} option "framework" must be equal to one of the allowed values`
+    )
+    expect(() => builder({ framework: 15 })).toThrow(
+      `${builder.pluginName} option "framework" must be string`
+    )
+    expect(() => builder({ framework: [{}] })).toThrow(
+      `${builder.pluginName} option "framework" must be string`
+    )
+  })
+
   describe('given some files', () => {
     it('applies default options', () => {
       expect(builder()).toEqual({
@@ -101,6 +113,16 @@ describe('plugin builder', () => {
       expect(await plugin.load(faker.lorem.word())).not.toBeDefined()
       expect(plugin.resolveId(`${defaultUrl}${workframeId}`)).toEqual(
         `${defaultUrl}${workframeId}`
+      )
+    })
+
+    it('throws on unavailbable framework bindings', async () => {
+      const framework = 'jquery'
+      const plugin = builder({ path, framework }, true)
+      await expect(
+        plugin.load(`${defaultUrl}${defaultWorkframeId}`)
+      ).rejects.toThrow(
+        `Could not load framework bindings for ${framework}. Please add to your dependencies: npm i -D @atelier-wb/${framework}`
       )
     })
 
@@ -146,6 +168,7 @@ new Workbench({
       const plugin = builder({ path, setupPath })
       expect(await plugin.load(`${defaultUrl}${defaultWorkframeId}`))
         .toEqual(`import { Workbench } from '@atelier-wb/svelte'
+
 import '${setupPath}'
 import tool1 from '${path}/a.tools.svelte'
 import tool2 from '${path}/b.tools.svelte'
@@ -166,6 +189,7 @@ new Workbench({
       const plugin = builder({ path, setupPath: `./${setupPath}` })
       expect(await plugin.load(`${defaultUrl}${defaultWorkframeId}`))
         .toEqual(`import { Workbench } from '@atelier-wb/svelte'
+
 import '${resolve(path, setupPath)}'
 import tool1 from '${path}/a.tools.svelte'
 import tool2 from '${path}/b.tools.svelte'
@@ -186,6 +210,7 @@ new Workbench({
       const plugin = builder({ path, setupPath })
       expect(await plugin.load(`${defaultUrl}${defaultWorkframeId}`))
         .toEqual(`import { Workbench } from '@atelier-wb/svelte'
+
 import '${setupPath}'
 import tool1 from '${path}/a.tools.svelte'
 import tool2 from '${path}/b.tools.svelte'

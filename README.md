@@ -7,6 +7,8 @@ Weclome to the Atelier!
 [![CI](https://github.com/feugy/atelier/actions/workflows/CI.yml/badge.svg)](https://github.com/feugy/atelier/actions/workflows/CI.yml)
 [![Codacy](https://app.codacy.com/project/badge/Grade/4f26d900b38547fbbb8899c853fca159)](https://www.codacy.com/gh/feugy/atelier/dashboard?utm_source=github.com&utm_medium=referral&utm_content=feugy/atelier&utm_campaign=Badge_Grade)
 
+![Atelier UI](/assets/atelier.png)
+
 ## What is this?
 
 Atelier (French word for workbench or workshop) is a simple UI component explorer, like [angular-playground] [react-cosmos], [storybook], [styleguidist], [svench] or [chromatic].
@@ -78,7 +80,7 @@ Atlier seamlessly integrates with [Vite] bundler, and give you back control.
 [chromatic]: https://github.com/meteor/chromatic/
 [create-react-app]: https://create-react-app.dev/
 [license]: https://github.com/feugy/atelier/blob/main/LICENSE
-[plugin-api]: https://github.com/feugy/atelier/tree/main/packages/plugin-svelte
+[plugin-api]: https://github.com/feugy/atelier/tree/main/packages/vite-plugin-atelier
 [react-cosmos]: https://reactcosmos.org/
 [storybook]: https://storybook.js.org/
 [styleguidist]: https://react-styleguidist.js.org/

@@ -5,7 +5,7 @@ const Ajv = require('ajv')
 const sirv = require('sirv')
 const { normalizePath } = require('vite')
 
-const pluginName = '@atelier-wb/vite-plugin-svelte'
+const pluginName = '@atelier-wb/vite-plugin-atelier'
 
 const validate = new Ajv().compile({
   type: 'object',
@@ -18,9 +18,17 @@ const validate = new Ajv().compile({
     setupPath: { type: 'string', nullable: true },
     publicDir: {
       oneOf: [{ type: 'string' }, { type: 'array', items: { type: 'string' } }]
-    }
+    },
+    framework: { type: 'string', enum: ['svelte'] }
   },
-  required: ['path', 'url', 'toolRegexp', 'workframeHtml', 'workframeId'],
+  required: [
+    'path',
+    'url',
+    'toolRegexp',
+    'workframeHtml',
+    'workframeId',
+    'framework'
+  ],
   additionalProperties: true
 })
 
@@ -31,7 +39,8 @@ const defaultOptions = {
   workframeHtml: resolve(__dirname, 'workframe.html'),
   workframeId: '@atelier-wb/workframe',
   bundled: true,
-  publicDir: []
+  publicDir: [],
+  framework: 'svelte'
 }
 
 async function findTools(path, detectionRegex) {
@@ -50,7 +59,15 @@ async function findTools(path, detectionRegex) {
   return paths
 }
 
-function buildWorkframe(paths, { path, setupPath }) {
+async function buildWorkframe(paths, { framework, path, setupPath }) {
+  let bindings
+  try {
+    bindings = require(`@atelier-wb/${framework}/workframe-content.cjs`)
+  } catch (err) {
+    throw new Error(
+      `Could not load framework bindings for ${framework}. Please add to your dependencies: npm i -D @atelier-wb/${framework}`
+    )
+  }
   const tools = new Array(paths.length)
   const imports = new Array(paths.length)
   let i = 0
@@ -58,26 +75,20 @@ function buildWorkframe(paths, { path, setupPath }) {
     imports[i] = `import tool${i + 1} from '${toolPath}'`
     tools[i] = `tool${++i}`
   }
-  return `import { Workbench } from '@atelier-wb/svelte'
-${
-  setupPath
-    ? `import '${
+  if (setupPath) {
+    imports.unshift(
+      `import '${
         setupPath.startsWith('.') ? resolve(path, setupPath) : setupPath
       }'`
-    : ''
-}
-${imports.join('\n')}
-
-new Workbench({
-  target: document.body,
-  props: { tools: [${tools.join(', ')}] }
-})`
+    )
+  }
+  return await bindings.buildWorkframeContent({ tools, imports })
 }
 
-function AtelierPlugin(pluginOptions = {}) {
+function AtelierPlugin(pluginOptions = {}, skipValidation = false) {
   const options = { ...defaultOptions, ...pluginOptions }
   const valid = validate(options)
-  if (!valid) {
+  if (!valid && !skipValidation) {
     const [error] = validate.errors
     throw new Error(
       `${pluginName} option "${error.instancePath.slice(1)}" ${error.message}`
@@ -154,7 +165,7 @@ function AtelierPlugin(pluginOptions = {}) {
 
     async load(id) {
       if (id === workframeUrl) {
-        const workframe = buildWorkframe(
+        const workframe = await buildWorkframe(
           await findTools(options.path, toolRegexp),
           options
         )
