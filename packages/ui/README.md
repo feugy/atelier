@@ -15,4 +15,4 @@ This package contains UI components, writen in [Svelte][svelte]:
 **The UI is bundled in [vite-plugin][vite-plugin]: you don't need to install this package.**
 
 [svelte]: https://svelte.dev
-[vite-plugin]: https://github.com/feugy/atelier/tree/main/packages/plugin-svelte
+[vite-plugin]: https://github.com/feugy/atelier/tree/main/packages/vite-plugin-atelier

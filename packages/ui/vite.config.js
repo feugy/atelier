@@ -1,7 +1,7 @@
 import { defineConfig } from 'vite'
 import { svelte } from '@sveltejs/vite-plugin-svelte'
 import yaml from '@rollup/plugin-yaml'
-import atelier from '@atelier-wb/vite-plugin-svelte'
+import atelier from '@atelier-wb/vite-plugin-atelier'
 import windi from 'vite-plugin-windicss'
 
 export default defineConfig({

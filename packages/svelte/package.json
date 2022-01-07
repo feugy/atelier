@@ -2,7 +2,14 @@
   "name": "@atelier-wb/svelte",
   "version": "0.5.1",
   "description": "Svelte bindings to test your svelte components",
-  "main": "src/index.js",
+  "main": "workframe-content.cjs",
+  "module": "src/index.js",
+  "exports": {
+    ".": {
+      "require": "./workframe-content.cjs",
+      "import": "./src/index.js"
+    }
+  },
   "scripts": {
     "test": "jest --coverage",
     "test:dev": "jest --watch"

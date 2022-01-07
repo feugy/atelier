@@ -5,7 +5,6 @@
 - configure viewports as plugin settings
 - configure background colors as plugin settings
 - remove tools on updates (toolbox/tool renamal, file deletion)
-- can it be framework agnostic?
 
 ## UI
 

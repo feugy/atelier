@@ -18,5 +18,9 @@ module.exports = {
     'jest-watch-typeahead/testname'
   ],
   coverageDirectory: './coverage',
-  collectCoverageFrom: ['<rootDir>/src/**/*.js', '<rootDir>/src/**/*.svelte']
+  collectCoverageFrom: [
+    '<rootDir>/*.cjs',
+    '<rootDir>/src/**/*.js',
+    '<rootDir>/src/**/*.svelte'
+  ]
 }
