@@ -4,6 +4,7 @@ exports[`Toolshot components/SizePicker.tools.svelte: Custom values 1`] = `
 <div>
   <button
     class="primary iconOnly noColor"
+    title="320 x 480"
   >
     <i
       class="material-icons"
@@ -15,6 +16,7 @@ exports[`Toolshot components/SizePicker.tools.svelte: Custom values 1`] = `
   </button>
   <button
     class="primary iconOnly noColor"
+    title="480 x 800"
   >
     <i
       class="material-icons"
@@ -31,6 +33,7 @@ exports[`Toolshot components/SizePicker.tools.svelte: Default values 1`] = `
 <div>
   <button
     class="primary iconOnly noColor"
+    title="320 x 568"
   >
     <i
       class="material-icons"
@@ -42,6 +45,7 @@ exports[`Toolshot components/SizePicker.tools.svelte: Default values 1`] = `
   </button>
   <button
     class="primary iconOnly noColor"
+    title="414 x 896"
   >
     <i
       class="material-icons"
@@ -53,6 +57,7 @@ exports[`Toolshot components/SizePicker.tools.svelte: Default values 1`] = `
   </button>
   <button
     class="primary iconOnly noColor"
+    title="834 x 1112"
   >
     <i
       class="material-icons"

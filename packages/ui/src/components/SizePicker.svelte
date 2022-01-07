@@ -91,6 +91,7 @@
       icon={option.icon}
       primary={true}
       noColor={currentSize !== option}
+      title={`${option.width} x ${option.height}`}
       on:click={() => handleSelect(option)}
     />
   {/each}

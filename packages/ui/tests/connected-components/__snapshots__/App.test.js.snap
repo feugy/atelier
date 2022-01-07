@@ -69,6 +69,7 @@ exports[`App connected component displays explorer, pane container and loader 1`
                 <div>
                   <button
                     class="primary iconOnly noColor"
+                    title="320 x 568"
                   >
                     <i
                       class="material-icons"
@@ -80,6 +81,7 @@ exports[`App connected component displays explorer, pane container and loader 1`
                   </button>
                   <button
                     class="primary iconOnly noColor"
+                    title="414 x 896"
                   >
                     <i
                       class="material-icons"
@@ -91,6 +93,7 @@ exports[`App connected component displays explorer, pane container and loader 1`
                   </button>
                   <button
                     class="primary iconOnly noColor"
+                    title="834 x 1112"
                   >
                     <i
                       class="material-icons"
