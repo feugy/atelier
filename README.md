@@ -2,7 +2,7 @@
 
 Weclome to the Atelier!
 
-[![](https://img.shields.io/npm/v/@atelier-wb/vite-plugin-svelte.svg)](https://www.npmjs.com/package/@atelier-wb/vite-plugin-svelte)
+[![](https://img.shields.io/npm/v/@atelier-wb/vite-plugin-atelier.svg)](https://www.npmjs.com/package/@atelier-wb/vite-plugin-atelier)
 [![GitHub](https://img.shields.io/github/license/feugy/atelier)][license]
 [![CI](https://github.com/feugy/atelier/actions/workflows/CI.yml/badge.svg)](https://github.com/feugy/atelier/actions/workflows/CI.yml)
 [![Codacy](https://app.codacy.com/project/badge/Grade/4f26d900b38547fbbb8899c853fca159)](https://www.codacy.com/gh/feugy/atelier/dashboard?utm_source=github.com&utm_medium=referral&utm_content=feugy/atelier&utm_campaign=Badge_Grade)
@@ -32,7 +32,7 @@ Atelier is based on [Vite] JavaScript bundler.
 1. Install the plugin for Vite and Svelte bindings.
 
    ```shell
-   npm i -D @atelier-wb/vite-plugin-svelte @atelier-wb/svelte
+   npm i -D @atelier-wb/vite-plugin-atelier @atelier-wb/svelte
    ```
 
 2. Register the plugin in `vite.config.js` file:
@@ -40,7 +40,7 @@ Atelier is based on [Vite] JavaScript bundler.
    ```js
    import svelte from '@sveltejs/vite-plugin-svelte'
    // other vite plugins
-   import atelier from '@atelier-wb/vite-plugin-svelte'
+   import atelier from '@atelier-wb/vite-plugin-atelier'
 
    export default defineConfig({
      plugins: [svelte(), /* other plugins */ atelier()]
