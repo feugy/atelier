@@ -5,7 +5,14 @@
   import * as PropertiesPane from './PropertiesPane.svelte'
   import ErrorDialogue from './ErrorDialogue.svelte'
   import '../common'
-  import { Aside, Explorer, Frame, PaneContainer, Toolbar } from '../components'
+  import {
+    Aside,
+    BackgroundPicker,
+    Explorer,
+    Frame,
+    PaneContainer,
+    SizePicker
+  } from '../components'
   import {
     currentTool,
     events,
@@ -23,6 +30,9 @@
 <style lang="postcss">
   main {
     @apply flex-grow flex flex-col overflow-auto z-0;
+  }
+  div {
+    @apply inline-flex gap-8 items-center mr-4;
   }
 </style>
 
@@ -55,7 +65,10 @@
       }
     ]}
   >
-    <Toolbar {viewport} />
+    <div>
+      <SizePicker {viewport} />
+      <BackgroundPicker {viewport} />
+    </div>
   </PaneContainer>
 </main>
 <ErrorDialogue />

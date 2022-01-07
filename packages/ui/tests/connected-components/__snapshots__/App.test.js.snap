@@ -65,42 +65,62 @@ exports[`App connected component displays explorer, pane container and loader 1`
             
              
             <li>
-              <nav>
-                <ul>
-                  <li>
-                    <button
-                      class="primary iconOnly noColor"
-                      title="Modifier la couleur de fond de l'atelier"
-                    >
-                      <i
-                        class="material-icons"
-                      >
-                        wallpaper
-                      </i>
-                       
-                       
-                    </button>
-                  </li>
-                   
-                  <li
-                    class="viewport-container"
+              <div>
+                <div>
+                  <button
+                    class="primary iconOnly noColor"
+                    title="320 x 568"
                   >
-                    <button
-                      class="primary iconOnly noColor"
-                      title="Redimensionner la taille de l'atelier"
+                    <i
+                      class="material-icons"
                     >
-                      <i
-                        class="material-icons"
-                      >
-                        devices
-                      </i>
-                       
-                       
-                    </button>
+                      phone_android
+                    </i>
                      
-                  </li>
+                     
+                  </button>
+                  <button
+                    class="primary iconOnly noColor"
+                    title="414 x 896"
+                  >
+                    <i
+                      class="material-icons"
+                    >
+                      stay_current_landscape
+                    </i>
+                     
+                     
+                  </button>
+                  <button
+                    class="primary iconOnly noColor"
+                    title="834 x 1112"
+                  >
+                    <i
+                      class="material-icons"
+                    >
+                      tablet_android
+                    </i>
+                     
+                     
+                  </button>
+                </div>
+                 
+                <ul>
+                  <li />
+                  <li
+                    style="--background: white;"
+                  />
+                  <li
+                    style="--background: #e0e0e0;"
+                  />
+                  <li
+                    style="--background: #a0a0a0;"
+                  />
+                  <li
+                    style="--background: black;"
+                  />
                 </ul>
-              </nav>
+              </div>
                
               <button
                 class="iconOnly noColor"

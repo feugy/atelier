@@ -13,12 +13,16 @@
 
   div {
     @apply absolute bottom-5 
-            text-$base-dark text-center opacity-30 
+            text-$base text-center opacity-10 
             select-none pointer-events-none;
-    font-size: 8vw;
+
+    & h1 {
+      @apply leading-22;
+      font-size: 8vw;
+    }
 
     .material-icons {
-      @apply text-$primary-darker;
+      @apply text-$primary;
       font-size: 25vw;
     }
   }

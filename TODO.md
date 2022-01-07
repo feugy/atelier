@@ -9,8 +9,6 @@
 
 ## UI
 
-- 'Slider' to select pre-defined viewports
-- 'Slider' to select background colors
 - hide some props from pane
 - color picker
 - warn on tool name collisions

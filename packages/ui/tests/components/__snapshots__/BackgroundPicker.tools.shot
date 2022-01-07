@@ -1,0 +1,34 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Toolshot components/BackgroundPicker.tools.svelte: Custom colors 1`] = `
+<ul>
+  <li />
+  <li
+    style="--background: #e879f9;"
+  />
+  <li
+    style="--background: rgba(150, 75, 50, 0.5);"
+  />
+  <li
+    style="--background: linear-gradient(to right, red, orange);"
+  />
+</ul>
+`;
+
+exports[`Toolshot components/BackgroundPicker.tools.svelte: Default colors 1`] = `
+<ul>
+  <li />
+  <li
+    style="--background: white;"
+  />
+  <li
+    style="--background: #e0e0e0;"
+  />
+  <li
+    style="--background: #a0a0a0;"
+  />
+  <li
+    style="--background: black;"
+  />
+</ul>
+`;

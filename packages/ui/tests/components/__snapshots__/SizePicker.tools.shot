@@ -1,0 +1,71 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Toolshot components/SizePicker.tools.svelte: Custom values 1`] = `
+<div>
+  <button
+    class="primary iconOnly noColor"
+    title="320 x 480"
+  >
+    <i
+      class="material-icons"
+    >
+      laptop
+    </i>
+     
+     
+  </button>
+  <button
+    class="primary iconOnly noColor"
+    title="480 x 800"
+  >
+    <i
+      class="material-icons"
+    >
+      border_outer
+    </i>
+     
+     
+  </button>
+</div>
+`;
+
+exports[`Toolshot components/SizePicker.tools.svelte: Default values 1`] = `
+<div>
+  <button
+    class="primary iconOnly noColor"
+    title="320 x 568"
+  >
+    <i
+      class="material-icons"
+    >
+      phone_android
+    </i>
+     
+     
+  </button>
+  <button
+    class="primary iconOnly noColor"
+    title="414 x 896"
+  >
+    <i
+      class="material-icons"
+    >
+      stay_current_landscape
+    </i>
+     
+     
+  </button>
+  <button
+    class="primary iconOnly noColor"
+    title="834 x 1112"
+  >
+    <i
+      class="material-icons"
+    >
+      tablet_android
+    </i>
+     
+     
+  </button>
+</div>
+`;
