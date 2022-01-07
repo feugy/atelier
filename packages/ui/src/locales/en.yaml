@@ -1,3 +1,16 @@
+label:
+  large-viewport: Large
+  medium-viewport: Medium
+  reset-viewport: Full screen
+  rotate-viewport: Rotate
+  small-viewport: Small
+message:
+  fix-and-reload: Please fix the problem before reloading this page.
+  no-events: No events received yet
+  no-pane-enabled: This tool is not configured to receive events or tweak properties.
+tab:
+  events: Events
+  properties: Properties
 title:
   app: Atelier
   error: Fatal error!
@@ -5,10 +18,3 @@ tooltip:
   background: Change the workbench background color
   collapsible: Collapse/Expand
   viewport: Resize the workbench view port
-tab:
-  events: Events
-  properties: Properties
-message:
-  no-events: No events received yet
-  no-pane-enabled: This tool is not configured to receive events or tweak properties.
-  fix-and-reload: Please fix the problem before reloading this page.

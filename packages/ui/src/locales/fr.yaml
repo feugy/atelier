@@ -1,3 +1,16 @@
+label:
+  large-viewport: Large
+  medium-viewport: Moyen
+  reset-viewport: Plein écran
+  rotate-viewport: Tourner
+  small-viewport: Petit
+message:
+  fix-and-reload: Veuillez corriger l'erreur avant de recharger la page.
+  no-events: Encore aucun message reçus
+  no-pane-enabled: Cet outil n'est pas configuré pour recevoir des évènements ou pour modifier les propriétés.
+tab:
+  events: Evènements
+  properties: Propriétés
 title:
   app: Atelier
   error: Erreur fatale!
@@ -5,10 +18,3 @@ tooltip:
   background: Modifier la couleur de fond de l'atelier
   collapsible: Réduire/Etendre
   viewport: Redimensionner la taille de l'atelier
-tab:
-  events: Evènements
-  properties: Propriétés
-message:
-  no-events: Encore aucun message reçus
-  no-pane-enabled: Cet outil n'est pas configuré pour recevoir des évènements ou pour modifier les propriétés.
-  fix-and-reload: Veuillez corriger l'erreur avant de recharger la page.
