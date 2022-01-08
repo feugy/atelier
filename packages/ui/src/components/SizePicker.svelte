@@ -94,7 +94,7 @@
   }
 </style>
 
-<div>
+<div role="toolbar">
   {#each options as option}
     <Button
       icon={option.icon}

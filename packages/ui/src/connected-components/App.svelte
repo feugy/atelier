@@ -16,6 +16,7 @@
   import {
     currentTool,
     events,
+    getSettings,
     selectTool,
     setWorkbenchFrame,
     tools
@@ -23,6 +24,9 @@
 
   let frame
   let viewport
+
+  const sizes = getSettings('sizes')
+  const backgrounds = getSettings('backgrounds')
 
   onMount(() => setWorkbenchFrame(frame))
 </script>
@@ -66,8 +70,8 @@
     ]}
   >
     <div>
-      <SizePicker {viewport} />
-      <BackgroundPicker {viewport} />
+      <SizePicker {viewport} sizes={$sizes} />
+      <BackgroundPicker {viewport} backgrounds={$backgrounds} />
     </div>
   </PaneContainer>
 </main>
