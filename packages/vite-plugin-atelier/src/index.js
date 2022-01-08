@@ -19,7 +19,8 @@ const validate = new Ajv().compile({
     publicDir: {
       oneOf: [{ type: 'string' }, { type: 'array', items: { type: 'string' } }]
     },
-    framework: { type: 'string', enum: ['svelte'] }
+    framework: { type: 'string', enum: ['svelte'] },
+    uiSettings: { type: 'object', additionalProperties: true }
   },
   required: [
     'path',
@@ -40,7 +41,8 @@ const defaultOptions = {
   workframeId: '@atelier-wb/workframe',
   bundled: true,
   publicDir: [],
-  framework: 'svelte'
+  framework: 'svelte',
+  uiSettings: {}
 }
 
 async function findTools(path, detectionRegex) {
@@ -118,25 +120,33 @@ function AtelierPlugin(pluginOptions = {}, skipValidation = false) {
       const serves = statics.map(dir => sirv(dir, { etag: true }))
 
       // configure a middleware for serving Atelier
-      server.middlewares.use(options.url, (req, res, next) => {
-        if (req.url === `/workframe.html`) {
+      server.middlewares.use(options.url, (request, response, next) => {
+        if (request.url === `/workframe.html`) {
           // serve our workframe.html for the iframe
-          res.writeHead(200, {
+          response.writeHead(200, {
             'Cache-Control': 'no-store',
             'Content-Type': 'text/html'
           })
-          createReadStream(options.workframeHtml).pipe(res)
-        } else if (`${req.originalUrl}/` === options.url) {
+          createReadStream(options.workframeHtml).pipe(response)
+        } else if (request.url === `/ui-settings.js`) {
+          response.writeHead(200, {
+            'Cache-Control': 'no-store',
+            'Content-Type': 'application/javascript;charset=utf-8'
+          })
+          response.end(
+            `window.uiSettings = ${JSON.stringify(options.uiSettings)};`
+          )
+        } else if (`${request.originalUrl}/` === options.url) {
           // append trailing slash to allows resolving <script /> with relative sources
-          res.statusCode = 301
-          res.setHeader('Location', options.url)
-          res.end()
+          response.statusCode = 301
+          response.setHeader('Location', options.url)
+          response.end()
         } else {
           // all other static Atelier assets
           let i = 0
           const tryNext = () => {
             if (serves[i]) {
-              serves[i++](req, res, tryNext)
+              serves[i++](request, response, tryNext)
             } else {
               next()
             }
