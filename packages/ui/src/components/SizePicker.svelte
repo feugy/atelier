@@ -77,6 +77,15 @@
     viewport.style.width = height
     viewport.style.height = width
   }
+
+  function makeTooltip(option) {
+    return [
+      option.label,
+      option.width ? `[${option.width} x ${option.height}]` : ''
+    ]
+      .filter(Boolean)
+      .join(' ')
+  }
 </script>
 
 <style lang="postcss">
@@ -91,7 +100,7 @@
       icon={option.icon}
       primary={true}
       noColor={currentSize !== option}
-      title={`${option.width} x ${option.height}`}
+      title={makeTooltip(option)}
       on:click={() => handleSelect(option)}
     />
   {/each}
