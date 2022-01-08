@@ -1,7 +1,9 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Toolshot components/BackgroundPicker.tools.svelte: Custom colors 1`] = `
-<ul>
+<ul
+  role="toolbar"
+>
   <li />
   <li
     style="--background: #e879f9;"
@@ -16,7 +18,9 @@ exports[`Toolshot components/BackgroundPicker.tools.svelte: Custom colors 1`] = 
 `;
 
 exports[`Toolshot components/BackgroundPicker.tools.svelte: Default colors 1`] = `
-<ul>
+<ul
+  role="toolbar"
+>
   <li />
   <li
     style="--background: white;"

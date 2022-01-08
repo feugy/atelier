@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`App connected component displays explorer, pane container and loader 1`] = `
+exports[`App connected component displays explorer, pane container with default pickers and loader 1`] = `
 <body>
   <div>
      
@@ -66,10 +66,12 @@ exports[`App connected component displays explorer, pane container and loader 1`
              
             <li>
               <div>
-                <div>
+                <div
+                  role="toolbar"
+                >
                   <button
                     class="primary iconOnly noColor"
-                    title="320 x 568"
+                    title="Petit [320 x 568]"
                   >
                     <i
                       class="material-icons"
@@ -81,7 +83,7 @@ exports[`App connected component displays explorer, pane container and loader 1`
                   </button>
                   <button
                     class="primary iconOnly noColor"
-                    title="414 x 896"
+                    title="Moyen [414 x 896]"
                   >
                     <i
                       class="material-icons"
@@ -93,7 +95,7 @@ exports[`App connected component displays explorer, pane container and loader 1`
                   </button>
                   <button
                     class="primary iconOnly noColor"
-                    title="834 x 1112"
+                    title="Large [834 x 1112]"
                   >
                     <i
                       class="material-icons"
@@ -105,7 +107,9 @@ exports[`App connected component displays explorer, pane container and loader 1`
                   </button>
                 </div>
                  
-                <ul>
+                <ul
+                  role="toolbar"
+                >
                   <li />
                   <li
                     style="--background: white;"

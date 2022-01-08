@@ -10,6 +10,22 @@ const defaultWorkframeId = '@atelier-wb/workframe'
 const defaultUrl = '/atelier/'
 const path = resolve(__dirname, 'fixtures', 'nested')
 
+async function configureAndStartServer(options) {
+  const plugin = builder(options)
+  const middlewares = connect()
+  const server = http.createServer(middlewares)
+  const watcher = new EventEmitter()
+  await plugin.configureServer({ middlewares, watcher })
+  await new Promise((resolve, reject) =>
+    server.listen(err => (err ? reject(err) : resolve()))
+  )
+  return {
+    server,
+    watcher,
+    address: `http://localhost:${server.address().port}`
+  }
+}
+
 describe('plugin builder', () => {
   beforeEach(jest.resetAllMocks)
 
@@ -83,6 +99,15 @@ describe('plugin builder', () => {
     )
     expect(() => builder({ framework: [{}] })).toThrow(
       `${builder.pluginName} option "framework" must be string`
+    )
+  })
+
+  it('validates uiSettings option', () => {
+    expect(() => builder({ uiSettings: 'jquery' })).toThrow(
+      `${builder.pluginName} option "uiSettings" must be object`
+    )
+    expect(() => builder({ uiSettings: null })).toThrow(
+      `${builder.pluginName} option "uiSettings" must be object`
     )
   })
 
@@ -228,29 +253,51 @@ new Workbench({
   })
 
   describe('given a configured and started server', () => {
-    let plugin
+    let server
+
+    afterEach(() => server?.close())
+
+    it(`serves script with ui settings`, async () => {
+      let address
+      const url = '/atelier/'
+      const uiSettings = {
+        backgrounds: ['', 'blue', 'pink'],
+        sizes: [{ width: 480, height: 800 }]
+      }
+      ;({ server, address } = await configureAndStartServer({
+        url,
+        path,
+        uiSettings
+      }))
+
+      const response = await got(`${address}${url}ui-settings.js`)
+      expect(response.statusCode).toEqual(200)
+      expect(response.headers).toEqual(
+        expect.objectContaining({
+          'content-type': 'application/javascript;charset=utf-8'
+        })
+      )
+      expect(response.body).toEqual(
+        `window.uiSettings = ${JSON.stringify(uiSettings)};`
+      )
+    })
+  })
+
+  describe('given a configured and started server', () => {
     let server
     let address
     let watcher
     let url = '/atelier/'
 
     beforeEach(async () => {
-      plugin = builder({
-        url: url,
+      ;({ server, watcher, address } = await configureAndStartServer({
+        url,
         path,
         publicDir: [
           resolve(__dirname, 'fixtures', 'static1'),
           resolve(__dirname, 'fixtures', 'static2')
         ]
-      })
-      const middlewares = connect()
-      server = http.createServer(middlewares)
-      watcher = new EventEmitter()
-      await plugin.configureServer({ middlewares, watcher })
-      await new Promise((resolve, reject) =>
-        server.listen(err => (err ? reject(err) : resolve()))
-      )
-      address = `http://localhost:${server.address().port}`
+      }))
     })
 
     afterEach(() => server.close())
@@ -269,6 +316,17 @@ new Workbench({
       expect(response.body).toEqual(
         expect.stringContaining('<link rel="stylesheet" href="assets/index.')
       )
+    })
+
+    it(`serves script with empty ui settings`, async () => {
+      const response = await got(`${address}${url}ui-settings.js`)
+      expect(response.statusCode).toEqual(200)
+      expect(response.headers).toEqual(
+        expect.objectContaining({
+          'content-type': 'application/javascript;charset=utf-8'
+        })
+      )
+      expect(response.body).toEqual('window.uiSettings = {};')
     })
 
     it(`serves files from public dir`, async () => {

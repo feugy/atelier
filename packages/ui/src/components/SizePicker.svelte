@@ -1,3 +1,19 @@
+<script context="module">
+  export const sizesSchema = {
+    type: 'array',
+    items: {
+      type: 'object',
+      required: ['icon', 'height', 'width'],
+      properties: {
+        icon: { type: 'string' },
+        label: { type: 'string' },
+        height: { type: 'number' },
+        width: { type: 'number' }
+      }
+    }
+  }
+</script>
+
 <script>
   import { createEventDispatcher } from 'svelte'
   import { _ } from 'svelte-intl'
@@ -77,6 +93,15 @@
     viewport.style.width = height
     viewport.style.height = width
   }
+
+  function makeTooltip(option) {
+    return [
+      option.label,
+      option.width ? `[${option.width} x ${option.height}]` : ''
+    ]
+      .filter(Boolean)
+      .join(' ')
+  }
 </script>
 
 <style lang="postcss">
@@ -85,13 +110,13 @@
   }
 </style>
 
-<div>
+<div role="toolbar">
   {#each options as option}
     <Button
       icon={option.icon}
       primary={true}
       noColor={currentSize !== option}
-      title={`${option.width} x ${option.height}`}
+      title={makeTooltip(option)}
       on:click={() => handleSelect(option)}
     />
   {/each}

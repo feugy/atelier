@@ -15,7 +15,7 @@
   }
 </script>
 
-<ToolBox name="Components/Size Picker 2" events={['select']} layout="centered">
+<ToolBox name="Components/Size Picker" events={['select']} layout="centered">
   <Tool name="Default values" let:handleEvent>
     <SizePicker on:select={handleEvent} on:select={handleSelect} {viewport} />
     <div>

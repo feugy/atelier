@@ -1,5 +1,4 @@
-import { BehaviorSubject } from 'rxjs'
-import { map, scan, shareReplay } from 'rxjs/operators'
+import { BehaviorSubject, Subject, map, scan, shareReplay } from 'rxjs'
 import { groupByName } from '../utils'
 
 let workframe = null
@@ -7,7 +6,11 @@ let workframeOrigin = null
 const tools$ = new BehaviorSubject([])
 const current$ = new BehaviorSubject()
 const events$ = new BehaviorSubject()
-const lastError$ = new BehaviorSubject()
+const lastError$ = new Subject()
+
+window.addEventListener('error', ({ error }) => {
+  lastError$.next(error)
+})
 
 function updateUrl(fullName) {
   if (fullName) {

@@ -1,3 +1,10 @@
+<script context="module">
+  export const backgroundsSchema = {
+    type: 'array',
+    items: { type: 'string' }
+  }
+</script>
+
 <script>
   import { createEventDispatcher } from 'svelte'
 
@@ -25,7 +32,7 @@
   }
 </style>
 
-<ul>
+<ul role="toolbar">
   {#each backgrounds as background}
     <li style="--background:{background};" on:click={() => apply(background)} />
   {/each}

@@ -11,11 +11,14 @@
     Explorer,
     Frame,
     PaneContainer,
-    SizePicker
+    SizePicker,
+    sizesSchema,
+    backgroundsSchema
   } from '../components'
   import {
     currentTool,
     events,
+    getSettings,
     selectTool,
     setWorkbenchFrame,
     tools
@@ -23,6 +26,9 @@
 
   let frame
   let viewport
+
+  const sizes = getSettings('sizes', sizesSchema)
+  const backgrounds = getSettings('backgrounds', backgroundsSchema)
 
   onMount(() => setWorkbenchFrame(frame))
 </script>
@@ -66,8 +72,8 @@
     ]}
   >
     <div>
-      <SizePicker {viewport} />
-      <BackgroundPicker {viewport} />
+      <SizePicker {viewport} sizes={$sizes} />
+      <BackgroundPicker {viewport} backgrounds={$backgrounds} />
     </div>
   </PaneContainer>
 </main>
