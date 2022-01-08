@@ -1,5 +1,4 @@
-import { BehaviorSubject } from 'rxjs'
-import { map, scan, shareReplay } from 'rxjs/operators'
+import { BehaviorSubject, map, scan, shareReplay } from 'rxjs'
 import { groupByName } from '../utils'
 
 let workframe = null
