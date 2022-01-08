@@ -1,3 +1,19 @@
+<script context="module">
+  export const sizesSchema = {
+    type: 'array',
+    items: {
+      type: 'object',
+      required: ['icon', 'height', 'width'],
+      properties: {
+        icon: { type: 'string' },
+        label: { type: 'string' },
+        height: { type: 'number' },
+        width: { type: 'number' }
+      }
+    }
+  }
+</script>
+
 <script>
   import { createEventDispatcher } from 'svelte'
   import { _ } from 'svelte-intl'

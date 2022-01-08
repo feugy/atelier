@@ -73,7 +73,7 @@ A lot of people throw a lot of effort to improve it for common cases, leading to
 
 However, if your project is not react-based, you're very likely to be forced rewriting an entire webpack configuration, leading to a very fragile and unefficient setup. On medium-sized code base, build time is significant, and becomes a barrier to CDD.
 
-Atlier seamlessly integrates with [Vite] bundler, and give you back control.
+Atlier seamlessly integrates with [Vite][vitejs] bundler, and give you back control.
 
 [angular-playground]: https://angularplayground.it/
 [cdd]: https://www.componentdriven.org/

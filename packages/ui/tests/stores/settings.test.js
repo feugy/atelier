@@ -1,4 +1,5 @@
 import faker from 'faker'
+import { firstValueFrom } from 'rxjs'
 import { get } from 'svelte/store'
 import { reloadSettings, getSettings } from '../../src/stores'
 
@@ -44,5 +45,23 @@ describe('settings store', () => {
 
     reloadSettings()
     expect(get(fooSettings)).toEqual(newValue)
+  })
+
+  it('applies validation', async () => {
+    let fooSettings = getSettings('foo', { type: 'boolean' })
+
+    window.uiSettings = { foo: 'bar' }
+    reloadSettings()
+    await expect(firstValueFrom(fooSettings)).rejects.toThrow(
+      'data must be boolean'
+    )
+
+    window.uiSettings = { foo: true }
+    reloadSettings()
+    expect(await firstValueFrom(fooSettings)).toBe(true)
+
+    window.uiSettings = {}
+    reloadSettings()
+    expect(await firstValueFrom(fooSettings)).toBeUndefined()
   })
 })

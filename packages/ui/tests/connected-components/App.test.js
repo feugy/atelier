@@ -1,10 +1,12 @@
-import { render, screen, within } from '@testing-library/svelte'
+import { render, screen, waitFor, within } from '@testing-library/svelte'
 import html from 'svelte-htm'
 import { translate } from '../test-utils'
 import { App } from '../../src/connected-components'
 import { reloadSettings } from '../../src/stores'
 
 describe('App connected component', () => {
+  beforeEach(jest.resetAllMocks)
+
   it('displays explorer, pane container with default pickers and loader', () => {
     const { container } = render(html`<${App} />`)
     expect(screen.queryByRole('heading')).toHaveTextContent(
@@ -23,6 +25,7 @@ describe('App connected component', () => {
     expect(within(toolBars[0]).getAllByRole('button')).toHaveLength(3)
     // 5 default backgrounds
     expect(within(toolBars[1]).getAllByRole('listitem')).toHaveLength(5)
+    expect(screen.queryByRole('dialog')).not.toBeInTheDocument()
   })
 
   it('passes settings to size and background pickers', () => {
@@ -52,5 +55,42 @@ describe('App connected component', () => {
     expect(within(toolBars[1]).getAllByRole('listitem')).toHaveLength(
       backgrounds.length
     )
+    expect(screen.queryByRole('dialog')).not.toBeInTheDocument()
+  })
+
+  it('validates size settings', async () => {
+    const errorSpy = jest.spyOn(console, 'error').mockImplementation(() => {})
+    window.uiSettings = { sizes: [{ invalid: true }] }
+    reloadSettings()
+
+    render(html`<${App} />`)
+
+    let dialog
+    await waitFor(() => {
+      dialog = screen.queryByRole('dialog')
+      expect(dialog).toBeInTheDocument()
+    })
+    expect(within(dialog).getByRole('main')).toHaveTextContent(
+      `Invalid value for "sizes" UI settings: data/0 must have required property 'icon'`
+    )
+    expect(errorSpy).toHaveBeenCalledTimes(1)
+  })
+
+  it('validates backgrounds settings', async () => {
+    const errorSpy = jest.spyOn(console, 'error').mockImplementation(() => {})
+    window.uiSettings = { backgrounds: ['', 18] }
+    reloadSettings()
+
+    render(html`<${App} />`)
+
+    let dialog
+    await waitFor(() => {
+      dialog = screen.queryByRole('dialog')
+      expect(dialog).toBeInTheDocument()
+    })
+    expect(within(dialog).getByRole('main')).toHaveTextContent(
+      `Invalid value for "backgrounds" UI settings: data/1 must be string`
+    )
+    expect(errorSpy).toHaveBeenCalledTimes(1)
   })
 })

@@ -1,3 +1,10 @@
+<script context="module">
+  export const backgroundsSchema = {
+    type: 'array',
+    items: { type: 'string' }
+  }
+</script>
+
 <script>
   import { createEventDispatcher } from 'svelte'
 

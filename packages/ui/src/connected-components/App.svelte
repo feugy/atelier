@@ -11,7 +11,9 @@
     Explorer,
     Frame,
     PaneContainer,
-    SizePicker
+    SizePicker,
+    sizesSchema,
+    backgroundsSchema
   } from '../components'
   import {
     currentTool,
@@ -25,8 +27,8 @@
   let frame
   let viewport
 
-  const sizes = getSettings('sizes')
-  const backgrounds = getSettings('backgrounds')
+  const sizes = getSettings('sizes', sizesSchema)
+  const backgrounds = getSettings('backgrounds', backgroundsSchema)
 
   onMount(() => setWorkbenchFrame(frame))
 </script>

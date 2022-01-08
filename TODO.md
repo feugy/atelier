@@ -2,8 +2,6 @@
 
 ## Plugin
 
-- configure viewports as plugin settings
-- configure background colors as plugin settings
 - remove tools on updates (toolbox/tool renamal, file deletion)
 
 ## UI

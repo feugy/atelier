@@ -95,6 +95,14 @@ describe('tools store', () => {
     const error1 = new Error('first error')
     const error2 = new Error('second error')
     setWorkbenchFrame({ src })
+    let error
+    lastError.subscribe({
+      next(value) {
+        error = value
+      }
+    })
+
+    expect(error).toBeUndefined()
 
     window.dispatchEvent(
       new MessageEvent('message', {
@@ -106,7 +114,7 @@ describe('tools store', () => {
         }
       })
     )
-    expect(get(lastError)).toMatchObject(error1)
+    expect(error).toMatchObject(error1)
 
     window.dispatchEvent(
       new MessageEvent('message', {
@@ -118,7 +126,24 @@ describe('tools store', () => {
         }
       })
     )
-    expect(get(lastError)).toMatchObject(error2)
+    expect(error).toMatchObject(error2)
+  })
+
+  it('catches UI errors', () => {
+    const error1 = new Error('first error')
+    let error
+    lastError.subscribe({
+      next(value) {
+        error = value
+      }
+    })
+
+    expect(error).toBeUndefined()
+
+    window.dispatchEvent(
+      new ErrorEvent('error', { error: error1, message: error1.message })
+    )
+    expect(error).toMatchObject(error1)
   })
 
   it('accumulates events', () => {
