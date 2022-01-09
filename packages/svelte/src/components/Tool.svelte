@@ -81,13 +81,7 @@
         visible = true
         if (!usesSlot && !instance && target && Component) {
           instance = new Component({ target, props: allProps })
-          listeners = []
-          for (const eventName of allEvents) {
-            const handler = makeEventHandler(eventName)
-            instance.$on(eventName, handler)
-            listeners.push({ eventName, handler })
-            target.addEventListener(eventName, handler)
-          }
+          attachListeners()
         }
         recordVisibility({ name, fullName, visible })
       }
@@ -97,12 +91,9 @@
   }
 
   async function destroy() {
-    for (const { eventName, handler } of listeners) {
-      target.removeEventListener(eventName, handler)
-    }
+    releaseListeners()
     instance?.$destroy()
     instance = null
-    listeners = []
     visible = false
     await teardown?.(fullName)
     await toolBox?.teardown?.(fullName)
@@ -123,6 +114,23 @@
     } else {
       allProps[name] = value
     }
+  }
+
+  function attachListeners() {
+    listeners = []
+    for (const eventName of allEvents) {
+      const handler = makeEventHandler(eventName)
+      instance.$on(eventName, handler)
+      listeners.push({ eventName, handler })
+      target.addEventListener(eventName, handler)
+    }
+  }
+
+  function releaseListeners() {
+    for (const { eventName, handler } of listeners) {
+      target.removeEventListener(eventName, handler)
+    }
+    listeners = []
   }
 </script>
 

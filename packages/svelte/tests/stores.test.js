@@ -8,6 +8,12 @@ import {
   currentTool
 } from '../src/stores'
 
+function mockExistence(fullName) {
+  const element = document.createElement('div')
+  element.setAttribute('data-full-name', fullName)
+  document.body.append(element)
+}
+
 describe('stores', () => {
   const postMessage = jest.spyOn(window.parent, 'postMessage')
   const origin = new URL(window.parent.location.href).origin
@@ -197,8 +203,11 @@ describe('stores', () => {
   })
 
   describe('registerTool()', () => {
+    // clean tools
+    afterEach(() => registerTool())
+
     it('sends tool details through postMessage', () => {
-      const fullName = faker.lorem.word()
+      const fullName = `${faker.lorem.word()}-1`
       registerTool({ fullName })
       expect(postMessage).toHaveBeenCalledWith(
         {
@@ -211,14 +220,22 @@ describe('stores', () => {
     })
 
     it('updates tool properties when receiving updateProperty message', () => {
-      const tool1 = { fullName: faker.lorem.word(), updateProperty: jest.fn() }
+      const tool1 = {
+        fullName: `${faker.lorem.word()}-2`,
+        updateProperty: jest.fn()
+      }
       registerTool(tool1)
+      mockExistence(tool1.fullName)
 
-      const tool2 = { fullName: faker.lorem.word(), updateProperty: jest.fn() }
+      const tool2 = {
+        fullName: `${faker.lorem.word()}-3`,
+        updateProperty: jest.fn()
+      }
       registerTool(tool2)
+      mockExistence(tool2.fullName)
 
       const update2 = {
-        name: faker.lorem.word(),
+        name: `${faker.lorem.word()}-4`,
         value: faker.datatype.number()
       }
       window.dispatchEvent(
@@ -239,7 +256,7 @@ describe('stores', () => {
       tool2.updateProperty.mockReset()
 
       const update1 = {
-        name: faker.lorem.word(),
+        name: `${faker.lorem.word()}-5`,
         value: faker.datatype.number()
       }
       window.dispatchEvent(
@@ -260,7 +277,10 @@ describe('stores', () => {
     })
 
     it('does not update tool properties when receiving updateProperty message of unknown tool', () => {
-      const tool = { fullName: faker.lorem.word(), updateProperty: jest.fn() }
+      const tool = {
+        fullName: `${faker.lorem.word()}-6`,
+        updateProperty: jest.fn()
+      }
       registerTool(tool)
 
       window.dispatchEvent(
@@ -269,7 +289,7 @@ describe('stores', () => {
           data: {
             type: 'updateProperty',
             data: {
-              tool: { fullName: faker.lorem.words() },
+              tool: { fullName: `${faker.lorem.word()}-7` },
               name: 'some-prop',
               value: 10
             }
@@ -283,7 +303,7 @@ describe('stores', () => {
           origin,
           data: {
             type: 'updateProperty',
-            data: { tool: { fullName: faker.lorem.words() } }
+            data: { tool: { fullName: `${faker.lorem.word()}-8` } }
           }
         })
       )
@@ -291,10 +311,13 @@ describe('stores', () => {
     })
 
     it('parse Arrays and Objects in property updates', () => {
-      const tool = { fullName: faker.lorem.word(), updateProperty: jest.fn() }
+      const tool = {
+        fullName: `${faker.lorem.word()}-9`,
+        updateProperty: jest.fn()
+      }
       registerTool(tool)
 
-      const name = faker.lorem.word()
+      const name = `${faker.lorem.word()}-10`
       const value = {
         a: 1,
         b: [1, 2, { d: 4, e: 5 }],
@@ -314,10 +337,13 @@ describe('stores', () => {
     })
 
     it('parse Maps and Sets in property updates', () => {
-      const tool = { fullName: faker.lorem.word(), updateProperty: jest.fn() }
+      const tool = {
+        fullName: `${faker.lorem.word()}-11`,
+        updateProperty: jest.fn()
+      }
       registerTool(tool)
 
-      const name = faker.lorem.word()
+      const name = `${faker.lorem.word()}-12`
       window.dispatchEvent(
         new MessageEvent('message', {
           origin,
@@ -373,6 +399,44 @@ describe('stores', () => {
         ])
       )
       expect(tool.updateProperty).toHaveBeenCalledTimes(1)
+    })
+
+    it('sends tool removal if it can not be found in DOM', () => {
+      const tool1 = `${faker.lorem.word()}-13`
+      const tool2 = `${faker.lorem.word()}-14`
+      const tool3 = `${faker.lorem.word()}-15`
+
+      registerTool({ fullName: tool1 })
+      postMessage.mockReset()
+
+      registerTool({ fullName: tool2 })
+      mockExistence(tool2)
+      expect(postMessage).toHaveBeenCalledWith(
+        {
+          type: 'removeTool',
+          data: tool1
+        },
+        origin
+      )
+      expect(postMessage).toHaveBeenCalledWith(
+        {
+          type: 'registerTool',
+          data: { fullName: tool2 }
+        },
+        origin
+      )
+      expect(postMessage).toHaveBeenCalledTimes(2)
+      postMessage.mockReset()
+
+      registerTool({ fullName: tool3 })
+      expect(postMessage).toHaveBeenCalledWith(
+        {
+          type: 'registerTool',
+          data: { fullName: tool3 }
+        },
+        origin
+      )
+      expect(postMessage).toHaveBeenCalledTimes(1)
     })
   })
 
