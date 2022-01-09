@@ -235,6 +235,20 @@ describe('tools store', () => {
     expect(postMessage).not.toHaveBeenCalled()
   })
 
+  it('ignores removal of unknown tools', () => {
+    const src = faker.internet.url()
+    window.history.pushState({}, '', 'http://localhost')
+    setWorkbenchFrame({ src, contentWindow: { postMessage } })
+    window.dispatchEvent(
+      new MessageEvent('message', {
+        origin: src,
+        data: { type: 'removeTool', data: faker.commerce.productName() }
+      })
+    )
+    expect(get(currentTool)).toBeUndefined()
+    expect(get(tools)).toEqual([])
+  })
+
   describe('given some registered tools', () => {
     const postMessage = jest.fn()
     const src = faker.internet.url()
@@ -266,6 +280,51 @@ describe('tools store', () => {
       postMessage.mockReset()
     })
 
+    it('removes tool', () => {
+      window.dispatchEvent(
+        new MessageEvent('message', {
+          origin: src,
+          data: { type: 'removeTool', data: tool2.fullName }
+        })
+      )
+      expect(get(currentTool)).toEqual(tool1)
+      expect(get(tools)).toEqual([tool1, tool3])
+    })
+
+    it('removes current tool', () => {
+      window.dispatchEvent(
+        new MessageEvent('message', {
+          origin: src,
+          data: { type: 'removeTool', data: tool1.fullName }
+        })
+      )
+      expect(get(currentTool)).toEqual(tool2)
+      expect(get(tools)).toEqual([tool2, tool3])
+    })
+
+    it('removes up to last tool', () => {
+      window.dispatchEvent(
+        new MessageEvent('message', {
+          origin: src,
+          data: { type: 'removeTool', data: tool1.fullName }
+        })
+      )
+      window.dispatchEvent(
+        new MessageEvent('message', {
+          origin: src,
+          data: { type: 'removeTool', data: tool3.fullName }
+        })
+      )
+      window.dispatchEvent(
+        new MessageEvent('message', {
+          origin: src,
+          data: { type: 'removeTool', data: tool2.fullName }
+        })
+      )
+      expect(get(currentTool)).toBeUndefined()
+      expect(get(tools)).toEqual([])
+    })
+
     it('registers existing tools', () => {
       const updatedTool2 = { ...tool2, count: 1 }
       window.dispatchEvent(
@@ -275,7 +334,7 @@ describe('tools store', () => {
         })
       )
       expect(get(currentTool)).toEqual(tool1)
-      expect(get(tools)).toEqual([tool1, tool3, updatedTool2])
+      expect(get(tools)).toEqual([tool1, updatedTool2, tool3])
 
       const updatedTool1 = { ...tool1, count: 1 }
       window.dispatchEvent(
@@ -285,7 +344,7 @@ describe('tools store', () => {
         })
       )
       expect(get(currentTool)).toEqual(updatedTool1)
-      expect(get(tools)).toEqual([tool3, updatedTool2, updatedTool1])
+      expect(get(tools)).toEqual([updatedTool1, updatedTool2, tool3])
     })
 
     it('send newly selected tool to the frame and location', () => {

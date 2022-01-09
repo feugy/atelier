@@ -8,66 +8,13 @@ const current$ = new BehaviorSubject()
 const events$ = new BehaviorSubject()
 const lastError$ = new Subject()
 
-window.addEventListener('error', ({ error }) => {
-  lastError$.next(error)
-})
-
-function updateUrl(fullName) {
-  if (fullName) {
-    const url = new URL(window.location)
-    url.searchParams.set('tool', fullName)
-    window.history.pushState({ fullName }, '', url)
-  }
-}
-
-function readToolFromUrl() {
-  const params = new URLSearchParams(window.location.search)
-  return params.get('tool')
-}
-
-function handleMessage({ origin, data }) {
-  if (origin === workframeOrigin) {
-    if (data.type === 'registerTool') {
-      registerTool(data.data)
-    } else if (data.type === 'recordEvent') {
-      events$.next({ ...data, time: Date.now() })
-    } else if (data.type === 'recordError') {
-      const error = new Error(data.message)
-      error.stack = data.stack
-      lastError$.next(error)
-    }
-  }
-}
-
-function registerTool(tool) {
-  const { value: list } = tools$
-
-  const idx = list.findIndex(({ fullName }) => fullName === tool.fullName)
-
-  tools$.next([
-    ...(idx === -1 ? list : [...list.slice(0, idx), ...list.slice(idx + 1)]),
-    tool
-  ])
-
-  // the current tool has been updated, or there are no current tool, but an url match
-  const urlName = readToolFromUrl()
-  if (
-    (idx >= 0 && current$.value === list[idx]) ||
-    (!current$.value && (urlName === tool.fullName || !urlName))
-  ) {
-    current$.next(tool)
-  }
-}
-
-function postMessage(type, data) {
-  if (workframe) {
-    workframe.contentWindow?.postMessage({ type, data }, workframeOrigin)
-  }
-}
-
 current$.subscribe(data => {
   postMessage('selectTool', data)
   updateUrl(data?.fullName)
+})
+
+window.addEventListener('error', ({ error }) => {
+  lastError$.next(error)
 })
 
 window.addEventListener('popstate', ({ state }) => {
@@ -95,6 +42,10 @@ export const events = events$.pipe(
 // subscribe so we never loose any event
 events.subscribe()
 
+export function clearEvents() {
+  events$.next(null)
+}
+
 export function setWorkbenchFrame(frame) {
   workframe = frame
   workframeOrigin = new URL(workframe.src).origin
@@ -117,6 +68,100 @@ export function updateProperty({ detail } = {}) {
   }
 }
 
-export function clearEvents() {
-  events$.next(null)
+function updateUrl(fullName) {
+  if (fullName) {
+    const url = new URL(window.location)
+    url.searchParams.set('tool', fullName)
+    window.history.pushState({ fullName }, '', url)
+  }
+}
+
+function readToolFromUrl() {
+  const params = new URLSearchParams(window.location.search)
+  return params.get('tool')
+}
+
+function handleMessage({ origin, data }) {
+  if (origin === workframeOrigin) {
+    if (data.type === 'registerTool') {
+      registerTool(data.data)
+    } else if (data.type === 'removeTool') {
+      removeTool(data.data)
+    } else if (data.type === 'recordEvent') {
+      recordEvent(data)
+    } else if (data.type === 'recordError') {
+      recordError(data)
+    }
+  }
+}
+
+function recordEvent(data) {
+  events$.next({ ...data, time: Date.now() })
+}
+
+function recordError({ message, stack }) {
+  const error = new Error(message)
+  error.stack = stack
+  lastError$.next(error)
+}
+
+function registerTool(tool) {
+  const idx = findInTools(tool.fullName)
+  if (idx >= 0) {
+    updateInTools(idx, tool)
+  } else {
+    appendToTools(tool)
+  }
+  if (
+    wasCurrentToolUpdated(tool.fullName) ||
+    (!current$.value && doesMatchUrl(tool))
+  ) {
+    current$.next(tool)
+  }
+}
+
+function removeTool(fullName) {
+  const idx = findInTools(fullName)
+  if (idx >= 0) {
+    removeInTools(idx)
+    if (wasCurrentToolUpdated(fullName)) {
+      // todo: Explorer's currentPath can be outdated
+      current$.next(tools$.value[0])
+    }
+  }
+}
+
+function postMessage(type, data) {
+  if (workframe) {
+    workframe.contentWindow?.postMessage({ type, data }, workframeOrigin)
+  }
+}
+
+function findInTools(fullName) {
+  return tools$.value.findIndex(tool => fullName === tool.fullName)
+}
+
+function updateInTools(idx, tool) {
+  tools$.next([
+    ...tools$.value.slice(0, idx),
+    tool,
+    ...tools$.value.slice(idx + 1)
+  ])
+}
+
+function appendToTools(tool) {
+  tools$.next([...tools$.value, tool])
+}
+
+function removeInTools(idx) {
+  tools$.next([...tools$.value.slice(0, idx), ...tools$.value.slice(idx + 1)])
+}
+
+function wasCurrentToolUpdated(fullName) {
+  return current$.value?.fullName === fullName
+}
+
+function doesMatchUrl({ fullName }) {
+  const urlName = readToolFromUrl()
+  return urlName === fullName || !urlName
 }
