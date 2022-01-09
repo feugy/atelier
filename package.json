@@ -17,7 +17,7 @@
     "lint": "eslint .",
     "format": "prettier --write .",
     "prepare": "husky install",
-    "prepublish": "npm -w packages/ui run build ",
+    "prepublishOnly": "npm -w packages/ui run build ",
     "release:bump": "standard-version -s",
     "test": "npm --workspaces --if-present test -- --verbose"
   },

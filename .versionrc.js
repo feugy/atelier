@@ -36,10 +36,14 @@ const updater = {
 }
 
 module.exports = {
+  scripts: {
+    postchangelog: 'npx prettier -w CHANGELOG.md',
+    postbump: 'npx prettier -w **/package.json package-lock.json'
+  },
   bumpFiles: [
     { filename: 'package.json', updater },
     { filename: 'package-lock.json', updater },
-    { filename: 'packages/plugin-svelte/package.json', updater },
+    { filename: 'packages/vite-plugin-atelier/package.json', updater },
     { filename: 'packages/svelte/package.json', updater },
     { filename: 'packages/toolshot/package.json', updater },
     { filename: 'packages/ui/package.json', updater }

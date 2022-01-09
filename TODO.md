@@ -44,8 +44,3 @@
 - Deep dive how-to write UI bindings
 - Deep dive how-to write toolboxes
 - How to develop plugins
-- How to release
-  ```shell
-  npm run release:bump -- --release-as major|minor|patch
-  npm publish --workspaces packages/* --access public
-  ```
