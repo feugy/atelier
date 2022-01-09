@@ -2,6 +2,25 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.6.0](https://github.com/feugy/atelier/compare/v0.5.1...v0.6.0) (2022-01-09)
+
+### ⚠ BREAKING CHANGES
+
+- **plugin:** framework-agnostic plugin (#16)
+- **plugin:** new configuration defaults (#13)
+
+### Features
+
+- **plugin:** framework-agnostic plugin ([#16](https://github.com/feugy/atelier/issues/16)) ([ec2368b](https://github.com/feugy/atelier/commit/ec2368bbde4bd55fc675833dd8320438bd8be810))
+- **plugin:** new configuration defaults ([#13](https://github.com/feugy/atelier/issues/13)) ([1def126](https://github.com/feugy/atelier/commit/1def1262fa88b75104aabf48cbc1e299778bfc51))
+- **ui, plugin:** configure UI throught plugin ([#17](https://github.com/feugy/atelier/issues/17)) ([dfafb16](https://github.com/feugy/atelier/commit/dfafb16d4b7bec97e863ead62a661f8fb38c7ead))
+- **ui:** adds background and size pickers ([#15](https://github.com/feugy/atelier/issues/15)) ([ac41c38](https://github.com/feugy/atelier/commit/ac41c386e96444aeabd1f35cefdd6248d73b2e2f))
+- **ui:** revamps user interface ([#14](https://github.com/feugy/atelier/issues/14)) ([bf26c6e](https://github.com/feugy/atelier/commit/bf26c6e6ce688ed3f90e00535a15ea1136a25d73))
+
+### Bug Fixes
+
+- **ui, svelte:** duplicates when renaming tools ([#18](https://github.com/feugy/atelier/issues/18)) ([21ab6d7](https://github.com/feugy/atelier/commit/21ab6d7002929170539d1bd4c7abc21baba53e39))
+
 ### [0.5.1](https://github.com/feugy/atelier/compare/v0.5.0...v0.5.1) (2021-10-10)
 
 ### Bug Fixes
