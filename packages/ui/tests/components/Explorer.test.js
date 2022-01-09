@@ -155,4 +155,63 @@ describe('Explorer components', () => {
     expect(within(tree).getByText('tool4')).not.toHaveClass('current')
     expect(within(tree).getByText('tool5')).toHaveClass('current')
   })
+
+  it('can remove tools', async () => {
+    const { component } = render(Explorer, {
+      props: { current: tools[1], tools: groupByName(tools) }
+    })
+
+    expect(screen.getByText('a')).toBeInTheDocument()
+    expect(screen.getByText('b')).toBeInTheDocument()
+
+    await component.$set({ tools: groupByName(tools.slice(0, 3)) })
+    expect(screen.getByText('a')).toBeInTheDocument()
+    expect(screen.queryByText('b')).not.toBeInTheDocument()
+  })
+
+  it('resets current when removing current tool', async () => {
+    const { component } = render(Explorer, {
+      props: { current: tools[1], tools: groupByName(tools) }
+    })
+    expect(screen.getByText('a')).toBeInTheDocument()
+    expect(screen.getByText('b')).toBeInTheDocument()
+    expect(screen.getByText('tool2')).toHaveClass('current')
+
+    await component.$set({ tools: groupByName([tools[0], ...tools.slice(2)]) })
+    expect(screen.getByText('a')).toBeInTheDocument()
+    expect(screen.getByText('b')).toBeInTheDocument()
+    expect(screen.queryByText('tool2')).not.toBeInTheDocument()
+  })
+
+  it('jumps to first tool when removing current tool', async () => {
+    const { component } = render(Explorer, {
+      props: { current: tools[3], tools: groupByName(tools) }
+    })
+    expect(screen.getByText('tool4')).toHaveClass('current')
+    expect(screen.getByText('tool5')).toBeInTheDocument()
+
+    await component.$set({
+      tools: groupByName([...tools.slice(0, 3), tools[4]]),
+      current: tools[0]
+    })
+    expect(screen.getByText('tool1')).toHaveClass('current')
+    expect(screen.getByText('c')).toBeInTheDocument()
+    expect(screen.queryByText('tool4')).not.toBeInTheDocument()
+    expect(screen.queryByText('tool5')).not.toBeInTheDocument()
+  })
+
+  it('display current when removing all displayed tools', async () => {
+    const { component } = render(Explorer, {
+      props: { current: tools[2], tools: groupByName(tools) }
+    })
+    await fireEvent.click(screen.getByText('home'))
+    await fireEvent.click(screen.getByText('b'))
+    expect(screen.getByText('tool4')).toBeInTheDocument()
+    expect(screen.getByText('tool5')).toBeInTheDocument()
+
+    await component.$set({
+      tools: groupByName(tools.slice(0, 3))
+    })
+    expect(screen.getByText('tool3')).toHaveClass('current')
+  })
 })

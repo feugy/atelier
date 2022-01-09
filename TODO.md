@@ -1,15 +1,10 @@
 # Features
 
-## Plugin
-
-- remove tools on updates (toolbox/tool renamal, file deletion)
-
 ## UI
 
+- warn on tool name collisions
 - hide some props from pane
 - color picker
-- warn on tool name collisions
-- graceful unhandled-rejection/uncaught-exception handling in Workbench
 
 ## Svelte
 
@@ -41,6 +36,10 @@
 
 # Documentation
 
+- ADR:
+  - UI agnostic framework
+  - options from plugin to UI
+  - register and remove tools (upon renamal)
 - degit recipe
 - Deep dive how-to write UI bindings
 - Deep dive how-to write toolboxes
