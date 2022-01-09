@@ -10,7 +10,8 @@
 
   const dispatch = createEventDispatcher()
 
-  $: currentPath = getParentName(current?.fullName)
+  // trick to evaluate currentPath when tools have changed but current has not
+  $: currentPath = tools ? getParentName(current?.fullName) : undefined
 
   function navigateTo({ detail: tool }) {
     if (isFolder(tool)) {

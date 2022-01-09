@@ -1,10 +1,55 @@
 import { writable, derived } from 'svelte/store'
 
-const main = window.parent
-
 const isJsdom = navigator.userAgent?.includes('jsdom') ?? false
 
 let mainOrigin = null
+
+const updatePropertyByName = new Map()
+
+const current = new writable()
+
+window.addEventListener('message', ({ origin, data }) => {
+  // only accept message from UI workbench, or when running in JSDom (toolshot)
+  if (origin === mainOrigin || (isJsdom && origin === '')) {
+    if (data.type === 'selectTool') {
+      current.set(data.data)
+    } else if (data.type === 'updateProperty') {
+      const { tool, name, value } = data.data || {}
+      updatePropertyByName.get(tool.fullName)?.(name, parse(value))
+    }
+  }
+})
+
+export const currentTool = derived(current, n => n)
+
+export function registerTool(data) {
+  checkToolsExistence()
+  if (data) {
+    updatePropertyByName.set(data.fullName, data.updateProperty)
+    postMessage({ type: 'registerTool', data })
+  }
+}
+
+/**
+ * Records a DOM or custom event into the UI.
+ * @param {string} name - the event name
+ * @param {...any} args - optional argument recorded in the UI
+ */
+export function recordEvent(name, ...args) {
+  postMessage({ type: 'recordEvent', name, args })
+}
+
+export function recordVisibility(data) {
+  postMessage({ type: 'recordVisibility', data })
+}
+
+export function recordError(error) {
+  postMessage({
+    type: 'recordError',
+    message: error.message,
+    stack: error.stack
+  })
+}
 
 // a mix of properties from Event, UIEvent, MouseEvent, TouchEvent, KeyboardEvent, WheelEvent, InputEvent
 const eventProps = [
@@ -48,101 +93,118 @@ const eventProps = [
   'which'
 ]
 
-const updatePropertyByName = new Map()
+function doesLiveInDOM(fullName) {
+  return Boolean(
+    document.querySelector(`[data-full-name='${encodeURIComponent(fullName)}']`)
+  )
+}
 
-const current = new writable()
+function checkToolsExistence() {
+  for (const fullName of [...updatePropertyByName.keys()]) {
+    if (!doesLiveInDOM(fullName)) {
+      postMessage({ type: 'removeTool', data: fullName })
+      updatePropertyByName.delete(fullName)
+    }
+  }
+}
 
 function postMessage(message) {
-  if (main) {
+  if (window.parent) {
     if (!mainOrigin) {
       mainOrigin = new URL(parent.location.href).origin
     }
-    main.postMessage(format(message), mainOrigin)
+    window.parent.postMessage(format(message), mainOrigin)
   }
 }
 
 function format(arg) {
   if (Array.isArray(arg)) {
-    return arg.map(format)
+    return formatArray(arg)
   }
   if (arg instanceof Map) {
-    return { type: 'Map', values: format([...arg.entries()]) }
+    return formatMap(arg)
   }
   if (arg instanceof Set) {
-    return { type: 'Set', values: format([...arg.keys()]) }
+    return formatSet(arg)
   }
   if (arg instanceof Function) {
-    return arg.toString()
+    return formatFunction(arg)
   }
-  if (arg instanceof Event || arg instanceof Object) {
-    const result = {}
-    const props = arg instanceof Event ? eventProps : Object.keys(arg)
-    for (const prop of props) {
-      if (prop in arg) {
-        result[prop] = format(arg[prop])
-      }
-    }
-    return result
+  if (arg instanceof Event) {
+    return formatEvent(arg)
+  }
+  if (arg instanceof Object) {
+    return formatObject(arg)
   }
   return arg
+}
+
+function formatArray(array) {
+  return array.map(format)
+}
+
+function formatMap(map) {
+  return { type: 'Map', values: format([...map.entries()]) }
+}
+
+function formatSet(set) {
+  return { type: 'Set', values: format([...set.keys()]) }
+}
+
+function formatFunction(func) {
+  return func.toString()
+}
+
+function formatEvent(event) {
+  const result = {}
+  for (const prop of eventProps) {
+    if (prop in event) {
+      result[prop] = format(event[prop])
+    }
+  }
+  return result
+}
+
+function formatObject(object) {
+  const result = {}
+  for (const prop of Object.keys(object)) {
+    result[prop] = format(object[prop])
+  }
+  return result
 }
 
 function parse(arg) {
   if (Array.isArray(arg)) {
-    return arg.map(parse)
+    return parseArray(arg)
   }
   if (arg instanceof Object) {
     if (arg.type === 'Map' && Array.isArray(arg.values)) {
-      return new Map(parse(arg.values))
+      return parseMap(arg)
     }
     if (arg.type === 'Set' && Array.isArray(arg.values)) {
-      return new Set(parse(arg.values))
+      return parseSet(arg)
     }
-    const result = {}
-    for (const prop in arg) {
-      result[prop] = parse(arg[prop])
-    }
-    return result
+    return parseObject(arg)
   }
   return arg
 }
 
-window.addEventListener('message', ({ origin, data }) => {
-  // only accept message from UI workbench, or when running in JSDom (toolshot)
-  if (origin === mainOrigin || (isJsdom && origin === '')) {
-    if (data.type === 'selectTool') {
-      current.set(data.data)
-    } else if (data.type === 'updateProperty') {
-      const { tool, name, value } = data.data || {}
-      updatePropertyByName.get(tool.fullName)?.(name, parse(value))
-    }
+function parseArray(array) {
+  return array.map(parse)
+}
+
+function parseMap(map) {
+  return new Map(parse(map.values))
+}
+
+function parseSet(set) {
+  return new Set(parse(set.values))
+}
+
+function parseObject(object) {
+  const result = {}
+  for (const prop in object) {
+    result[prop] = parse(object[prop])
   }
-})
-
-export const currentTool = derived(current, n => n)
-
-export function registerTool(data) {
-  updatePropertyByName.set(data.fullName, data.updateProperty)
-  postMessage({ type: 'registerTool', data })
-}
-
-/**
- * Records a DOM or custom event into the UI.
- * @param {string} name - the event name
- * @param {...any} args - optional argument recorded in the UI
- */
-export function recordEvent(name, ...args) {
-  postMessage({ type: 'recordEvent', name, args })
-}
-
-export function recordVisibility(data) {
-  postMessage({ type: 'recordVisibility', data })
-}
-
-export function recordError(error) {
-  postMessage({
-    type: 'recordError',
-    message: error.message,
-    stack: error.stack
-  })
+  return result
 }
