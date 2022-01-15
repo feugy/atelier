@@ -32,10 +32,12 @@ Since the tool is not opinionated, here are the conventions we use.
 
    It generates CHANGELOG.md, bumps versions in packages.json files, creates a git tag.
 
-2. Push commit and tags: `git push --follow-tags origin main`
+2. Includes automatically formatted files: `git add -A`
 
-3. Using CLI, log into NPM, `npm login`
+3. Push commit and tags: `git push --follow-tags origin main`
 
-4. Get your NPM OTP ready, then publish all packages: `npm publish --workspaces ---access public -otp $OTP`
+4. Using CLI, log into NPM, `npm login`
+
+5. Get your NPM OTP ready, then publish all packages: `npm publish --workspaces ---access public -otp $OTP`
 
 [mono-repo]: https://en.wikipedia.org/wiki/Monorepo
