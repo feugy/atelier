@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.6.3](https://github.com/feugy/atelier/compare/v0.6.2...v0.6.3) (2022-01-15)
+
+### Bug Fixes
+
+- vite-plugin-atelier can not load ui ([7f54e70](https://github.com/feugy/atelier/commit/7f54e70fb20a50e004240c177c65cbf5208bd1ce))
+
 ### [0.6.2](https://github.com/feugy/atelier/compare/v0.6.1...v0.6.2) (2022-01-09)
 
 ### [0.6.1](https://github.com/feugy/atelier/compare/v0.6.0...v0.6.1) (2022-01-09)
