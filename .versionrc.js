@@ -36,10 +36,6 @@ const updater = {
 }
 
 module.exports = {
-  scripts: {
-    postchangelog: 'npx prettier -w CHANGELOG.md',
-    postbump: 'npx prettier -w **/package.json package-lock.json'
-  },
   bumpFiles: [
     { filename: 'package.json', updater },
     { filename: 'package-lock.json', updater },
