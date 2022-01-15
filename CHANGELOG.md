@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.6.5](https://github.com/feugy/atelier/compare/v0.6.4...v0.6.5) (2022-01-15)
+
+### Bug Fixes
+
+- **ui:** 1st background still not applied by default ([4006e22](https://github.com/feugy/atelier/commit/4006e221444e8e7c97215e30cadda41ad67c8281))
+
 ### [0.6.4](https://github.com/feugy/atelier/compare/v0.6.3...v0.6.4) (2022-01-15)
 
 ### Bug Fixes

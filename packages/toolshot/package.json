@@ -1,6 +1,6 @@
 {
   "name": "@atelier-wb/toolshot",
-  "version": "0.6.4",
+  "version": "0.6.5",
   "description": "Creates Jest snapshots out of Atelier tools",
   "main": "src/index.js",
   "type": "module",
