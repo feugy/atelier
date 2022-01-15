@@ -1,9 +1,10 @@
-const { resolve } = require('path')
+const { dirname, resolve } = require('path')
 const { createReadStream } = require('fs')
 const { readdir } = require('fs/promises')
 const Ajv = require('ajv')
 const sirv = require('sirv')
 const { normalizePath } = require('vite')
+const ui = dirname(require.resolve('@atelier-wb/ui'))
 
 const pluginName = '@atelier-wb/vite-plugin-atelier'
 
@@ -106,10 +107,7 @@ function AtelierPlugin(pluginOptions = {}, skipValidation = false) {
     apply: 'serve',
 
     async configureServer(server) {
-      let uiPath = resolve(__dirname, '..', '..', 'ui')
-      if (options.bundled) {
-        uiPath = resolve(uiPath, 'dist')
-      }
+      let uiPath = options.bundled ? resolve(ui, 'dist') : ui
       const statics = [
         uiPath,
         ...(Array.isArray(options.publicDir)

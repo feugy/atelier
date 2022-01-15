@@ -11,17 +11,18 @@
     "svelte": "^3.44.3"
   },
   "devDependencies": {
-    "@babel/preset-env": "^7.16.7",
+    "@babel/preset-env": "^7.16.8",
     "@testing-library/jest-dom": "^5.16.1",
     "@testing-library/svelte": "^3.0.3",
-    "babel-jest": "^27.4.5",
+    "babel-jest": "^27.4.6",
     "faker": "^5.5.3",
-    "jest": "^27.4.5",
+    "jest": "^27.4.7",
     "jest-transform-svelte": "^2.1.1",
     "jest-watch-typeahead": "^1.0.0",
     "svelte-htm": "^1.1.1"
   },
   "files": [
-    "src/**/*"
+    "src/**/*",
+    "workframe-content.cjs"
   ]
 }

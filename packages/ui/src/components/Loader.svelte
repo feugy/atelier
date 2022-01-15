@@ -4,9 +4,8 @@
   }
 
   circle {
-    stroke: var(--primary);
+    @apply stroke-$primary stroke-offset-0;
     stroke-dasharray: 80px, 200px;
-    stroke-dashoffset: 0px;
   }
 </style>
 

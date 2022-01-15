@@ -9,7 +9,7 @@
   },
   "dependencies": {
     "@atelier-wb/ui": "0.6.2",
-    "ajv": "^8.8.2",
+    "ajv": "^8.9.0",
     "sirv": "^2.0.0"
   },
   "peerDependencies": {
@@ -19,7 +19,7 @@
     "connect": "^3.7.0",
     "faker": "^5.5.3",
     "got": "^11.8.3",
-    "jest": "^27.4.5",
+    "jest": "^27.4.7",
     "jest-watch-typeahead": "^1.0.0"
   },
   "files": [
