@@ -6,12 +6,14 @@
 </script>
 
 <script>
-  import { createEventDispatcher } from 'svelte'
+  import { createEventDispatcher, onMount } from 'svelte'
 
   export let viewport = null
   export let backgrounds = ['', 'white', '#e0e0e0', '#a0a0a0', 'black']
 
   const dispatch = createEventDispatcher()
+
+  onMount(() => apply(backgrounds[0]))
 
   function apply(background) {
     if (viewport) {

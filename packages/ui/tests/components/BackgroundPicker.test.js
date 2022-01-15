@@ -15,8 +15,8 @@ describe('BackgroundPicker component', () => {
       'custom backgrounds',
       false,
       [
-        '',
         '#e879f9',
+        '',
         'rgba(150, 75, 50, 0.5)',
         'linear-gradient(to right, red, orange)'
       ]
@@ -54,6 +54,17 @@ describe('BackgroundPicker component', () => {
 
       fireEvent.click(items[3])
       expect(viewport.style.background).toEqual(backgrounds[3])
+    })
+
+    it('applies first background by default', async () => {
+      render(
+        html`<${BackgroundPicker}
+          backgrounds=${useDefaults ? undefined : backgrounds}
+          viewport=${viewport}
+        />`
+      )
+
+      expect(viewport.style.background).toEqual(backgrounds[0])
     })
   })
 })
