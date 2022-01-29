@@ -5,6 +5,7 @@
 - warn on tool name collisions
 - hide some props from pane
 - color picker
+- viewport zoom
 
 ## Svelte
 
