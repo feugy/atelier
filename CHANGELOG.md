@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.6.6](https://github.com/feugy/atelier/compare/v0.6.5...v0.6.6) (2022-01-29)
+
+### Bug Fixes
+
+- **svelte, ui:** frame and explorer don't have scroll bars ([#19](https://github.com/feugy/atelier/issues/19)) ([8d76156](https://github.com/feugy/atelier/commit/8d76156b71b6da1892fe3a244c1f4e2fb9b99770))
+
 ### [0.6.5](https://github.com/feugy/atelier/compare/v0.6.4...v0.6.5) (2022-01-15)
 
 ### Bug Fixes
