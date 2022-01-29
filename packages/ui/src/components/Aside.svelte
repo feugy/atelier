@@ -8,11 +8,11 @@
   }
 
   span {
-    @apply z-1;
+    @apply z-1 flex flex-col overflow-hidden;
   }
 
   div {
-    @apply absolute bottom-5 
+    @apply absolute bottom-5
             text-$base text-center opacity-10 
             select-none pointer-events-none;
 

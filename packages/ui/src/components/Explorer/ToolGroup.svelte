@@ -19,8 +19,16 @@
 </script>
 
 <style lang="postcss">
+  ul {
+    overflow: hidden auto;
+  }
+
   li {
-    @apply cursor-pointer mt-2 select-none;
+    @apply cursor-pointer select-none;
+
+    &.isCurrent {
+      @apply mt-2;
+    }
 
     & .current {
       @apply text-$primary;
@@ -44,7 +52,7 @@
 
 <ul>
   {#each tools as tool}
-    <li on:click|stopPropagation={() => navigateTo(tool)}>
+    <li class:isCurrent on:click|stopPropagation={() => navigateTo(tool)}>
       {#if isCurrent}
         <div
           class:current={selectedPath === tool?.fullName}
