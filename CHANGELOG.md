@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.6.7](https://github.com/feugy/atelier/compare/v0.6.6...v0.6.7) (2022-01-29)
+
+### Bug Fixes
+
+- **ui:** undesired margin with large frame ([9821593](https://github.com/feugy/atelier/commit/98215930a92f27be37187f7c8f1e1f29db77e8b7))
+
 ### [0.6.6](https://github.com/feugy/atelier/compare/v0.6.5...v0.6.6) (2022-01-29)
 
 ### Bug Fixes
