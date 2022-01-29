@@ -81,7 +81,22 @@ Once they'll be triggered, Atelier will show the time, event name and details in
 
 It is automatically cleared when opening a different tool, and there is a button to do it manually.
 
----
+_Note_: you can also "programmaticaly" record an event:
+
+```js
+<script>
+  import { Tool, recordEvent } from '@atelier-wb/svelte'
+  import MyComponent from './MyComponent.svelte'
+</script>
+
+<Tool
+  name="My Awesome Component"
+  props={{
+    myComponentFunctionProp: () => recordEvent('programmatic-event', 'event arg 1', 'arg could be anything')
+  }}
+  component={MyComponent}
+/>
+```
 
 ## Slots and side markup
 
