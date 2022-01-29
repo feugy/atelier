@@ -14,6 +14,12 @@
     flex-grow: 1;
   }
 
+  :global(html, body) {
+    height: 100%;
+    overflow: auto;
+    margin: 0;
+  }
+
   section.padded {
     padding: 2rem;
   }
