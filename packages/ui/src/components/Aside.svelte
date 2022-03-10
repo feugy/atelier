@@ -4,7 +4,7 @@
 
 <style lang="postcss">
   aside {
-    @apply relative p-4 w-1/5 h-screen flex flex-col flex-shrink-0 overflow-hidden;
+    @apply relative p-4 w-1/5 h-screen flex flex-col flex-shrink-0;
   }
 
   span {
