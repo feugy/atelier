@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.6.9](https://github.com/feugy/atelier/compare/v0.6.8...v0.6.9) (2022-03-10)
+
+### Bug Fixes
+
+- **ui:** body overflow is not set ([60b2e2d](https://github.com/feugy/atelier/commit/60b2e2d035f860d4400e0ecc29dc6c75661e5571))
+
 ### [0.6.8](https://github.com/feugy/atelier/compare/v0.6.7...v0.6.8) (2022-03-10)
 
 ### Bug Fixes
