@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.6.8](https://github.com/feugy/atelier/compare/v0.6.7...v0.6.8) (2022-03-10)
+
+### Bug Fixes
+
+- **ui:** no overflow for Atelier logo ([#20](https://github.com/feugy/atelier/issues/20)) ([5fa41b7](https://github.com/feugy/atelier/commit/5fa41b71727ed7c96ff2b585bf747699a7daba89))
+
 ### [0.6.7](https://github.com/feugy/atelier/compare/v0.6.6...v0.6.7) (2022-01-29)
 
 ### Bug Fixes
