@@ -1,7 +1,7 @@
-import { defineConfig } from 'vite'
 import { svelte } from '@sveltejs/vite-plugin-svelte'
 import yaml from '@rollup/plugin-yaml'
 import atelier from '@atelier-wb/vite-plugin-atelier'
+import { defineConfig } from 'vite'
 import windi from 'vite-plugin-windicss'
 
 export default defineConfig({
@@ -16,9 +16,15 @@ export default defineConfig({
       bundled: false
     })
   ],
+  build: {
+    rollupOptions: {
+      external: ['./ui-settings.js']
+    }
+  },
   server: {
     port: 3001,
-    open: '/atelier'
+    open: '/atelier',
+    fs: { strict: false }
   },
   // we'll get rid of this chunk when vite will use a more recent of esbuild
   // https://github.com/vitejs/vite/issues/5833#issuecomment-997971698
