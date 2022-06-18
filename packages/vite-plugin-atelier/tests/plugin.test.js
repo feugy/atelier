@@ -116,6 +116,7 @@ describe('plugin builder', () => {
       expect(builder()).toEqual({
         name: builder.pluginName,
         apply: 'serve',
+        config: expect.any(Function),
         configureServer: expect.any(Function),
         resolveId: expect.any(Function),
         load: expect.any(Function)

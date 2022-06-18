@@ -29,6 +29,7 @@
   on:unhandledrejection={() => location.reload()}
 />
 
+<!-- svelte-ignore a11y-no-redundant-roles -->
 <section role="region" class={$currentTool?.data?.layout ?? 'fullscreen'}>
   {#each tools as tool}
     <svelte:component this={tool} />

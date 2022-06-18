@@ -100,21 +100,26 @@ function AtelierPlugin(pluginOptions = {}, skipValidation = false) {
   const workframeUrl = `${options.url}${options.workframeId}`
 
   const toolRegexp = new RegExp(options.toolRegexp, 'i')
+  const uiPath = options.bundled ? resolve(ui, 'dist') : ui
+  const statics = [
+    uiPath,
+    ...(Array.isArray(options.publicDir)
+      ? options.publicDir
+      : [options.publicDir])
+  ].filter(Boolean)
 
   return {
     name: pluginName,
 
     apply: 'serve',
 
+    config() {
+      return {
+        server: { fs: { allow: [...new Set([options.path, ...statics])] } }
+      }
+    },
+
     async configureServer(server) {
-      let uiPath = options.bundled ? resolve(ui, 'dist') : ui
-      const statics = [
-        uiPath,
-        ...(Array.isArray(options.publicDir)
-          ? options.publicDir
-          : [options.publicDir]
-        ).filter(Boolean)
-      ]
       const serves = statics.map(dir => sirv(dir, { etag: true }))
 
       // configure a middleware for serving Atelier
@@ -144,6 +149,7 @@ function AtelierPlugin(pluginOptions = {}, skipValidation = false) {
           let i = 0
           const tryNext = () => {
             if (serves[i]) {
+              console.log('serve', i, request.url)
               serves[i++](request, response, tryNext)
             } else {
               next()

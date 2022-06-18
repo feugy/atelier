@@ -1,5 +1,5 @@
 const sveltePreprocess = require('svelte-preprocess')
-const postcss = require('./postcss.config.js')
+const postcss = require('./postcss.config.cjs')
 
 // This file is used by
 // - @svelte/vite-plugin-svelte
