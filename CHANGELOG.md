@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.7.0](https://github.com/feugy/atelier/compare/v0.6.9...v0.7.0) (2022-06-18)
+
+### Features
+
+- adds svelte-kit support ([#21](https://github.com/feugy/atelier/issues/21)) ([74cefbe](https://github.com/feugy/atelier/commit/74cefbe32800b1833be50d89f27f2bb23862ea3a))
+
 ### [0.6.9](https://github.com/feugy/atelier/compare/v0.6.8...v0.6.9) (2022-03-10)
 
 ### Bug Fixes
