@@ -13,6 +13,7 @@ module.exports = {
   },
   setupFilesAfterEnv: ['<rootDir>/tests/jest-setup.js'],
   moduleFileExtensions: ['js', 'svelte'],
+  transformIgnorePatterns: ['node_modules\\/(?!htm)'],
   watchPlugins: [
     'jest-watch-typeahead/filename',
     'jest-watch-typeahead/testname'

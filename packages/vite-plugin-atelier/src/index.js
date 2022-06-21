@@ -149,7 +149,6 @@ function AtelierPlugin(pluginOptions = {}, skipValidation = false) {
           let i = 0
           const tryNext = () => {
             if (serves[i]) {
-              console.log('serve', i, request.url)
               serves[i++](request, response, tryNext)
             } else {
               next()

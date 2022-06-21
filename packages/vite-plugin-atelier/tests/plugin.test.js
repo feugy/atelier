@@ -1,8 +1,8 @@
+const { faker } = require('@faker-js/faker')
 const { EventEmitter } = require('events')
 const http = require('http')
 const { resolve } = require('path')
 const connect = require('connect')
-const faker = require('faker')
 const got = require('got')
 const builder = require('../src')
 

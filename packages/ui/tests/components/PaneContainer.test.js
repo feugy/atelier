@@ -1,5 +1,5 @@
+import { faker } from '@faker-js/faker'
 import { fireEvent, render, screen, within } from '@testing-library/svelte'
-import faker from 'faker'
 import { readable } from 'svelte/store'
 import html from 'svelte-htm'
 import { translate } from '../test-utils'

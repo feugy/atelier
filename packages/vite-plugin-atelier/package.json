@@ -9,18 +9,18 @@
   },
   "dependencies": {
     "@atelier-wb/ui": "0.7.0",
-    "ajv": "^8.9.0",
-    "sirv": "^2.0.0"
+    "ajv": "^8.11.0",
+    "sirv": "^2.0.2"
   },
   "peerDependencies": {
-    "vite": "^2.7.10"
+    "vite": ">=2.7.10"
   },
   "devDependencies": {
+    "@faker-js/faker": "^7.3.0",
     "connect": "^3.7.0",
-    "faker": "^5.5.3",
     "got": "^11.8.3",
-    "jest": "^27.4.7",
-    "jest-watch-typeahead": "^1.0.0"
+    "jest": "^28.1.1",
+    "jest-watch-typeahead": "^1.1.0"
   },
   "files": [
     "src/**/*"

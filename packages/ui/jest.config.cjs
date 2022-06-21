@@ -10,9 +10,9 @@ module.exports = {
       }
     ],
     '^.+\\.svelte$': 'jest-transform-svelte',
-    '^.+\\.ya?ml$': 'jest-yaml-transform'
+    '^.+\\.ya?ml$': '<rootDir>/tests/yaml-transformer.js'
   },
-  transformIgnorePatterns: ['node_modules\\/(?!svelte-portal)'],
+  transformIgnorePatterns: ['node_modules\\/(?!htm|svelte-portal)'],
   moduleNameMapper: {
     '^.+\\.(post)?css$': 'identity-obj-proxy'
   },

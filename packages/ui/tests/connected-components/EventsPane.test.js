@@ -1,6 +1,6 @@
+import { faker } from '@faker-js/faker'
 import { fireEvent, render, screen } from '@testing-library/svelte'
 import html from 'svelte-htm'
-import faker from 'faker'
 import { translate } from '../test-utils'
 import {
   default as EventsPane,
