@@ -1,7 +1,7 @@
+import { faker } from '@faker-js/faker'
 import { fireEvent, render, screen, waitFor } from '@testing-library/svelte'
 import { get, writable } from 'svelte/store'
 import html from 'svelte-htm'
-import faker from 'faker'
 import { Button } from '../test-components'
 import { Tool, ToolBox } from '../../src'
 import {

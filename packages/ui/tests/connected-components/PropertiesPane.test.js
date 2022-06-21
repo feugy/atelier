@@ -1,5 +1,5 @@
+import { faker } from '@faker-js/faker'
 import { fireEvent, render, screen } from '@testing-library/svelte'
-import faker from 'faker'
 import html from 'svelte-htm'
 import { PropertiesPane } from '../../src/connected-components'
 import { currentTool, updateProperty } from '../../src/stores'
@@ -57,7 +57,7 @@ describe('PropertiesPane connected component', () => {
 
   it('can edit a numeric property', async () => {
     const name = faker.lorem.word()
-    const value = faker.random.arrayElement([-12.5, 0.25, 7.35])
+    const value = faker.helpers.arrayElement([-12.5, 0.25, 7.35])
     currentTool.next({ props: { [name]: value } })
     render(html`<${PropertiesPane} />`)
 

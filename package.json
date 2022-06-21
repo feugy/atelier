@@ -21,16 +21,16 @@
     "test": "npm --workspaces --if-present test -- --verbose"
   },
   "devDependencies": {
-    "eslint": "^8.6.0",
-    "eslint-config-prettier": "^8.3.0",
-    "eslint-plugin-jest-dom": "^4.0.1",
-    "eslint-plugin-svelte3": "^3.4.0",
+    "eslint": "^8.18.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-jest-dom": "^4.0.2",
+    "eslint-plugin-svelte3": "^4.0.0",
     "eslint-plugin-testing-library": "^5.0.3",
-    "husky": "^7.0.4",
-    "lint-staged": "^12.1.7",
-    "prettier": "^2.5.1",
-    "prettier-plugin-svelte": "^2.6.0",
-    "standard-version": "^9.3.2"
+    "husky": "^8.0.1",
+    "lint-staged": "^13.0.2",
+    "prettier": "^2.7.1",
+    "prettier-plugin-svelte": "^2.7.0",
+    "standard-version": "^9.5.0"
   },
   "lint-staged": {
     "*.{js,svelte}": "eslint --cache --fix",

@@ -1,6 +1,6 @@
+import { faker } from '@faker-js/faker'
 import { render } from '@testing-library/svelte'
 import html from 'svelte-htm'
-import faker from 'faker'
 import { Tool } from '../test-components'
 import { ToolBox } from '../../src'
 

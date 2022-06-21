@@ -1,4 +1,4 @@
-import faker from 'faker'
+import { faker } from '@faker-js/faker'
 import { firstValueFrom } from 'rxjs'
 import { get } from 'svelte/store'
 import { reloadSettings, getSettings } from '../../src/stores'

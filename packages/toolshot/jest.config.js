@@ -11,6 +11,7 @@ export default {
     ],
     '^.+\\.svelte$': 'jest-transform-svelte'
   },
+  transformIgnorePatterns: ['node_modules\\/(?!htm)'],
   watchPlugins: [
     'jest-watch-typeahead/filename',
     'jest-watch-typeahead/testname'
