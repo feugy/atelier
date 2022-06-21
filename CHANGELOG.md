@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.7.1](https://github.com/feugy/atelier/compare/v0.7.0...v0.7.1) (2022-06-21)
+
+### Bug Fixes
+
+- **toolshot:** relaxes peer dependency to allow jest@28 ([#22](https://github.com/feugy/atelier/issues/22)) ([581dbd5](https://github.com/feugy/atelier/commit/581dbd51740b8b4c7f375a986e4143ea98d80232))
+
 ## [0.7.0](https://github.com/feugy/atelier/compare/v0.6.9...v0.7.0) (2022-06-18)
 
 ### Features
