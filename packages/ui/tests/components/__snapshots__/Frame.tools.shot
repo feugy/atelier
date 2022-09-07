@@ -1,19 +1,22 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Toolshot components/Frame.tools.svelte: Components/Frame 1`] = `
+exports[`tests/atelier.test.js[2m > [22mToolshot[2m > [22mcomponents/Frame.tools.svelte: Components/Frame 1`] = `
 <span
-  class="viewport-container"
+  class="viewport-container s-W668Ab5bybm8"
 >
-  <div>
+  <div
+    class="s-W668Ab5bybm8"
+  >
     <span
-      class="loader"
+      class="loader s-W668Ab5bybm8"
     >
       <svg
-        class="animate-spin"
+        class="animate-spin s-BBunC__gYdVv"
         role="progressbar"
         viewBox="22 22 44 44"
       >
         <circle
+          class="s-BBunC__gYdVv"
           cx="44"
           cy="44"
           fill="none"
@@ -21,9 +24,11 @@ exports[`Toolshot components/Frame.tools.svelte: Components/Frame 1`] = `
           stroke-width="3.6"
         />
       </svg>
+      <!--&lt;Loader&gt;-->
     </span>
      
     <iframe
+      class="s-W668Ab5bybm8"
       src="index.html"
       title="workframe"
     />

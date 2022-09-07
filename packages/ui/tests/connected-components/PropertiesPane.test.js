@@ -4,16 +4,16 @@ import html from 'svelte-htm'
 import { PropertiesPane } from '../../src/connected-components'
 import { currentTool, updateProperty } from '../../src/stores'
 
-jest.mock('../../src/stores/tools', () => {
+vi.mock('../../src/stores/tools', () => {
   const { BehaviorSubject } = require('rxjs')
   return {
     currentTool: new BehaviorSubject(),
-    updateProperty: jest.fn()
+    updateProperty: vi.fn()
   }
 })
 
 describe('PropertiesPane connected component', () => {
-  beforeEach(jest.resetAllMocks)
+  beforeEach(vi.resetAllMocks)
 
   it('can edit a text property', async () => {
     const name = faker.lorem.word()

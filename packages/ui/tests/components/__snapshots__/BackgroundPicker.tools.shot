@@ -1,37 +1,50 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Toolshot components/BackgroundPicker.tools.svelte: Custom colors 1`] = `
+exports[`tests/atelier.test.js[2m > [22mToolshot[2m > [22mcomponents/BackgroundPicker.tools.svelte: Custom colors 1`] = `
 <ul
+  class="s-h0HyUOZHS-l4"
   role="toolbar"
 >
-  <li />
   <li
+    class="s-h0HyUOZHS-l4"
+  />
+  <li
+    class="s-h0HyUOZHS-l4"
     style="--background: #e879f9;"
   />
   <li
+    class="s-h0HyUOZHS-l4"
     style="--background: rgba(150, 75, 50, 0.5);"
   />
   <li
+    class="s-h0HyUOZHS-l4"
     style="--background: linear-gradient(to right, red, orange);"
   />
 </ul>
 `;
 
-exports[`Toolshot components/BackgroundPicker.tools.svelte: Default colors 1`] = `
+exports[`tests/atelier.test.js[2m > [22mToolshot[2m > [22mcomponents/BackgroundPicker.tools.svelte: Default colors 1`] = `
 <ul
+  class="s-h0HyUOZHS-l4"
   role="toolbar"
 >
-  <li />
   <li
+    class="s-h0HyUOZHS-l4"
+  />
+  <li
+    class="s-h0HyUOZHS-l4"
     style="--background: white;"
   />
   <li
+    class="s-h0HyUOZHS-l4"
     style="--background: #e0e0e0;"
   />
   <li
+    class="s-h0HyUOZHS-l4"
     style="--background: #a0a0a0;"
   />
   <li
+    class="s-h0HyUOZHS-l4"
     style="--background: black;"
   />
 </ul>

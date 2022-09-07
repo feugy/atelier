@@ -13,6 +13,11 @@ current$.subscribe(data => {
   updateUrl(data?.fullName)
 })
 
+if (typeof process !== 'undefined') {
+  process.on('uncaughtException', error => {
+    lastError$.next(error)
+  })
+}
 window.addEventListener('error', ({ error }) => {
   lastError$.next(error)
 })

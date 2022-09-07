@@ -1,5 +1,4 @@
 import { faker } from '@faker-js/faker'
-import { jest } from '@jest/globals'
 import { join, resolve } from 'path'
 import { configureToolshot } from '../src'
 
@@ -8,9 +7,9 @@ const fixtures = resolve(__dirname, 'fixtures')
 const sleep = duration => new Promise(resolve => setTimeout(resolve, duration))
 
 describe('toolshot builder', () => {
-  beforeEach(jest.resetAllMocks)
+  beforeEach(vi.resetAllMocks)
 
-  describe('given nor running in jest', () => {
+  describe('given nor running in test environment', () => {
     const save = {}
     beforeEach(() => {
       save.test = global.test
@@ -24,14 +23,14 @@ describe('toolshot builder', () => {
     it('throws an error when test() is not defined', () => {
       global.test = undefined
       expect(() => configureToolshot()).toThrow(
-        'configureToolshot() must run within Jest context'
+        'configureToolshot() needs global describe() and test() functions'
       )
     })
 
     it('throws an error when describe() is not defined', () => {
       global.describe = undefined
       expect(() => configureToolshot()).toThrow(
-        'configureToolshot() must run within Jest context'
+        'configureToolshot() needs global describe() and test() functions'
       )
     })
   })
@@ -42,11 +41,11 @@ describe('toolshot builder', () => {
     let matchSpecificSnapshot
 
     beforeEach(() => {
-      testSpy = jest.spyOn(global, 'test').mockImplementation(() => {})
-      describeSpy = jest
+      testSpy = vi.spyOn(global, 'test').mockImplementation(() => {})
+      describeSpy = vi
         .spyOn(global, 'describe')
         .mockImplementation((name, content) => content())
-      matchSpecificSnapshot = jest.fn().mockReturnValue({ pass: true })
+      matchSpecificSnapshot = vi.fn().mockReturnValue({ pass: true })
       expect.extend({ toMatchSpecificSnapshot: matchSpecificSnapshot })
     })
 

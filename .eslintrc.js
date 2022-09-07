@@ -10,6 +10,9 @@ module.exports = {
     node: true,
     jest: true
   },
+  globals: {
+    vi: true
+  },
   plugins: ['svelte3'],
   overrides: [
     {

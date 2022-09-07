@@ -4,7 +4,7 @@ import { Button } from '../test-components'
 import { Workbench } from '../../src'
 import { currentTool } from '../../src/stores'
 
-jest.mock('../../src/stores', () => {
+vi.mock('../../src/stores', () => {
   const { writable } = require('svelte/store')
   return {
     currentTool: new writable()
@@ -12,7 +12,7 @@ jest.mock('../../src/stores', () => {
 })
 
 describe('Workbench component', () => {
-  beforeEach(jest.resetAllMocks)
+  beforeEach(vi.resetAllMocks)
 
   it('can handle no tools', () => {
     render(html`<${Workbench} />`)

@@ -1,170 +1,222 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Toolshot components/Button.tools.svelte: Default 1`] = `
-<span>
-  <button>
+exports[`tests/atelier.test.js[2m > [22mToolshot[2m > [22mcomponents/Button.tools.svelte: Default 1`] = `
+<span
+  class="s-7qAc1DaxWaj4"
+>
+  <button
+    class="s-NMyTiX1zi6rz"
+  >
      
-    <span>
+    <span
+      class="s-NMyTiX1zi6rz"
+    >
       Default
     </span>
      
   </button>
+  <!--&lt;Button&gt;-->
 </span>
 `;
 
-exports[`Toolshot components/Button.tools.svelte: Disabled 1`] = `
-<span>
+exports[`tests/atelier.test.js[2m > [22mToolshot[2m > [22mcomponents/Button.tools.svelte: Disabled 1`] = `
+<span
+  class="s-7qAc1DaxWaj4"
+>
   <button
+    class="s-NMyTiX1zi6rz"
     disabled=""
   >
      
-    <span>
+    <span
+      class="s-NMyTiX1zi6rz"
+    >
       Disabled
     </span>
      
   </button>
+  <!--&lt;Button&gt;-->
 </span>
 `;
 
-exports[`Toolshot components/Button.tools.svelte: Icon only 1`] = `
-<span>
+exports[`tests/atelier.test.js[2m > [22mToolshot[2m > [22mcomponents/Button.tools.svelte: Icon only 1`] = `
+<span
+  class="s-7qAc1DaxWaj4"
+>
   <button
-    class="iconOnly"
+    class="iconOnly s-NMyTiX1zi6rz"
   >
     <i
-      class="material-icons"
+      class="material-icons s-NMyTiX1zi6rz"
     >
       face
     </i>
      
      
   </button>
+  <!--&lt;Button&gt;-->
 </span>
 `;
 
-exports[`Toolshot components/Button.tools.svelte: Icon only, no color 1`] = `
-<span>
+exports[`tests/atelier.test.js[2m > [22mToolshot[2m > [22mcomponents/Button.tools.svelte: Icon only, no color 1`] = `
+<span
+  class="s-7qAc1DaxWaj4"
+>
   <button
-    class="iconOnly noColor"
+    class="iconOnly noColor s-NMyTiX1zi6rz"
   >
     <i
-      class="material-icons"
+      class="material-icons s-NMyTiX1zi6rz"
     >
       face
     </i>
      
      
   </button>
+  <!--&lt;Button&gt;-->
 </span>
 `;
 
-exports[`Toolshot components/Button.tools.svelte: No color 1`] = `
-<span>
+exports[`tests/atelier.test.js[2m > [22mToolshot[2m > [22mcomponents/Button.tools.svelte: No color 1`] = `
+<span
+  class="s-7qAc1DaxWaj4"
+>
   <button
-    class="noColor"
+    class="noColor s-NMyTiX1zi6rz"
   >
      
-    <span>
+    <span
+      class="s-NMyTiX1zi6rz"
+    >
       Text only
     </span>
      
   </button>
+  <!--&lt;Button&gt;-->
 </span>
 `;
 
-exports[`Toolshot components/Button.tools.svelte: Primary 1`] = `
-<span>
+exports[`tests/atelier.test.js[2m > [22mToolshot[2m > [22mcomponents/Button.tools.svelte: Primary 1`] = `
+<span
+  class="s-7qAc1DaxWaj4"
+>
   <button
-    class="primary"
+    class="primary s-NMyTiX1zi6rz"
   >
      
-    <span>
+    <span
+      class="s-NMyTiX1zi6rz"
+    >
       Primary
     </span>
      
   </button>
+  <!--&lt;Button&gt;-->
 </span>
 `;
 
-exports[`Toolshot components/Button.tools.svelte: Primary disabled 1`] = `
-<span>
+exports[`tests/atelier.test.js[2m > [22mToolshot[2m > [22mcomponents/Button.tools.svelte: Primary disabled 1`] = `
+<span
+  class="s-7qAc1DaxWaj4"
+>
   <button
-    class="primary"
+    class="primary s-NMyTiX1zi6rz"
     disabled=""
   >
      
-    <span>
+    <span
+      class="s-NMyTiX1zi6rz"
+    >
       Primary
     </span>
      
   </button>
+  <!--&lt;Button&gt;-->
 </span>
 `;
 
-exports[`Toolshot components/Button.tools.svelte: Primary with icon only 1`] = `
-<span>
+exports[`tests/atelier.test.js[2m > [22mToolshot[2m > [22mcomponents/Button.tools.svelte: Primary with icon only 1`] = `
+<span
+  class="s-7qAc1DaxWaj4"
+>
   <button
-    class="primary iconOnly"
+    class="primary iconOnly s-NMyTiX1zi6rz"
   >
     <i
-      class="material-icons"
+      class="material-icons s-NMyTiX1zi6rz"
     >
       volume_up
     </i>
      
      
   </button>
+  <!--&lt;Button&gt;-->
 </span>
 `;
 
-exports[`Toolshot components/Button.tools.svelte: Primary with icon only, no color 1`] = `
-<span>
+exports[`tests/atelier.test.js[2m > [22mToolshot[2m > [22mcomponents/Button.tools.svelte: Primary with icon only, no color 1`] = `
+<span
+  class="s-7qAc1DaxWaj4"
+>
   <button
-    class="primary iconOnly noColor"
+    class="primary iconOnly noColor s-NMyTiX1zi6rz"
   >
     <i
-      class="material-icons"
+      class="material-icons s-NMyTiX1zi6rz"
     >
       volume_up
     </i>
      
      
   </button>
+  <!--&lt;Button&gt;-->
 </span>
 `;
 
-exports[`Toolshot components/Button.tools.svelte: Primary with text and icon 1`] = `
-<span>
+exports[`tests/atelier.test.js[2m > [22mToolshot[2m > [22mcomponents/Button.tools.svelte: Primary with text and icon 1`] = `
+<span
+  class="s-7qAc1DaxWaj4"
+>
   <button
-    class="primary"
+    class="primary s-NMyTiX1zi6rz"
   >
     <i
-      class="material-icons"
+      class="material-icons s-NMyTiX1zi6rz"
     >
       person
     </i>
      
-    <span>
+    <span
+      class="s-NMyTiX1zi6rz"
+    >
       Hey!
     </span>
      
   </button>
+  <!--&lt;Button&gt;-->
 </span>
 `;
 
-exports[`Toolshot components/Button.tools.svelte: Text and icon 1`] = `
-<span>
-  <button>
+exports[`tests/atelier.test.js[2m > [22mToolshot[2m > [22mcomponents/Button.tools.svelte: Text and icon 1`] = `
+<span
+  class="s-7qAc1DaxWaj4"
+>
+  <button
+    class="s-NMyTiX1zi6rz"
+  >
     <i
-      class="material-icons"
+      class="material-icons s-NMyTiX1zi6rz"
     >
       face
     </i>
      
-    <span>
+    <span
+      class="s-NMyTiX1zi6rz"
+    >
       Hello
     </span>
      
   </button>
+  <!--&lt;Button&gt;-->
 </span>
 `;

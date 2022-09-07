@@ -5,7 +5,7 @@ import { reloadSettings, getSettings } from '../../src/stores'
 
 describe('settings store', () => {
   beforeEach(() => {
-    jest.resetAllMocks()
+    vi.resetAllMocks()
     delete window.uiSettings
     reloadSettings()
   })

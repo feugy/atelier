@@ -40,7 +40,9 @@ export function configureToolshot({
   timeout = 5000
 } = {}) {
   if (typeof describe !== 'function' || typeof test !== 'function') {
-    throw new Error('configureToolshot() must run within Jest context')
+    throw new Error(
+      'configureToolshot() needs global describe() and test() functions'
+    )
   }
 
   const includeRegExp = new RegExp(include, 'i')

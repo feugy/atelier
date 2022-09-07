@@ -1,45 +1,68 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1
 
-exports[`App connected component displays explorer, pane container with default pickers and loader 1`] = `
+exports[`App connected component > displays explorer, pane container with default pickers and loader 1`] = `
 <body>
   <div>
      
-    <aside>
-      <span>
-        <nav>
-          <ol />
+    <aside
+      class="s-ufy4N79qlNiA"
+    >
+      <span
+        class="s-ufy4N79qlNiA"
+      >
+        <nav
+          class="s-949zNf21XPuY"
+        >
+          <ol
+            class="s-949zNf21XPuY"
+          />
         </nav>
+        <!--&lt;BreadCrumb&gt;-->
          
-        <ul />
+        <ul
+          class="s-YQBR31bjQxRq"
+        />
+        <!--&lt;ToolGroup&gt;-->
+        <!--&lt;Explorer&gt;-->
       </span>
        
-      <div>
+      <div
+        class="s-ufy4N79qlNiA"
+      >
         <span
-          class="material-icons"
+          class="material-icons s-ufy4N79qlNiA"
         >
           handyman
         </span>
          
-        <h1>
+        <h1
+          class="s-ufy4N79qlNiA"
+        >
           Atelier
         </h1>
       </div>
     </aside>
+    <!--&lt;Aside&gt;-->
      
-    <main>
+    <main
+      class="s-zw8_1amru9jb"
+    >
       <span
-        class="viewport-container"
+        class="viewport-container s-W668Ab5bybm8"
       >
-        <div>
+        <div
+          class="s-W668Ab5bybm8"
+        >
           <span
-            class="loader"
+            class="loader s-W668Ab5bybm8"
           >
             <svg
-              class="animate-spin"
+              class="animate-spin s-BBunC__gYdVv"
               role="progressbar"
               viewBox="22 22 44 44"
             >
               <circle
+                class="s-BBunC__gYdVv"
                 cx="44"
                 cy="44"
                 fill="none"
@@ -47,118 +70,147 @@ exports[`App connected component displays explorer, pane container with default 
                 stroke-width="3.6"
               />
             </svg>
+            <!--&lt;Loader&gt;-->
           </span>
            
           <iframe
+            class="s-W668Ab5bybm8"
             src="workframe.html"
             title="workframe"
           />
         </div>
       </span>
+      <!--&lt;Frame&gt;-->
        
       <div
-        class="root has-collapsed"
+        class="root s-P6J8Lj8bk_bE has-collapsed"
       >
-        <nav>
-          <ul>
+        <nav
+          class="s-P6J8Lj8bk_bE"
+        >
+          <ul
+            class="s-P6J8Lj8bk_bE"
+          >
             
             
              
-            <li>
-              <div>
+            <li
+              class="s-P6J8Lj8bk_bE"
+            >
+              <div
+                class="s-zw8_1amru9jb"
+              >
                 <div
+                  class="s-iHgI6ExwAEwa"
                   role="toolbar"
                 >
                   <button
-                    class="primary iconOnly noColor"
+                    class="primary iconOnly noColor s-NMyTiX1zi6rz"
                     title="Petit [320 x 568]"
                   >
                     <i
-                      class="material-icons"
+                      class="material-icons s-NMyTiX1zi6rz"
                     >
                       phone_android
                     </i>
                      
                      
                   </button>
+                  <!--&lt;Button&gt;-->
                   <button
-                    class="primary iconOnly noColor"
+                    class="primary iconOnly noColor s-NMyTiX1zi6rz"
                     title="Moyen [414 x 896]"
                   >
                     <i
-                      class="material-icons"
+                      class="material-icons s-NMyTiX1zi6rz"
                     >
                       stay_current_landscape
                     </i>
                      
                      
                   </button>
+                  <!--&lt;Button&gt;-->
                   <button
-                    class="primary iconOnly noColor"
+                    class="primary iconOnly noColor s-NMyTiX1zi6rz"
                     title="Large [834 x 1112]"
                   >
                     <i
-                      class="material-icons"
+                      class="material-icons s-NMyTiX1zi6rz"
                     >
                       tablet_android
                     </i>
                      
                      
                   </button>
+                  <!--&lt;Button&gt;-->
                 </div>
+                <!--&lt;SizePicker&gt;-->
                  
                 <ul
+                  class="s-h0HyUOZHS-l4"
                   role="toolbar"
                 >
-                  <li />
                   <li
+                    class="s-h0HyUOZHS-l4"
+                  />
+                  <li
+                    class="s-h0HyUOZHS-l4"
                     style="--background: white;"
                   />
                   <li
+                    class="s-h0HyUOZHS-l4"
                     style="--background: #e0e0e0;"
                   />
                   <li
+                    class="s-h0HyUOZHS-l4"
                     style="--background: #a0a0a0;"
                   />
                   <li
+                    class="s-h0HyUOZHS-l4"
                     style="--background: black;"
                   />
                 </ul>
+                <!--&lt;BackgroundPicker&gt;-->
               </div>
                
               <button
-                class="iconOnly noColor"
+                class="iconOnly noColor s-NMyTiX1zi6rz"
                 title="Réduire/Etendre"
               >
                 <i
-                  class="material-icons"
+                  class="material-icons s-NMyTiX1zi6rz"
                 >
                   expand_less
                 </i>
                  
                  
               </button>
+              <!--&lt;Button&gt;-->
             </li>
           </ul>
         </nav>
          
         <main
-          class="collapsed"
+          class="s-P6J8Lj8bk_bE collapsed"
         >
           
           
            
           <div
-            class="disclaimer"
+            class="disclaimer s-Mso-UVgDL8y-"
           >
             Cet outil n'est pas configuré pour recevoir des évènements ou pour modifier les propriétés.
           </div>
+          <!--&lt;PaneDisclaimer&gt;-->
         </main>
       </div>
       
+      <!--&lt;PaneContainer&gt;-->
     </main>
      
     
+    <!--&lt;ErrorDialogue&gt;-->
+    <!--&lt;App&gt;-->
   </div>
 </body>
 `;

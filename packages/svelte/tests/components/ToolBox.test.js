@@ -12,7 +12,7 @@ describe('ToolBox component', () => {
   }
 
   beforeEach(() => {
-    jest.resetAllMocks()
+    vi.resetAllMocks()
     context = null
   })
 

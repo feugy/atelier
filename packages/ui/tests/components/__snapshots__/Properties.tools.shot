@@ -1,138 +1,183 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Toolshot components/Properties.tools.svelte: Arrays 1`] = `
-<span>
+exports[`tests/atelier.test.js[2m > [22mToolshot[2m > [22mcomponents/Properties.tools.svelte: Arrays 1`] = `
+<span
+  class="s-7qAc1DaxWaj4"
+>
   <div
-    class="root"
+    class="root s-AofbQOEI1ryj"
   >
-    <span>
+    <span
+      class="s-AofbQOEI1ryj"
+    >
       <label
+        class="s-AofbQOEI1ryj"
         for="numbers"
       >
         numbers
       </label>
        
       <textarea
+        class="s-AofbQOEI1ryj"
         id="numbers"
       />
        
     </span>
-    <span>
+    <span
+      class="s-AofbQOEI1ryj"
+    >
       <label
+        class="s-AofbQOEI1ryj"
         for="strings"
       >
         strings
       </label>
        
       <textarea
+        class="s-AofbQOEI1ryj"
         id="strings"
       />
        
     </span>
-    <span>
+    <span
+      class="s-AofbQOEI1ryj"
+    >
       <label
+        class="s-AofbQOEI1ryj"
         for="empty"
       >
         empty
       </label>
        
       <textarea
+        class="s-AofbQOEI1ryj"
         id="empty"
       />
        
     </span>
   </div>
+  <!--&lt;Properties&gt;-->
 </span>
 `;
 
-exports[`Toolshot components/Properties.tools.svelte: Native types 1`] = `
-<span>
+exports[`tests/atelier.test.js[2m > [22mToolshot[2m > [22mcomponents/Properties.tools.svelte: Native types 1`] = `
+<span
+  class="s-7qAc1DaxWaj4"
+>
   <div
-    class="root"
+    class="root s-AofbQOEI1ryj"
   >
-    <span>
+    <span
+      class="s-AofbQOEI1ryj"
+    >
       <label
+        class="s-AofbQOEI1ryj"
         for="name"
       >
         name
       </label>
        
       <input
+        class="s-AofbQOEI1ryj"
         id="name"
       />
        
     </span>
-    <span>
+    <span
+      class="s-AofbQOEI1ryj"
+    >
       <label
+        class="s-AofbQOEI1ryj"
         for="age"
       >
         age
       </label>
        
       <input
+        class="s-AofbQOEI1ryj"
         id="age"
         type="number"
       />
        
     </span>
-    <span>
+    <span
+      class="s-AofbQOEI1ryj"
+    >
       <label
+        class="s-AofbQOEI1ryj"
         for="hasSigned"
       >
         hasSigned
       </label>
        
       <input
+        class="s-AofbQOEI1ryj"
         id="hasSigned"
         type="checkbox"
       />
        
     </span>
   </div>
+  <!--&lt;Properties&gt;-->
 </span>
 `;
 
-exports[`Toolshot components/Properties.tools.svelte: Objects 1`] = `
-<span>
+exports[`tests/atelier.test.js[2m > [22mToolshot[2m > [22mcomponents/Properties.tools.svelte: Objects 1`] = `
+<span
+  class="s-7qAc1DaxWaj4"
+>
   <div
-    class="root"
+    class="root s-AofbQOEI1ryj"
   >
-    <span>
+    <span
+      class="s-AofbQOEI1ryj"
+    >
       <label
+        class="s-AofbQOEI1ryj"
         for="numbers"
       >
         numbers
       </label>
        
       <textarea
+        class="s-AofbQOEI1ryj"
         id="numbers"
       />
        
     </span>
-    <span>
+    <span
+      class="s-AofbQOEI1ryj"
+    >
       <label
+        class="s-AofbQOEI1ryj"
         for="strings"
       >
         strings
       </label>
        
       <textarea
+        class="s-AofbQOEI1ryj"
         id="strings"
       />
        
     </span>
-    <span>
+    <span
+      class="s-AofbQOEI1ryj"
+    >
       <label
+        class="s-AofbQOEI1ryj"
         for="empty"
       >
         empty
       </label>
        
       <textarea
+        class="s-AofbQOEI1ryj"
         id="empty"
       />
        
     </span>
   </div>
+  <!--&lt;Properties&gt;-->
 </span>
 `;

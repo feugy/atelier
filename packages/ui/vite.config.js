@@ -44,5 +44,11 @@ export default defineConfig({
         }
       ]
     }
+  },
+  test: {
+    deps: { fallbackCJS: true },
+    globals: true,
+    environment: 'jsdom',
+    setupFiles: 'tests/setup'
   }
 })

@@ -1,18 +1,29 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Toolshot components/Explorer.tools.svelte: Multiple levels 1`] = `
-<span>
-  <nav>
-    <ol />
+exports[`tests/atelier.test.js[2m > [22mToolshot[2m > [22mcomponents/Explorer.tools.svelte: Multiple levels 1`] = `
+<span
+  class="s-7qAc1DaxWaj4"
+>
+  <nav
+    class="s-949zNf21XPuY"
+  >
+    <ol
+      class="s-949zNf21XPuY"
+    />
   </nav>
+  <!--&lt;BreadCrumb&gt;-->
    
-  <ul>
+  <ul
+    class="s-YQBR31bjQxRq"
+  >
     <li
-      class="isCurrent"
+      class="s-YQBR31bjQxRq isCurrent"
     >
-      <div>
+      <div
+        class="s-YQBR31bjQxRq"
+      >
         <span
-          class="material-icons symbol"
+          class="material-icons symbol s-YQBR31bjQxRq"
         >
           architecture
         </span>
@@ -21,13 +32,13 @@ exports[`Toolshot components/Explorer.tools.svelte: Multiple levels 1`] = `
        
     </li>
     <li
-      class="isCurrent"
+      class="s-YQBR31bjQxRq isCurrent"
     >
       <div
-        class="folder"
+        class="s-YQBR31bjQxRq folder"
       >
         <span
-          class="material-icons symbol"
+          class="material-icons symbol s-YQBR31bjQxRq"
         >
           folder_open
         </span>
@@ -36,13 +47,13 @@ exports[`Toolshot components/Explorer.tools.svelte: Multiple levels 1`] = `
        
     </li>
     <li
-      class="isCurrent"
+      class="s-YQBR31bjQxRq isCurrent"
     >
       <div
-        class="folder"
+        class="s-YQBR31bjQxRq folder"
       >
         <span
-          class="material-icons symbol"
+          class="material-icons symbol s-YQBR31bjQxRq"
         >
           folder_open
         </span>
@@ -51,22 +62,35 @@ exports[`Toolshot components/Explorer.tools.svelte: Multiple levels 1`] = `
        
     </li>
   </ul>
+  <!--&lt;ToolGroup&gt;-->
+  <!--&lt;Explorer&gt;-->
 </span>
 `;
 
-exports[`Toolshot components/Explorer.tools.svelte: Single level 1`] = `
-<span>
-  <nav>
-    <ol />
+exports[`tests/atelier.test.js[2m > [22mToolshot[2m > [22mcomponents/Explorer.tools.svelte: Single level 1`] = `
+<span
+  class="s-7qAc1DaxWaj4"
+>
+  <nav
+    class="s-949zNf21XPuY"
+  >
+    <ol
+      class="s-949zNf21XPuY"
+    />
   </nav>
+  <!--&lt;BreadCrumb&gt;-->
    
-  <ul>
+  <ul
+    class="s-YQBR31bjQxRq"
+  >
     <li
-      class="isCurrent"
+      class="s-YQBR31bjQxRq isCurrent"
     >
-      <div>
+      <div
+        class="s-YQBR31bjQxRq"
+      >
         <span
-          class="material-icons symbol"
+          class="material-icons symbol s-YQBR31bjQxRq"
         >
           architecture
         </span>
@@ -75,11 +99,13 @@ exports[`Toolshot components/Explorer.tools.svelte: Single level 1`] = `
        
     </li>
     <li
-      class="isCurrent"
+      class="s-YQBR31bjQxRq isCurrent"
     >
-      <div>
+      <div
+        class="s-YQBR31bjQxRq"
+      >
         <span
-          class="material-icons symbol"
+          class="material-icons symbol s-YQBR31bjQxRq"
         >
           architecture
         </span>
@@ -88,11 +114,13 @@ exports[`Toolshot components/Explorer.tools.svelte: Single level 1`] = `
        
     </li>
     <li
-      class="isCurrent"
+      class="s-YQBR31bjQxRq isCurrent"
     >
-      <div>
+      <div
+        class="s-YQBR31bjQxRq"
+      >
         <span
-          class="material-icons symbol"
+          class="material-icons symbol s-YQBR31bjQxRq"
         >
           architecture
         </span>
@@ -101,5 +129,7 @@ exports[`Toolshot components/Explorer.tools.svelte: Single level 1`] = `
        
     </li>
   </ul>
+  <!--&lt;ToolGroup&gt;-->
+  <!--&lt;Explorer&gt;-->
 </span>
 `;

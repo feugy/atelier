@@ -18,16 +18,16 @@
     "format": "prettier --write .",
     "prepare": "husky install",
     "release:bump": "standard-version -s",
-    "test": "npm --workspaces --if-present test -- --verbose"
+    "test": "npm --workspaces --if-present test"
   },
   "devDependencies": {
-    "eslint": "^8.18.0",
+    "eslint": "^8.23.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-jest-dom": "^4.0.2",
     "eslint-plugin-svelte3": "^4.0.0",
-    "eslint-plugin-testing-library": "^5.0.3",
+    "eslint-plugin-testing-library": "^5.6.1",
     "husky": "^8.0.1",
-    "lint-staged": "^13.0.2",
+    "lint-staged": "^13.0.3",
     "prettier": "^2.7.1",
     "prettier-plugin-svelte": "^2.7.0",
     "standard-version": "^9.5.0"

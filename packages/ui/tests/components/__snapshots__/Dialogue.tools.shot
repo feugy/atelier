@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Toolshot components/Dialogue.tools.svelte: Components/Dialogue 1`] = `
+exports[`tests/atelier.test.js[2m > [22mToolshot[2m > [22mcomponents/Dialogue.tools.svelte: Components/Dialogue 1`] = `
 <p>
   Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
 </p>

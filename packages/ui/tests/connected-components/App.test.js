@@ -5,7 +5,7 @@ import { App } from '../../src/connected-components'
 import { reloadSettings } from '../../src/stores'
 
 describe('App connected component', () => {
-  beforeEach(jest.resetAllMocks)
+  beforeEach(vi.resetAllMocks)
 
   it('displays explorer, pane container with default pickers and loader', () => {
     const { container } = render(html`<${App} />`)
@@ -59,10 +59,8 @@ describe('App connected component', () => {
   })
 
   it('validates size settings', async () => {
-    const errorSpy = jest.spyOn(console, 'error').mockImplementation(() => {})
     window.uiSettings = { sizes: [{ invalid: true }] }
     reloadSettings()
-
     render(html`<${App} />`)
 
     let dialog
@@ -73,14 +71,11 @@ describe('App connected component', () => {
     expect(within(dialog).getByRole('main')).toHaveTextContent(
       `Invalid value for "sizes" UI settings: data/0 must have required property 'icon'`
     )
-    expect(errorSpy).toHaveBeenCalledTimes(1)
   })
 
   it('validates backgrounds settings', async () => {
-    const errorSpy = jest.spyOn(console, 'error').mockImplementation(() => {})
     window.uiSettings = { backgrounds: ['', 18] }
     reloadSettings()
-
     render(html`<${App} />`)
 
     let dialog
@@ -91,6 +86,5 @@ describe('App connected component', () => {
     expect(within(dialog).getByRole('main')).toHaveTextContent(
       `Invalid value for "backgrounds" UI settings: data/1 must be string`
     )
-    expect(errorSpy).toHaveBeenCalledTimes(1)
   })
 })
