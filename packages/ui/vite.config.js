@@ -26,25 +26,6 @@ export default defineConfig({
     open: '/atelier',
     fs: { strict: false }
   },
-  // we'll get rid of this chunk when vite will use a more recent of esbuild
-  // https://github.com/vitejs/vite/issues/5833#issuecomment-997971698
-  // https://github.com/evanw/esbuild/blob/master/internal/css_parser/css_parser.go#L223
-  css: {
-    postcss: {
-      plugins: [
-        {
-          postcssPlugin: 'internal:charset-removal',
-          AtRule: {
-            charset: atRule => {
-              if (atRule.name === 'charset') {
-                atRule.remove()
-              }
-            }
-          }
-        }
-      ]
-    }
-  },
   test: {
     deps: { fallbackCJS: true },
     globals: true,

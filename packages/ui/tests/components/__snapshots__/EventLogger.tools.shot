@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`tests/atelier.test.js[2m > [22mToolshot[2m > [22mcomponents/EventLogger.tools.svelte: Empty 1`] = `
+exports[`Empty 1`] = `
 <span
   class="s-7qAc1DaxWaj4"
 >
@@ -18,7 +18,7 @@ exports[`tests/atelier.test.js[2m > [22mToolshot[2m > [22mcomponents/EventLo
 </span>
 `;
 
-exports[`tests/atelier.test.js[2m > [22mToolshot[2m > [22mcomponents/EventLogger.tools.svelte: With events 1`] = `
+exports[`With events 1`] = `
 <div
   class="root s-1jHrzA2TXN4p"
 >

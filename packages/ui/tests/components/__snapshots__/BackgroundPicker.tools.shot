@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`tests/atelier.test.js[2m > [22mToolshot[2m > [22mcomponents/BackgroundPicker.tools.svelte: Custom colors 1`] = `
+exports[`Custom colors 1`] = `
 <ul
   class="s-h0HyUOZHS-l4"
   role="toolbar"
@@ -23,7 +23,7 @@ exports[`tests/atelier.test.js[2m > [22mToolshot[2m > [22mcomponents/Backgro
 </ul>
 `;
 
-exports[`tests/atelier.test.js[2m > [22mToolshot[2m > [22mcomponents/BackgroundPicker.tools.svelte: Default colors 1`] = `
+exports[`Default colors 1`] = `
 <ul
   class="s-h0HyUOZHS-l4"
   role="toolbar"

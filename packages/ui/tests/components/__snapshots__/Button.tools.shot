@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`tests/atelier.test.js[2m > [22mToolshot[2m > [22mcomponents/Button.tools.svelte: Default 1`] = `
+exports[`Default 1`] = `
 <span
   class="s-7qAc1DaxWaj4"
 >
@@ -19,7 +19,7 @@ exports[`tests/atelier.test.js[2m > [22mToolshot[2m > [22mcomponents/Button.
 </span>
 `;
 
-exports[`tests/atelier.test.js[2m > [22mToolshot[2m > [22mcomponents/Button.tools.svelte: Disabled 1`] = `
+exports[`Disabled 1`] = `
 <span
   class="s-7qAc1DaxWaj4"
 >
@@ -39,7 +39,7 @@ exports[`tests/atelier.test.js[2m > [22mToolshot[2m > [22mcomponents/Button.
 </span>
 `;
 
-exports[`tests/atelier.test.js[2m > [22mToolshot[2m > [22mcomponents/Button.tools.svelte: Icon only 1`] = `
+exports[`Icon only 1`] = `
 <span
   class="s-7qAc1DaxWaj4"
 >
@@ -58,7 +58,7 @@ exports[`tests/atelier.test.js[2m > [22mToolshot[2m > [22mcomponents/Button.
 </span>
 `;
 
-exports[`tests/atelier.test.js[2m > [22mToolshot[2m > [22mcomponents/Button.tools.svelte: Icon only, no color 1`] = `
+exports[`Icon only, no color 1`] = `
 <span
   class="s-7qAc1DaxWaj4"
 >
@@ -77,7 +77,7 @@ exports[`tests/atelier.test.js[2m > [22mToolshot[2m > [22mcomponents/Button.
 </span>
 `;
 
-exports[`tests/atelier.test.js[2m > [22mToolshot[2m > [22mcomponents/Button.tools.svelte: No color 1`] = `
+exports[`No color 1`] = `
 <span
   class="s-7qAc1DaxWaj4"
 >
@@ -96,7 +96,7 @@ exports[`tests/atelier.test.js[2m > [22mToolshot[2m > [22mcomponents/Button.
 </span>
 `;
 
-exports[`tests/atelier.test.js[2m > [22mToolshot[2m > [22mcomponents/Button.tools.svelte: Primary 1`] = `
+exports[`Primary 1`] = `
 <span
   class="s-7qAc1DaxWaj4"
 >
@@ -115,7 +115,7 @@ exports[`tests/atelier.test.js[2m > [22mToolshot[2m > [22mcomponents/Button.
 </span>
 `;
 
-exports[`tests/atelier.test.js[2m > [22mToolshot[2m > [22mcomponents/Button.tools.svelte: Primary disabled 1`] = `
+exports[`Primary disabled 1`] = `
 <span
   class="s-7qAc1DaxWaj4"
 >
@@ -135,7 +135,7 @@ exports[`tests/atelier.test.js[2m > [22mToolshot[2m > [22mcomponents/Button.
 </span>
 `;
 
-exports[`tests/atelier.test.js[2m > [22mToolshot[2m > [22mcomponents/Button.tools.svelte: Primary with icon only 1`] = `
+exports[`Primary with icon only 1`] = `
 <span
   class="s-7qAc1DaxWaj4"
 >
@@ -154,7 +154,7 @@ exports[`tests/atelier.test.js[2m > [22mToolshot[2m > [22mcomponents/Button.
 </span>
 `;
 
-exports[`tests/atelier.test.js[2m > [22mToolshot[2m > [22mcomponents/Button.tools.svelte: Primary with icon only, no color 1`] = `
+exports[`Primary with icon only, no color 1`] = `
 <span
   class="s-7qAc1DaxWaj4"
 >
@@ -173,7 +173,7 @@ exports[`tests/atelier.test.js[2m > [22mToolshot[2m > [22mcomponents/Button.
 </span>
 `;
 
-exports[`tests/atelier.test.js[2m > [22mToolshot[2m > [22mcomponents/Button.tools.svelte: Primary with text and icon 1`] = `
+exports[`Primary with text and icon 1`] = `
 <span
   class="s-7qAc1DaxWaj4"
 >
@@ -197,7 +197,7 @@ exports[`tests/atelier.test.js[2m > [22mToolshot[2m > [22mcomponents/Button.
 </span>
 `;
 
-exports[`tests/atelier.test.js[2m > [22mToolshot[2m > [22mcomponents/Button.tools.svelte: Text and icon 1`] = `
+exports[`Text and icon 1`] = `
 <span
   class="s-7qAc1DaxWaj4"
 >

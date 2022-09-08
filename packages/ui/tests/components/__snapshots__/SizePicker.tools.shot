@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`tests/atelier.test.js[2m > [22mToolshot[2m > [22mcomponents/SizePicker.tools.svelte: Custom values 1`] = `
+exports[`Custom values 1`] = `
 <div
   class="s-iHgI6ExwAEwa"
   role="toolbar"
@@ -34,7 +34,7 @@ exports[`tests/atelier.test.js[2m > [22mToolshot[2m > [22mcomponents/SizePic
 </div>
 `;
 
-exports[`tests/atelier.test.js[2m > [22mToolshot[2m > [22mcomponents/SizePicker.tools.svelte: Default values 1`] = `
+exports[`Default values 1`] = `
 <div
   class="s-iHgI6ExwAEwa"
   role="toolbar"

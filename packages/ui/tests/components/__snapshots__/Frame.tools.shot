@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`tests/atelier.test.js[2m > [22mToolshot[2m > [22mcomponents/Frame.tools.svelte: Components/Frame 1`] = `
+exports[`Components/Frame 1`] = `
 <span
   class="viewport-container s-W668Ab5bybm8"
 >

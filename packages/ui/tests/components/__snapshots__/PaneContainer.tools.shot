@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`tests/atelier.test.js[2m > [22mToolshot[2m > [22mcomponents/PaneContainer.tools.svelte: Empty 1`] = `
+exports[`Empty 1`] = `
 <span
   class="s-7qAc1DaxWaj4"
 >
@@ -9,7 +9,7 @@ exports[`tests/atelier.test.js[2m > [22mToolshot[2m > [22mcomponents/PaneCon
 </span>
 `;
 
-exports[`tests/atelier.test.js[2m > [22mToolshot[2m > [22mcomponents/PaneContainer.tools.svelte: Multiple tabs 1`] = `
+exports[`Multiple tabs 1`] = `
 <span
   class="s-ecxglyKpgvvR"
 >
@@ -81,7 +81,7 @@ exports[`tests/atelier.test.js[2m > [22mToolshot[2m > [22mcomponents/PaneCon
 </span>
 `;
 
-exports[`tests/atelier.test.js[2m > [22mToolshot[2m > [22mcomponents/PaneContainer.tools.svelte: Single tab 1`] = `
+exports[`Single tab 1`] = `
 <span
   class="s-ecxglyKpgvvR"
 >

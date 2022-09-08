@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`tests/atelier.test.js[2m > [22mToolshot[2m > [22mcomponents/Explorer.tools.svelte: Multiple levels 1`] = `
+exports[`Multiple levels 1`] = `
 <span
   class="s-7qAc1DaxWaj4"
 >
@@ -67,7 +67,7 @@ exports[`tests/atelier.test.js[2m > [22mToolshot[2m > [22mcomponents/Explore
 </span>
 `;
 
-exports[`tests/atelier.test.js[2m > [22mToolshot[2m > [22mcomponents/Explorer.tools.svelte: Single level 1`] = `
+exports[`Single level 1`] = `
 <span
   class="s-7qAc1DaxWaj4"
 >
