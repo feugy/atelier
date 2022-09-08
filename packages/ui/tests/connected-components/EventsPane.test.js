@@ -5,16 +5,16 @@ import { translate } from '../test-utils'
 import {
   default as EventsPane,
   isEnabled
-} from '../../src/connected-components/EventsPane'
+} from '../../src/connected-components/EventsPane.svelte'
 import { events, clearEvents } from '../../src/stores'
 
-jest.mock('../../src/stores/tools', () => ({
+vi.mock('../../src/stores/tools', () => ({
   events: new (require('rxjs').BehaviorSubject)(),
-  clearEvents: jest.fn()
+  clearEvents: vi.fn()
 }))
 
 describe('EventLogger connected component', () => {
-  beforeEach(jest.resetAllMocks)
+  beforeEach(vi.resetAllMocks)
 
   it('handles no events', () => {
     events.next([])

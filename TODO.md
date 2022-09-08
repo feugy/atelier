@@ -37,6 +37,7 @@
 
 # Documentation
 
+- plugin's uiSettings
 - ADR:
   - UI agnostic framework
   - options from plugin to UI

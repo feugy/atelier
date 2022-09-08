@@ -135,7 +135,7 @@ describe('Explorer components', () => {
   })
 
   it('selects a different tool', async () => {
-    const handleSelect = jest.fn()
+    const handleSelect = vi.fn()
     render(html`<${Explorer}
       tools=${groupByName(tools)}
       current=${tools[3]}

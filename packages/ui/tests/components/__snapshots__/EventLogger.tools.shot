@@ -1,34 +1,36 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Toolshot components/EventLogger.tools.svelte: Empty 1`] = `
+exports[`Empty 1`] = `
 <span>
   <div
-    class="root"
+    class="root svelte-ygsof7"
   >
     <div
-      class="disclaimer"
+      class="disclaimer svelte-1d2pv82"
     >
       message.no-events
     </div>
+    <!--&lt;PaneDisclaimer&gt;-->
   </div>
+  <!--&lt;EventLogger&gt;-->
 </span>
 `;
 
-exports[`Toolshot components/EventLogger.tools.svelte: With events 1`] = `
+exports[`With events 1`] = `
 <div
-  class="root"
+  class="root svelte-ygsof7"
 >
   <div
-    class="log"
+    class="log svelte-ygsof7"
   >
     <div
-      class="time"
+      class="time svelte-ygsof7"
     >
       1:34:14 PM
     </div>
      
     <div
-      class="name"
+      class="name svelte-ygsof7"
     >
       simple
     </div>
@@ -39,13 +41,13 @@ exports[`Toolshot components/EventLogger.tools.svelte: With events 1`] = `
       hello!
     </div>
     <div
-      class="time"
+      class="time svelte-ygsof7"
     >
       10:00:00 AM
     </div>
      
     <div
-      class="name"
+      class="name svelte-ygsof7"
     >
       multiple
     </div>
@@ -56,13 +58,13 @@ exports[`Toolshot components/EventLogger.tools.svelte: With events 1`] = `
       1, true, hi
     </div>
     <div
-      class="time"
+      class="time svelte-ygsof7"
     >
       3:45:06 PM
     </div>
      
     <div
-      class="name"
+      class="name svelte-ygsof7"
     >
       DOM event
     </div>
@@ -111,20 +113,21 @@ exports[`Toolshot components/EventLogger.tools.svelte: With events 1`] = `
   </div>
    
   <span
-    class="clear-button"
+    class="clear-button svelte-ygsof7"
   >
     <button
-      class="iconOnly"
+      class="iconOnly svelte-6r5o0y"
       title="tooltip.clear-events"
     >
       <i
-        class="material-icons"
+        class="material-icons svelte-6r5o0y"
       >
         clear_all
       </i>
        
        
     </button>
+    <!--&lt;Button&gt;-->
   </span>
 </div>
 `;

@@ -1,6 +1,6 @@
 import { groupByName } from '../../src/utils'
 
-beforeEach(jest.resetAllMocks)
+beforeEach(vi.resetAllMocks)
 
 describe('groupByName() utility', () => {
   it('handles no tools', () => {

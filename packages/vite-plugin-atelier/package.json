@@ -4,23 +4,23 @@
   "description": "Helps you buildind Component Driven UIs with Atelier and Vite",
   "main": "src/index.js",
   "scripts": {
-    "test": "jest --coverage",
-    "test:dev": "jest --watch"
+    "test": "vitest run --coverage",
+    "test:dev": "vitest dev"
   },
   "dependencies": {
-    "@atelier-wb/ui": "0.7.0",
+    "@atelier-wb/ui": "^0.7.1",
     "ajv": "^8.11.0",
     "sirv": "^2.0.2"
   },
   "peerDependencies": {
-    "vite": ">=2.7.10"
+    "vite": ">=3.1.0"
   },
   "devDependencies": {
-    "@faker-js/faker": "^7.3.0",
+    "@faker-js/faker": "^7.5.0",
+    "@vitest/coverage-c8": "^0.23.1",
     "connect": "^3.7.0",
     "got": "^11.8.3",
-    "jest": "^28.1.1",
-    "jest-watch-typeahead": "^1.1.0"
+    "vitest": "^0.23.1"
   },
   "files": [
     "src/**/*"

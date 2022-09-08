@@ -27,7 +27,7 @@ async function configureAndStartServer(options) {
 }
 
 describe('plugin builder', () => {
-  beforeEach(jest.resetAllMocks)
+  beforeEach(vi.resetAllMocks)
 
   it('validates path option', () => {
     expect(() => builder({ path: true })).toThrow(
@@ -311,11 +311,11 @@ new Workbench({
       )
       expect(response.body).toEqual(
         expect.stringContaining(
-          '<script type="module" crossorigin src="assets/index.'
+          '<script type="module" crossorigin src="./assets/index.'
         )
       )
       expect(response.body).toEqual(
-        expect.stringContaining('<link rel="stylesheet" href="assets/index.')
+        expect.stringContaining('<link rel="stylesheet" href="./assets/index.')
       )
     })
 
@@ -386,7 +386,7 @@ new Workbench({
     ])(
       'triggers workframe on %s',
       async (test, eventName, file, isDirectory) => {
-        const emit = jest.spyOn(watcher, 'emit')
+        const emit = vi.spyOn(watcher, 'emit')
         expect(emit).not.toHaveBeenCalled()
 
         watcher.emit(eventName, resolve(path, file), {
@@ -404,7 +404,7 @@ new Workbench({
       ['regular file creation', 'add', faker.system.fileName()],
       ['regular file removal', 'unlink', faker.system.fileName()]
     ])('does not trigger workframe on %s', async (test, eventName, file) => {
-      const emit = jest.spyOn(watcher, 'emit')
+      const emit = vi.spyOn(watcher, 'emit')
       expect(emit).not.toHaveBeenCalled()
 
       watcher.emit(eventName, resolve(path, file), { isDirectory: () => false })

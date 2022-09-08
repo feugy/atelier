@@ -1,45 +1,66 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1
 
-exports[`App connected component displays explorer, pane container with default pickers and loader 1`] = `
+exports[`App connected component > displays explorer, pane container with default pickers and loader 1`] = `
 <body>
   <div>
      
-    <aside>
-      <span>
-        <nav>
+    <aside
+      class="svelte-1xti39p"
+    >
+      <span
+        class="svelte-1xti39p"
+      >
+        <nav
+          class="svelte-aeg211"
+        >
           <ol />
         </nav>
+        <!--&lt;BreadCrumb&gt;-->
          
-        <ul />
+        <ul
+          class="svelte-1i7sfgn"
+        />
+        <!--&lt;ToolGroup&gt;-->
+        <!--&lt;Explorer&gt;-->
       </span>
        
-      <div>
+      <div
+        class="svelte-1xti39p"
+      >
         <span
-          class="material-icons"
+          class="material-icons svelte-1xti39p"
         >
           handyman
         </span>
          
-        <h1>
+        <h1
+          class="svelte-1xti39p"
+        >
           Atelier
         </h1>
       </div>
     </aside>
+    <!--&lt;Aside&gt;-->
      
-    <main>
+    <main
+      class="svelte-pmihz0"
+    >
       <span
-        class="viewport-container"
+        class="viewport-container svelte-10kat9k"
       >
-        <div>
+        <div
+          class="svelte-10kat9k"
+        >
           <span
-            class="loader"
+            class="loader svelte-10kat9k"
           >
             <svg
-              class="animate-spin"
+              class="animate-spin svelte-f2f9il"
               role="progressbar"
               viewBox="22 22 44 44"
             >
               <circle
+                class="svelte-f2f9il"
                 cx="44"
                 cy="44"
                 fill="none"
@@ -47,118 +68,147 @@ exports[`App connected component displays explorer, pane container with default 
                 stroke-width="3.6"
               />
             </svg>
+            <!--&lt;Loader&gt;-->
           </span>
            
           <iframe
+            class="svelte-10kat9k"
             src="workframe.html"
             title="workframe"
           />
         </div>
       </span>
+      <!--&lt;Frame&gt;-->
        
       <div
-        class="root has-collapsed"
+        class="root svelte-1hpkjx7 has-collapsed"
       >
-        <nav>
-          <ul>
+        <nav
+          class="svelte-1hpkjx7"
+        >
+          <ul
+            class="svelte-1hpkjx7"
+          >
             
             
              
-            <li>
-              <div>
+            <li
+              class="svelte-1hpkjx7"
+            >
+              <div
+                class="svelte-pmihz0"
+              >
                 <div
+                  class="svelte-4941ld"
                   role="toolbar"
                 >
                   <button
-                    class="primary iconOnly noColor"
+                    class="primary iconOnly noColor svelte-6r5o0y"
                     title="Petit [320 x 568]"
                   >
                     <i
-                      class="material-icons"
+                      class="material-icons svelte-6r5o0y"
                     >
                       phone_android
                     </i>
                      
                      
                   </button>
+                  <!--&lt;Button&gt;-->
                   <button
-                    class="primary iconOnly noColor"
+                    class="primary iconOnly noColor svelte-6r5o0y"
                     title="Moyen [414 x 896]"
                   >
                     <i
-                      class="material-icons"
+                      class="material-icons svelte-6r5o0y"
                     >
                       stay_current_landscape
                     </i>
                      
                      
                   </button>
+                  <!--&lt;Button&gt;-->
                   <button
-                    class="primary iconOnly noColor"
+                    class="primary iconOnly noColor svelte-6r5o0y"
                     title="Large [834 x 1112]"
                   >
                     <i
-                      class="material-icons"
+                      class="material-icons svelte-6r5o0y"
                     >
                       tablet_android
                     </i>
                      
                      
                   </button>
+                  <!--&lt;Button&gt;-->
                 </div>
+                <!--&lt;SizePicker&gt;-->
                  
                 <ul
+                  class="svelte-1xwg7nr"
                   role="toolbar"
                 >
-                  <li />
                   <li
+                    class="svelte-1xwg7nr"
+                  />
+                  <li
+                    class="svelte-1xwg7nr"
                     style="--background: white;"
                   />
                   <li
+                    class="svelte-1xwg7nr"
                     style="--background: #e0e0e0;"
                   />
                   <li
+                    class="svelte-1xwg7nr"
                     style="--background: #a0a0a0;"
                   />
                   <li
+                    class="svelte-1xwg7nr"
                     style="--background: black;"
                   />
                 </ul>
+                <!--&lt;BackgroundPicker&gt;-->
               </div>
                
               <button
-                class="iconOnly noColor"
+                class="iconOnly noColor svelte-6r5o0y"
                 title="Réduire/Etendre"
               >
                 <i
-                  class="material-icons"
+                  class="material-icons svelte-6r5o0y"
                 >
                   expand_less
                 </i>
                  
                  
               </button>
+              <!--&lt;Button&gt;-->
             </li>
           </ul>
         </nav>
          
         <main
-          class="collapsed"
+          class="svelte-1hpkjx7 collapsed"
         >
           
           
            
           <div
-            class="disclaimer"
+            class="disclaimer svelte-1d2pv82"
           >
             Cet outil n'est pas configuré pour recevoir des évènements ou pour modifier les propriétés.
           </div>
+          <!--&lt;PaneDisclaimer&gt;-->
         </main>
       </div>
       
+      <!--&lt;PaneContainer&gt;-->
     </main>
      
     
+    <!--&lt;ErrorDialogue&gt;-->
+    <!--&lt;App&gt;-->
   </div>
 </body>
 `;

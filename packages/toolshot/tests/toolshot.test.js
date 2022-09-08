@@ -1,5 +1,4 @@
 import { faker } from '@faker-js/faker'
-import { jest } from '@jest/globals'
 import { join, resolve } from 'path'
 import { configureToolshot } from '../src'
 
@@ -8,9 +7,9 @@ const fixtures = resolve(__dirname, 'fixtures')
 const sleep = duration => new Promise(resolve => setTimeout(resolve, duration))
 
 describe('toolshot builder', () => {
-  beforeEach(jest.resetAllMocks)
+  beforeEach(vi.resetAllMocks)
 
-  describe('given nor running in jest', () => {
+  describe('given nor running in test environment', () => {
     const save = {}
     beforeEach(() => {
       save.test = global.test
@@ -24,14 +23,14 @@ describe('toolshot builder', () => {
     it('throws an error when test() is not defined', () => {
       global.test = undefined
       expect(() => configureToolshot()).toThrow(
-        'configureToolshot() must run within Jest context'
+        'configureToolshot() needs global describe(), afterAll(), test() and expect.extend() functions'
       )
     })
 
     it('throws an error when describe() is not defined', () => {
       global.describe = undefined
       expect(() => configureToolshot()).toThrow(
-        'configureToolshot() must run within Jest context'
+        'configureToolshot() needs global describe(), afterAll(), test() and expect.extend() functions'
       )
     })
   })
@@ -39,15 +38,15 @@ describe('toolshot builder', () => {
   describe('given mocked test global', () => {
     let testSpy
     let describeSpy
-    let matchSpecificSnapshot
+    let matchFileSnapshot
 
     beforeEach(() => {
-      testSpy = jest.spyOn(global, 'test').mockImplementation(() => {})
-      describeSpy = jest
+      testSpy = vi.spyOn(global, 'test').mockImplementation(() => {})
+      describeSpy = vi
         .spyOn(global, 'describe')
         .mockImplementation((name, content) => content())
-      matchSpecificSnapshot = jest.fn().mockReturnValue({ pass: true })
-      expect.extend({ toMatchSpecificSnapshot: matchSpecificSnapshot })
+      matchFileSnapshot = vi.fn().mockReturnValue({ pass: true })
+      expect.extend({ toMatchFileSnapshot: matchFileSnapshot })
     })
 
     it('groups tools in a single suite', () => {
@@ -163,12 +162,12 @@ describe('toolshot builder', () => {
       expect(testSpy).toHaveBeenCalledTimes(1)
       await testSpy.mock.calls[0][1]()
       await sleep(100)
-      expect(matchSpecificSnapshot).toHaveBeenCalledWith(
+      expect(matchFileSnapshot).toHaveBeenCalledWith(
         document.querySelector('p'),
         join(fixtures, '__snapshots__', 'single.tools.shot'),
         'single tool'
       )
-      expect(matchSpecificSnapshot).toHaveBeenCalledTimes(1)
+      expect(matchFileSnapshot).toHaveBeenCalledTimes(1)
     })
 
     it('loads tool file and assert multiple results', async () => {
@@ -190,25 +189,25 @@ describe('toolshot builder', () => {
       h2.innerHTML = 'second'
       const h3 = document.createElement('h3')
       h3.innerHTML = 'third'
-      expect(matchSpecificSnapshot).toHaveBeenNthCalledWith(
+      expect(matchFileSnapshot).toHaveBeenNthCalledWith(
         1,
         h1,
         snapshotFile,
         'first tool'
       )
-      expect(matchSpecificSnapshot).toHaveBeenNthCalledWith(
+      expect(matchFileSnapshot).toHaveBeenNthCalledWith(
         2,
         h2,
         snapshotFile,
         'second tool'
       )
-      expect(matchSpecificSnapshot).toHaveBeenNthCalledWith(
+      expect(matchFileSnapshot).toHaveBeenNthCalledWith(
         3,
         h3,
         snapshotFile,
         'third tool'
       )
-      expect(matchSpecificSnapshot).toHaveBeenCalledTimes(3)
+      expect(matchFileSnapshot).toHaveBeenCalledTimes(3)
     })
 
     it('can configure snapshot folder name', async () => {
@@ -220,12 +219,12 @@ describe('toolshot builder', () => {
       expect(testSpy).toHaveBeenCalledTimes(1)
       await testSpy.mock.calls[0][1]()
       await sleep(100)
-      expect(matchSpecificSnapshot).toHaveBeenCalledWith(
+      expect(matchFileSnapshot).toHaveBeenCalledWith(
         document.querySelector('p'),
         join(fixtures, '__custom__', 'single.tools.shot'),
         'single tool'
       )
-      expect(matchSpecificSnapshot).toHaveBeenCalledTimes(1)
+      expect(matchFileSnapshot).toHaveBeenCalledTimes(1)
     })
   })
 })

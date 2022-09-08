@@ -1,13 +1,14 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Toolshot components/Loader.tools.svelte: Components/Loader 1`] = `
+exports[`Components/Loader 1`] = `
 <span>
   <svg
-    class="animate-spin"
+    class="animate-spin svelte-f2f9il"
     role="progressbar"
     viewBox="22 22 44 44"
   >
     <circle
+      class="svelte-f2f9il"
       cx="44"
       cy="44"
       fill="none"
@@ -15,5 +16,6 @@ exports[`Toolshot components/Loader.tools.svelte: Components/Loader 1`] = `
       stroke-width="3.6"
     />
   </svg>
+  <!--&lt;Loader&gt;-->
 </span>
 `;

@@ -1,18 +1,25 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Toolshot components/Explorer.tools.svelte: Multiple levels 1`] = `
+exports[`Multiple levels 1`] = `
 <span>
-  <nav>
+  <nav
+    class="svelte-aeg211"
+  >
     <ol />
   </nav>
+  <!--&lt;BreadCrumb&gt;-->
    
-  <ul>
+  <ul
+    class="svelte-1i7sfgn"
+  >
     <li
-      class="isCurrent"
+      class="svelte-1i7sfgn isCurrent"
     >
-      <div>
+      <div
+        class="svelte-1i7sfgn"
+      >
         <span
-          class="material-icons symbol"
+          class="material-icons symbol svelte-1i7sfgn"
         >
           architecture
         </span>
@@ -21,13 +28,13 @@ exports[`Toolshot components/Explorer.tools.svelte: Multiple levels 1`] = `
        
     </li>
     <li
-      class="isCurrent"
+      class="svelte-1i7sfgn isCurrent"
     >
       <div
-        class="folder"
+        class="svelte-1i7sfgn folder"
       >
         <span
-          class="material-icons symbol"
+          class="material-icons symbol svelte-1i7sfgn"
         >
           folder_open
         </span>
@@ -36,13 +43,13 @@ exports[`Toolshot components/Explorer.tools.svelte: Multiple levels 1`] = `
        
     </li>
     <li
-      class="isCurrent"
+      class="svelte-1i7sfgn isCurrent"
     >
       <div
-        class="folder"
+        class="svelte-1i7sfgn folder"
       >
         <span
-          class="material-icons symbol"
+          class="material-icons symbol svelte-1i7sfgn"
         >
           folder_open
         </span>
@@ -51,22 +58,31 @@ exports[`Toolshot components/Explorer.tools.svelte: Multiple levels 1`] = `
        
     </li>
   </ul>
+  <!--&lt;ToolGroup&gt;-->
+  <!--&lt;Explorer&gt;-->
 </span>
 `;
 
-exports[`Toolshot components/Explorer.tools.svelte: Single level 1`] = `
+exports[`Single level 1`] = `
 <span>
-  <nav>
+  <nav
+    class="svelte-aeg211"
+  >
     <ol />
   </nav>
+  <!--&lt;BreadCrumb&gt;-->
    
-  <ul>
+  <ul
+    class="svelte-1i7sfgn"
+  >
     <li
-      class="isCurrent"
+      class="svelte-1i7sfgn isCurrent"
     >
-      <div>
+      <div
+        class="svelte-1i7sfgn"
+      >
         <span
-          class="material-icons symbol"
+          class="material-icons symbol svelte-1i7sfgn"
         >
           architecture
         </span>
@@ -75,11 +91,13 @@ exports[`Toolshot components/Explorer.tools.svelte: Single level 1`] = `
        
     </li>
     <li
-      class="isCurrent"
+      class="svelte-1i7sfgn isCurrent"
     >
-      <div>
+      <div
+        class="svelte-1i7sfgn"
+      >
         <span
-          class="material-icons symbol"
+          class="material-icons symbol svelte-1i7sfgn"
         >
           architecture
         </span>
@@ -88,11 +106,13 @@ exports[`Toolshot components/Explorer.tools.svelte: Single level 1`] = `
        
     </li>
     <li
-      class="isCurrent"
+      class="svelte-1i7sfgn isCurrent"
     >
-      <div>
+      <div
+        class="svelte-1i7sfgn"
+      >
         <span
-          class="material-icons symbol"
+          class="material-icons symbol svelte-1i7sfgn"
         >
           architecture
         </span>
@@ -101,5 +121,7 @@ exports[`Toolshot components/Explorer.tools.svelte: Single level 1`] = `
        
     </li>
   </ul>
+  <!--&lt;ToolGroup&gt;-->
+  <!--&lt;Explorer&gt;-->
 </span>
 `;

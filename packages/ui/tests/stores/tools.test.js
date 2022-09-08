@@ -14,7 +14,7 @@ import {
 describe('tools store', () => {
   const subscriptions = []
 
-  beforeEach(jest.resetAllMocks)
+  beforeEach(vi.resetAllMocks)
 
   afterEach(() => {
     for (const subscription of subscriptions) {
@@ -225,7 +225,7 @@ describe('tools store', () => {
   it('does not send properties updates without current tool', () => {
     const name = faker.lorem.words()
     const value = faker.datatype.number()
-    const postMessage = jest.fn()
+    const postMessage = vi.fn()
 
     const src = faker.internet.url()
     setWorkbenchFrame({ src, contentWindow: { postMessage } })
@@ -237,7 +237,7 @@ describe('tools store', () => {
 
   it('ignores removal of unknown tools', () => {
     const src = faker.internet.url()
-    window.history.pushState({}, '', 'http://localhost')
+    window.history.pushState('', 'http://localhost')
     setWorkbenchFrame({ src, contentWindow: { postMessage } })
     window.dispatchEvent(
       new MessageEvent('message', {
@@ -250,15 +250,16 @@ describe('tools store', () => {
   })
 
   describe('given some registered tools', () => {
-    const postMessage = jest.fn()
+    const postMessage = vi.fn()
     const src = faker.internet.url()
     const tool1 = { fullName: faker.commerce.productName() }
     const tool2 = { fullName: faker.commerce.productName() }
     const tool3 = { fullName: faker.commerce.productName() }
 
-    beforeEach(() => {
-      window.history.pushState({}, '', 'http://localhost')
+    beforeEach(async () => {
+      window.history.pushState({}, '', 'http://localhost:3000')
       setWorkbenchFrame({ src, contentWindow: { postMessage } })
+      await Promise.resolve()
       window.dispatchEvent(
         new MessageEvent('message', {
           origin: src,
@@ -326,6 +327,7 @@ describe('tools store', () => {
     })
 
     it('registers existing tools', () => {
+      expect(get(currentTool)).toEqual(tool1)
       const updatedTool2 = { ...tool2, count: 1 }
       window.dispatchEvent(
         new MessageEvent('message', {
@@ -347,7 +349,7 @@ describe('tools store', () => {
       expect(get(tools)).toEqual([updatedTool1, updatedTool2, tool3])
     })
 
-    it('send newly selected tool to the frame and location', () => {
+    it('send newly selected tool to the frame and location', async () => {
       expect(get(currentTool)).toEqual(tool1)
 
       selectTool(tool3)
@@ -357,6 +359,7 @@ describe('tools store', () => {
         src
       )
       expect(postMessage).toHaveBeenCalledTimes(1)
+      await new Promise(r => setTimeout(r, 500))
       expect(new URLSearchParams(location.search).get('tool')).toEqual(
         tool3.fullName
       )

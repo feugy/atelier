@@ -1,8 +1,8 @@
 import { render } from '@testing-library/svelte'
-import 'jest-specific-snapshot'
 import klaw from 'klaw-sync'
 import { basename, dirname, extname, relative } from 'path'
 import html from 'svelte-htm'
+import './matcher.js'
 
 /**
  * @typedef {object} ToolshotOptions - toolshot options, including:
@@ -39,8 +39,15 @@ export function configureToolshot({
   snapshotFolder = '__snapshots__',
   timeout = 5000
 } = {}) {
-  if (typeof describe !== 'function' || typeof test !== 'function') {
-    throw new Error('configureToolshot() must run within Jest context')
+  if (
+    typeof describe !== 'function' ||
+    typeof test !== 'function' ||
+    typeof afterAll !== 'function' ||
+    typeof expect?.extend !== 'function'
+  ) {
+    throw new Error(
+      'configureToolshot() needs global describe(), afterAll(), test() and expect.extend() functions'
+    )
   }
 
   const includeRegExp = new RegExp(include, 'i')
@@ -92,7 +99,7 @@ export function configureToolshot({
                 document.querySelector(
                   `[data-full-name="${encodeURIComponent(tool.fullName)}"]`
                 ).firstChild
-              ).toMatchSpecificSnapshot(
+              ).toMatchFileSnapshot(
                 `${toolboxFolder}/${snapshotFolder}/${toolboxName}.shot`,
                 tool.name
               )

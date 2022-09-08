@@ -1,6 +1,7 @@
 import { faker } from '@faker-js/faker'
 import { fireEvent, render, screen, waitFor } from '@testing-library/svelte'
 import { get, writable } from 'svelte/store'
+import { tick } from 'svelte'
 import html from 'svelte-htm'
 import { Button } from '../test-components'
 import { Tool, ToolBox } from '../../src'
@@ -11,21 +12,20 @@ import {
   recordEvent,
   recordVisibility
 } from '../../src/stores'
-import { tick } from 'svelte'
 
-jest.mock('../../src/stores', () => {
+vi.mock('../../src/stores', () => {
   const { writable } = require('svelte/store')
   return {
     currentTool: new writable(),
-    registerTool: jest.fn(),
-    recordError: jest.fn(),
-    recordEvent: jest.fn(),
-    recordVisibility: jest.fn()
+    registerTool: vi.fn(),
+    recordError: vi.fn(),
+    recordEvent: vi.fn(),
+    recordVisibility: vi.fn()
   }
 })
 
 describe('Tool component', () => {
-  beforeEach(jest.resetAllMocks)
+  beforeEach(vi.resetAllMocks)
 
   describe('given no toolbox', () => {
     it('needs a name', () => {
@@ -349,7 +349,7 @@ describe('Tool component', () => {
 
     it('calls tool setup before displaying it', async () => {
       const name = faker.lorem.words()
-      const setup = jest.fn().mockResolvedValue()
+      const setup = vi.fn().mockResolvedValue()
       const props = { label: 'Aww yeah' }
       render(
         html`<${Tool}
@@ -385,7 +385,7 @@ describe('Tool component', () => {
       const name = faker.lorem.words()
       const props = { label: 'Aww yeah' }
       const finalProps = { label: 'overridden' }
-      const setup = jest.fn().mockResolvedValue(finalProps)
+      const setup = vi.fn().mockResolvedValue(finalProps)
       currentTool.set({ fullName: name, name })
       render(
         html`<${Tool}
@@ -411,7 +411,7 @@ describe('Tool component', () => {
 
     it('calls tool setup before displaying within a slot', async () => {
       const name = faker.lorem.words()
-      const setup = jest.fn().mockResolvedValue()
+      const setup = vi.fn().mockResolvedValue()
       const props = { label: 'Aww yeah' }
       render(
         html`<${Tool} name=${name} props=${props} setup=${setup}><${Button} /></${Tool}>`
@@ -439,7 +439,7 @@ describe('Tool component', () => {
 
     it('calls tool teardown after destroying it', async () => {
       const name = faker.lorem.words()
-      const teardown = jest.fn().mockResolvedValue()
+      const teardown = vi.fn().mockResolvedValue()
       render(
         html`<${Tool} name=${name} component=${Button} teardown=${teardown} />`
       )
@@ -474,7 +474,7 @@ describe('Tool component', () => {
 
     it('calls tool teardown after destroying it within a slot', async () => {
       const name = faker.lorem.words()
-      const teardown = jest.fn().mockResolvedValue()
+      const teardown = vi.fn().mockResolvedValue()
       render(
         html`<${Tool} name=${name} teardown=${teardown}><${Button} /></${Tool}>`
       )
@@ -789,8 +789,8 @@ describe('Tool component', () => {
       const toolBoxName = faker.lorem.words()
       const name = faker.lorem.words()
       const fullName = `${toolBoxName}/${name}`
-      const setup = jest.fn().mockResolvedValue()
-      const toolSetup = jest.fn().mockResolvedValue()
+      const setup = vi.fn().mockResolvedValue()
+      const toolSetup = vi.fn().mockResolvedValue()
       const props = { label: 'Aww yeah', disabled: true }
       render(html`<${ToolBox}
         name=${toolBoxName}
@@ -832,8 +832,8 @@ describe('Tool component', () => {
       const props = { label: 'Aww yeah', disabled: true }
       const intermediateProps = { label: 'intermediate' }
       const finalProps = { label: 'overridden' }
-      const setup = jest.fn().mockResolvedValue(intermediateProps)
-      const toolSetup = jest.fn().mockResolvedValue(finalProps)
+      const setup = vi.fn().mockResolvedValue(intermediateProps)
+      const toolSetup = vi.fn().mockResolvedValue(finalProps)
       currentTool.set({ fullName, name })
       render(html`<${ToolBox}
         name=${toolBoxName}
@@ -873,9 +873,9 @@ describe('Tool component', () => {
       const name2 = faker.lorem.words()
       const fullName2 = `${toolBoxName}/${name2}`
       const props2 = { label: 'Aww yeah', disabled: false }
-      const setup = jest.fn().mockResolvedValue()
-      const toolSetup1 = jest.fn().mockResolvedValue()
-      const toolSetup2 = jest.fn().mockResolvedValue()
+      const setup = vi.fn().mockResolvedValue()
+      const toolSetup1 = vi.fn().mockResolvedValue()
+      const toolSetup2 = vi.fn().mockResolvedValue()
       render(html`<${ToolBox}
         name=${toolBoxName}
         component=${Button}
@@ -955,8 +955,8 @@ describe('Tool component', () => {
     it('calls tool teardown, then toolbox teardown after destroying it', async () => {
       const toolBoxName = faker.lorem.words()
       const name = faker.lorem.words()
-      const teardown = jest.fn().mockResolvedValue()
-      const toolTeardown = jest.fn().mockResolvedValue()
+      const teardown = vi.fn().mockResolvedValue()
+      const toolTeardown = vi.fn().mockResolvedValue()
       currentTool.set({ name, fullName: `${toolBoxName}/${name}` })
       render(html`<${ToolBox}
         name=${toolBoxName}
@@ -998,9 +998,9 @@ describe('Tool component', () => {
       const toolBoxName = faker.lorem.words()
       const name1 = faker.lorem.words()
       const name2 = faker.lorem.words()
-      const teardown = jest.fn().mockResolvedValue()
-      const toolTeardown1 = jest.fn().mockResolvedValue()
-      const toolTeardown2 = jest.fn().mockResolvedValue()
+      const teardown = vi.fn().mockResolvedValue()
+      const toolTeardown1 = vi.fn().mockResolvedValue()
+      const toolTeardown2 = vi.fn().mockResolvedValue()
       currentTool.set({ name: name1, fullName: `${toolBoxName}/${name1}` })
       render(html`<${ToolBox}
         name=${toolBoxName}

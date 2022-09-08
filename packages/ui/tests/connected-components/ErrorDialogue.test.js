@@ -1,10 +1,10 @@
 import { render, screen, within } from '@testing-library/svelte'
 import html from 'svelte-htm'
 import { translate } from '../test-utils'
-import ErrorDialogue from '../../src/connected-components/ErrorDialogue'
+import ErrorDialogue from '../../src/connected-components/ErrorDialogue.svelte'
 import { lastError } from '../../src/stores'
 
-jest.mock('../../src/stores/tools', () => ({
+vi.mock('../../src/stores/tools', () => ({
   lastError: new (require('rxjs').BehaviorSubject)()
 }))
 

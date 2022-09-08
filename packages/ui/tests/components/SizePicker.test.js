@@ -8,12 +8,12 @@ describe('SizePicker component', () => {
     // we're not testing DOM elements, but assignments to mock object.
     /* eslint-disable jest-dom/prefer-to-have-style */
     style: {},
-    parentElement: { classList: { add: jest.fn(), remove: jest.fn() } }
+    parentElement: { classList: { add: vi.fn(), remove: vi.fn() } }
   }
 
   beforeEach(() => {
     viewport.style = {}
-    jest.resetAllMocks()
+    vi.resetAllMocks()
   })
 
   describe.each([

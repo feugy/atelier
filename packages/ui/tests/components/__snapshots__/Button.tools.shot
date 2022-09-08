@@ -1,20 +1,24 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Toolshot components/Button.tools.svelte: Default 1`] = `
+exports[`Default 1`] = `
 <span>
-  <button>
+  <button
+    class="svelte-6r5o0y"
+  >
      
     <span>
       Default
     </span>
      
   </button>
+  <!--&lt;Button&gt;-->
 </span>
 `;
 
-exports[`Toolshot components/Button.tools.svelte: Disabled 1`] = `
+exports[`Disabled 1`] = `
 <span>
   <button
+    class="svelte-6r5o0y"
     disabled=""
   >
      
@@ -23,45 +27,48 @@ exports[`Toolshot components/Button.tools.svelte: Disabled 1`] = `
     </span>
      
   </button>
+  <!--&lt;Button&gt;-->
 </span>
 `;
 
-exports[`Toolshot components/Button.tools.svelte: Icon only 1`] = `
+exports[`Icon only 1`] = `
 <span>
   <button
-    class="iconOnly"
+    class="iconOnly svelte-6r5o0y"
   >
     <i
-      class="material-icons"
+      class="material-icons svelte-6r5o0y"
     >
       face
     </i>
      
      
   </button>
+  <!--&lt;Button&gt;-->
 </span>
 `;
 
-exports[`Toolshot components/Button.tools.svelte: Icon only, no color 1`] = `
+exports[`Icon only, no color 1`] = `
 <span>
   <button
-    class="iconOnly noColor"
+    class="iconOnly noColor svelte-6r5o0y"
   >
     <i
-      class="material-icons"
+      class="material-icons svelte-6r5o0y"
     >
       face
     </i>
      
      
   </button>
+  <!--&lt;Button&gt;-->
 </span>
 `;
 
-exports[`Toolshot components/Button.tools.svelte: No color 1`] = `
+exports[`No color 1`] = `
 <span>
   <button
-    class="noColor"
+    class="noColor svelte-6r5o0y"
   >
      
     <span>
@@ -69,13 +76,14 @@ exports[`Toolshot components/Button.tools.svelte: No color 1`] = `
     </span>
      
   </button>
+  <!--&lt;Button&gt;-->
 </span>
 `;
 
-exports[`Toolshot components/Button.tools.svelte: Primary 1`] = `
+exports[`Primary 1`] = `
 <span>
   <button
-    class="primary"
+    class="primary svelte-6r5o0y"
   >
      
     <span>
@@ -83,13 +91,14 @@ exports[`Toolshot components/Button.tools.svelte: Primary 1`] = `
     </span>
      
   </button>
+  <!--&lt;Button&gt;-->
 </span>
 `;
 
-exports[`Toolshot components/Button.tools.svelte: Primary disabled 1`] = `
+exports[`Primary disabled 1`] = `
 <span>
   <button
-    class="primary"
+    class="primary svelte-6r5o0y"
     disabled=""
   >
      
@@ -98,48 +107,51 @@ exports[`Toolshot components/Button.tools.svelte: Primary disabled 1`] = `
     </span>
      
   </button>
+  <!--&lt;Button&gt;-->
 </span>
 `;
 
-exports[`Toolshot components/Button.tools.svelte: Primary with icon only 1`] = `
+exports[`Primary with icon only 1`] = `
 <span>
   <button
-    class="primary iconOnly"
+    class="primary iconOnly svelte-6r5o0y"
   >
     <i
-      class="material-icons"
+      class="material-icons svelte-6r5o0y"
     >
       volume_up
     </i>
      
      
   </button>
+  <!--&lt;Button&gt;-->
 </span>
 `;
 
-exports[`Toolshot components/Button.tools.svelte: Primary with icon only, no color 1`] = `
+exports[`Primary with icon only, no color 1`] = `
 <span>
   <button
-    class="primary iconOnly noColor"
+    class="primary iconOnly noColor svelte-6r5o0y"
   >
     <i
-      class="material-icons"
+      class="material-icons svelte-6r5o0y"
     >
       volume_up
     </i>
      
      
   </button>
+  <!--&lt;Button&gt;-->
 </span>
 `;
 
-exports[`Toolshot components/Button.tools.svelte: Primary with text and icon 1`] = `
+exports[`Primary with text and icon 1`] = `
 <span>
   <button
-    class="primary"
+    class="primary svelte-6r5o0y"
   >
     <i
-      class="material-icons"
+      class="material-icons svelte-6r5o0y"
     >
       person
     </i>
@@ -149,14 +161,17 @@ exports[`Toolshot components/Button.tools.svelte: Primary with text and icon 1`]
     </span>
      
   </button>
+  <!--&lt;Button&gt;-->
 </span>
 `;
 
-exports[`Toolshot components/Button.tools.svelte: Text and icon 1`] = `
+exports[`Text and icon 1`] = `
 <span>
-  <button>
+  <button
+    class="svelte-6r5o0y"
+  >
     <i
-      class="material-icons"
+      class="material-icons svelte-6r5o0y"
     >
       face
     </i>
@@ -166,5 +181,6 @@ exports[`Toolshot components/Button.tools.svelte: Text and icon 1`] = `
     </span>
      
   </button>
+  <!--&lt;Button&gt;-->
 </span>
 `;

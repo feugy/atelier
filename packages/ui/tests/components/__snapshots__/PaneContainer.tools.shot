@@ -1,55 +1,72 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Toolshot components/PaneContainer.tools.svelte: Empty 1`] = `
+exports[`Empty 1`] = `
 <span>
   
+  <!--&lt;PaneContainer&gt;-->
 </span>
 `;
 
-exports[`Toolshot components/PaneContainer.tools.svelte: Multiple tabs 1`] = `
-<span>
+exports[`Multiple tabs 1`] = `
+<span
+  class="svelte-3qf6s7"
+>
   <div
-    class="root"
+    class="root svelte-1hpkjx7"
   >
-    <nav>
-      <ul>
+    <nav
+      class="svelte-1hpkjx7"
+    >
+      <ul
+        class="svelte-1hpkjx7"
+      >
         <li
-          class="current"
+          class="svelte-1hpkjx7 current"
         >
           First tab
         </li>
         
-        <li>
+        <li
+          class="svelte-1hpkjx7"
+        >
           Another one
         </li>
         
-        <li>
+        <li
+          class="svelte-1hpkjx7"
+        >
           A third...
         </li>
         
          
-        <li>
+        <li
+          class="svelte-1hpkjx7"
+        >
            
           <button
-            class="iconOnly noColor"
+            class="iconOnly noColor svelte-6r5o0y"
             title="tooltip.collapsible"
           >
             <i
-              class="material-icons"
+              class="material-icons svelte-6r5o0y"
             >
               expand_more
             </i>
              
              
           </button>
+          <!--&lt;Button&gt;-->
         </li>
       </ul>
     </nav>
      
-    <main>
+    <main
+      class="svelte-1hpkjx7"
+    >
       <h1>
         This is pane #1
       </h1>
+      <!--&lt;Pane1&gt;-->
       
       
       
@@ -58,50 +75,64 @@ exports[`Toolshot components/PaneContainer.tools.svelte: Multiple tabs 1`] = `
     </main>
   </div>
   
+  <!--&lt;PaneContainer&gt;-->
 </span>
 `;
 
-exports[`Toolshot components/PaneContainer.tools.svelte: Single tab 1`] = `
-<span>
+exports[`Single tab 1`] = `
+<span
+  class="svelte-3qf6s7"
+>
   <div
-    class="root"
+    class="root svelte-1hpkjx7"
   >
-    <nav>
-      <ul>
+    <nav
+      class="svelte-1hpkjx7"
+    >
+      <ul
+        class="svelte-1hpkjx7"
+      >
         <li
-          class="current"
+          class="svelte-1hpkjx7 current"
         >
           tab 1
         </li>
         
          
-        <li>
+        <li
+          class="svelte-1hpkjx7"
+        >
            
           <button
-            class="iconOnly noColor"
+            class="iconOnly noColor svelte-6r5o0y"
             title="tooltip.collapsible"
           >
             <i
-              class="material-icons"
+              class="material-icons svelte-6r5o0y"
             >
               expand_more
             </i>
              
              
           </button>
+          <!--&lt;Button&gt;-->
         </li>
       </ul>
     </nav>
      
-    <main>
+    <main
+      class="svelte-1hpkjx7"
+    >
       <h1>
         This is pane #1
       </h1>
+      <!--&lt;Pane1&gt;-->
       
       
        
     </main>
   </div>
   
+  <!--&lt;PaneContainer&gt;-->
 </span>
 `;

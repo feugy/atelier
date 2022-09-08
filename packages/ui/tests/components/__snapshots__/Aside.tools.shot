@@ -1,21 +1,30 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Toolshot components/Aside.tools.svelte: Components/Aside 1`] = `
+exports[`Components/Aside 1`] = `
 <span>
-  <aside>
-    <span />
+  <aside
+    class="svelte-1xti39p"
+  >
+    <span
+      class="svelte-1xti39p"
+    />
      
-    <div>
+    <div
+      class="svelte-1xti39p"
+    >
       <span
-        class="material-icons"
+        class="material-icons svelte-1xti39p"
       >
         handyman
       </span>
        
-      <h1>
+      <h1
+        class="svelte-1xti39p"
+      >
         title.app
       </h1>
     </div>
   </aside>
+  <!--&lt;Aside&gt;-->
 </span>
 `;

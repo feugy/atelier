@@ -15,10 +15,10 @@ function mockExistence(fullName) {
 }
 
 describe('stores', () => {
-  const postMessage = jest.spyOn(window.parent, 'postMessage')
+  const postMessage = vi.spyOn(window.parent, 'postMessage')
   const origin = new URL(window.parent.location.href).origin
 
-  beforeEach(jest.resetAllMocks)
+  beforeEach(vi.resetAllMocks)
 
   describe('recordVisibility()', () => {
     it('records visibility change through postMessage', () => {
@@ -72,8 +72,7 @@ describe('stores', () => {
       const name = faker.lorem.word()
       const clickEvent = new MouseEvent('click', {
         bubbles: true,
-        cancelable: true,
-        view: window
+        cancelable: true
       })
       recordEvent(name, clickEvent)
       expect(postMessage).toHaveBeenCalledWith(
@@ -222,14 +221,14 @@ describe('stores', () => {
     it('updates tool properties when receiving updateProperty message', () => {
       const tool1 = {
         fullName: `${faker.lorem.word()}-2`,
-        updateProperty: jest.fn()
+        updateProperty: vi.fn()
       }
       registerTool(tool1)
       mockExistence(tool1.fullName)
 
       const tool2 = {
         fullName: `${faker.lorem.word()}-3`,
-        updateProperty: jest.fn()
+        updateProperty: vi.fn()
       }
       registerTool(tool2)
       mockExistence(tool2.fullName)
@@ -279,7 +278,7 @@ describe('stores', () => {
     it('does not update tool properties when receiving updateProperty message of unknown tool', () => {
       const tool = {
         fullName: `${faker.lorem.word()}-6`,
-        updateProperty: jest.fn()
+        updateProperty: vi.fn()
       }
       registerTool(tool)
 
@@ -313,7 +312,7 @@ describe('stores', () => {
     it('parse Arrays and Objects in property updates', () => {
       const tool = {
         fullName: `${faker.lorem.word()}-9`,
-        updateProperty: jest.fn()
+        updateProperty: vi.fn()
       }
       registerTool(tool)
 
@@ -339,7 +338,7 @@ describe('stores', () => {
     it('parse Maps and Sets in property updates', () => {
       const tool = {
         fullName: `${faker.lorem.word()}-11`,
-        updateProperty: jest.fn()
+        updateProperty: vi.fn()
       }
       registerTool(tool)
 
