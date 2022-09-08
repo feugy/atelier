@@ -2,22 +2,22 @@
 
 exports[`Custom colors 1`] = `
 <ul
-  class="s-h0HyUOZHS-l4"
+  class="svelte-1xwg7nr"
   role="toolbar"
 >
   <li
-    class="s-h0HyUOZHS-l4"
+    class="svelte-1xwg7nr"
   />
   <li
-    class="s-h0HyUOZHS-l4"
+    class="svelte-1xwg7nr"
     style="--background: #e879f9;"
   />
   <li
-    class="s-h0HyUOZHS-l4"
+    class="svelte-1xwg7nr"
     style="--background: rgba(150, 75, 50, 0.5);"
   />
   <li
-    class="s-h0HyUOZHS-l4"
+    class="svelte-1xwg7nr"
     style="--background: linear-gradient(to right, red, orange);"
   />
 </ul>
@@ -25,26 +25,26 @@ exports[`Custom colors 1`] = `
 
 exports[`Default colors 1`] = `
 <ul
-  class="s-h0HyUOZHS-l4"
+  class="svelte-1xwg7nr"
   role="toolbar"
 >
   <li
-    class="s-h0HyUOZHS-l4"
+    class="svelte-1xwg7nr"
   />
   <li
-    class="s-h0HyUOZHS-l4"
+    class="svelte-1xwg7nr"
     style="--background: white;"
   />
   <li
-    class="s-h0HyUOZHS-l4"
+    class="svelte-1xwg7nr"
     style="--background: #e0e0e0;"
   />
   <li
-    class="s-h0HyUOZHS-l4"
+    class="svelte-1xwg7nr"
     style="--background: #a0a0a0;"
   />
   <li
-    class="s-h0HyUOZHS-l4"
+    class="svelte-1xwg7nr"
     style="--background: black;"
   />
 </ul>

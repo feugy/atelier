@@ -1,56 +1,54 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Arrays 1`] = `
-<span
-  class="s-7qAc1DaxWaj4"
->
+<span>
   <div
-    class="root s-AofbQOEI1ryj"
+    class="root svelte-v4o7vv"
   >
     <span
-      class="s-AofbQOEI1ryj"
+      class="svelte-v4o7vv"
     >
       <label
-        class="s-AofbQOEI1ryj"
+        class="svelte-v4o7vv"
         for="numbers"
       >
         numbers
       </label>
        
       <textarea
-        class="s-AofbQOEI1ryj"
+        class="svelte-v4o7vv"
         id="numbers"
       />
        
     </span>
     <span
-      class="s-AofbQOEI1ryj"
+      class="svelte-v4o7vv"
     >
       <label
-        class="s-AofbQOEI1ryj"
+        class="svelte-v4o7vv"
         for="strings"
       >
         strings
       </label>
        
       <textarea
-        class="s-AofbQOEI1ryj"
+        class="svelte-v4o7vv"
         id="strings"
       />
        
     </span>
     <span
-      class="s-AofbQOEI1ryj"
+      class="svelte-v4o7vv"
     >
       <label
-        class="s-AofbQOEI1ryj"
+        class="svelte-v4o7vv"
         for="empty"
       >
         empty
       </label>
        
       <textarea
-        class="s-AofbQOEI1ryj"
+        class="svelte-v4o7vv"
         id="empty"
       />
        
@@ -61,57 +59,55 @@ exports[`Arrays 1`] = `
 `;
 
 exports[`Native types 1`] = `
-<span
-  class="s-7qAc1DaxWaj4"
->
+<span>
   <div
-    class="root s-AofbQOEI1ryj"
+    class="root svelte-v4o7vv"
   >
     <span
-      class="s-AofbQOEI1ryj"
+      class="svelte-v4o7vv"
     >
       <label
-        class="s-AofbQOEI1ryj"
+        class="svelte-v4o7vv"
         for="name"
       >
         name
       </label>
        
       <input
-        class="s-AofbQOEI1ryj"
+        class="svelte-v4o7vv"
         id="name"
       />
        
     </span>
     <span
-      class="s-AofbQOEI1ryj"
+      class="svelte-v4o7vv"
     >
       <label
-        class="s-AofbQOEI1ryj"
+        class="svelte-v4o7vv"
         for="age"
       >
         age
       </label>
        
       <input
-        class="s-AofbQOEI1ryj"
+        class="svelte-v4o7vv"
         id="age"
         type="number"
       />
        
     </span>
     <span
-      class="s-AofbQOEI1ryj"
+      class="svelte-v4o7vv"
     >
       <label
-        class="s-AofbQOEI1ryj"
+        class="svelte-v4o7vv"
         for="hasSigned"
       >
         hasSigned
       </label>
        
       <input
-        class="s-AofbQOEI1ryj"
+        class="svelte-v4o7vv"
         id="hasSigned"
         type="checkbox"
       />
@@ -123,56 +119,54 @@ exports[`Native types 1`] = `
 `;
 
 exports[`Objects 1`] = `
-<span
-  class="s-7qAc1DaxWaj4"
->
+<span>
   <div
-    class="root s-AofbQOEI1ryj"
+    class="root svelte-v4o7vv"
   >
     <span
-      class="s-AofbQOEI1ryj"
+      class="svelte-v4o7vv"
     >
       <label
-        class="s-AofbQOEI1ryj"
+        class="svelte-v4o7vv"
         for="numbers"
       >
         numbers
       </label>
        
       <textarea
-        class="s-AofbQOEI1ryj"
+        class="svelte-v4o7vv"
         id="numbers"
       />
        
     </span>
     <span
-      class="s-AofbQOEI1ryj"
+      class="svelte-v4o7vv"
     >
       <label
-        class="s-AofbQOEI1ryj"
+        class="svelte-v4o7vv"
         for="strings"
       >
         strings
       </label>
        
       <textarea
-        class="s-AofbQOEI1ryj"
+        class="svelte-v4o7vv"
         id="strings"
       />
        
     </span>
     <span
-      class="s-AofbQOEI1ryj"
+      class="svelte-v4o7vv"
     >
       <label
-        class="s-AofbQOEI1ryj"
+        class="svelte-v4o7vv"
         for="empty"
       >
         empty
       </label>
        
       <textarea
-        class="s-AofbQOEI1ryj"
+        class="svelte-v4o7vv"
         id="empty"
       />
        

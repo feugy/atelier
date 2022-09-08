@@ -1,14 +1,12 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Empty 1`] = `
-<span
-  class="s-7qAc1DaxWaj4"
->
+<span>
   <div
-    class="root s-1jHrzA2TXN4p"
+    class="root svelte-ygsof7"
   >
     <div
-      class="disclaimer s-Mso-UVgDL8y-"
+      class="disclaimer svelte-1d2pv82"
     >
       message.no-events
     </div>
@@ -20,59 +18,59 @@ exports[`Empty 1`] = `
 
 exports[`With events 1`] = `
 <div
-  class="root s-1jHrzA2TXN4p"
+  class="root svelte-ygsof7"
 >
   <div
-    class="log s-1jHrzA2TXN4p"
+    class="log svelte-ygsof7"
   >
     <div
-      class="time s-1jHrzA2TXN4p"
+      class="time svelte-ygsof7"
     >
       1:34:14 PM
     </div>
      
     <div
-      class="name s-1jHrzA2TXN4p"
+      class="name svelte-ygsof7"
     >
       simple
     </div>
      
     <div
-      class="args s-1jHrzA2TXN4p"
+      class="args"
     >
       hello!
     </div>
     <div
-      class="time s-1jHrzA2TXN4p"
+      class="time svelte-ygsof7"
     >
       10:00:00 AM
     </div>
      
     <div
-      class="name s-1jHrzA2TXN4p"
+      class="name svelte-ygsof7"
     >
       multiple
     </div>
      
     <div
-      class="args s-1jHrzA2TXN4p"
+      class="args"
     >
       1, true, hi
     </div>
     <div
-      class="time s-1jHrzA2TXN4p"
+      class="time svelte-ygsof7"
     >
       3:45:06 PM
     </div>
      
     <div
-      class="name s-1jHrzA2TXN4p"
+      class="name svelte-ygsof7"
     >
       DOM event
     </div>
      
     <div
-      class="args s-1jHrzA2TXN4p"
+      class="args"
     >
       {
   "altKey": false,
@@ -115,14 +113,14 @@ exports[`With events 1`] = `
   </div>
    
   <span
-    class="clear-button s-1jHrzA2TXN4p"
+    class="clear-button svelte-ygsof7"
   >
     <button
-      class="iconOnly s-NMyTiX1zi6rz"
+      class="iconOnly svelte-6r5o0y"
       title="tooltip.clear-events"
     >
       <i
-        class="material-icons s-NMyTiX1zi6rz"
+        class="material-icons svelte-6r5o0y"
       >
         clear_all
       </i>

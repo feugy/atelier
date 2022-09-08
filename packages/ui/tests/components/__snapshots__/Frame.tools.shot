@@ -2,21 +2,21 @@
 
 exports[`Components/Frame 1`] = `
 <span
-  class="viewport-container s-W668Ab5bybm8"
+  class="viewport-container svelte-10kat9k"
 >
   <div
-    class="s-W668Ab5bybm8"
+    class="svelte-10kat9k"
   >
     <span
-      class="loader s-W668Ab5bybm8"
+      class="loader svelte-10kat9k"
     >
       <svg
-        class="animate-spin s-BBunC__gYdVv"
+        class="animate-spin svelte-f2f9il"
         role="progressbar"
         viewBox="22 22 44 44"
       >
         <circle
-          class="s-BBunC__gYdVv"
+          class="svelte-f2f9il"
           cx="44"
           cy="44"
           fill="none"
@@ -28,7 +28,7 @@ exports[`Components/Frame 1`] = `
     </span>
      
     <iframe
-      class="s-W668Ab5bybm8"
+      class="svelte-10kat9k"
       src="index.html"
       title="workframe"
     />

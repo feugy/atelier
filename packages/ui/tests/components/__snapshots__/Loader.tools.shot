@@ -1,16 +1,14 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Components/Loader 1`] = `
-<span
-  class="s-7qAc1DaxWaj4"
->
+<span>
   <svg
-    class="animate-spin s-BBunC__gYdVv"
+    class="animate-spin svelte-f2f9il"
     role="progressbar"
     viewBox="22 22 44 44"
   >
     <circle
-      class="s-BBunC__gYdVv"
+      class="svelte-f2f9il"
       cx="44"
       cy="44"
       fill="none"

@@ -5,38 +5,36 @@ exports[`App connected component > displays explorer, pane container with defaul
   <div>
      
     <aside
-      class="s-ufy4N79qlNiA"
+      class="svelte-1xti39p"
     >
       <span
-        class="s-ufy4N79qlNiA"
+        class="svelte-1xti39p"
       >
         <nav
-          class="s-949zNf21XPuY"
+          class="svelte-aeg211"
         >
-          <ol
-            class="s-949zNf21XPuY"
-          />
+          <ol />
         </nav>
         <!--&lt;BreadCrumb&gt;-->
          
         <ul
-          class="s-YQBR31bjQxRq"
+          class="svelte-1i7sfgn"
         />
         <!--&lt;ToolGroup&gt;-->
         <!--&lt;Explorer&gt;-->
       </span>
        
       <div
-        class="s-ufy4N79qlNiA"
+        class="svelte-1xti39p"
       >
         <span
-          class="material-icons s-ufy4N79qlNiA"
+          class="material-icons svelte-1xti39p"
         >
           handyman
         </span>
          
         <h1
-          class="s-ufy4N79qlNiA"
+          class="svelte-1xti39p"
         >
           Atelier
         </h1>
@@ -45,24 +43,24 @@ exports[`App connected component > displays explorer, pane container with defaul
     <!--&lt;Aside&gt;-->
      
     <main
-      class="s-zw8_1amru9jb"
+      class="svelte-pmihz0"
     >
       <span
-        class="viewport-container s-W668Ab5bybm8"
+        class="viewport-container svelte-10kat9k"
       >
         <div
-          class="s-W668Ab5bybm8"
+          class="svelte-10kat9k"
         >
           <span
-            class="loader s-W668Ab5bybm8"
+            class="loader svelte-10kat9k"
           >
             <svg
-              class="animate-spin s-BBunC__gYdVv"
+              class="animate-spin svelte-f2f9il"
               role="progressbar"
               viewBox="22 22 44 44"
             >
               <circle
-                class="s-BBunC__gYdVv"
+                class="svelte-f2f9il"
                 cx="44"
                 cy="44"
                 fill="none"
@@ -74,7 +72,7 @@ exports[`App connected component > displays explorer, pane container with defaul
           </span>
            
           <iframe
-            class="s-W668Ab5bybm8"
+            class="svelte-10kat9k"
             src="workframe.html"
             title="workframe"
           />
@@ -83,33 +81,33 @@ exports[`App connected component > displays explorer, pane container with defaul
       <!--&lt;Frame&gt;-->
        
       <div
-        class="root s-P6J8Lj8bk_bE has-collapsed"
+        class="root svelte-1hpkjx7 has-collapsed"
       >
         <nav
-          class="s-P6J8Lj8bk_bE"
+          class="svelte-1hpkjx7"
         >
           <ul
-            class="s-P6J8Lj8bk_bE"
+            class="svelte-1hpkjx7"
           >
             
             
              
             <li
-              class="s-P6J8Lj8bk_bE"
+              class="svelte-1hpkjx7"
             >
               <div
-                class="s-zw8_1amru9jb"
+                class="svelte-pmihz0"
               >
                 <div
-                  class="s-iHgI6ExwAEwa"
+                  class="svelte-4941ld"
                   role="toolbar"
                 >
                   <button
-                    class="primary iconOnly noColor s-NMyTiX1zi6rz"
+                    class="primary iconOnly noColor svelte-6r5o0y"
                     title="Petit [320 x 568]"
                   >
                     <i
-                      class="material-icons s-NMyTiX1zi6rz"
+                      class="material-icons svelte-6r5o0y"
                     >
                       phone_android
                     </i>
@@ -118,11 +116,11 @@ exports[`App connected component > displays explorer, pane container with defaul
                   </button>
                   <!--&lt;Button&gt;-->
                   <button
-                    class="primary iconOnly noColor s-NMyTiX1zi6rz"
+                    class="primary iconOnly noColor svelte-6r5o0y"
                     title="Moyen [414 x 896]"
                   >
                     <i
-                      class="material-icons s-NMyTiX1zi6rz"
+                      class="material-icons svelte-6r5o0y"
                     >
                       stay_current_landscape
                     </i>
@@ -131,11 +129,11 @@ exports[`App connected component > displays explorer, pane container with defaul
                   </button>
                   <!--&lt;Button&gt;-->
                   <button
-                    class="primary iconOnly noColor s-NMyTiX1zi6rz"
+                    class="primary iconOnly noColor svelte-6r5o0y"
                     title="Large [834 x 1112]"
                   >
                     <i
-                      class="material-icons s-NMyTiX1zi6rz"
+                      class="material-icons svelte-6r5o0y"
                     >
                       tablet_android
                     </i>
@@ -147,26 +145,26 @@ exports[`App connected component > displays explorer, pane container with defaul
                 <!--&lt;SizePicker&gt;-->
                  
                 <ul
-                  class="s-h0HyUOZHS-l4"
+                  class="svelte-1xwg7nr"
                   role="toolbar"
                 >
                   <li
-                    class="s-h0HyUOZHS-l4"
+                    class="svelte-1xwg7nr"
                   />
                   <li
-                    class="s-h0HyUOZHS-l4"
+                    class="svelte-1xwg7nr"
                     style="--background: white;"
                   />
                   <li
-                    class="s-h0HyUOZHS-l4"
+                    class="svelte-1xwg7nr"
                     style="--background: #e0e0e0;"
                   />
                   <li
-                    class="s-h0HyUOZHS-l4"
+                    class="svelte-1xwg7nr"
                     style="--background: #a0a0a0;"
                   />
                   <li
-                    class="s-h0HyUOZHS-l4"
+                    class="svelte-1xwg7nr"
                     style="--background: black;"
                   />
                 </ul>
@@ -174,11 +172,11 @@ exports[`App connected component > displays explorer, pane container with defaul
               </div>
                
               <button
-                class="iconOnly noColor s-NMyTiX1zi6rz"
+                class="iconOnly noColor svelte-6r5o0y"
                 title="Réduire/Etendre"
               >
                 <i
-                  class="material-icons s-NMyTiX1zi6rz"
+                  class="material-icons svelte-6r5o0y"
                 >
                   expand_less
                 </i>
@@ -191,13 +189,13 @@ exports[`App connected component > displays explorer, pane container with defaul
         </nav>
          
         <main
-          class="s-P6J8Lj8bk_bE collapsed"
+          class="svelte-1hpkjx7 collapsed"
         >
           
           
            
           <div
-            class="disclaimer s-Mso-UVgDL8y-"
+            class="disclaimer svelte-1d2pv82"
           >
             Cet outil n'est pas configuré pour recevoir des évènements ou pour modifier les propriétés.
           </div>

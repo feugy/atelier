@@ -1,9 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Empty 1`] = `
-<span
-  class="s-7qAc1DaxWaj4"
->
+<span>
   
   <!--&lt;PaneContainer&gt;-->
 </span>
@@ -11,46 +9,46 @@ exports[`Empty 1`] = `
 
 exports[`Multiple tabs 1`] = `
 <span
-  class="s-ecxglyKpgvvR"
+  class="svelte-3qf6s7"
 >
   <div
-    class="root s-P6J8Lj8bk_bE"
+    class="root svelte-1hpkjx7"
   >
     <nav
-      class="s-P6J8Lj8bk_bE"
+      class="svelte-1hpkjx7"
     >
       <ul
-        class="s-P6J8Lj8bk_bE"
+        class="svelte-1hpkjx7"
       >
         <li
-          class="s-P6J8Lj8bk_bE current"
+          class="svelte-1hpkjx7 current"
         >
           First tab
         </li>
         
         <li
-          class="s-P6J8Lj8bk_bE"
+          class="svelte-1hpkjx7"
         >
           Another one
         </li>
         
         <li
-          class="s-P6J8Lj8bk_bE"
+          class="svelte-1hpkjx7"
         >
           A third...
         </li>
         
          
         <li
-          class="s-P6J8Lj8bk_bE"
+          class="svelte-1hpkjx7"
         >
            
           <button
-            class="iconOnly noColor s-NMyTiX1zi6rz"
+            class="iconOnly noColor svelte-6r5o0y"
             title="tooltip.collapsible"
           >
             <i
-              class="material-icons s-NMyTiX1zi6rz"
+              class="material-icons svelte-6r5o0y"
             >
               expand_more
             </i>
@@ -63,7 +61,7 @@ exports[`Multiple tabs 1`] = `
     </nav>
      
     <main
-      class="s-P6J8Lj8bk_bE"
+      class="svelte-1hpkjx7"
     >
       <h1>
         This is pane #1
@@ -83,34 +81,34 @@ exports[`Multiple tabs 1`] = `
 
 exports[`Single tab 1`] = `
 <span
-  class="s-ecxglyKpgvvR"
+  class="svelte-3qf6s7"
 >
   <div
-    class="root s-P6J8Lj8bk_bE"
+    class="root svelte-1hpkjx7"
   >
     <nav
-      class="s-P6J8Lj8bk_bE"
+      class="svelte-1hpkjx7"
     >
       <ul
-        class="s-P6J8Lj8bk_bE"
+        class="svelte-1hpkjx7"
       >
         <li
-          class="s-P6J8Lj8bk_bE current"
+          class="svelte-1hpkjx7 current"
         >
           tab 1
         </li>
         
          
         <li
-          class="s-P6J8Lj8bk_bE"
+          class="svelte-1hpkjx7"
         >
            
           <button
-            class="iconOnly noColor s-NMyTiX1zi6rz"
+            class="iconOnly noColor svelte-6r5o0y"
             title="tooltip.collapsible"
           >
             <i
-              class="material-icons s-NMyTiX1zi6rz"
+              class="material-icons svelte-6r5o0y"
             >
               expand_more
             </i>
@@ -123,7 +121,7 @@ exports[`Single tab 1`] = `
     </nav>
      
     <main
-      class="s-P6J8Lj8bk_bE"
+      class="svelte-1hpkjx7"
     >
       <h1>
         This is pane #1

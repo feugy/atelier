@@ -2,15 +2,15 @@
 
 exports[`Custom values 1`] = `
 <div
-  class="s-iHgI6ExwAEwa"
+  class="svelte-4941ld"
   role="toolbar"
 >
   <button
-    class="primary iconOnly noColor s-NMyTiX1zi6rz"
+    class="primary iconOnly noColor svelte-6r5o0y"
     title="label.medium-viewport [320 x 480]"
   >
     <i
-      class="material-icons s-NMyTiX1zi6rz"
+      class="material-icons svelte-6r5o0y"
     >
       laptop
     </i>
@@ -19,11 +19,11 @@ exports[`Custom values 1`] = `
   </button>
   <!--&lt;Button&gt;-->
   <button
-    class="primary iconOnly noColor s-NMyTiX1zi6rz"
+    class="primary iconOnly noColor svelte-6r5o0y"
     title="label.medium-viewport [480 x 800]"
   >
     <i
-      class="material-icons s-NMyTiX1zi6rz"
+      class="material-icons svelte-6r5o0y"
     >
       border_outer
     </i>
@@ -36,15 +36,15 @@ exports[`Custom values 1`] = `
 
 exports[`Default values 1`] = `
 <div
-  class="s-iHgI6ExwAEwa"
+  class="svelte-4941ld"
   role="toolbar"
 >
   <button
-    class="primary iconOnly noColor s-NMyTiX1zi6rz"
+    class="primary iconOnly noColor svelte-6r5o0y"
     title="label.small-viewport [320 x 568]"
   >
     <i
-      class="material-icons s-NMyTiX1zi6rz"
+      class="material-icons svelte-6r5o0y"
     >
       phone_android
     </i>
@@ -53,11 +53,11 @@ exports[`Default values 1`] = `
   </button>
   <!--&lt;Button&gt;-->
   <button
-    class="primary iconOnly noColor s-NMyTiX1zi6rz"
+    class="primary iconOnly noColor svelte-6r5o0y"
     title="label.medium-viewport [414 x 896]"
   >
     <i
-      class="material-icons s-NMyTiX1zi6rz"
+      class="material-icons svelte-6r5o0y"
     >
       stay_current_landscape
     </i>
@@ -66,11 +66,11 @@ exports[`Default values 1`] = `
   </button>
   <!--&lt;Button&gt;-->
   <button
-    class="primary iconOnly noColor s-NMyTiX1zi6rz"
+    class="primary iconOnly noColor svelte-6r5o0y"
     title="label.large-viewport [834 x 1112]"
   >
     <i
-      class="material-icons s-NMyTiX1zi6rz"
+      class="material-icons svelte-6r5o0y"
     >
       tablet_android
     </i>

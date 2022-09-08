@@ -1,16 +1,12 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Default 1`] = `
-<span
-  class="s-7qAc1DaxWaj4"
->
+<span>
   <button
-    class="s-NMyTiX1zi6rz"
+    class="svelte-6r5o0y"
   >
      
-    <span
-      class="s-NMyTiX1zi6rz"
-    >
+    <span>
       Default
     </span>
      
@@ -20,17 +16,13 @@ exports[`Default 1`] = `
 `;
 
 exports[`Disabled 1`] = `
-<span
-  class="s-7qAc1DaxWaj4"
->
+<span>
   <button
-    class="s-NMyTiX1zi6rz"
+    class="svelte-6r5o0y"
     disabled=""
   >
      
-    <span
-      class="s-NMyTiX1zi6rz"
-    >
+    <span>
       Disabled
     </span>
      
@@ -40,14 +32,12 @@ exports[`Disabled 1`] = `
 `;
 
 exports[`Icon only 1`] = `
-<span
-  class="s-7qAc1DaxWaj4"
->
+<span>
   <button
-    class="iconOnly s-NMyTiX1zi6rz"
+    class="iconOnly svelte-6r5o0y"
   >
     <i
-      class="material-icons s-NMyTiX1zi6rz"
+      class="material-icons svelte-6r5o0y"
     >
       face
     </i>
@@ -59,14 +49,12 @@ exports[`Icon only 1`] = `
 `;
 
 exports[`Icon only, no color 1`] = `
-<span
-  class="s-7qAc1DaxWaj4"
->
+<span>
   <button
-    class="iconOnly noColor s-NMyTiX1zi6rz"
+    class="iconOnly noColor svelte-6r5o0y"
   >
     <i
-      class="material-icons s-NMyTiX1zi6rz"
+      class="material-icons svelte-6r5o0y"
     >
       face
     </i>
@@ -78,16 +66,12 @@ exports[`Icon only, no color 1`] = `
 `;
 
 exports[`No color 1`] = `
-<span
-  class="s-7qAc1DaxWaj4"
->
+<span>
   <button
-    class="noColor s-NMyTiX1zi6rz"
+    class="noColor svelte-6r5o0y"
   >
      
-    <span
-      class="s-NMyTiX1zi6rz"
-    >
+    <span>
       Text only
     </span>
      
@@ -97,16 +81,12 @@ exports[`No color 1`] = `
 `;
 
 exports[`Primary 1`] = `
-<span
-  class="s-7qAc1DaxWaj4"
->
+<span>
   <button
-    class="primary s-NMyTiX1zi6rz"
+    class="primary svelte-6r5o0y"
   >
      
-    <span
-      class="s-NMyTiX1zi6rz"
-    >
+    <span>
       Primary
     </span>
      
@@ -116,17 +96,13 @@ exports[`Primary 1`] = `
 `;
 
 exports[`Primary disabled 1`] = `
-<span
-  class="s-7qAc1DaxWaj4"
->
+<span>
   <button
-    class="primary s-NMyTiX1zi6rz"
+    class="primary svelte-6r5o0y"
     disabled=""
   >
      
-    <span
-      class="s-NMyTiX1zi6rz"
-    >
+    <span>
       Primary
     </span>
      
@@ -136,14 +112,12 @@ exports[`Primary disabled 1`] = `
 `;
 
 exports[`Primary with icon only 1`] = `
-<span
-  class="s-7qAc1DaxWaj4"
->
+<span>
   <button
-    class="primary iconOnly s-NMyTiX1zi6rz"
+    class="primary iconOnly svelte-6r5o0y"
   >
     <i
-      class="material-icons s-NMyTiX1zi6rz"
+      class="material-icons svelte-6r5o0y"
     >
       volume_up
     </i>
@@ -155,14 +129,12 @@ exports[`Primary with icon only 1`] = `
 `;
 
 exports[`Primary with icon only, no color 1`] = `
-<span
-  class="s-7qAc1DaxWaj4"
->
+<span>
   <button
-    class="primary iconOnly noColor s-NMyTiX1zi6rz"
+    class="primary iconOnly noColor svelte-6r5o0y"
   >
     <i
-      class="material-icons s-NMyTiX1zi6rz"
+      class="material-icons svelte-6r5o0y"
     >
       volume_up
     </i>
@@ -174,21 +146,17 @@ exports[`Primary with icon only, no color 1`] = `
 `;
 
 exports[`Primary with text and icon 1`] = `
-<span
-  class="s-7qAc1DaxWaj4"
->
+<span>
   <button
-    class="primary s-NMyTiX1zi6rz"
+    class="primary svelte-6r5o0y"
   >
     <i
-      class="material-icons s-NMyTiX1zi6rz"
+      class="material-icons svelte-6r5o0y"
     >
       person
     </i>
      
-    <span
-      class="s-NMyTiX1zi6rz"
-    >
+    <span>
       Hey!
     </span>
      
@@ -198,21 +166,17 @@ exports[`Primary with text and icon 1`] = `
 `;
 
 exports[`Text and icon 1`] = `
-<span
-  class="s-7qAc1DaxWaj4"
->
+<span>
   <button
-    class="s-NMyTiX1zi6rz"
+    class="svelte-6r5o0y"
   >
     <i
-      class="material-icons s-NMyTiX1zi6rz"
+      class="material-icons svelte-6r5o0y"
     >
       face
     </i>
      
-    <span
-      class="s-NMyTiX1zi6rz"
-    >
+    <span>
       Hello
     </span>
      

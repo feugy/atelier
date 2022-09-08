@@ -1,29 +1,25 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Multiple levels 1`] = `
-<span
-  class="s-7qAc1DaxWaj4"
->
+<span>
   <nav
-    class="s-949zNf21XPuY"
+    class="svelte-aeg211"
   >
-    <ol
-      class="s-949zNf21XPuY"
-    />
+    <ol />
   </nav>
   <!--&lt;BreadCrumb&gt;-->
    
   <ul
-    class="s-YQBR31bjQxRq"
+    class="svelte-1i7sfgn"
   >
     <li
-      class="s-YQBR31bjQxRq isCurrent"
+      class="svelte-1i7sfgn isCurrent"
     >
       <div
-        class="s-YQBR31bjQxRq"
+        class="svelte-1i7sfgn"
       >
         <span
-          class="material-icons symbol s-YQBR31bjQxRq"
+          class="material-icons symbol svelte-1i7sfgn"
         >
           architecture
         </span>
@@ -32,13 +28,13 @@ exports[`Multiple levels 1`] = `
        
     </li>
     <li
-      class="s-YQBR31bjQxRq isCurrent"
+      class="svelte-1i7sfgn isCurrent"
     >
       <div
-        class="s-YQBR31bjQxRq folder"
+        class="svelte-1i7sfgn folder"
       >
         <span
-          class="material-icons symbol s-YQBR31bjQxRq"
+          class="material-icons symbol svelte-1i7sfgn"
         >
           folder_open
         </span>
@@ -47,13 +43,13 @@ exports[`Multiple levels 1`] = `
        
     </li>
     <li
-      class="s-YQBR31bjQxRq isCurrent"
+      class="svelte-1i7sfgn isCurrent"
     >
       <div
-        class="s-YQBR31bjQxRq folder"
+        class="svelte-1i7sfgn folder"
       >
         <span
-          class="material-icons symbol s-YQBR31bjQxRq"
+          class="material-icons symbol svelte-1i7sfgn"
         >
           folder_open
         </span>
@@ -68,29 +64,25 @@ exports[`Multiple levels 1`] = `
 `;
 
 exports[`Single level 1`] = `
-<span
-  class="s-7qAc1DaxWaj4"
->
+<span>
   <nav
-    class="s-949zNf21XPuY"
+    class="svelte-aeg211"
   >
-    <ol
-      class="s-949zNf21XPuY"
-    />
+    <ol />
   </nav>
   <!--&lt;BreadCrumb&gt;-->
    
   <ul
-    class="s-YQBR31bjQxRq"
+    class="svelte-1i7sfgn"
   >
     <li
-      class="s-YQBR31bjQxRq isCurrent"
+      class="svelte-1i7sfgn isCurrent"
     >
       <div
-        class="s-YQBR31bjQxRq"
+        class="svelte-1i7sfgn"
       >
         <span
-          class="material-icons symbol s-YQBR31bjQxRq"
+          class="material-icons symbol svelte-1i7sfgn"
         >
           architecture
         </span>
@@ -99,13 +91,13 @@ exports[`Single level 1`] = `
        
     </li>
     <li
-      class="s-YQBR31bjQxRq isCurrent"
+      class="svelte-1i7sfgn isCurrent"
     >
       <div
-        class="s-YQBR31bjQxRq"
+        class="svelte-1i7sfgn"
       >
         <span
-          class="material-icons symbol s-YQBR31bjQxRq"
+          class="material-icons symbol svelte-1i7sfgn"
         >
           architecture
         </span>
@@ -114,13 +106,13 @@ exports[`Single level 1`] = `
        
     </li>
     <li
-      class="s-YQBR31bjQxRq isCurrent"
+      class="svelte-1i7sfgn isCurrent"
     >
       <div
-        class="s-YQBR31bjQxRq"
+        class="svelte-1i7sfgn"
       >
         <span
-          class="material-icons symbol s-YQBR31bjQxRq"
+          class="material-icons symbol svelte-1i7sfgn"
         >
           architecture
         </span>

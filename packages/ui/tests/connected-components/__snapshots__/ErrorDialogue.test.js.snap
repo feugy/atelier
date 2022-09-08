@@ -10,26 +10,26 @@ exports[`ErrorDialogue connected component > displays error message 1`] = `
   </div>
   <div>
     <div
-      class="filter s-OcGGhMDsfjw6 open"
+      class="filter svelte-194kj68 open"
     />
      
     <div
-      class="backdrop s-OcGGhMDsfjw6 open"
+      class="backdrop svelte-194kj68 open"
     >
       <article
-        class="s-OcGGhMDsfjw6"
+        class="svelte-194kj68"
         role="dialog"
       >
         <header
           aria-level="1"
-          class="s-OcGGhMDsfjw6"
+          class="svelte-194kj68"
           role="heading"
         >
           title.error
         </header>
          
         <div
-          class="content s-OcGGhMDsfjw6"
+          class="content svelte-194kj68"
         >
           <main>
             some random error text
@@ -37,7 +37,7 @@ exports[`ErrorDialogue connected component > displays error message 1`] = `
         </div>
          
         <footer
-          class="s-OcGGhMDsfjw6"
+          class="svelte-194kj68"
         >
           <div
             class="text-sm"
