@@ -58,6 +58,7 @@ The atelier plugin function takes the following settings:
 - `url` (detaults to `/atelier/`): the url root under which Atelier's UI will be available. Must have leading and trailing `/`.
 - `path` (defaults to `./atelier`): the path to the top level folder containing your `*.tools.*` files. It could be either absolute, or relative to your vite configuration file.
 - `toolRegexp` (defaults to `/\.tools(?!\.shot$).+$/`, any files endinf with `.tools.` but `.tools.shot`): the regular expression used to find your tool files.
+- `outDir` (defaults to `./dist-atelier`): path to the folder which will contain the static export of your atelier. Set to `null` to disable export.
 - `setupPath`: optional path to a file **imported** prior to any of your tool files. It can be absolute, from node_modules, or relative to `path`.
 - `publicDir`: optional path, or list of paths, to folders containing static assets your tools may use.
 
