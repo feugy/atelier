@@ -1,0 +1,15 @@
+{
+  "name": "@atelier-wb/example-svelte",
+  "version": "1.0.0",
+  "description": "UI explorer for svelte components",
+  "license": "MIT",
+  "scripts": {
+    "build": "vite build",
+    "dev": "vite dev"
+  },
+  "devDependencies": {
+    "@atelier-wb/vite-plugin-atelier": "^0.7.1",
+    "@sveltejs/vite-plugin-svelte": "latest",
+    "vite": "latest"
+  }
+}
