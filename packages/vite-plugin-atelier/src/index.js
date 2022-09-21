@@ -140,7 +140,7 @@ function AtelierPlugin(pluginOptions = {}, skipValidation = false) {
     name: pluginName,
 
     async config(configuration, { command }) {
-      isBuilding = command === 'build' && !!options.outDir
+      isBuilding = command === 'build' && options.outDir !== null
       root = configuration.root ?? '.'
       options.path = resolve(root, options.path)
       if (options.outDir) {
@@ -240,6 +240,9 @@ function AtelierPlugin(pluginOptions = {}, skipValidation = false) {
     },
 
     async generateBundle(generateOpts, bundle) {
+      if (!isBuilding) {
+        return
+      }
       if (options.outDir) {
         await rm(options.outDir, { recursive: true, force: true })
       }
@@ -274,8 +277,10 @@ function AtelierPlugin(pluginOptions = {}, skipValidation = false) {
     async closeBundle() {
       if (isBuilding) {
         const fullBuildTempFolder = join(viteOutDir, buildTempFolder)
-        // includes static assets and ui distribution
-        for (const staticFolder of statics) {
+        // includes ui distribution (always the bundled one)
+        await cp(uiDist, options.outDir, { force: true, recursive: true })
+        // includes static assets
+        for (const staticFolder of statics.slice(1)) {
           await cp(resolve(root, staticFolder), options.outDir, {
             force: true,
             recursive: true
