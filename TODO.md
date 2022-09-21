@@ -35,9 +35,14 @@
   </Tool>
   ```
 
+## Vite plugin
+
+- test with vite [createServer](https://vitejs.dev/guide/api-javascript.html#createserver) instead of starting one of our own
+
 # Documentation
 
 - plugin's uiSettings
+- examples
 - ADR:
   - UI agnostic framework
   - options from plugin to UI

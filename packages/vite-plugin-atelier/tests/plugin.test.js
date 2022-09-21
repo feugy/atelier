@@ -1,9 +1,12 @@
 const { faker } = require('@faker-js/faker')
+const { svelte } = require('@sveltejs/vite-plugin-svelte')
 const { EventEmitter } = require('events')
+const { readFile, rm, stat } = require('fs/promises')
 const http = require('http')
 const { resolve } = require('path')
 const connect = require('connect')
 const got = require('got')
+const { build } = require('vite')
 const builder = require('../src')
 
 const defaultWorkframeId = '@atelier-wb/workframe'
@@ -24,6 +27,16 @@ async function configureAndStartServer(options) {
     watcher,
     address: `http://localhost:${server.address().port}`
   }
+}
+
+function preparePlugin(
+  options = {},
+  viteEnv = { command: 'serve' },
+  skipValidation = false
+) {
+  const plugin = builder(options, skipValidation)
+  plugin.config({ root: '' }, viteEnv)
+  return plugin
 }
 
 describe('plugin builder', () => {
@@ -111,20 +124,19 @@ describe('plugin builder', () => {
     )
   })
 
-  describe('given some files', () => {
-    it('applies default options', () => {
-      expect(builder()).toEqual({
-        name: builder.pluginName,
-        apply: 'serve',
-        config: expect.any(Function),
-        configureServer: expect.any(Function),
-        resolveId: expect.any(Function),
-        load: expect.any(Function)
-      })
-    })
+  it('validates outDir option', () => {
+    expect(() => builder({ outDir: false })).toThrow(
+      `${builder.pluginName} option "outDir" must be string`
+    )
+    expect(() => builder({ outDir: undefined })).toThrow(
+      `${builder.pluginName} option "" must have required property 'outDir'`
+    )
+    expect(() => builder({ outDir: null })).not.toThrow()
+  })
 
+  describe('given some files', () => {
     it('does not handle other ids than workframeId', async () => {
-      const plugin = builder()
+      const plugin = preparePlugin()
       expect(plugin.resolveId(faker.lorem.word())).not.toBeDefined()
       expect(await plugin.load(faker.lorem.word())).not.toBeDefined()
       expect(plugin.resolveId(`${defaultUrl}${defaultWorkframeId}`)).toEqual(
@@ -134,7 +146,7 @@ describe('plugin builder', () => {
 
     it('supports custom workframeId', async () => {
       const workframeId = faker.lorem.word()
-      const plugin = builder({ workframeId })
+      const plugin = preparePlugin({ workframeId })
       expect(plugin.resolveId(faker.lorem.word())).not.toBeDefined()
       expect(await plugin.load(faker.lorem.word())).not.toBeDefined()
       expect(plugin.resolveId(`${defaultUrl}${workframeId}`)).toEqual(
@@ -144,7 +156,7 @@ describe('plugin builder', () => {
 
     it('throws on unavailbable framework bindings', async () => {
       const framework = 'jquery'
-      const plugin = builder({ path, framework }, true)
+      const plugin = preparePlugin({ path, framework }, undefined, true)
       await expect(
         plugin.load(`${defaultUrl}${defaultWorkframeId}`)
       ).rejects.toThrow(
@@ -153,7 +165,7 @@ describe('plugin builder', () => {
     })
 
     it('finds tool files and generates workframe content', async () => {
-      const plugin = builder({ path })
+      const plugin = preparePlugin({ path })
       expect(await plugin.load(`${defaultUrl}${defaultWorkframeId}`))
         .toEqual(`import { Workbench } from '@atelier-wb/svelte'
 
@@ -173,7 +185,7 @@ new Workbench({
 
     it('finds tool files with custom regexp', async () => {
       const path = resolve(__dirname, 'fixtures', 'nested')
-      const plugin = builder({ path, toolRegexp: '\\.custom\\.svelte$' })
+      const plugin = preparePlugin({ path, toolRegexp: '\\.custom\\.svelte$' })
       expect(await plugin.load(`${defaultUrl}${defaultWorkframeId}`))
         .toEqual(`import { Workbench } from '@atelier-wb/svelte'
 
@@ -191,7 +203,7 @@ new Workbench({
 
     it('allows setup import from node_modules', async () => {
       const setupPath = faker.lorem.word()
-      const plugin = builder({ path, setupPath })
+      const plugin = preparePlugin({ path, setupPath })
       expect(await plugin.load(`${defaultUrl}${defaultWorkframeId}`))
         .toEqual(`import { Workbench } from '@atelier-wb/svelte'
 
@@ -212,7 +224,7 @@ new Workbench({
 
     it('allows relative setup import', async () => {
       const setupPath = faker.lorem.word()
-      const plugin = builder({ path, setupPath: `./${setupPath}` })
+      const plugin = preparePlugin({ path, setupPath: `./${setupPath}` })
       expect(await plugin.load(`${defaultUrl}${defaultWorkframeId}`))
         .toEqual(`import { Workbench } from '@atelier-wb/svelte'
 
@@ -233,7 +245,7 @@ new Workbench({
 
     it('allows absolute setup import', async () => {
       const setupPath = resolve(path, faker.lorem.word())
-      const plugin = builder({ path, setupPath })
+      const plugin = preparePlugin({ path, setupPath })
       expect(await plugin.load(`${defaultUrl}${defaultWorkframeId}`))
         .toEqual(`import { Workbench } from '@atelier-wb/svelte'
 
@@ -415,4 +427,219 @@ new Workbench({
       expect(emit).toHaveBeenCalledTimes(1)
     })
   })
+
+  describe('given a built simple application', () => {
+    const root = resolve(__dirname, 'fixtures/simple')
+    const atelierOut = resolve(root, 'dist-atelier')
+    const uiSettings = { foo: faker.lorem.words() }
+
+    beforeAll(async () => {
+      await rm(atelierOut, { recursive: true, force: true })
+      await build({
+        root,
+        logLevel: 'silent',
+        plugins: [svelte(), builder({ uiSettings })]
+      })
+    })
+
+    it(`generated workframe file with its assets`, async () => {
+      await expectWorkframeAndAssets(atelierOut)
+    })
+
+    it(`included ui distribution`, async () => {
+      await expectUiDistribution(atelierOut)
+    })
+
+    it(`generated ui-settings file`, async () => {
+      const settingsPath = resolve(atelierOut, 'ui-settings.js')
+      await expect(stat(settingsPath)).resolves.toBeDefined()
+      expect(await readFile(settingsPath, 'utf-8')).toEqual(
+        `window.uiSettings = ${JSON.stringify(uiSettings)};`
+      )
+    })
+  })
+
+  describe('given a built simple application with custom out', () => {
+    const root = resolve(__dirname, 'fixtures/simple')
+    const atelierOut = resolve(root, 'dist-atelier/custom-out')
+
+    beforeAll(async () => {
+      await rm(atelierOut, { recursive: true, force: true })
+      await build({
+        root,
+        logLevel: 'silent',
+        plugins: [svelte(), builder({ outDir: 'dist-atelier/custom-out' })]
+      })
+    })
+
+    it(`generated workframe file with its assets`, async () => {
+      await expectWorkframeAndAssets(atelierOut)
+    })
+
+    it(`included ui distribution`, async () => {
+      await expectUiDistribution(atelierOut)
+    })
+  })
+
+  describe('given a built application with entry point', () => {
+    const root = resolve(__dirname, 'fixtures/with-entry')
+    const atelierOut = resolve(root, 'dist-atelier')
+
+    beforeAll(async () => {
+      await rm(atelierOut, { recursive: true, force: true })
+      await build({
+        root,
+        logLevel: 'silent',
+        plugins: [svelte(), builder()]
+      })
+    })
+
+    it(`generated workframe file and index file`, async () => {
+      await expectWorkframeAndAssets(atelierOut)
+      await expect(
+        stat(resolve(root, 'dist/index.html'))
+      ).resolves.toBeDefined()
+    })
+
+    it(`included ui distribution`, async () => {
+      await expectUiDistribution(atelierOut)
+    })
+  })
+
+  describe('given a built application with custom path', () => {
+    const root = resolve(__dirname, 'fixtures/custom-path')
+    const atelierOut = resolve(root, 'dist-atelier')
+
+    beforeAll(async () => {
+      await rm(atelierOut, { recursive: true, force: true })
+      await build({
+        root,
+        logLevel: 'silent',
+        plugins: [svelte(), builder({ path })]
+      })
+    })
+
+    it(`generated workframe file with its assets`, async () => {
+      await expectWorkframeAndAssets(atelierOut)
+    })
+
+    it(`included ui distribution`, async () => {
+      await expectUiDistribution(atelierOut)
+    })
+  })
+
+  describe('given null outDir', () => {
+    const root = resolve(__dirname, 'fixtures/with-entry')
+    const atelierOut = resolve(root, 'dist-atelier')
+
+    beforeAll(async () => {
+      await rm(atelierOut, { recursive: true, force: true })
+      await build({
+        root,
+        logLevel: 'silent',
+        plugins: [svelte(), builder({ outDir: null })]
+      })
+    })
+
+    it(`does not generate workframe file`, async () => {
+      await expect(
+        stat(resolve(root, 'dist/index.html'))
+      ).resolves.toBeDefined()
+      await expect(stat(resolve(atelierOut, 'workframe.html'))).rejects.toThrow(
+        'ENOENT'
+      )
+    })
+  })
+
+  describe('given a built application with public directories', () => {
+    const root = resolve(__dirname, 'fixtures/public-dirs')
+    const atelierOut = resolve(root, 'dist-atelier')
+
+    beforeAll(async () => {
+      await rm(atelierOut, { recursive: true, force: true })
+      await build({
+        root,
+        logLevel: 'silent',
+        plugins: [svelte(), builder({ publicDir: ['./static'] })]
+      })
+    })
+
+    it(`generated workframe file with its assets`, async () => {
+      await expectWorkframeAndAssets(atelierOut)
+    })
+
+    it(`included ui distribution`, async () => {
+      await expectUiDistribution(atelierOut)
+    })
+
+    it(`copied vite default public assets`, async () => {
+      await expect(
+        stat(resolve(atelierOut, 'favicon.ico'))
+      ).resolves.toBeDefined()
+    })
+
+    it(`copied public directory assets`, async () => {
+      await expect(
+        stat(resolve(atelierOut, 'icon-256x256.png'))
+      ).resolves.toBeDefined()
+    })
+  })
 })
+
+async function expectWorkframeAndAssets(atelierOut) {
+  const workframeHtmlPath = resolve(atelierOut, 'workframe.html')
+  const workframeJsRegExp =
+    /<script type="module" crossorigin src="\.\/(assets\/workframe\.\w+\.js)">/
+  const workframeCssRegExp =
+    /<link rel="stylesheet" href="\.\/(assets\/workframe\.\w+\.css)">/
+
+  await expect(stat(workframeHtmlPath)).resolves.toBeDefined()
+  const content = await readFile(workframeHtmlPath, 'utf-8')
+  expect(
+    content,
+    `${content} does not include expected path to JS bundle`
+  ).toMatch(workframeJsRegExp)
+  expect(
+    content,
+    `${content} does not include expected path to Css bundle`
+  ).toMatch(workframeCssRegExp)
+  const workframeJsFile = content.match(workframeJsRegExp)[1]
+  await expect(
+    stat(resolve(atelierOut, workframeJsFile)),
+    `${workframeJsFile} does not exist`
+  ).resolves.toBeDefined()
+  const workframeCssFile = content.match(workframeCssRegExp)[1]
+  await expect(
+    stat(resolve(atelierOut, workframeCssFile)),
+    `${workframeCssFile} does not exist`
+  ).resolves.toBeDefined()
+}
+
+async function expectUiDistribution(atelierOut) {
+  const indexHtmlPath = resolve(atelierOut, 'index.html')
+  const workframeJsRegExp =
+    /<script type="module" crossorigin src="\.\/(assets\/index\.\w+\.js)">/
+  const workframeCssRegExp =
+    /<link rel="stylesheet" href="\.\/(assets\/index\.\w+\.css)">/
+
+  await expect(stat(indexHtmlPath)).resolves.toBeDefined()
+  const content = await readFile(indexHtmlPath, 'utf-8')
+  expect(
+    content,
+    `${content} does not include expected path to JS bundle`
+  ).toMatch(workframeJsRegExp)
+  expect(
+    content,
+    `${content} does not include expected path to Css bundle`
+  ).toMatch(workframeCssRegExp)
+  const workframeJsFile = content.match(workframeJsRegExp)[1]
+  await expect(
+    stat(resolve(atelierOut, workframeJsFile)),
+    `${workframeJsFile} does not exist`
+  ).resolves.toBeDefined()
+  const workframeCssFile = content.match(workframeCssRegExp)[1]
+  await expect(
+    stat(resolve(atelierOut, workframeCssFile)),
+    `${workframeCssFile} does not exist`
+  ).resolves.toBeDefined()
+}
