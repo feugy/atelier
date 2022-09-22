@@ -7,6 +7,7 @@
   "scripts": {
     "build": "vite build",
     "dev": "vite",
+    "export": "vite build --mode export-atelier",
     "prepublishOnly": "npm run build ",
     "test": "vitest run --coverage",
     "test:dev": "vitest dev"

@@ -1,6 +1,6 @@
 <script>
   import { Tool, ToolBox } from '@atelier-wb/svelte'
-  import Button from '../Button.svelte'
+  import Button from '../src/Button.svelte'
 </script>
 
 <ToolBox

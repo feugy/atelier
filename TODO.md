@@ -51,3 +51,9 @@
 - Deep dive how-to write UI bindings
 - Deep dive how-to write toolboxes
 - How to develop plugins
+- Release:
+  - `npm run release:bump`
+  - `git add CHANGELOG.md`
+  - `git commit --amend --no-edit`
+  - `git push`
+  - `npm publish -w packages --otp 123456`
