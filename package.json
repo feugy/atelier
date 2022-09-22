@@ -11,8 +11,7 @@
     "url": "https://github.com/feugy/atelier"
   },
   "workspaces": [
-    "packages/*",
-    "examples/*"
+    "packages/*"
   ],
   "scripts": {
     "lint": "eslint .",

@@ -8,7 +8,7 @@
     "test:dev": "vitest dev"
   },
   "dependencies": {
-    "@atelier-wb/ui": "^0.7.1",
+    "@atelier-wb/ui": "^0.8.0",
     "ajv": "^8.11.0",
     "sirv": "^2.0.2"
   },
