@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.8.0](https://github.com/feugy/atelier/compare/v0.7.1...v0.8.0) (2022-09-22)
+
+### Features
+
+- **plugin:** exports a static version of atelier during vite build ([#24](https://github.com/feugy/atelier/issues/24)) ([db184c6](https://github.com/feugy/atelier/commit/db184c6a2fba3011917a7f3ac06664ac384bff99))
+- **plugin:** exports atelier in dedicated build ([#25](https://github.com/feugy/atelier/issues/25)) ([418b4e2](https://github.com/feugy/atelier/commit/418b4e292c92eba5804aa82a3f1e57032a86f10e))
+
 ### [0.7.2](https://github.com/feugy/atelier/compare/v0.7.1...v0.7.2) (2022-09-21)
 
 ### Features

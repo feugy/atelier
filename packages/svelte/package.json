@@ -1,6 +1,6 @@
 {
   "name": "@atelier-wb/svelte",
-  "version": "0.7.2",
+  "version": "0.8.0",
   "description": "Svelte bindings to test your svelte components",
   "main": "src/index.js",
   "type": "module",
