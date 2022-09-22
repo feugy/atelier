@@ -56,4 +56,4 @@
   - `git add CHANGELOG.md`
   - `git commit --amend --no-edit`
   - `git push`
-  - `npm publish -w packages --otp 123456`
+  - `npm publish -w packages --otp 531066`
