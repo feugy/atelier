@@ -131,7 +131,6 @@ describe('plugin builder', () => {
     expect(() => builder({ outDir: undefined })).toThrow(
       `${builder.pluginName} option "" must have required property 'outDir'`
     )
-    expect(() => builder({ outDir: null })).not.toThrow()
   })
 
   describe('given some files', () => {
@@ -428,6 +427,18 @@ new Workbench({
     })
   })
 
+  it(`does not export when building without 'export-atelier' mode`, async () => {
+    const root = resolve(__dirname, 'fixtures/simple')
+    const atelierOut = resolve(root, 'dist-atelier')
+    await rm(atelierOut, { recursive: true, force: true })
+    await build({
+      root,
+      logLevel: 'silent',
+      plugins: [svelte(), builder()]
+    })
+    await expect(stat(atelierOut)).rejects.toThrow('ENOENT')
+  })
+
   describe('given a built simple application', () => {
     const root = resolve(__dirname, 'fixtures/simple')
     const atelierOut = resolve(root, 'dist-atelier')
@@ -437,6 +448,7 @@ new Workbench({
       await rm(atelierOut, { recursive: true, force: true })
       await build({
         root,
+        mode: 'export-atelier',
         logLevel: 'silent',
         plugins: [svelte(), builder({ uiSettings })]
       })
@@ -467,6 +479,7 @@ new Workbench({
       await rm(atelierOut, { recursive: true, force: true })
       await build({
         root,
+        mode: 'export-atelier',
         logLevel: 'silent',
         plugins: [svelte(), builder({ outDir: 'dist-atelier/custom-out' })]
       })
@@ -474,31 +487,6 @@ new Workbench({
 
     it(`generated workframe file with its assets`, async () => {
       await expectWorkframeAndAssets(atelierOut)
-    })
-
-    it(`included ui distribution`, async () => {
-      await expectUiDistribution(atelierOut)
-    })
-  })
-
-  describe('given a built application with entry point', () => {
-    const root = resolve(__dirname, 'fixtures/with-entry')
-    const atelierOut = resolve(root, 'dist-atelier')
-
-    beforeAll(async () => {
-      await rm(atelierOut, { recursive: true, force: true })
-      await build({
-        root,
-        logLevel: 'silent',
-        plugins: [svelte(), builder()]
-      })
-    })
-
-    it(`generated workframe file and index file`, async () => {
-      await expectWorkframeAndAssets(atelierOut)
-      await expect(
-        stat(resolve(root, 'dist/index.html'))
-      ).resolves.toBeDefined()
     })
 
     it(`included ui distribution`, async () => {
@@ -514,6 +502,7 @@ new Workbench({
       await rm(atelierOut, { recursive: true, force: true })
       await build({
         root,
+        mode: 'export-atelier',
         logLevel: 'silent',
         plugins: [svelte(), builder({ path })]
       })
@@ -528,29 +517,6 @@ new Workbench({
     })
   })
 
-  describe('given null outDir', () => {
-    const root = resolve(__dirname, 'fixtures/with-entry')
-    const atelierOut = resolve(root, 'dist-atelier')
-
-    beforeAll(async () => {
-      await rm(atelierOut, { recursive: true, force: true })
-      await build({
-        root,
-        logLevel: 'silent',
-        plugins: [svelte(), builder({ outDir: null })]
-      })
-    })
-
-    it(`does not generate workframe file`, async () => {
-      await expect(
-        stat(resolve(root, 'dist/index.html'))
-      ).resolves.toBeDefined()
-      await expect(stat(resolve(atelierOut, 'workframe.html'))).rejects.toThrow(
-        'ENOENT'
-      )
-    })
-  })
-
   describe('given a built application with public directories', () => {
     const root = resolve(__dirname, 'fixtures/public-dirs')
     const atelierOut = resolve(root, 'dist-atelier')
@@ -559,6 +525,7 @@ new Workbench({
       await rm(atelierOut, { recursive: true, force: true })
       await build({
         root,
+        mode: 'export-atelier',
         logLevel: 'silent',
         plugins: [svelte(), builder({ publicDir: ['./static'] })]
       })
@@ -589,9 +556,9 @@ new Workbench({
 async function expectWorkframeAndAssets(atelierOut) {
   const workframeHtmlPath = resolve(atelierOut, 'workframe.html')
   const workframeJsRegExp =
-    /<script type="module" crossorigin src="\.\/(assets\/workframe\.\w+\.js)">/
+    /<script type="module" crossorigin src="\/(.+\/workframe\.\w+\.js)">/
   const workframeCssRegExp =
-    /<link rel="stylesheet" href="\.\/(assets\/workframe\.\w+\.css)">/
+    /<link rel="stylesheet" href="\/(.+\/workframe\.\w+\.css)">/
 
   await expect(stat(workframeHtmlPath)).resolves.toBeDefined()
   const content = await readFile(workframeHtmlPath, 'utf-8')
@@ -617,9 +584,9 @@ async function expectWorkframeAndAssets(atelierOut) {
 
 async function expectUiDistribution(atelierOut) {
   const indexHtmlPath = resolve(atelierOut, 'index.html')
-  const workframeJsRegExp =
+  const indexJsRegExp =
     /<script type="module" crossorigin src="\.\/(assets\/index\.\w+\.js)">/
-  const workframeCssRegExp =
+  const indexCssRegExp =
     /<link rel="stylesheet" href="\.\/(assets\/index\.\w+\.css)">/
 
   await expect(stat(indexHtmlPath)).resolves.toBeDefined()
@@ -627,17 +594,17 @@ async function expectUiDistribution(atelierOut) {
   expect(
     content,
     `${content} does not include expected path to JS bundle`
-  ).toMatch(workframeJsRegExp)
+  ).toMatch(indexJsRegExp)
   expect(
     content,
     `${content} does not include expected path to Css bundle`
-  ).toMatch(workframeCssRegExp)
-  const workframeJsFile = content.match(workframeJsRegExp)[1]
+  ).toMatch(indexCssRegExp)
+  const workframeJsFile = content.match(indexJsRegExp)[1]
   await expect(
     stat(resolve(atelierOut, workframeJsFile)),
     `${workframeJsFile} does not exist`
   ).resolves.toBeDefined()
-  const workframeCssFile = content.match(workframeCssRegExp)[1]
+  const workframeCssFile = content.match(indexCssRegExp)[1]
   await expect(
     stat(resolve(atelierOut, workframeCssFile)),
     `${workframeCssFile} does not exist`

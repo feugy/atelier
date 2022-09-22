@@ -6,6 +6,8 @@ Weclome to the Atelier!
 
 This [Vite][vite] plugin launches atelier as part of your dev server.
 
+It can also export your entire atelier as a static website.
+
 ---
 
 - [Getting started](#getting-started)
@@ -48,6 +50,12 @@ Then, assuming you already [installed vite and configured it][vite-getting-start
 
 1. then browse your components on http://localhost:3000/atelier.
 
+To export your atelier, run Vite build command with `export-atelier` mode:
+
+```shell
+vite build --mode export-atelier
+```
+
 ---
 
 ## Configuration API
@@ -58,7 +66,7 @@ The atelier plugin function takes the following settings:
 - `url` (detaults to `/atelier/`): the url root under which Atelier's UI will be available. Must have leading and trailing `/`.
 - `path` (defaults to `./atelier`): the path to the top level folder containing your `*.tools.*` files. It could be either absolute, or relative to your vite configuration file.
 - `toolRegexp` (defaults to `/\.tools(?!\.shot$).+$/`, any files endinf with `.tools.` but `.tools.shot`): the regular expression used to find your tool files.
-- `outDir` (defaults to `./dist-atelier`): path to the folder which will contain the static export of your atelier. Set to `null` to disable export.
+- `outDir` (defaults to `./dist-atelier`): path to the folder which will contain the static export of your atelier.
 - `setupPath`: optional path to a file **imported** prior to any of your tool files. It can be absolute, from node_modules, or relative to `path`.
 - `publicDir`: optional path, or list of paths, to folders containing static assets your tools may use.
 

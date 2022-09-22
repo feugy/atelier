@@ -62,7 +62,12 @@ Atelier is based on [Vite] JavaScript bundler.
 
 5. Start vite, and navigate to http://localhost:3000/atelier
 
-6. When you'll build your application, a static version of your atelier will stand in `dist-atelier` folder.
+6. To export your atelier as a static website in `dist-atelier` folder, run this command:
+
+   ```shell
+   vite build --mode export-atelier
+   ```
+
    Expose it with a plain http server (`npx -y serve dist-atelier` for example) to enjoy it!
 
 ---

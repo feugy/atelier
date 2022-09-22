@@ -1,13 +1,13 @@
 const Ajv = require('ajv')
 const { createReadStream } = require('fs')
-const { cp, readdir, readFile, writeFile, rm, stat } = require('fs/promises')
-const { basename, dirname, resolve, join } = require('path')
-const colors = require('picocolors')
+const { cp, readdir, readFile, rm, writeFile, stat } = require('fs/promises')
+const { dirname, resolve } = require('path')
 const sirv = require('sirv')
-const { normalizePath, createLogger } = require('vite')
-const ui = dirname(require.resolve('@atelier-wb/ui'))
+const { normalizePath } = require('vite')
 
+const ui = dirname(require.resolve('@atelier-wb/ui'))
 const pluginName = '@atelier-wb/vite-plugin-atelier'
+const exportMode = 'export-atelier'
 
 const validate = new Ajv().compile({
   type: 'object',
@@ -23,7 +23,7 @@ const validate = new Ajv().compile({
     },
     framework: { type: 'string', enum: ['svelte'] },
     uiSettings: { type: 'object', additionalProperties: true },
-    outDir: { type: 'string', nullable: true }
+    outDir: { type: 'string' }
   },
   required: [
     'path',
@@ -92,11 +92,20 @@ async function buildDevWorkframe(paths, { framework, path, setupPath }) {
   return await bindings.buildWorkframeContent({ tools, imports })
 }
 
-async function buildWorkframe(path) {
-  const content = await readFile(path, 'utf8')
-  return content.replace(
-    /<script.*src="\/@vite\/client"(?!<\/script>)><\/script>/i,
-    ''
+async function buildStaticWorkframe(filePath, options) {
+  const content = await readFile(options.workframeHtml, 'utf8')
+  const toolsContent = await buildDevWorkframe(
+    await findTools(options.path, new RegExp(options.toolRegexp, 'i')),
+    options
+  )
+  await writeFile(
+    filePath,
+    content
+      .replace(/<script.*src="\/@vite\/client"(?!<\/script>)><\/script>/i, '')
+      .replace(
+        new RegExp(`<script.*src="${options.workframeId}"></script>`, 'i'),
+        `<script type="module">\n${toolsContent}\n</script>`
+      )
   )
 }
 
@@ -125,33 +134,40 @@ function AtelierPlugin(pluginOptions = {}, skipValidation = false) {
       : [options.publicDir])
   ].filter(Boolean)
   const settingsFile = 'ui-settings.js'
-  const workfromeFile = 'workframe.html'
-  // because vite can not write outside of its outDir, uses a temporary folder
-  const buildTempFolder = 'atelier-tmp'
+  const workframeFile = 'workframe.html'
 
-  let isBuilding = false
-  let logger
+  let isExporting = false
   let root
-  let isWorkframeId
-  let staticWorkframeId
-  let viteOutDir
+  let outDir
+  let entryFile
 
   return {
     name: pluginName,
 
-    async config(configuration, { command }) {
-      isBuilding = command === 'build' && options.outDir !== null
-      root = configuration.root ?? '.'
-      options.path = resolve(root, options.path)
-      if (options.outDir) {
-        options.outDir = resolve(root, options.outDir)
-      }
-      logger = createLogger(configuration.logLevel)
-      isWorkframeId = isBuilding
-        ? id => id === options.workframeId
-        : id => id === workframeUrl
-      return {
-        server: { fs: { allow: [...new Set([options.path, ...statics])] } }
+    config(configuration, { command, mode }) {
+      isExporting =
+        command === 'build' && !configuration.build?.ssr && mode === exportMode
+
+      options.path = resolve(configuration.root ?? '.', options.path)
+      return isExporting
+        ? { build: { manifest: false } }
+        : {
+            server: { fs: { allow: [...new Set([options.path, ...statics])] } }
+          }
+    },
+
+    async configResolved(viteConfig) {
+      if (isExporting) {
+        root = viteConfig.root
+        outDir = normalizePath(`${root}/${options.outDir}`)
+        entryFile = normalizePath(`${root}/${workframeFile}`)
+        await buildStaticWorkframe(entryFile, options)
+        viteConfig.build.rollupOptions = { input: entryFile }
+        viteConfig.build.outDir = outDir
+        // exclude sveltekit which fails to find its application
+        viteConfig.plugins = viteConfig.plugins.filter(
+          ({ name }) => name !== 'vite-plugin-svelte-kit'
+        )
       }
     },
 
@@ -160,7 +176,7 @@ function AtelierPlugin(pluginOptions = {}, skipValidation = false) {
 
       // configure a middleware for serving Atelier
       server.middlewares.use(options.url, (request, response, next) => {
-        if (request.url === `/${workfromeFile}`) {
+        if (request.url === `/${workframeFile}`) {
           // serve our workframe.html for the iframe
           response.writeHead(200, {
             'Cache-Control': 'no-store',
@@ -205,15 +221,13 @@ function AtelierPlugin(pluginOptions = {}, skipValidation = false) {
     },
 
     resolveId(id) {
-      if (id === staticWorkframeId || isWorkframeId(id)) {
+      if (id === workframeUrl) {
         return id
       }
     },
 
     async load(id) {
-      if (id === staticWorkframeId) {
-        return await buildWorkframe(options.workframeHtml)
-      } else if (isWorkframeId(id)) {
+      if (id === workframeUrl) {
         return await buildDevWorkframe(
           await findTools(options.path, toolRegexp),
           options
@@ -221,79 +235,19 @@ function AtelierPlugin(pluginOptions = {}, skipValidation = false) {
       }
     },
 
-    async options(buildOpts) {
-      if (!isBuilding) {
-        return buildOpts
-      }
-      staticWorkframeId = resolve(root, buildTempFolder, workfromeFile)
-      // do not include vite default index.html if it does not exist
-      const inputExist = await stat(buildOpts.input).catch(() => false)
-      buildOpts.input = inputExist
-        ? [buildOpts.input, staticWorkframeId]
-        : [staticWorkframeId]
-      return buildOpts
-    },
-
-    outputOptions(outputOpts) {
-      viteOutDir = outputOpts.dir
-      return null
-    },
-
-    async generateBundle(generateOpts, bundle) {
-      if (!isBuilding) {
-        return
-      }
-      if (options.outDir) {
-        await rm(options.outDir, { recursive: true, force: true })
-      }
-      // moves workframe assets into the temporary folder
-      for (const entry of Object.values(bundle)) {
-        if (
-          entry.facadeModuleId === staticWorkframeId ||
-          entry.name?.includes(buildTempFolder)
-        ) {
-          entry.fileName = join(buildTempFolder, entry.fileName)
-        }
-      }
-      // generates ui-settings file
-      this.emitFile({
-        type: 'asset',
-        fileName: join(buildTempFolder, settingsFile),
-        source: buildSettings(options)
-      })
-    },
-
-    async writeBundle(writeOpts, bundle) {
-      const entry = bundle[join(buildTempFolder, workfromeFile)]
-      if (entry) {
-        // makes workframe assets paths relative
-        await writeFile(
-          join(viteOutDir, buildTempFolder, basename(entry.fileName)),
-          entry.source.replace(/"[^"]+(\/workframe\..+)"/g, `"./assets$1"`)
-        )
-      }
-    },
-
     async closeBundle() {
-      if (isBuilding) {
-        const fullBuildTempFolder = join(viteOutDir, buildTempFolder)
-        // includes ui distribution (always the bundled one)
-        await cp(uiDist, options.outDir, { force: true, recursive: true })
-        // includes static assets
+      if (isExporting) {
+        await writeFile(resolve(outDir, settingsFile), buildSettings(options))
         for (const staticFolder of statics.slice(1)) {
-          await cp(resolve(root, staticFolder), options.outDir, {
-            force: true,
-            recursive: true
-          })
+          if (await stat(resolve(root, staticFolder)).catch(() => false)) {
+            await cp(resolve(root, staticFolder), outDir, {
+              force: true,
+              recursive: true
+            })
+          }
         }
-        // moves temporary folder to its final place
-        await cp(fullBuildTempFolder, options.outDir, { recursive: true })
-        await rm(fullBuildTempFolder, { recursive: true })
-        logger.info(
-          `${colors.green('atelier')} static build available in ${colors.gray(
-            resolve(options.outDir)
-          )}`
-        )
+        await cp(uiDist, outDir, { recursive: true })
+        await rm(entryFile, { force: true })
       }
     }
   }
