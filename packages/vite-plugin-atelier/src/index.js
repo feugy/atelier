@@ -58,7 +58,7 @@ async function findTools(path, detectionRegex) {
     const { name } = entry
     const fullname = resolve(path, name)
     if (entry.isFile() && detectionRegex.test(fullname)) {
-      paths.push(fullname)
+      paths.push(fullname.replace(/\\/g, '/'))
     } else if (entry.isDirectory()) {
       paths.push(...(await findTools(fullname, detectionRegex)))
     }
@@ -84,9 +84,10 @@ async function buildDevWorkframe(paths, { framework, path, setupPath }) {
   }
   if (setupPath) {
     imports.unshift(
-      `import '${
-        setupPath.startsWith('.') ? resolve(path, setupPath) : setupPath
-      }'`
+      `import '${(setupPath.startsWith('.')
+        ? resolve(path, setupPath)
+        : setupPath
+      ).replace(/\\/g, '/')}'`
     )
   }
   return await bindings.buildWorkframeContent({ tools, imports })

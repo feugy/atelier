@@ -1,6 +1,6 @@
 import { render } from '@testing-library/svelte'
 import klaw from 'klaw-sync'
-import { basename, dirname, extname, relative } from 'path'
+import { basename, dirname, extname, join, relative } from 'path'
 import html from 'svelte-htm'
 import './matcher.js'
 
@@ -100,7 +100,7 @@ export function configureToolshot({
                   `[data-full-name="${encodeURIComponent(tool.fullName)}"]`
                 ).firstChild
               ).toMatchFileSnapshot(
-                `${toolboxFolder}/${snapshotFolder}/${toolboxName}.shot`,
+                join(toolboxFolder, `${snapshotFolder}/${toolboxName}.shot`),
                 tool.name
               )
             }

@@ -34,7 +34,7 @@ export default defineConfig(({ mode }) => {
       fs: { strict: false }
     },
     test: {
-      deps: { fallbackCJS: true },
+      deps: { inline: ['svelte-hyperscript'] },
       globals: true,
       environment: 'jsdom',
       setupFiles: 'tests/setup'
