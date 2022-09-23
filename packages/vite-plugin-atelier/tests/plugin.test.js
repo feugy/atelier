@@ -11,7 +11,7 @@ const builder = require('../src')
 
 const defaultWorkframeId = '@atelier-wb/workframe'
 const defaultUrl = '/atelier/'
-const path = resolve(__dirname, 'fixtures', 'nested')
+const path = resolve(__dirname, 'fixtures', 'nested').replace(/\\/g, '/')
 
 async function configureAndStartServer(options) {
   const plugin = builder(options)
@@ -183,7 +183,7 @@ new Workbench({
     })
 
     it('finds tool files with custom regexp', async () => {
-      const path = resolve(__dirname, 'fixtures', 'nested')
+      const path = resolve(__dirname, 'fixtures', 'nested').replace(/\\/g, '/')
       const plugin = preparePlugin({ path, toolRegexp: '\\.custom\\.svelte$' })
       expect(await plugin.load(`${defaultUrl}${defaultWorkframeId}`))
         .toEqual(`import { Workbench } from '@atelier-wb/svelte'
@@ -227,7 +227,7 @@ new Workbench({
       expect(await plugin.load(`${defaultUrl}${defaultWorkframeId}`))
         .toEqual(`import { Workbench } from '@atelier-wb/svelte'
 
-import '${resolve(path, setupPath)}'
+import '${resolve(path, setupPath).replace(/\\/g, '/')}'
 import tool1 from '${path}/a.tools.svelte'
 import tool2 from '${path}/b.tools.svelte'
 import tool3 from '${path}/folder1/b.tools.svelte'
@@ -243,7 +243,7 @@ new Workbench({
     })
 
     it('allows absolute setup import', async () => {
-      const setupPath = resolve(path, faker.lorem.word())
+      const setupPath = resolve(path, faker.lorem.word()).replace(/\\/g, '/')
       const plugin = preparePlugin({ path, setupPath })
       expect(await plugin.load(`${defaultUrl}${defaultWorkframeId}`))
         .toEqual(`import { Workbench } from '@atelier-wb/svelte'

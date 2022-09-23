@@ -4,7 +4,7 @@ import { defineConfig } from 'vite'
 export default defineConfig({
   plugins: [svelte()],
   test: {
-    deps: { fallbackCJS: true },
+    deps: { inline: ['svelte-hyperscript'] },
     globals: true,
     environment: 'jsdom'
   }
