@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.9.0](https://github.com/feugy/atelier/compare/v0.8.1...v0.9.0) (2022-09-27)
+
+### ⚠ BREAKING CHANGES
+
+- **svelte:** extra span captured in toolshots (#27)
+
+### Bug Fixes
+
+- **svelte:** extra span captured in toolshots ([#27](https://github.com/feugy/atelier/issues/27)) ([e0c5288](https://github.com/feugy/atelier/commit/e0c52888cca54cd7e592ec6549731dbcf4ddef06))
+
 ### [0.8.1](https://github.com/feugy/atelier/compare/v0.7.1...v0.8.1) (2022-09-26)
 
 ### Features

@@ -1,6 +1,6 @@
 {
   "name": "@atelier-wb/vite-plugin-atelier",
-  "version": "0.8.1",
+  "version": "0.9.0",
   "description": "Helps you buildind Component Driven UIs with Atelier and Vite",
   "main": "src/index.js",
   "scripts": {
@@ -8,7 +8,7 @@
     "test:dev": "vitest dev"
   },
   "dependencies": {
-    "@atelier-wb/ui": "^0.8.0",
+    "@atelier-wb/ui": "^0.9.0",
     "ajv": "^8.11.0",
     "sirv": "^2.0.2"
   },

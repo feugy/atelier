@@ -53,7 +53,9 @@
 - How to develop plugins
 - Release:
   - `npm run release:bump`
-  - `git add CHANGELOG.md`
+  - updates `packages/ui` and `packages/vite-plugin-atlier` deps
+  - `npm i`
+  - `git add CHANGELOG.md packages/*/package.json package-lock.json`
   - `git commit --amend --no-edit`
   - `git push --follow-tags`
   - `npm publish -w packages --otp 531066`
