@@ -549,7 +549,7 @@ describe('Tool component', () => {
       })
       expect(registerTool).toHaveBeenCalledTimes(1)
       expect(recordEvent).not.toHaveBeenCalled()
-      const tool = screen.getByRole('button').parentElement.parentElement
+      const tool = screen.getByRole('button').parentElement
       expect(tool).toHaveClass('tool')
     })
 

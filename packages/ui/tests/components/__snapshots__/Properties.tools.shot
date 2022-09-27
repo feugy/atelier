@@ -1,177 +1,168 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Arrays 1`] = `
-<span>
-  <div
-    class="root svelte-v4o7vv"
+<div
+  class="root svelte-v4o7vv"
+>
+  <span
+    class="svelte-v4o7vv"
   >
-    <span
+    <label
       class="svelte-v4o7vv"
+      for="numbers"
     >
-      <label
-        class="svelte-v4o7vv"
-        for="numbers"
-      >
-        numbers
-      </label>
-       
-      <textarea
-        class="svelte-v4o7vv"
-        id="numbers"
-      />
-       
-    </span>
-    <span
+      numbers
+    </label>
+     
+    <textarea
       class="svelte-v4o7vv"
-    >
-      <label
-        class="svelte-v4o7vv"
-        for="strings"
-      >
-        strings
-      </label>
-       
-      <textarea
-        class="svelte-v4o7vv"
-        id="strings"
-      />
-       
-    </span>
-    <span
+      id="numbers"
+    />
+     
+  </span>
+  <span
+    class="svelte-v4o7vv"
+  >
+    <label
       class="svelte-v4o7vv"
+      for="strings"
     >
-      <label
-        class="svelte-v4o7vv"
-        for="empty"
-      >
-        empty
-      </label>
-       
-      <textarea
-        class="svelte-v4o7vv"
-        id="empty"
-      />
-       
-    </span>
-  </div>
-  <!--&lt;Properties&gt;-->
-</span>
+      strings
+    </label>
+     
+    <textarea
+      class="svelte-v4o7vv"
+      id="strings"
+    />
+     
+  </span>
+  <span
+    class="svelte-v4o7vv"
+  >
+    <label
+      class="svelte-v4o7vv"
+      for="empty"
+    >
+      empty
+    </label>
+     
+    <textarea
+      class="svelte-v4o7vv"
+      id="empty"
+    />
+     
+  </span>
+</div>
 `;
 
 exports[`Native types 1`] = `
-<span>
-  <div
-    class="root svelte-v4o7vv"
+<div
+  class="root svelte-v4o7vv"
+>
+  <span
+    class="svelte-v4o7vv"
   >
-    <span
+    <label
       class="svelte-v4o7vv"
+      for="name"
     >
-      <label
-        class="svelte-v4o7vv"
-        for="name"
-      >
-        name
-      </label>
-       
-      <input
-        class="svelte-v4o7vv"
-        id="name"
-      />
-       
-    </span>
-    <span
+      name
+    </label>
+     
+    <input
       class="svelte-v4o7vv"
-    >
-      <label
-        class="svelte-v4o7vv"
-        for="age"
-      >
-        age
-      </label>
-       
-      <input
-        class="svelte-v4o7vv"
-        id="age"
-        type="number"
-      />
-       
-    </span>
-    <span
+      id="name"
+    />
+     
+  </span>
+  <span
+    class="svelte-v4o7vv"
+  >
+    <label
       class="svelte-v4o7vv"
+      for="age"
     >
-      <label
-        class="svelte-v4o7vv"
-        for="hasSigned"
-      >
-        hasSigned
-      </label>
-       
-      <input
-        class="svelte-v4o7vv"
-        id="hasSigned"
-        type="checkbox"
-      />
-       
-    </span>
-  </div>
-  <!--&lt;Properties&gt;-->
-</span>
+      age
+    </label>
+     
+    <input
+      class="svelte-v4o7vv"
+      id="age"
+      type="number"
+    />
+     
+  </span>
+  <span
+    class="svelte-v4o7vv"
+  >
+    <label
+      class="svelte-v4o7vv"
+      for="hasSigned"
+    >
+      hasSigned
+    </label>
+     
+    <input
+      class="svelte-v4o7vv"
+      id="hasSigned"
+      type="checkbox"
+    />
+     
+  </span>
+</div>
 `;
 
 exports[`Objects 1`] = `
-<span>
-  <div
-    class="root svelte-v4o7vv"
+<div
+  class="root svelte-v4o7vv"
+>
+  <span
+    class="svelte-v4o7vv"
   >
-    <span
+    <label
       class="svelte-v4o7vv"
+      for="numbers"
     >
-      <label
-        class="svelte-v4o7vv"
-        for="numbers"
-      >
-        numbers
-      </label>
-       
-      <textarea
-        class="svelte-v4o7vv"
-        id="numbers"
-      />
-       
-    </span>
-    <span
+      numbers
+    </label>
+     
+    <textarea
       class="svelte-v4o7vv"
-    >
-      <label
-        class="svelte-v4o7vv"
-        for="strings"
-      >
-        strings
-      </label>
-       
-      <textarea
-        class="svelte-v4o7vv"
-        id="strings"
-      />
-       
-    </span>
-    <span
+      id="numbers"
+    />
+     
+  </span>
+  <span
+    class="svelte-v4o7vv"
+  >
+    <label
       class="svelte-v4o7vv"
+      for="strings"
     >
-      <label
-        class="svelte-v4o7vv"
-        for="empty"
-      >
-        empty
-      </label>
-       
-      <textarea
-        class="svelte-v4o7vv"
-        id="empty"
-      />
-       
-    </span>
-  </div>
-  <!--&lt;Properties&gt;-->
-</span>
+      strings
+    </label>
+     
+    <textarea
+      class="svelte-v4o7vv"
+      id="strings"
+    />
+     
+  </span>
+  <span
+    class="svelte-v4o7vv"
+  >
+    <label
+      class="svelte-v4o7vv"
+      for="empty"
+    >
+      empty
+    </label>
+     
+    <textarea
+      class="svelte-v4o7vv"
+      id="empty"
+    />
+     
+  </span>
+</div>
 `;

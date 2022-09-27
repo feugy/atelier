@@ -1,51 +1,61 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Custom colors 1`] = `
-<ul
-  class="svelte-1xwg7nr"
-  role="toolbar"
->
-  <li
+HTMLCollection [
+  <ul
     class="svelte-1xwg7nr"
-  />
-  <li
-    class="svelte-1xwg7nr"
-    style="--background: #e879f9;"
-  />
-  <li
-    class="svelte-1xwg7nr"
-    style="--background: rgba(150, 75, 50, 0.5);"
-  />
-  <li
-    class="svelte-1xwg7nr"
-    style="--background: linear-gradient(to right, red, orange);"
-  />
-</ul>
+    role="toolbar"
+  >
+    <li
+      class="svelte-1xwg7nr"
+    />
+    <li
+      class="svelte-1xwg7nr"
+      style="--background: #e879f9;"
+    />
+    <li
+      class="svelte-1xwg7nr"
+      style="--background: rgba(150, 75, 50, 0.5);"
+    />
+    <li
+      class="svelte-1xwg7nr"
+      style="--background: linear-gradient(to right, red, orange);"
+    />
+  </ul>,
+  <span
+    class="svelte-178aoja"
+  />,
+]
 `;
 
 exports[`Default colors 1`] = `
-<ul
-  class="svelte-1xwg7nr"
-  role="toolbar"
->
-  <li
+HTMLCollection [
+  <ul
     class="svelte-1xwg7nr"
-  />
-  <li
-    class="svelte-1xwg7nr"
-    style="--background: white;"
-  />
-  <li
-    class="svelte-1xwg7nr"
-    style="--background: #e0e0e0;"
-  />
-  <li
-    class="svelte-1xwg7nr"
-    style="--background: #a0a0a0;"
-  />
-  <li
-    class="svelte-1xwg7nr"
-    style="--background: black;"
-  />
-</ul>
+    role="toolbar"
+  >
+    <li
+      class="svelte-1xwg7nr"
+    />
+    <li
+      class="svelte-1xwg7nr"
+      style="--background: white;"
+    />
+    <li
+      class="svelte-1xwg7nr"
+      style="--background: #e0e0e0;"
+    />
+    <li
+      class="svelte-1xwg7nr"
+      style="--background: #a0a0a0;"
+    />
+    <li
+      class="svelte-1xwg7nr"
+      style="--background: black;"
+    />
+  </ul>,
+  <span
+    class="svelte-178aoja"
+  />,
+]
 `;

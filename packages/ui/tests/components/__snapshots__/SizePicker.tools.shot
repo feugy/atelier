@@ -1,82 +1,112 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Custom values 1`] = `
-<div
-  class="svelte-4941ld"
-  role="toolbar"
->
-  <button
-    class="primary iconOnly noColor svelte-6r5o0y"
-    title="label.medium-viewport [320 x 480]"
+HTMLCollection [
+  <div
+    class="svelte-4941ld"
+    role="toolbar"
   >
-    <i
-      class="material-icons svelte-6r5o0y"
+    <button
+      class="primary iconOnly noColor svelte-6r5o0y"
+      title="label.medium-viewport [320 x 480]"
     >
-      laptop
-    </i>
-     
-     
-  </button>
-  <!--&lt;Button&gt;-->
-  <button
-    class="primary iconOnly noColor svelte-6r5o0y"
-    title="label.medium-viewport [480 x 800]"
-  >
-    <i
-      class="material-icons svelte-6r5o0y"
+      <i
+        class="material-icons svelte-6r5o0y"
+      >
+        laptop
+      </i>
+       
+       
+    </button>
+    <!--&lt;Button&gt;-->
+    <button
+      class="primary iconOnly noColor svelte-6r5o0y"
+      title="label.medium-viewport [480 x 800]"
     >
-      border_outer
-    </i>
+      <i
+        class="material-icons svelte-6r5o0y"
+      >
+        border_outer
+      </i>
+       
+       
+    </button>
+    <!--&lt;Button&gt;-->
+  </div>,
+  <div>
+    <span />
      
+    <div>
+      width: 
+      100%
+    </div>
      
-  </button>
-  <!--&lt;Button&gt;-->
-</div>
+    <div>
+      height: 
+      100%
+    </div>
+  </div>,
+]
 `;
 
 exports[`Default values 1`] = `
-<div
-  class="svelte-4941ld"
-  role="toolbar"
->
-  <button
-    class="primary iconOnly noColor svelte-6r5o0y"
-    title="label.small-viewport [320 x 568]"
+HTMLCollection [
+  <div
+    class="svelte-4941ld"
+    role="toolbar"
   >
-    <i
-      class="material-icons svelte-6r5o0y"
+    <button
+      class="primary iconOnly noColor svelte-6r5o0y"
+      title="label.small-viewport [320 x 568]"
     >
-      phone_android
-    </i>
-     
-     
-  </button>
-  <!--&lt;Button&gt;-->
-  <button
-    class="primary iconOnly noColor svelte-6r5o0y"
-    title="label.medium-viewport [414 x 896]"
-  >
-    <i
-      class="material-icons svelte-6r5o0y"
+      <i
+        class="material-icons svelte-6r5o0y"
+      >
+        phone_android
+      </i>
+       
+       
+    </button>
+    <!--&lt;Button&gt;-->
+    <button
+      class="primary iconOnly noColor svelte-6r5o0y"
+      title="label.medium-viewport [414 x 896]"
     >
-      stay_current_landscape
-    </i>
-     
-     
-  </button>
-  <!--&lt;Button&gt;-->
-  <button
-    class="primary iconOnly noColor svelte-6r5o0y"
-    title="label.large-viewport [834 x 1112]"
-  >
-    <i
-      class="material-icons svelte-6r5o0y"
+      <i
+        class="material-icons svelte-6r5o0y"
+      >
+        stay_current_landscape
+      </i>
+       
+       
+    </button>
+    <!--&lt;Button&gt;-->
+    <button
+      class="primary iconOnly noColor svelte-6r5o0y"
+      title="label.large-viewport [834 x 1112]"
     >
-      tablet_android
-    </i>
+      <i
+        class="material-icons svelte-6r5o0y"
+      >
+        tablet_android
+      </i>
+       
+       
+    </button>
+    <!--&lt;Button&gt;-->
+  </div>,
+  <div>
+    <span />
      
+    <div>
+      width: 
+      100%
+    </div>
      
-  </button>
-  <!--&lt;Button&gt;-->
-</div>
+    <div>
+      height: 
+      100%
+    </div>
+  </div>,
+]
 `;

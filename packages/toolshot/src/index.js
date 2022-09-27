@@ -95,10 +95,11 @@ export function configureToolshot({
               await isVisible()
 
               // ...and assert their rendering
+              const { children } = document.querySelector(
+                `[data-full-name="${encodeURIComponent(tool.fullName)}"]`
+              )
               expect(
-                document.querySelector(
-                  `[data-full-name="${encodeURIComponent(tool.fullName)}"]`
-                ).firstChild
+                children.length > 1 ? children : children[0]
               ).toMatchFileSnapshot(
                 join(toolboxFolder, `${snapshotFolder}/${toolboxName}.shot`),
                 tool.name

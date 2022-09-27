@@ -1,11 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Empty 1`] = `
-<span>
-  
-  <!--&lt;PaneContainer&gt;-->
-</span>
-`;
+exports[`Empty 1`] = `undefined`;
 
 exports[`Multiple tabs 1`] = `
 <span

@@ -1,19 +1,16 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Empty 1`] = `
-<span>
+<div
+  class="root svelte-ygsof7"
+>
   <div
-    class="root svelte-ygsof7"
+    class="disclaimer svelte-1d2pv82"
   >
-    <div
-      class="disclaimer svelte-1d2pv82"
-    >
-      message.no-events
-    </div>
-    <!--&lt;PaneDisclaimer&gt;-->
+    message.no-events
   </div>
-  <!--&lt;EventLogger&gt;-->
-</span>
+  <!--&lt;PaneDisclaimer&gt;-->
+</div>
 `;
 
 exports[`With events 1`] = `

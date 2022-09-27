@@ -1,14 +1,12 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Multiple levels 1`] = `
-<span>
+HTMLCollection [
   <nav
     class="svelte-aeg211"
   >
     <ol />
-  </nav>
-  <!--&lt;BreadCrumb&gt;-->
-   
+  </nav>,
   <ul
     class="svelte-1i7sfgn"
   >
@@ -57,21 +55,17 @@ exports[`Multiple levels 1`] = `
       </div>
        
     </li>
-  </ul>
-  <!--&lt;ToolGroup&gt;-->
-  <!--&lt;Explorer&gt;-->
-</span>
+  </ul>,
+]
 `;
 
 exports[`Single level 1`] = `
-<span>
+HTMLCollection [
   <nav
     class="svelte-aeg211"
   >
     <ol />
-  </nav>
-  <!--&lt;BreadCrumb&gt;-->
-   
+  </nav>,
   <ul
     class="svelte-1i7sfgn"
   >
@@ -120,8 +114,6 @@ exports[`Single level 1`] = `
       </div>
        
     </li>
-  </ul>
-  <!--&lt;ToolGroup&gt;-->
-  <!--&lt;Explorer&gt;-->
-</span>
+  </ul>,
+]
 `;

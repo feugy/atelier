@@ -1,30 +1,27 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Components/Aside 1`] = `
-<span>
-  <aside
+<aside
+  class="svelte-1xti39p"
+>
+  <span
+    class="svelte-1xti39p"
+  />
+   
+  <div
     class="svelte-1xti39p"
   >
     <span
-      class="svelte-1xti39p"
-    />
+      class="material-icons svelte-1xti39p"
+    >
+      handyman
+    </span>
      
-    <div
+    <h1
       class="svelte-1xti39p"
     >
-      <span
-        class="material-icons svelte-1xti39p"
-      >
-        handyman
-      </span>
-       
-      <h1
-        class="svelte-1xti39p"
-      >
-        title.app
-      </h1>
-    </div>
-  </aside>
-  <!--&lt;Aside&gt;-->
-</span>
+      title.app
+    </h1>
+  </div>
+</aside>
 `;

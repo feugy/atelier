@@ -13,6 +13,7 @@
     "test:dev": "vitest dev"
   },
   "devDependencies": {
+    "@atelier-wb/toolshot": "^0.8.1",
     "@faker-js/faker": "^7.5.0",
     "@rollup/plugin-yaml": "^3.1.0",
     "@sveltejs/vite-plugin-svelte": "^1.0.5",

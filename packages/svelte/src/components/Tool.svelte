@@ -146,18 +146,21 @@
 
 {#if error}
   {error.message}
+{:else if !usesSlot}
+  <span
+    class="tool"
+    class:visible
+    data-full-name={encodeURIComponent(fullName)}
+    bind:this={target}
+  />
 {:else}
   <span
     class="tool"
     class:visible
     data-full-name={encodeURIComponent(fullName)}
   >
-    {#if usesSlot}
-      {#if visible}
-        <slot props={allProps} {handleEvent} />
-      {/if}
-    {:else}
-      <span bind:this={target} />
+    {#if visible}
+      <slot props={allProps} {handleEvent} />
     {/if}
   </span>
 {/if}
