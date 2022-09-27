@@ -1,186 +1,153 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Default 1`] = `
-<span>
-  <button
-    class="svelte-6r5o0y"
-  >
-     
-    <span>
-      Default
-    </span>
-     
-  </button>
-  <!--&lt;Button&gt;-->
-</span>
+<button
+  class="svelte-6r5o0y"
+>
+   
+  <span>
+    Default
+  </span>
+   
+</button>
 `;
 
 exports[`Disabled 1`] = `
-<span>
-  <button
-    class="svelte-6r5o0y"
-    disabled=""
-  >
-     
-    <span>
-      Disabled
-    </span>
-     
-  </button>
-  <!--&lt;Button&gt;-->
-</span>
+<button
+  class="svelte-6r5o0y"
+  disabled=""
+>
+   
+  <span>
+    Disabled
+  </span>
+   
+</button>
 `;
 
 exports[`Icon only 1`] = `
-<span>
-  <button
-    class="iconOnly svelte-6r5o0y"
+<button
+  class="iconOnly svelte-6r5o0y"
+>
+  <i
+    class="material-icons svelte-6r5o0y"
   >
-    <i
-      class="material-icons svelte-6r5o0y"
-    >
-      face
-    </i>
-     
-     
-  </button>
-  <!--&lt;Button&gt;-->
-</span>
+    face
+  </i>
+   
+   
+</button>
 `;
 
 exports[`Icon only, no color 1`] = `
-<span>
-  <button
-    class="iconOnly noColor svelte-6r5o0y"
+<button
+  class="iconOnly noColor svelte-6r5o0y"
+>
+  <i
+    class="material-icons svelte-6r5o0y"
   >
-    <i
-      class="material-icons svelte-6r5o0y"
-    >
-      face
-    </i>
-     
-     
-  </button>
-  <!--&lt;Button&gt;-->
-</span>
+    face
+  </i>
+   
+   
+</button>
 `;
 
 exports[`No color 1`] = `
-<span>
-  <button
-    class="noColor svelte-6r5o0y"
-  >
-     
-    <span>
-      Text only
-    </span>
-     
-  </button>
-  <!--&lt;Button&gt;-->
-</span>
+<button
+  class="noColor svelte-6r5o0y"
+>
+   
+  <span>
+    Text only
+  </span>
+   
+</button>
 `;
 
 exports[`Primary 1`] = `
-<span>
-  <button
-    class="primary svelte-6r5o0y"
-  >
-     
-    <span>
-      Primary
-    </span>
-     
-  </button>
-  <!--&lt;Button&gt;-->
-</span>
+<button
+  class="primary svelte-6r5o0y"
+>
+   
+  <span>
+    Primary
+  </span>
+   
+</button>
 `;
 
 exports[`Primary disabled 1`] = `
-<span>
-  <button
-    class="primary svelte-6r5o0y"
-    disabled=""
-  >
-     
-    <span>
-      Primary
-    </span>
-     
-  </button>
-  <!--&lt;Button&gt;-->
-</span>
+<button
+  class="primary svelte-6r5o0y"
+  disabled=""
+>
+   
+  <span>
+    Primary
+  </span>
+   
+</button>
 `;
 
 exports[`Primary with icon only 1`] = `
-<span>
-  <button
-    class="primary iconOnly svelte-6r5o0y"
+<button
+  class="primary iconOnly svelte-6r5o0y"
+>
+  <i
+    class="material-icons svelte-6r5o0y"
   >
-    <i
-      class="material-icons svelte-6r5o0y"
-    >
-      volume_up
-    </i>
-     
-     
-  </button>
-  <!--&lt;Button&gt;-->
-</span>
+    volume_up
+  </i>
+   
+   
+</button>
 `;
 
 exports[`Primary with icon only, no color 1`] = `
-<span>
-  <button
-    class="primary iconOnly noColor svelte-6r5o0y"
+<button
+  class="primary iconOnly noColor svelte-6r5o0y"
+>
+  <i
+    class="material-icons svelte-6r5o0y"
   >
-    <i
-      class="material-icons svelte-6r5o0y"
-    >
-      volume_up
-    </i>
-     
-     
-  </button>
-  <!--&lt;Button&gt;-->
-</span>
+    volume_up
+  </i>
+   
+   
+</button>
 `;
 
 exports[`Primary with text and icon 1`] = `
-<span>
-  <button
-    class="primary svelte-6r5o0y"
+<button
+  class="primary svelte-6r5o0y"
+>
+  <i
+    class="material-icons svelte-6r5o0y"
   >
-    <i
-      class="material-icons svelte-6r5o0y"
-    >
-      person
-    </i>
-     
-    <span>
-      Hey!
-    </span>
-     
-  </button>
-  <!--&lt;Button&gt;-->
-</span>
+    person
+  </i>
+   
+  <span>
+    Hey!
+  </span>
+   
+</button>
 `;
 
 exports[`Text and icon 1`] = `
-<span>
-  <button
-    class="svelte-6r5o0y"
+<button
+  class="svelte-6r5o0y"
+>
+  <i
+    class="material-icons svelte-6r5o0y"
   >
-    <i
-      class="material-icons svelte-6r5o0y"
-    >
-      face
-    </i>
-     
-    <span>
-      Hello
-    </span>
-     
-  </button>
-  <!--&lt;Button&gt;-->
-</span>
+    face
+  </i>
+   
+  <span>
+    Hello
+  </span>
+   
+</button>
 `;

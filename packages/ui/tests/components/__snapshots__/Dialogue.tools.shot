@@ -1,7 +1,96 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Components/Dialogue 1`] = `
-<p>
-  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-</p>
+HTMLCollection [
+  <p>
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+  </p>,
+  <p>
+    In eu mi bibendum neque egestas congue quisque egestas
+  </p>,
+  <p>
+    Arcu non odio euismod lacinia at quis risus sed
+  </p>,
+  <p>
+    Massa tempor nec feugiat nisl
+  </p>,
+  <p>
+    Sagittis aliquam malesuada bibendum arcu vitae elementum
+  </p>,
+  <p>
+    Elementum facilisis leo vel fringilla est ullamcorper eget nulla
+  </p>,
+  <p>
+    Bibendum arcu vitae elementum curabitur vitae nunc sed velit dignissim
+  </p>,
+  <p>
+    Elit sed vulputate mi sit amet mauris commodo
+  </p>,
+  <p>
+    Ut enim blandit volutpat maecenas volutpat blandit aliquam etiam erat
+  </p>,
+  <p>
+    Lorem mollis aliquam ut porttitor leo a diam sollicitudin
+  </p>,
+  <p>
+    Vitae proin sagittis nisl rhoncus mattis
+  </p>,
+  <p>
+    Ut morbi tincidunt augue interdum velit euismod in pellentesque
+  </p>,
+  <p>
+    Aliquam purus sit amet luctus venenatis lectus magna
+  </p>,
+  <p>
+    Amet venenatis urna cursus eget
+  </p>,
+  <p>
+    Et pharetra pharetra massa massa
+  </p>,
+  <p>
+    Ac ut consequat semper viverra nam libero justo laoreet
+  </p>,
+  <p>
+    Eget arcu dictum varius duis at consectetur lorem
+  </p>,
+  <p>
+    Tellus id interdum velit laoreet id donec
+  </p>,
+  <p>
+    Aliquam sem fringilla ut morbi
+  </p>,
+  <p>
+    Consequat nisl vel pretium lectus quam id leo in vitae
+  </p>,
+  <p>
+    Velit scelerisque in dictum non
+  </p>,
+  <p>
+    Pretium aenean pharetra magna ac
+  </p>,
+  <p>
+    Tincidunt arcu non sodales neque sodales ut etiam
+  </p>,
+  <p>
+    Cursus eget nunc scelerisque viverra mauris in aliquam
+  </p>,
+  <p>
+    Tortor at auctor urna nunc id cursus
+  </p>,
+  <p>
+    Consequat interdum varius sit amet mattis vulputate enim nulla
+  </p>,
+  <p>
+    Sagittis vitae et leo duis ut
+  </p>,
+  <p>
+    Pretium lectus quam id leo in
+  </p>,
+  <p>
+    Fusce ut placerat orci nulla pellentesque dignissim enim sit
+  </p>,
+  <p>
+    Sed cras ornare arcu dui vivamus arcu.
+  </p>,
+]
 `;

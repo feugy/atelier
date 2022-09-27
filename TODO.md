@@ -55,5 +55,5 @@
   - `npm run release:bump`
   - `git add CHANGELOG.md`
   - `git commit --amend --no-edit`
-  - `git push`
+  - `git push --follow-tags`
   - `npm publish -w packages --otp 531066`
