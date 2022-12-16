@@ -1,5 +1,7 @@
 coverage/
 dist/
+dist-atelier/
 node_modules/
 scans/
 .husky/
+pnpm-lock.yaml
