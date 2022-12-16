@@ -14,6 +14,8 @@
   },
   "devDependencies": {
     "@atelier-wb/toolshot": "workspace:^0.9.0",
+    "@atelier-wb/svelte": "workspace:^0.9.0",
+    "@atelier-wb/vite-plugin-atelier": "workspace:^0.9.0",
     "@faker-js/faker": "^7.6.0",
     "@rollup/plugin-yaml": "^4.0.1",
     "@sveltejs/vite-plugin-svelte": "^2.0.2",
