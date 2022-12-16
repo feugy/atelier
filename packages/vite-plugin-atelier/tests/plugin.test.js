@@ -5,7 +5,7 @@ const { readFile, rm, stat } = require('fs/promises')
 const http = require('http')
 const { resolve } = require('path')
 const connect = require('connect')
-const got = require('got')
+const { fetch } = require('undici')
 const { build } = require('vite')
 const builder = require('../src')
 
@@ -282,14 +282,12 @@ new Workbench({
         uiSettings
       }))
 
-      const response = await got(`${address}${url}ui-settings.js`)
-      expect(response.statusCode).toEqual(200)
-      expect(response.headers).toEqual(
-        expect.objectContaining({
-          'content-type': 'application/javascript;charset=utf-8'
-        })
+      const response = await fetch(`${address}${url}ui-settings.js`)
+      expect(response.status).toEqual(200)
+      expect(response.headers.get('content-type')).toEqual(
+        'application/javascript;charset=utf-8'
       )
-      expect(response.body).toEqual(
+      expect(await response.text()).toEqual(
         `window.uiSettings = ${JSON.stringify(uiSettings)};`
       )
     })
@@ -315,78 +313,69 @@ new Workbench({
     afterEach(() => server.close())
 
     it(`serves atelier's main html file`, async () => {
-      const response = await got(`${address}${url}`)
-      expect(response.statusCode).toEqual(200)
-      expect(response.headers).toEqual(
-        expect.objectContaining({ 'content-type': 'text/html;charset=utf-8' })
+      const response = await fetch(`${address}${url}`)
+      expect(response.status).toEqual(200)
+      expect(response.headers.get('content-type')).toEqual(
+        'text/html;charset=utf-8'
       )
-      expect(response.body).toEqual(
+      const body = await response.text()
+      expect(body).toEqual(
         expect.stringContaining(
           '<script type="module" crossorigin src="./assets/index.'
         )
       )
-      expect(response.body).toEqual(
+      expect(body).toEqual(
         expect.stringContaining('<link rel="stylesheet" href="./assets/index.')
       )
     })
 
     it(`serves script with empty ui settings`, async () => {
-      const response = await got(`${address}${url}ui-settings.js`)
-      expect(response.statusCode).toEqual(200)
-      expect(response.headers).toEqual(
-        expect.objectContaining({
-          'content-type': 'application/javascript;charset=utf-8'
-        })
+      const response = await fetch(`${address}${url}ui-settings.js`)
+      expect(response.status).toEqual(200)
+      expect(response.headers.get('content-type')).toEqual(
+        'application/javascript;charset=utf-8'
       )
-      expect(response.body).toEqual('window.uiSettings = {};')
+      expect(await response.text()).toEqual('window.uiSettings = {};')
     })
 
     it(`serves files from public dir`, async () => {
-      let response = await got(`${address}${url}icon-256x256.png`)
-      expect(response.statusCode).toEqual(200)
-      expect(response.headers).toEqual(
-        expect.objectContaining({ 'content-type': 'image/png' })
-      )
-      response = await got(`${address}${url}favicon.ico`)
-      expect(response.statusCode).toEqual(200)
-      expect(response.headers).toEqual(
-        expect.objectContaining({ 'content-length': '1150' })
-      )
-      await expect(got(`${address}${url}unknown.jpeg`)).rejects.toThrow('404')
+      let response = await fetch(`${address}${url}icon-256x256.png`)
+      expect(response.status).toEqual(200)
+      expect(response.headers.get('content-type')).toEqual('image/png')
+      response = await fetch(`${address}${url}favicon.ico`)
+      expect(response.status).toEqual(200)
+      expect(response.headers.get('content-length')).toEqual('1150')
+      response = await fetch(`${address}${url}unknown.jpeg`)
+      expect(response.status).toEqual(404)
     })
 
     it(`redirects to atelier's main html file without trailing /`, async () => {
-      const response = await got(`${address}${url.slice(0, -1)}`, {
-        followRedirect: false
+      const response = await fetch(`${address}${url.slice(0, -1)}`, {
+        redirect: 'manual'
       })
-      expect(response.statusCode).toEqual(301)
-      expect(response.headers).toEqual(
-        expect.objectContaining({ location: url })
-      )
+      expect(response.status).toEqual(301)
+      expect(response.headers.get('location')).toEqual(url)
     })
 
     it(`serves atelier's workframe`, async () => {
-      const response = await got(`${address}${url}workframe.html`)
-      expect(response.statusCode).toEqual(200)
-      expect(response.headers).toEqual(
-        expect.objectContaining({ 'content-type': 'text/html' })
-      )
-      expect(response.body).toMatchInlineSnapshot(`
-"<!DOCTYPE html>
-<html lang=\\"en\\">
+      const response = await fetch(`${address}${url}workframe.html`)
+      expect(response.status).toEqual(200)
+      expect(response.headers.get('content-type')).toEqual('text/html')
+      expect(await response.text()).toMatchInlineSnapshot(`
+        "<!DOCTYPE html>
+        <html lang=\\"en\\">
+          <head>
+            <meta charset=\\"utf-8\\" />
+            <meta name=\\"viewport\\" content=\\"width=device-width, initial-scale=1\\" />
+            <script type=\\"module\\" src=\\"/@vite/client\\"></script>
+          </head>
 
-<head>
-  <meta charset=\\"utf-8\\" />
-  <meta name=\\"viewport\\" content=\\"width=device-width, initial-scale=1\\" />
-  <script type=\\"module\\" src=\\"/@vite/client\\"></script>
-</head>
-
-<body>
-  <script type=\\"module\\" src=\\"@atelier-wb/workframe\\"></script>
-</body>
-
-</html>"
-`)
+          <body>
+            <script type=\\"module\\" src=\\"@atelier-wb/workframe\\"></script>
+          </body>
+        </html>
+        "
+      `)
     })
 
     it.each([

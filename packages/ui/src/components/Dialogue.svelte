@@ -5,6 +5,21 @@
   export let open = true
 </script>
 
+<Portal>
+  <div class="filter" class:open />
+  <div class="backdrop" class:open>
+    <article role="dialog" on:click|stopPropagation on:keydown|stopPropagation>
+      <header role="heading" aria-level="1">{title}</header>
+      <div class="content">
+        <slot />
+      </div>
+      <footer>
+        <slot name="footer" />
+      </footer>
+    </article>
+  </div>
+</Portal>
+
 <style lang="postcss">
   .backdrop,
   .filter {
@@ -43,18 +58,3 @@
     @apply mt-4 p-4;
   }
 </style>
-
-<Portal>
-  <div class="filter" class:open />
-  <div class="backdrop" class:open>
-    <article role="dialog" on:click|stopPropagation>
-      <header role="heading" aria-level="1">{title}</header>
-      <div class="content">
-        <slot />
-      </div>
-      <footer>
-        <slot name="footer" />
-      </footer>
-    </article>
-  </div>
-</Portal>

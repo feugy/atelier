@@ -8,17 +8,21 @@ HTMLCollection [
   >
     <li
       class="svelte-1xwg7nr"
+      role="button"
     />
     <li
       class="svelte-1xwg7nr"
+      role="button"
       style="--background: #e879f9;"
     />
     <li
       class="svelte-1xwg7nr"
+      role="button"
       style="--background: rgba(150, 75, 50, 0.5);"
     />
     <li
       class="svelte-1xwg7nr"
+      role="button"
       style="--background: linear-gradient(to right, red, orange);"
     />
   </ul>,
@@ -36,21 +40,26 @@ HTMLCollection [
   >
     <li
       class="svelte-1xwg7nr"
+      role="button"
     />
     <li
       class="svelte-1xwg7nr"
+      role="button"
       style="--background: white;"
     />
     <li
       class="svelte-1xwg7nr"
+      role="button"
       style="--background: #e0e0e0;"
     />
     <li
       class="svelte-1xwg7nr"
+      role="button"
       style="--background: #a0a0a0;"
     />
     <li
       class="svelte-1xwg7nr"
+      role="button"
       style="--background: black;"
     />
   </ul>,

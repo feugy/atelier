@@ -19,29 +19,6 @@
   }
 </script>
 
-<style lang="postcss">
-  .root {
-    @apply p-4 overflow-auto w-full h-full relative;
-  }
-
-  .log {
-    @apply grid gap-y-1 gap-x-4;
-    grid-template-columns: auto auto 1fr;
-  }
-
-  .time {
-    @apply text-xs leading-6 text-$secondary-light;
-  }
-
-  .name {
-    @apply justify-self-end text-$base-lighter;
-  }
-
-  .clear-button {
-    @apply absolute top-4 right-4;
-  }
-</style>
-
 <div class="root">
   {#if !events?.length}
     <PaneDisclaimer message={$_('message.no-events')} />
@@ -64,3 +41,26 @@
     >
   {/if}
 </div>
+
+<style lang="postcss">
+  .root {
+    @apply p-4 overflow-auto w-full h-full relative;
+  }
+
+  .log {
+    @apply grid gap-y-1 gap-x-4;
+    grid-template-columns: auto auto 1fr;
+  }
+
+  .time {
+    @apply text-xs leading-6 text-$secondary-light;
+  }
+
+  .name {
+    @apply justify-self-end text-$base-lighter;
+  }
+
+  .clear-button {
+    @apply absolute top-4 right-4;
+  }
+</style>

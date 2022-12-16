@@ -49,6 +49,33 @@
   }
 </script>
 
+<div class="root">
+  {#each entries as { name, value, type }}
+    <span in:fade|local>
+      <label for={name}>{name}</label>
+      {#if type === 'number'}
+        <input
+          type="number"
+          id={name}
+          {value}
+          on:change={makeNumberChangeHandler(name)}
+        />
+      {:else if type === 'boolean'}
+        <input
+          type="checkbox"
+          id={name}
+          checked={value}
+          on:change={makeBooleanChangeHandler(name)}
+        />
+      {:else if type === 'object'}
+        <textarea id={name} {value} on:input={makeObjectChangeHandler(name)} />
+      {:else}
+        <input id={name} {value} on:input={makeStringChangeHandler(name)} />
+      {/if}</span
+    >
+  {/each}
+</div>
+
 <style lang="postcss">
   .root {
     @apply grid overflow-y-auto overflow-x-hidden gap-4 h-full;
@@ -79,30 +106,3 @@
     @apply resize-y h-full;
   }
 </style>
-
-<div class="root">
-  {#each entries as { name, value, type }}
-    <span in:fade|local>
-      <label for={name}>{name}</label>
-      {#if type === 'number'}
-        <input
-          type="number"
-          id={name}
-          {value}
-          on:change={makeNumberChangeHandler(name)}
-        />
-      {:else if type === 'boolean'}
-        <input
-          type="checkbox"
-          id={name}
-          checked={value}
-          on:change={makeBooleanChangeHandler(name)}
-        />
-      {:else if type === 'object'}
-        <textarea id={name} {value} on:input={makeObjectChangeHandler(name)} />
-      {:else}
-        <input id={name} {value} on:input={makeStringChangeHandler(name)} />
-      {/if}</span
-    >
-  {/each}
-</div>

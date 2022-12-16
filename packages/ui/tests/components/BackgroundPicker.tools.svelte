@@ -5,12 +5,6 @@
   let viewport
 </script>
 
-<style lang="postcss">
-  span {
-    @apply inline-block w-10 h-10 m-4;
-  }
-</style>
-
 <ToolBox
   name="Components/Background Picker"
   events={['select']}
@@ -38,3 +32,9 @@
     <span bind:this={viewport} />
   </Tool>
 </ToolBox>
+
+<style lang="postcss">
+  span {
+    @apply inline-block w-10 h-10 m-4;
+  }
+</style>

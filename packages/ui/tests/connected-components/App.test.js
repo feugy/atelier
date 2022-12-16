@@ -24,7 +24,7 @@ describe('App connected component', () => {
     // 3 default sizes
     expect(within(toolBars[0]).getAllByRole('button')).toHaveLength(3)
     // 5 default backgrounds
-    expect(within(toolBars[1]).getAllByRole('listitem')).toHaveLength(5)
+    expect(within(toolBars[1]).getAllByRole('button')).toHaveLength(5)
     expect(screen.queryByRole('dialog')).not.toBeInTheDocument()
   })
 
@@ -52,7 +52,7 @@ describe('App connected component', () => {
     expect(within(toolBars[0]).getAllByRole('button')).toHaveLength(
       sizes.length
     )
-    expect(within(toolBars[1]).getAllByRole('listitem')).toHaveLength(
+    expect(within(toolBars[1]).getAllByRole('button')).toHaveLength(
       backgrounds.length
     )
     expect(screen.queryByRole('dialog')).not.toBeInTheDocument()

@@ -104,12 +104,6 @@
   }
 </script>
 
-<style lang="postcss">
-  div {
-    @apply inline-flex;
-  }
-</style>
-
 <div role="toolbar">
   {#each options as option}
     <Button
@@ -121,3 +115,9 @@
     />
   {/each}
 </div>
+
+<style lang="postcss">
+  div {
+    @apply inline-flex;
+  }
+</style>
