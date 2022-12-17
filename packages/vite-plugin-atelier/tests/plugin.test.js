@@ -3,14 +3,16 @@ import { svelte } from '@sveltejs/vite-plugin-svelte'
 import { EventEmitter } from 'events'
 import { readFile, rm, stat } from 'fs/promises'
 import { createServer } from 'http'
-import { resolve } from 'path'
+import { dirname, resolve } from 'path'
 import connect from 'connect'
 import { fetch } from 'undici'
+import { fileURLToPath } from 'url'
 import { build } from 'vite'
 import builder from '../src'
 
 const defaultWorkframeId = '@atelier-wb/workframe'
 const defaultUrl = '/atelier/'
+const __dirname = dirname(fileURLToPath(import.meta.url))
 const path = resolve(__dirname, 'fixtures', 'nested').replace(/\\/g, '/')
 
 async function configureAndStartServer(options) {
@@ -261,6 +263,32 @@ new Workbench({
   target: document.body,
   props: { tools: [tool1, tool2, tool3, tool4, tool5, tool6, tool7] }
 })`)
+    })
+
+    it('adds atelier paths to default project', async () => {
+      const plugin = builder({})
+      expect(
+        plugin.config({ root: '' }, { command: 'serve' })?.server?.fs?.allow
+      ).toEqual([
+        resolve(__dirname, '../../..'),
+        resolve(__dirname, '../atelier'),
+        resolve(__dirname, '../../ui/dist')
+      ])
+    })
+
+    it('adds atelier paths to the provided ones', async () => {
+      const allow = [faker.system.directoryPath(), faker.system.directoryPath()]
+      const plugin = builder({})
+      expect(
+        plugin.config(
+          { root: '', server: { fs: { allow } } },
+          { command: 'serve' }
+        )?.server?.fs?.allow
+      ).toEqual([
+        ...allow,
+        resolve(__dirname, '../atelier'),
+        resolve(__dirname, '../../ui/dist')
+      ])
     })
   })
 
