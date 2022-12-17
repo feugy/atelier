@@ -30,7 +30,7 @@ describe('BackgroundPicker component', () => {
         />`
       )
 
-      const items = screen.getAllByRole('listitem')
+      const items = screen.getAllByRole('button')
       expect(items).toHaveLength(backgrounds.length)
       for (const [i, background] of backgrounds.entries()) {
         if (background) {
@@ -48,7 +48,7 @@ describe('BackgroundPicker component', () => {
         />`
       )
 
-      const items = screen.getAllByRole('listitem')
+      const items = screen.getAllByRole('button')
       fireEvent.click(items[1])
       expect(viewport.style.background).toEqual(backgrounds[1])
 

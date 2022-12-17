@@ -17,18 +17,21 @@ exports[`Multiple tabs 1`] = `
       >
         <li
           class="svelte-1hpkjx7 current"
+          role="tab"
         >
           First tab
         </li>
         
         <li
           class="svelte-1hpkjx7"
+          role="tab"
         >
           Another one
         </li>
         
         <li
           class="svelte-1hpkjx7"
+          role="tab"
         >
           A third...
         </li>
@@ -89,6 +92,7 @@ exports[`Single tab 1`] = `
       >
         <li
           class="svelte-1hpkjx7 current"
+          role="tab"
         >
           tab 1
         </li>

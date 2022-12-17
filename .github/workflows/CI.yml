@@ -13,27 +13,29 @@ jobs:
   lint-and-format:
     runs-on: ubuntu-latest
 
-    strategy:
-      matrix:
-        node-version: [18.x]
-
     steps:
       - name: Check code out
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
-      - name: Set Node.js ${{ matrix.node-version }} up
-        uses: actions/setup-node@v1
+      - name: Intall Pnpm
+        uses: pnpm/action-setup@v2.2.2
         with:
-          node-version: ${{ matrix.node-version }}
+          version: 7
+
+      - name: Set Node.js up
+        uses: actions/setup-node@v3
+        with:
+          node-version-file: '.nvmrc'
+          cache: 'pnpm'
 
       - name: Install dependencies
-        run: npm ci
+        run: pnpm install --ignore-scripts
 
       - name: Check linter violations
-        run: npm run lint
+        run: pnpm lint
 
       - name: Check code format
-        run: npm run format -- --check
+        run: pnpm format --check
 
   test:
     runs-on: ubuntu-latest
@@ -44,21 +46,27 @@ jobs:
 
     steps:
       - name: Check code out
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
+
+      - name: Intall Pnpm
+        uses: pnpm/action-setup@v2.2.2
+        with:
+          version: 7
 
       - name: Set Node.js ${{ matrix.node-version }} up
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
+          cache: 'pnpm'
 
       - name: Install dependencies
-        run: npm ci
+        run: pnpm install --ignore-scripts
 
       - name: Build UI
-        run: npm run build --workspace packages/ui
+        run: pnpm --filter ui build
 
       - name: Run tests
-        run: npm test
+        run: pnpm test
 
       - name: Send coverage to Codacy
         if: always()

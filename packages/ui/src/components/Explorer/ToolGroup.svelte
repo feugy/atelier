@@ -16,7 +16,45 @@
   function navigateTo(tool) {
     dispatch('select', tool)
   }
+
+  function makeKeyHandler(background) {
+    return ({ code }) => {
+      if (code === 'Enter' || code === 'Space') {
+        navigateTo(background)
+      }
+    }
+  }
 </script>
+
+<ul>
+  {#each tools as tool}
+    <li
+      class:isCurrent
+      on:keydown|stopPropagation={makeKeyHandler(tool)}
+      on:click|stopPropagation={() => navigateTo(tool)}
+    >
+      {#if isCurrent}
+        <div
+          class:current={selectedPath === tool?.fullName}
+          class:folder={isFolder(tool)}
+          in:fly={{ x: moveForward ? 200 : -200, duration: 350 }}
+        >
+          <span class="material-icons symbol"
+            >{isFolder(tool) ? 'folder_open' : 'architecture'}</span
+          >{getName(tool.fullName)}
+        </div>
+      {:else if isFolder(tool)}
+        <svelte:self
+          tools={tool.children}
+          {selectedPath}
+          {currentPath}
+          {moveForward}
+          on:select
+        />
+      {/if}
+    </li>
+  {/each}
+</ul>
 
 <style lang="postcss">
   ul {
@@ -49,29 +87,3 @@
     }
   }
 </style>
-
-<ul>
-  {#each tools as tool}
-    <li class:isCurrent on:click|stopPropagation={() => navigateTo(tool)}>
-      {#if isCurrent}
-        <div
-          class:current={selectedPath === tool?.fullName}
-          class:folder={isFolder(tool)}
-          in:fly={{ x: moveForward ? 200 : -200, duration: 350 }}
-        >
-          <span class="material-icons symbol"
-            >{isFolder(tool) ? 'folder_open' : 'architecture'}</span
-          >{getName(tool.fullName)}
-        </div>
-      {:else if isFolder(tool)}
-        <svelte:self
-          tools={tool.children}
-          {selectedPath}
-          {currentPath}
-          {moveForward}
-          on:select
-        />
-      {/if}
-    </li>
-  {/each}
-</ul>

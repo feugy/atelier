@@ -19,6 +19,20 @@
   }
 </script>
 
+<span class="viewport-container">
+  <div bind:this={viewport}>
+    {#if isLoading}<span class="loader"><Loader /></span>{/if}
+    <iframe
+      title="workframe"
+      bind:this={frame}
+      on:load={handleLoad}
+      on:abort={() => handleError({ error: new Error('aborted') })}
+      on:error={handleError}
+      {src}
+    />
+  </div>
+</span>
+
 <style lang="postcss">
   .viewport-container {
     @apply flex p-4 overflow-auto flex-grow items-center;
@@ -40,17 +54,3 @@
     @apply inline-block border-none h-full w-full;
   }
 </style>
-
-<span class="viewport-container">
-  <div bind:this={viewport}>
-    {#if isLoading}<span class="loader"><Loader /></span>{/if}
-    <iframe
-      title="workframe"
-      bind:this={frame}
-      on:load={handleLoad}
-      on:abort={() => handleError({ error: new Error('aborted') })}
-      on:error={handleError}
-      {src}
-    />
-  </div>
-</span>

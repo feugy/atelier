@@ -9,7 +9,34 @@
   function navigate(index) {
     dispatch('navigate', legs.slice(1, index + 1).join('/') || null)
   }
+
+  function makeKeyHandler(index) {
+    return ({ code }) => {
+      if (code === 'Enter' || code === 'Space') {
+        navigate(index)
+      }
+    }
+  }
 </script>
+
+<nav>
+  <ol>
+    {#each legs as leg, index}
+      {#if index !== legs.length - 1}
+        <li
+          role="button"
+          on:keydown={makeKeyHandler(index)}
+          on:click={() => navigate(index)}
+        >
+          {#if leg}{leg}{:else}<span class="material-icons">home</span>{/if}
+        </li>
+        <span class="divider">/</span>
+      {:else}
+        <li>{leg}</li>
+      {/if}
+    {/each}
+  </ol>
+</nav>
 
 <style lang="postcss">
   nav {
@@ -32,18 +59,3 @@
     }
   }
 </style>
-
-<nav>
-  <ol>
-    {#each legs as leg, index}
-      {#if index !== legs.length - 1}
-        <li on:click={() => navigate(index)}>
-          {#if leg}{leg}{:else}<span class="material-icons">home</span>{/if}
-        </li>
-        <span class="divider">/</span>
-      {:else}
-        <li>{leg}</li>
-      {/if}
-    {/each}
-  </ol>
-</nav>

@@ -1,6 +1,6 @@
 import { svelte } from '@sveltejs/vite-plugin-svelte'
 import yaml from '@rollup/plugin-yaml'
-import atelier from '@atelier-wb/vite-plugin-atelier'
+import atelier from '../vite-plugin-atelier'
 import sveltePreprocess from 'svelte-preprocess'
 import { defineConfig } from 'vite'
 import windi from 'vite-plugin-windicss'

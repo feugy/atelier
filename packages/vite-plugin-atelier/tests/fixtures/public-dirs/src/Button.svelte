@@ -2,6 +2,10 @@
   export let text = null
 </script>
 
+<button on:click {...$$restProps}>
+  {#if text}<span>{text}</span>{/if}
+</button>
+
 <style lang="postcss">
   button {
     display: inline-flex;
@@ -23,7 +27,3 @@
     transform: scale(1.05, 1.05);
   }
 </style>
-
-<button on:click {...$$restProps}>
-  {#if text}<span>{text}</span>{/if}
-</button>

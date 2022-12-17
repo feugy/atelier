@@ -30,7 +30,55 @@
   function toggleCollapse() {
     collapsed = !collapsed
   }
+
+  function makeKeyHandler(i) {
+    return ({ code }) => {
+      if (code === 'Enter' || code === 'Space') {
+        select(i)
+      }
+    }
+  }
 </script>
+
+{#if tabs?.length}
+  <div class="root" class:has-collapsed={collapsed}>
+    <nav on:dblclick={toggleCollapse}>
+      <ul>
+        {#each tabs as { name }, i}
+          {#if tabEnability[i]}
+            <li
+              class:current={i === selected}
+              role="tab"
+              on:keydown={makeKeyHandler(i)}
+              on:click={() => select(i)}
+            >
+              {name}
+            </li>
+          {/if}
+        {/each}
+        <li>
+          <slot />
+          <Button
+            noColor
+            title={$_('tooltip.collapsible')}
+            on:click={toggleCollapse}
+            icon={collapsed ? 'expand_less' : 'expand_more'}
+          />
+        </li>
+      </ul>
+    </nav>
+    <main class:collapsed bind:this={main}>
+      {#each tabs as { component }, i}
+        {#if i === selected}
+          <svelte:component this={component} />
+        {/if}
+      {/each}
+      {#if allDisabled}
+        <PaneDisclaimer message={$_('message.no-pane-enabled')} />
+      {/if}
+    </main>
+  </div>
+{/if}
 
 <style lang="postcss">
   .root {
@@ -67,38 +115,3 @@
     }
   }
 </style>
-
-{#if tabs?.length}
-  <div class="root" class:has-collapsed={collapsed}>
-    <nav on:dblclick={toggleCollapse}>
-      <ul>
-        {#each tabs as { name }, i}
-          {#if tabEnability[i]}
-            <li class:current={i === selected} on:click={() => select(i)}>
-              {name}
-            </li>
-          {/if}
-        {/each}
-        <li>
-          <slot />
-          <Button
-            noColor
-            title={$_('tooltip.collapsible')}
-            on:click={toggleCollapse}
-            icon={collapsed ? 'expand_less' : 'expand_more'}
-          />
-        </li>
-      </ul>
-    </nav>
-    <main class:collapsed bind:this={main}>
-      {#each tabs as { component }, i}
-        {#if i === selected}
-          <svelte:component this={component} />
-        {/if}
-      {/each}
-      {#if allDisabled}
-        <PaneDisclaimer message={$_('message.no-pane-enabled')} />
-      {/if}
-    </main>
-  </div>
-{/if}

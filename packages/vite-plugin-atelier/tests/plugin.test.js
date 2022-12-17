@@ -1,13 +1,13 @@
-const { faker } = require('@faker-js/faker')
-const { svelte } = require('@sveltejs/vite-plugin-svelte')
-const { EventEmitter } = require('events')
-const { readFile, rm, stat } = require('fs/promises')
-const http = require('http')
-const { resolve } = require('path')
-const connect = require('connect')
-const got = require('got')
-const { build } = require('vite')
-const builder = require('../src')
+import { faker } from '@faker-js/faker'
+import { svelte } from '@sveltejs/vite-plugin-svelte'
+import { EventEmitter } from 'events'
+import { readFile, rm, stat } from 'fs/promises'
+import { createServer } from 'http'
+import { resolve } from 'path'
+import connect from 'connect'
+import { fetch } from 'undici'
+import { build } from 'vite'
+import builder from '../src'
 
 const defaultWorkframeId = '@atelier-wb/workframe'
 const defaultUrl = '/atelier/'
@@ -16,7 +16,7 @@ const path = resolve(__dirname, 'fixtures', 'nested').replace(/\\/g, '/')
 async function configureAndStartServer(options) {
   const plugin = builder(options)
   const middlewares = connect()
-  const server = http.createServer(middlewares)
+  const server = createServer(middlewares)
   const watcher = new EventEmitter()
   await plugin.configureServer({ middlewares, watcher })
   await new Promise((resolve, reject) =>
@@ -282,14 +282,12 @@ new Workbench({
         uiSettings
       }))
 
-      const response = await got(`${address}${url}ui-settings.js`)
-      expect(response.statusCode).toEqual(200)
-      expect(response.headers).toEqual(
-        expect.objectContaining({
-          'content-type': 'application/javascript;charset=utf-8'
-        })
+      const response = await fetch(`${address}${url}ui-settings.js`)
+      expect(response.status).toEqual(200)
+      expect(response.headers.get('content-type')).toEqual(
+        'application/javascript;charset=utf-8'
       )
-      expect(response.body).toEqual(
+      expect(await response.text()).toEqual(
         `window.uiSettings = ${JSON.stringify(uiSettings)};`
       )
     })
@@ -315,78 +313,69 @@ new Workbench({
     afterEach(() => server.close())
 
     it(`serves atelier's main html file`, async () => {
-      const response = await got(`${address}${url}`)
-      expect(response.statusCode).toEqual(200)
-      expect(response.headers).toEqual(
-        expect.objectContaining({ 'content-type': 'text/html;charset=utf-8' })
+      const response = await fetch(`${address}${url}`)
+      expect(response.status).toEqual(200)
+      expect(response.headers.get('content-type')).toEqual(
+        'text/html;charset=utf-8'
       )
-      expect(response.body).toEqual(
+      const body = await response.text()
+      expect(body).toEqual(
         expect.stringContaining(
-          '<script type="module" crossorigin src="./assets/index.'
+          '<script type="module" crossorigin src="./assets/index-'
         )
       )
-      expect(response.body).toEqual(
-        expect.stringContaining('<link rel="stylesheet" href="./assets/index.')
+      expect(body).toEqual(
+        expect.stringContaining('<link rel="stylesheet" href="./assets/index-')
       )
     })
 
     it(`serves script with empty ui settings`, async () => {
-      const response = await got(`${address}${url}ui-settings.js`)
-      expect(response.statusCode).toEqual(200)
-      expect(response.headers).toEqual(
-        expect.objectContaining({
-          'content-type': 'application/javascript;charset=utf-8'
-        })
+      const response = await fetch(`${address}${url}ui-settings.js`)
+      expect(response.status).toEqual(200)
+      expect(response.headers.get('content-type')).toEqual(
+        'application/javascript;charset=utf-8'
       )
-      expect(response.body).toEqual('window.uiSettings = {};')
+      expect(await response.text()).toEqual('window.uiSettings = {};')
     })
 
     it(`serves files from public dir`, async () => {
-      let response = await got(`${address}${url}icon-256x256.png`)
-      expect(response.statusCode).toEqual(200)
-      expect(response.headers).toEqual(
-        expect.objectContaining({ 'content-type': 'image/png' })
-      )
-      response = await got(`${address}${url}favicon.ico`)
-      expect(response.statusCode).toEqual(200)
-      expect(response.headers).toEqual(
-        expect.objectContaining({ 'content-length': '1150' })
-      )
-      await expect(got(`${address}${url}unknown.jpeg`)).rejects.toThrow('404')
+      let response = await fetch(`${address}${url}icon-256x256.png`)
+      expect(response.status).toEqual(200)
+      expect(response.headers.get('content-type')).toEqual('image/png')
+      response = await fetch(`${address}${url}favicon.ico`)
+      expect(response.status).toEqual(200)
+      expect(response.headers.get('content-length')).toEqual('1150')
+      response = await fetch(`${address}${url}unknown.jpeg`)
+      expect(response.status).toEqual(404)
     })
 
     it(`redirects to atelier's main html file without trailing /`, async () => {
-      const response = await got(`${address}${url.slice(0, -1)}`, {
-        followRedirect: false
+      const response = await fetch(`${address}${url.slice(0, -1)}`, {
+        redirect: 'manual'
       })
-      expect(response.statusCode).toEqual(301)
-      expect(response.headers).toEqual(
-        expect.objectContaining({ location: url })
-      )
+      expect(response.status).toEqual(301)
+      expect(response.headers.get('location')).toEqual(url)
     })
 
     it(`serves atelier's workframe`, async () => {
-      const response = await got(`${address}${url}workframe.html`)
-      expect(response.statusCode).toEqual(200)
-      expect(response.headers).toEqual(
-        expect.objectContaining({ 'content-type': 'text/html' })
-      )
-      expect(response.body).toMatchInlineSnapshot(`
-"<!DOCTYPE html>
-<html lang=\\"en\\">
+      const response = await fetch(`${address}${url}workframe.html`)
+      expect(response.status).toEqual(200)
+      expect(response.headers.get('content-type')).toEqual('text/html')
+      expect(await response.text()).toMatchInlineSnapshot(`
+        "<!DOCTYPE html>
+        <html lang=\\"en\\">
+          <head>
+            <meta charset=\\"utf-8\\" />
+            <meta name=\\"viewport\\" content=\\"width=device-width, initial-scale=1\\" />
+            <script type=\\"module\\" src=\\"/@vite/client\\"></script>
+          </head>
 
-<head>
-  <meta charset=\\"utf-8\\" />
-  <meta name=\\"viewport\\" content=\\"width=device-width, initial-scale=1\\" />
-  <script type=\\"module\\" src=\\"/@vite/client\\"></script>
-</head>
-
-<body>
-  <script type=\\"module\\" src=\\"@atelier-wb/workframe\\"></script>
-</body>
-
-</html>"
-`)
+          <body>
+            <script type=\\"module\\" src=\\"@atelier-wb/workframe\\"></script>
+          </body>
+        </html>
+        "
+      `)
     })
 
     it.each([
@@ -556,9 +545,9 @@ new Workbench({
 async function expectWorkframeAndAssets(atelierOut) {
   const workframeHtmlPath = resolve(atelierOut, 'workframe.html')
   const workframeJsRegExp =
-    /<script type="module" crossorigin src="\/(.+\/workframe\.\w+\.js)">/
+    /<script type="module" crossorigin src="\/(.+\/workframe-\w+\.js)">/
   const workframeCssRegExp =
-    /<link rel="stylesheet" href="\/(.+\/workframe\.\w+\.css)">/
+    /<link rel="stylesheet" href="\/(.+\/workframe-\w+\.css)">/
 
   await expect(stat(workframeHtmlPath)).resolves.toBeDefined()
   const content = await readFile(workframeHtmlPath, 'utf-8')
@@ -585,9 +574,9 @@ async function expectWorkframeAndAssets(atelierOut) {
 async function expectUiDistribution(atelierOut) {
   const indexHtmlPath = resolve(atelierOut, 'index.html')
   const indexJsRegExp =
-    /<script type="module" crossorigin src="\.\/(assets\/index\.\w+\.js)">/
+    /<script type="module" crossorigin src="\.\/(assets\/index-\w+\.js)">/
   const indexCssRegExp =
-    /<link rel="stylesheet" href="\.\/(assets\/index\.\w+\.css)">/
+    /<link rel="stylesheet" href="\.\/(assets\/index-\w+\.css)">/
 
   await expect(stat(indexHtmlPath)).resolves.toBeDefined()
   const content = await readFile(indexHtmlPath, 'utf-8')

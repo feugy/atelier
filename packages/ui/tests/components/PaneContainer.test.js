@@ -32,11 +32,11 @@ describe('PaneContainer component', () => {
     })
     render(html`<${PaneContainer} tabs=${tabs} currentTool=${tool} />`)
 
-    const tabItems = screen.queryAllByRole('listitem')
+    const tabItems = screen.queryAllByRole('tab')
     expect(tabItems[0]).toHaveTextContent(tabs[0].name)
     expect(tabItems[1]).toHaveTextContent(tabs[1].name)
     expect(tabItems[2]).toHaveTextContent(tabs[2].name)
-    expect(tabItems).toHaveLength(4)
+    expect(tabItems).toHaveLength(3)
     const main = screen.getByRole('main')
     expect(main).toHaveTextContent('This is pane #1')
 
@@ -68,10 +68,10 @@ describe('PaneContainer component', () => {
     })
     render(html`<${PaneContainer} tabs=${tabs} currentTool=${tool} />`)
 
-    const tabItems = screen.queryAllByRole('listitem')
+    const tabItems = screen.queryAllByRole('tab')
     expect(tabItems[0]).toHaveTextContent(tabs[1].name)
     expect(tabItems[1]).toHaveTextContent(tabs[2].name)
-    expect(tabItems).toHaveLength(3)
+    expect(tabItems).toHaveLength(2)
     const main = screen.getByRole('main')
     expect(main).toHaveTextContent('This is pane #2')
 

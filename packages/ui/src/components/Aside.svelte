@@ -2,6 +2,16 @@
   import { _ } from 'svelte-intl'
 </script>
 
+<aside>
+  <span>
+    <slot />
+  </span>
+  <div>
+    <span class="material-icons">handyman</span>
+    <h1>{$_('title.app')}</h1>
+  </div>
+</aside>
+
 <style lang="postcss">
   aside {
     @apply relative p-4 w-1/5 h-screen flex flex-col flex-shrink-0;
@@ -27,13 +37,3 @@
     }
   }
 </style>
-
-<aside>
-  <span>
-    <slot />
-  </span>
-  <div>
-    <span class="material-icons">handyman</span>
-    <h1>{$_('title.app')}</h1>
-  </div>
-</aside>

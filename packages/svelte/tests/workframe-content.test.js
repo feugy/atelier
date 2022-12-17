@@ -1,4 +1,4 @@
-import { buildWorkframeContent } from '../workframe-content.cjs'
+import { buildWorkframeContent } from '../workframe-content.js'
 
 describe('buildWorkFrameContent()', () => {
   it('instanciate Workbench with provided tools', async () => {

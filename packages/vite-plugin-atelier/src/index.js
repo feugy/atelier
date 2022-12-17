@@ -1,11 +1,12 @@
-const Ajv = require('ajv')
-const { createReadStream } = require('fs')
-const { cp, readdir, readFile, rm, writeFile, stat } = require('fs/promises')
-const { dirname, resolve } = require('path')
-const sirv = require('sirv')
-const { normalizePath } = require('vite')
+import Ajv from 'ajv'
+import { createReadStream } from 'fs'
+import { cp, readdir, readFile, rm, writeFile, stat } from 'fs/promises'
+import { createRequire } from 'module'
+import { dirname, resolve } from 'path'
+import sirv from 'sirv'
+import { normalizePath } from 'vite'
 
-const ui = dirname(require.resolve('@atelier-wb/ui'))
+const ui = dirname(createRequire(import.meta.url).resolve('@atelier-wb/ui'))
 const pluginName = '@atelier-wb/vite-plugin-atelier'
 const exportMode = 'export-atelier'
 
@@ -69,7 +70,7 @@ async function findTools(path, detectionRegex) {
 async function buildDevWorkframe(paths, { framework, path, setupPath }) {
   let bindings
   try {
-    bindings = require(`@atelier-wb/${framework}/workframe-content.cjs`)
+    bindings = await import(`@atelier-wb/${framework}/workframe-content.js`)
   } catch (err) {
     throw new Error(
       `Could not load framework bindings for ${framework}. Please add to your dependencies: npm i -D @atelier-wb/${framework}`
@@ -114,7 +115,10 @@ function buildSettings(options) {
   return `window.uiSettings = ${JSON.stringify(options.uiSettings)};`
 }
 
-function AtelierPlugin(pluginOptions = {}, skipValidation = false) {
+export default function AtelierPlugin(
+  pluginOptions = {},
+  skipValidation = false
+) {
   const options = { ...defaultOptions, ...pluginOptions }
   const valid = validate(options)
   if (!valid && !skipValidation) {
@@ -254,6 +258,4 @@ function AtelierPlugin(pluginOptions = {}, skipValidation = false) {
   }
 }
 
-module.exports = AtelierPlugin
 AtelierPlugin.pluginName = pluginName
-AtelierPlugin['default'] = AtelierPlugin

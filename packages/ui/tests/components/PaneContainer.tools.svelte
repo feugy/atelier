@@ -7,12 +7,6 @@
   const isEnabled = () => true
 </script>
 
-<style lang="postcss">
-  span {
-    @apply h-full;
-  }
-</style>
-
 <ToolBox
   name="Components/Pane container"
   component={PaneContainer}
@@ -48,3 +42,9 @@
 
   <Tool name="Empty" />
 </ToolBox>
+
+<style lang="postcss">
+  span {
+    @apply h-full;
+  }
+</style>

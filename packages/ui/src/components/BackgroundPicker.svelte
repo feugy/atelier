@@ -25,7 +25,26 @@
       dispatch('select', background)
     }
   }
+
+  function makeKeyHandler(background) {
+    return ({ code }) => {
+      if (code === 'Enter' || code === 'Space') {
+        apply(background)
+      }
+    }
+  }
 </script>
+
+<ul role="toolbar">
+  {#each backgrounds as background}
+    <li
+      style="--background:{background};"
+      role="button"
+      on:keydown={makeKeyHandler(background)}
+      on:click={() => apply(background)}
+    />
+  {/each}
+</ul>
 
 <style lang="postcss">
   ul {
@@ -37,9 +56,3 @@
     background: var(--background);
   }
 </style>
-
-<ul role="toolbar">
-  {#each backgrounds as background}
-    <li style="--background:{background};" on:click={() => apply(background)} />
-  {/each}
-</ul>

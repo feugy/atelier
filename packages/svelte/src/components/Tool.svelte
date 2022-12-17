@@ -134,16 +134,6 @@
   }
 </script>
 
-<style>
-  .tool {
-    display: none;
-    flex-direction: column;
-  }
-  .tool.visible {
-    display: flex;
-  }
-</style>
-
 {#if error}
   {error.message}
 {:else if !usesSlot}
@@ -164,3 +154,13 @@
     {/if}
   </span>
 {/if}
+
+<style>
+  .tool {
+    display: none;
+    flex-direction: column;
+  }
+  .tool.visible {
+    display: flex;
+  }
+</style>

@@ -7,6 +7,18 @@
   $: iconOnly = !text
 </script>
 
+<button
+  class:primary
+  class:iconOnly
+  class:noColor
+  {...$$restProps}
+  on:click|stopPropagation
+>
+  {#if icon}<i class="material-icons">{icon}</i>{/if}
+  {#if text}<span>{text}</span>{/if}
+  <slot />
+</button>
+
 <style lang="postcss">
   button {
     @apply inline-flex cursor-pointer px-6 py-2 
@@ -70,15 +82,3 @@
     }
   }
 </style>
-
-<button
-  class:primary
-  class:iconOnly
-  class:noColor
-  {...$$restProps}
-  on:click|stopPropagation
->
-  {#if icon}<i class="material-icons">{icon}</i>{/if}
-  {#if text}<span>{text}</span>{/if}
-  <slot />
-</button>

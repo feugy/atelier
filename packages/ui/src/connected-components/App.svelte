@@ -33,15 +33,6 @@
   onMount(() => setWorkbenchFrame(frame))
 </script>
 
-<style lang="postcss">
-  main {
-    @apply flex-grow flex flex-col overflow-auto z-0;
-  }
-  div {
-    @apply inline-flex gap-8 items-center mr-4;
-  }
-</style>
-
 <svelte:head>
   <title>{$_('title.app')}</title>
 </svelte:head>
@@ -78,3 +69,12 @@
   </PaneContainer>
 </main>
 <ErrorDialogue />
+
+<style lang="postcss">
+  main {
+    @apply flex-grow flex flex-col overflow-auto z-0;
+  }
+  div {
+    @apply inline-flex gap-8 items-center mr-4;
+  }
+</style>
