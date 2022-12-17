@@ -52,10 +52,7 @@
 - Deep dive how-to write toolboxes
 - How to develop plugins
 - Release:
-  - `npm run release:bump`
-  - updates `packages/ui` and `packages/vite-plugin-atlier` deps
-  - `npm i`
-  - `git add CHANGELOG.md packages/*/package.json package-lock.json`
-  - `git commit --amend --no-edit`
-  - `git push --follow-tags`
-  - `npm publish -w packages --otp 531066`
+  - merge the version PR on Github
+  - pull main: `git switch main && git pull`
+  - get NPM totp
+  - trigger publish: `pnpm publish -r --no-git-checks --otp 000000`

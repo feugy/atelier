@@ -3,6 +3,7 @@
   "version": "0.10.0",
   "description": "Helps you buildind Component Driven UIs with Atelier and Vite",
   "main": "src/index.js",
+  "type": "module",
   "scripts": {
     "test": "vitest run --coverage",
     "test:dev": "vitest dev"

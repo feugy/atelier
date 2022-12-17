@@ -4,7 +4,8 @@ import { cp, readdir, readFile, rm, writeFile, stat } from 'fs/promises'
 import { createRequire } from 'module'
 import { dirname, resolve } from 'path'
 import sirv from 'sirv'
-import { normalizePath } from 'vite'
+import { fileURLToPath } from 'url'
+import { normalizePath, searchForWorkspaceRoot } from 'vite'
 
 const ui = dirname(createRequire(import.meta.url).resolve('@atelier-wb/ui'))
 const pluginName = '@atelier-wb/vite-plugin-atelier'
@@ -42,7 +43,10 @@ const defaultOptions = {
   path: './atelier',
   url: '/atelier/',
   toolRegexp: '\\.tools(?!\\.shot$).+$',
-  workframeHtml: resolve(__dirname, 'workframe.html'),
+  workframeHtml: resolve(
+    dirname(fileURLToPath(import.meta.url)),
+    'workframe.html'
+  ),
   workframeId: '@atelier-wb/workframe',
   bundled: true,
   publicDir: [],
@@ -157,7 +161,19 @@ export default function AtelierPlugin(
       return isExporting
         ? { build: { manifest: false } }
         : {
-            server: { fs: { allow: [...new Set([options.path, ...statics])] } }
+            server: {
+              fs: {
+                allow: [
+                  ...new Set([
+                    ...(configuration.server?.fs?.allow ?? [
+                      searchForWorkspaceRoot(process.cwd())
+                    ]),
+                    options.path,
+                    ...statics
+                  ])
+                ]
+              }
+            }
           }
     },
 
