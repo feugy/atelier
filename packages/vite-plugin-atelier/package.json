@@ -8,7 +8,7 @@
     "test:dev": "vitest dev"
   },
   "dependencies": {
-    "@atelier-wb/ui": "workspace:^0.9.0",
+    "@atelier-wb/ui": "workspace:*",
     "ajv": "^8.11.2",
     "sirv": "^2.0.2"
   },
@@ -16,12 +16,11 @@
     "vite": ">=3.1.0"
   },
   "devDependencies": {
-    "@atelier-wb/svelte": "workspace:^0.9.0",
-    "@faker-js/faker": "^7.6.0",
-    "@vitest/coverage-c8": "^0.25.8",
+    "@sveltejs/vite-plugin-svelte": "^2.0.2",
     "connect": "^3.7.0",
+    "svelte": "^3.55.0",
     "undici": "^5.14.0",
-    "vitest": "^0.25.8"
+    "vite": "^4.0.1"
   },
   "files": [
     "src/**/*"

@@ -1,13 +1,13 @@
-const { faker } = require('@faker-js/faker')
-const { svelte } = require('@sveltejs/vite-plugin-svelte')
-const { EventEmitter } = require('events')
-const { readFile, rm, stat } = require('fs/promises')
-const http = require('http')
-const { resolve } = require('path')
-const connect = require('connect')
-const { fetch } = require('undici')
-const { build } = require('vite')
-const builder = require('../src')
+import { faker } from '@faker-js/faker'
+import { svelte } from '@sveltejs/vite-plugin-svelte'
+import { EventEmitter } from 'events'
+import { readFile, rm, stat } from 'fs/promises'
+import { createServer } from 'http'
+import { resolve } from 'path'
+import connect from 'connect'
+import { fetch } from 'undici'
+import { build } from 'vite'
+import builder from '../src'
 
 const defaultWorkframeId = '@atelier-wb/workframe'
 const defaultUrl = '/atelier/'
@@ -16,7 +16,7 @@ const path = resolve(__dirname, 'fixtures', 'nested').replace(/\\/g, '/')
 async function configureAndStartServer(options) {
   const plugin = builder(options)
   const middlewares = connect()
-  const server = http.createServer(middlewares)
+  const server = createServer(middlewares)
   const watcher = new EventEmitter()
   await plugin.configureServer({ middlewares, watcher })
   await new Promise((resolve, reject) =>
@@ -321,11 +321,11 @@ new Workbench({
       const body = await response.text()
       expect(body).toEqual(
         expect.stringContaining(
-          '<script type="module" crossorigin src="./assets/index.'
+          '<script type="module" crossorigin src="./assets/index-'
         )
       )
       expect(body).toEqual(
-        expect.stringContaining('<link rel="stylesheet" href="./assets/index.')
+        expect.stringContaining('<link rel="stylesheet" href="./assets/index-')
       )
     })
 
@@ -545,9 +545,9 @@ new Workbench({
 async function expectWorkframeAndAssets(atelierOut) {
   const workframeHtmlPath = resolve(atelierOut, 'workframe.html')
   const workframeJsRegExp =
-    /<script type="module" crossorigin src="\/(.+\/workframe\.\w+\.js)">/
+    /<script type="module" crossorigin src="\/(.+\/workframe-\w+\.js)">/
   const workframeCssRegExp =
-    /<link rel="stylesheet" href="\/(.+\/workframe\.\w+\.css)">/
+    /<link rel="stylesheet" href="\/(.+\/workframe-\w+\.css)">/
 
   await expect(stat(workframeHtmlPath)).resolves.toBeDefined()
   const content = await readFile(workframeHtmlPath, 'utf-8')
@@ -574,9 +574,9 @@ async function expectWorkframeAndAssets(atelierOut) {
 async function expectUiDistribution(atelierOut) {
   const indexHtmlPath = resolve(atelierOut, 'index.html')
   const indexJsRegExp =
-    /<script type="module" crossorigin src="\.\/(assets\/index\.\w+\.js)">/
+    /<script type="module" crossorigin src="\.\/(assets\/index-\w+\.js)">/
   const indexCssRegExp =
-    /<link rel="stylesheet" href="\.\/(assets\/index\.\w+\.css)">/
+    /<link rel="stylesheet" href="\.\/(assets\/index-\w+\.css)">/
 
   await expect(stat(indexHtmlPath)).resolves.toBeDefined()
   const content = await readFile(indexHtmlPath, 'utf-8')

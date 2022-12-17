@@ -35,7 +35,7 @@ jobs:
         run: pnpm lint
 
       - name: Check code format
-        run: pnpm format -- --check
+        run: pnpm format --check
 
   test:
     runs-on: ubuntu-latest
