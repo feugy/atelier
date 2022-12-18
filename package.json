@@ -14,7 +14,7 @@
     "lint": "eslint .",
     "format": "prettier --write . --plugin-search-dir=.",
     "prepare": "husky install",
-    "release:bump": "pnpm changeset",
+    "release": "pnpm --filter !atelier publish --no-git-checks",
     "test": "pnpm -r --stream t"
   },
   "devDependencies": {

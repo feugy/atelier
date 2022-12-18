@@ -22,6 +22,6 @@
   },
   "files": [
     "src/**/*",
-    "workframe-content.cjs"
+    "workframe-content.js"
   ]
 }

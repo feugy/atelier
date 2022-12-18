@@ -1,5 +1,7 @@
 # Features
 
+Sound is disabled when stopping video (switch off or switch rules)
+
 ## UI
 
 - warn on tool name collisions
@@ -55,4 +57,4 @@
   - merge the version PR on Github
   - pull main: `git switch main && git pull`
   - get NPM totp
-  - trigger publish: `pnpm publish -r --no-git-checks --otp 000000`
+  - trigger publish: `pnpm release -otp 000000`

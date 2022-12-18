@@ -6,8 +6,26 @@
 
 - 108944b: makes vite-plugin-atelier fully ESM-compliant
 
-## 0.10.0
+### 0.7.1
+
+### Patch Changes
+
+- 581dbd5: relaxes peer dependency to allow jest@28
+
+## 0.3.0
 
 ### Minor Changes
 
-- 7468f3b: migrate to pnpm, changesets, and updates all dependencies
+- ef4b55d: uses tool short name in snapshot
+
+## 0.2.1
+
+### Patch Changes
+
+- 3ab1041: non-source files are published
+
+## 0.2.0
+
+### Minor Changes
+
+- 1459273: introduces tools snapshots in Jest
