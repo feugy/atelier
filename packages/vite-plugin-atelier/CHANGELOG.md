@@ -1,5 +1,11 @@
 # @atelier-wb/vite-plugin-atelier
 
+## 0.10.2
+
+### Patch Changes
+
+- 716973c: can not export with sveltekit@1.0.1 plugins
+
 ## 0.10.1
 
 ### Patch Changes
