@@ -568,6 +568,45 @@ new Workbench({
       ).resolves.toBeDefined()
     })
   })
+
+  describe('given a built sveltekit application', () => {
+    const root = resolve(__dirname, 'fixtures/simple')
+    const atelierOut = resolve(root, 'dist-atelier')
+    const uiSettings = { foo: faker.lorem.words() }
+    const sveltekitBuild = vi.fn()
+
+    beforeEach(async () => {
+      await rm(atelierOut, { recursive: true, force: true })
+    })
+
+    it(`excluded svelte-kit legacy plugin`, async () => {
+      await build({
+        root,
+        mode: 'export-atelier',
+        logLevel: 'silent',
+        plugins: [
+          svelte(),
+          builder({ uiSettings }),
+          { name: 'vite-plugin-svelte-kit', closeBundle: sveltekitBuild }
+        ]
+      })
+      expect(sveltekitBuild).not.toHaveBeenCalled()
+    })
+
+    it(`excluded svelte-kit 1.0 plugin`, async () => {
+      await build({
+        root,
+        mode: 'export-atelier',
+        logLevel: 'silent',
+        plugins: [
+          svelte(),
+          builder({ uiSettings }),
+          { name: 'vite-plugin-sveltekit-compile', closeBundle: sveltekitBuild }
+        ]
+      })
+      expect(sveltekitBuild).not.toHaveBeenCalled()
+    })
+  })
 })
 
 async function expectWorkframeAndAssets(atelierOut) {

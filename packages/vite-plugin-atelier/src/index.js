@@ -185,9 +185,11 @@ export default function AtelierPlugin(
         await buildStaticWorkframe(entryFile, options)
         viteConfig.build.rollupOptions = { input: entryFile }
         viteConfig.build.outDir = outDir
-        // exclude sveltekit which fails to find its application
+        // exclude sveltekit which fails to find its application:
+        // ENOENT: no such file or directory, open '.../.svelte-kit/output/client/false'
         viteConfig.plugins = viteConfig.plugins.filter(
-          ({ name }) => name !== 'vite-plugin-svelte-kit'
+          ({ name }) =>
+            !name.includes('svelte-kit') && !name.includes('sveltekit')
         )
       }
     },
