@@ -1,5 +1,11 @@
 # @atelier-wb/svelte
 
+## 0.10.1
+
+### Patch Changes
+
+- 8f84696: bindings could not be loaded from plugin
+
 ## 0.10.0
 
 ### Minor Changes
