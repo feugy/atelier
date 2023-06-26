@@ -1,20 +1,27 @@
 import { faker } from '@faker-js/faker'
-import { fireEvent, render, screen, waitFor } from '@testing-library/svelte'
-import { get, writable } from 'svelte/store'
+import {
+  cleanup,
+  fireEvent,
+  render,
+  screen,
+  waitFor
+} from '@testing-library/svelte'
 import { tick } from 'svelte'
 import html from 'svelte-htm'
-import { Button } from '../test-components'
+import { get, writable } from 'svelte/store'
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { Tool, ToolBox } from '../../src'
 import {
   currentTool,
-  registerTool,
   recordError,
   recordEvent,
-  recordVisibility
+  recordVisibility,
+  registerTool
 } from '../../src/stores'
+import { Button } from '../test-components'
 
-vi.mock('../../src/stores', () => {
-  const { writable } = require('svelte/store')
+vi.mock('../../src/stores', async () => {
+  const { writable } = await import('svelte/store')
   return {
     currentTool: new writable(),
     registerTool: vi.fn(),
@@ -26,6 +33,7 @@ vi.mock('../../src/stores', () => {
 
 describe('Tool component', () => {
   beforeEach(vi.resetAllMocks)
+  afterEach(cleanup)
 
   describe('given no toolbox', () => {
     it('needs a name', () => {
@@ -40,8 +48,8 @@ describe('Tool component', () => {
     it('registers tool and renders component when being current', async () => {
       const name = faker.lorem.words()
       currentTool.set({ fullName: name, name })
-      const data = { foo: faker.datatype.uuid() }
-      const custom = [faker.datatype.number(), faker.datatype.number()]
+      const data = { foo: faker.string.uuid() }
+      const custom = [faker.number.int(999), faker.number.int(999)]
       render(
         html`<${Tool}
           name=${name}
@@ -522,9 +530,9 @@ describe('Tool component', () => {
     it('registers tool and renders component when being current', async () => {
       const name = faker.lorem.words()
       const toolBoxName = faker.lorem.words()
-      const data = { foo: faker.datatype.uuid() }
-      const toolData = { bar: faker.datatype.uuid() }
-      const custom = [faker.datatype.number(), faker.datatype.number()]
+      const data = { foo: faker.string.uuid() }
+      const toolData = { bar: faker.string.uuid() }
+      const custom = [faker.number.int(999), faker.number.int(999)]
       currentTool.set({ name, fullName: `${toolBoxName}/${name}` })
       render(
         html`<${ToolBox} name=${toolBoxName} component=${Button} data=${data} custom=${custom}>
@@ -559,7 +567,7 @@ describe('Tool component', () => {
       const toolBoxName = faker.lorem.words()
       const data = { foo: faker.lorem.words() }
       const toolData = { bar: faker.lorem.words() }
-      const custom = [faker.datatype.uuid()]
+      const custom = [faker.string.uuid()]
       const other = faker.commerce.productName()
       render(
         html`<${ToolBox} name=${toolBoxName} component=${Button} data=${data} custom=${custom}>

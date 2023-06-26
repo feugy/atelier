@@ -14,6 +14,7 @@ current$.subscribe(data => {
 })
 
 if (typeof process !== 'undefined') {
+  process.removeAllListeners('uncaughtException')
   process.on('uncaughtException', error => {
     lastError$.next(error)
   })

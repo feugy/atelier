@@ -3,7 +3,7 @@
 exports[`Multiple levels 1`] = `
 HTMLCollection [
   <nav
-    class="svelte-aeg211"
+    class="svelte-12uy6v9"
   >
     <ol />
   </nav>,
@@ -11,7 +11,9 @@ HTMLCollection [
     class="svelte-1i7sfgn"
   >
     <li
+      aria-selected="false"
       class="svelte-1i7sfgn isCurrent"
+      role="treeitem"
     >
       <div
         class="svelte-1i7sfgn"
@@ -26,7 +28,9 @@ HTMLCollection [
        
     </li>
     <li
+      aria-selected="false"
       class="svelte-1i7sfgn isCurrent"
+      role="treeitem"
     >
       <div
         class="svelte-1i7sfgn folder"
@@ -41,7 +45,9 @@ HTMLCollection [
        
     </li>
     <li
+      aria-selected="false"
       class="svelte-1i7sfgn isCurrent"
+      role="treeitem"
     >
       <div
         class="svelte-1i7sfgn folder"
@@ -62,7 +68,7 @@ HTMLCollection [
 exports[`Single level 1`] = `
 HTMLCollection [
   <nav
-    class="svelte-aeg211"
+    class="svelte-12uy6v9"
   >
     <ol />
   </nav>,
@@ -70,7 +76,9 @@ HTMLCollection [
     class="svelte-1i7sfgn"
   >
     <li
+      aria-selected="false"
       class="svelte-1i7sfgn isCurrent"
+      role="treeitem"
     >
       <div
         class="svelte-1i7sfgn"
@@ -85,7 +93,9 @@ HTMLCollection [
        
     </li>
     <li
+      aria-selected="false"
       class="svelte-1i7sfgn isCurrent"
+      role="treeitem"
     >
       <div
         class="svelte-1i7sfgn"
@@ -100,7 +110,9 @@ HTMLCollection [
        
     </li>
     <li
+      aria-selected="false"
       class="svelte-1i7sfgn isCurrent"
+      role="treeitem"
     >
       <div
         class="svelte-1i7sfgn"

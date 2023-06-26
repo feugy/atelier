@@ -1,11 +1,12 @@
-import { render, screen } from '@testing-library/svelte'
+import { cleanup, render, screen } from '@testing-library/svelte'
 import html from 'svelte-htm'
-import { Button } from '../test-components'
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { Workbench } from '../../src'
 import { currentTool } from '../../src/stores'
+import { Button } from '../test-components'
 
-vi.mock('../../src/stores', () => {
-  const { writable } = require('svelte/store')
+vi.mock('../../src/stores', async () => {
+  const { writable } = await import('svelte/store')
   return {
     currentTool: new writable()
   }
@@ -13,6 +14,7 @@ vi.mock('../../src/stores', () => {
 
 describe('Workbench component', () => {
   beforeEach(vi.resetAllMocks)
+  afterEach(cleanup)
 
   it('can handle no tools', () => {
     render(html`<${Workbench} />`)

@@ -4,7 +4,8 @@
     beforeUpdate,
     getContext,
     onDestroy,
-    onMount
+    onMount,
+    tick
   } from 'svelte'
   import * as ToolBox from './ToolBox.svelte'
   import {
@@ -83,6 +84,7 @@
           instance = new Component({ target, props: allProps })
           attachListeners()
         }
+        await tick()
         recordVisibility({ name, fullName, visible })
       }
     })

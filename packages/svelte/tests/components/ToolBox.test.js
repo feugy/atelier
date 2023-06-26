@@ -1,8 +1,9 @@
 import { faker } from '@faker-js/faker'
-import { render } from '@testing-library/svelte'
+import { cleanup, render } from '@testing-library/svelte'
 import html from 'svelte-htm'
-import { Tool } from '../test-components'
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { ToolBox } from '../../src'
+import { Tool } from '../test-components'
 
 describe('ToolBox component', () => {
   let context
@@ -15,6 +16,8 @@ describe('ToolBox component', () => {
     vi.resetAllMocks()
     context = null
   })
+
+  afterEach(cleanup)
 
   it('allows no properties', async () => {
     render(html`<${ToolBox}><${Tool} on:context=${setContext}/></${ToolBox}>`)
@@ -31,12 +34,12 @@ describe('ToolBox component', () => {
 
   it('exposes its properties through context', async () => {
     const name = faker.lorem.words()
-    const events = [faker.datatype.number(), faker.datatype.number()]
-    const component = faker.datatype.uuid()
+    const events = [faker.number.int(999), faker.number.int(999)]
+    const component = faker.string.uuid()
     const setup = function () {}
     const teardown = function () {}
-    const data = { foo: faker.datatype.uuid() }
-    const custom = [faker.datatype.number(), faker.datatype.number()]
+    const data = { foo: faker.string.uuid() }
+    const custom = [faker.number.int(999), faker.number.int(999)]
     render(
       html`<${ToolBox} name=${name} component=${component} events=${events} setup=${setup} teardown=${teardown} data=${data} custom=${custom}>
         <${Tool} on:context=${setContext}/>

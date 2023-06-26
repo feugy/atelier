@@ -1,4 +1,4 @@
-// Vitest Snapshot v1
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
 exports[`App connected component > displays explorer, pane container with default pickers and loader 1`] = `
 <body>
@@ -11,7 +11,7 @@ exports[`App connected component > displays explorer, pane container with defaul
         class="svelte-1xti39p"
       >
         <nav
-          class="svelte-aeg211"
+          class="svelte-12uy6v9"
         >
           <ol />
         </nav>
@@ -144,35 +144,30 @@ exports[`App connected component > displays explorer, pane container with defaul
                 </div>
                 <!--&lt;SizePicker&gt;-->
                  
-                <ul
-                  class="svelte-1xwg7nr"
+                <div
+                  class="svelte-kbw3ps"
                   role="toolbar"
                 >
-                  <li
-                    class="svelte-1xwg7nr"
-                    role="button"
+                  <button
+                    class="svelte-kbw3ps"
                   />
-                  <li
-                    class="svelte-1xwg7nr"
-                    role="button"
+                  <button
+                    class="svelte-kbw3ps"
                     style="--background: white;"
                   />
-                  <li
-                    class="svelte-1xwg7nr"
-                    role="button"
+                  <button
+                    class="svelte-kbw3ps"
                     style="--background: #e0e0e0;"
                   />
-                  <li
-                    class="svelte-1xwg7nr"
-                    role="button"
+                  <button
+                    class="svelte-kbw3ps"
                     style="--background: #a0a0a0;"
                   />
-                  <li
-                    class="svelte-1xwg7nr"
-                    role="button"
+                  <button
+                    class="svelte-kbw3ps"
                     style="--background: black;"
                   />
-                </ul>
+                </div>
                 <!--&lt;BackgroundPicker&gt;-->
               </div>
                

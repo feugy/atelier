@@ -1,7 +1,5 @@
 # Features
 
-Sound is disabled when stopping video (switch off or switch rules)
-
 ## UI
 
 - warn on tool name collisions

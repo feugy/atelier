@@ -25,33 +25,23 @@
       dispatch('select', background)
     }
   }
-
-  function makeKeyHandler(background) {
-    return ({ code }) => {
-      if (code === 'Enter' || code === 'Space') {
-        apply(background)
-      }
-    }
-  }
 </script>
 
-<ul role="toolbar">
+<div role="toolbar">
   {#each backgrounds as background}
-    <li
+    <button
       style="--background:{background};"
-      role="button"
-      on:keydown={makeKeyHandler(background)}
       on:click={() => apply(background)}
     />
   {/each}
-</ul>
+</div>
 
 <style lang="postcss">
-  ul {
+  div {
     @apply inline-flex;
   }
 
-  li {
+  button {
     @apply block w-6 h-6 border border-$base cursor-pointer;
     background: var(--background);
   }
