@@ -1,5 +1,16 @@
 # @atelier-wb/vite-plugin-atelier
 
+## 0.11.0
+
+### Minor Changes
+
+- fb659c5: updates dependencies and supports latest sveltekit
+
+### Patch Changes
+
+- Updated dependencies [fb659c5]
+  - @atelier-wb/ui@0.11.0
+
 ## 0.10.2
 
 ### Patch Changes
