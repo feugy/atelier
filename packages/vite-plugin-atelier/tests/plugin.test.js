@@ -1,13 +1,22 @@
 import { faker } from '@faker-js/faker'
 import { svelte } from '@sveltejs/vite-plugin-svelte'
+import connect from 'connect'
 import { EventEmitter } from 'events'
 import { readFile, rm, stat } from 'fs/promises'
 import { createServer } from 'http'
 import { dirname, resolve } from 'path'
-import connect from 'connect'
 import { fetch } from 'undici'
 import { fileURLToPath } from 'url'
 import { build } from 'vite'
+import {
+  afterEach,
+  beforeAll,
+  beforeEach,
+  describe,
+  expect,
+  it,
+  vi
+} from 'vitest'
 import builder from '../src'
 
 const defaultWorkframeId = '@atelier-wb/workframe'
@@ -71,7 +80,7 @@ describe('plugin builder', () => {
     )
     const toolRegexp = '(unparseable regexp'
     expect(() => builder({ toolRegexp })).toThrow(
-      `Invalid regular expression: /${toolRegexp}/: Unterminated group`
+      `Invalid regular expression: /${toolRegexp}/i: Unterminated group`
     )
   })
 

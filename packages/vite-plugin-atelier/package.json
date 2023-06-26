@@ -10,18 +10,18 @@
   },
   "dependencies": {
     "@atelier-wb/ui": "workspace:*",
-    "ajv": "^8.11.2",
-    "sirv": "^2.0.2"
+    "ajv": "^8.12.0",
+    "sirv": "^2.0.3"
   },
   "peerDependencies": {
     "vite": ">=3.1.0"
   },
   "devDependencies": {
-    "@sveltejs/vite-plugin-svelte": "^2.0.2",
+    "@sveltejs/vite-plugin-svelte": "^2.4.2",
     "connect": "^3.7.0",
-    "svelte": "^3.55.0",
-    "undici": "^5.14.0",
-    "vite": "^4.0.1"
+    "svelte": "^4.0.0",
+    "undici": "^5.22.1",
+    "vite": "^4.3.9"
   },
   "files": [
     "src/**/*"

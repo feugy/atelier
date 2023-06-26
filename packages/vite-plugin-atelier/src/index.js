@@ -154,27 +154,24 @@ export default function AtelierPlugin(
     name: pluginName,
 
     config(configuration, { command, mode }) {
-      isExporting =
-        command === 'build' && !configuration.build?.ssr && mode === exportMode
+      isExporting = command === 'build' && mode === exportMode
 
       options.path = resolve(configuration.root ?? '.', options.path)
-      return isExporting
-        ? { build: { manifest: false } }
-        : {
-            server: {
-              fs: {
-                allow: [
-                  ...new Set([
-                    ...(configuration.server?.fs?.allow ?? [
-                      searchForWorkspaceRoot(process.cwd())
-                    ]),
-                    options.path,
-                    ...statics
-                  ])
-                ]
-              }
-            }
+      return {
+        server: {
+          fs: {
+            allow: [
+              ...new Set([
+                ...(configuration.server?.fs?.allow ?? [
+                  searchForWorkspaceRoot(process.cwd())
+                ]),
+                options.path,
+                ...statics
+              ])
+            ]
           }
+        }
+      }
     },
 
     async configResolved(viteConfig) {
@@ -185,12 +182,13 @@ export default function AtelierPlugin(
         await buildStaticWorkframe(entryFile, options)
         viteConfig.build.rollupOptions = { input: entryFile }
         viteConfig.build.outDir = outDir
-        // exclude sveltekit which fails to find its application:
-        // ENOENT: no such file or directory, open '.../.svelte-kit/output/client/false'
+        // exclude sveltekit plugin and disable ssr option they set
         viteConfig.plugins = viteConfig.plugins.filter(
           ({ name }) =>
             !name.includes('svelte-kit') && !name.includes('sveltekit')
         )
+        viteConfig.build.ssr = false
+        viteConfig.build.manifest = false
       }
     },
 
