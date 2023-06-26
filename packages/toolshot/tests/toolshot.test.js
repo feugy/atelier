@@ -1,4 +1,5 @@
 import { faker } from '@faker-js/faker'
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { join, resolve } from 'path'
 import { configureToolshot } from '../src'
 
@@ -140,7 +141,7 @@ describe('toolshot builder', () => {
     })
 
     it('can configure the test timeout', () => {
-      const timeout = faker.datatype.number()
+      const timeout = faker.number.int(999)
       configureToolshot({
         folder: fixtures,
         include: 'single.tools.svelte',
