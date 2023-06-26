@@ -1,6 +1,6 @@
 {
   "name": "@atelier-wb/toolshot",
-  "version": "0.10.1",
+  "version": "0.11.0",
   "description": "Creates snapshots out of Atelier tools",
   "main": "src/index.js",
   "type": "module",

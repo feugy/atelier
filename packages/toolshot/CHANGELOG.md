@@ -1,5 +1,11 @@
 # @atelier-wb/toolshot
 
+## 0.11.0
+
+### Minor Changes
+
+- fb659c5: updates dependencies and supports latest sveltekit
+
 ## 0.10.1
 
 ### Patch Changes
