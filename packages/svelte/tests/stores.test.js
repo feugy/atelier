@@ -1,11 +1,12 @@
 import { faker } from '@faker-js/faker'
 import { get } from 'svelte/store'
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import {
+  currentTool,
   recordError,
   recordEvent,
   recordVisibility,
-  registerTool,
-  currentTool
+  registerTool
 } from '../src/stores'
 
 function mockExistence(fullName) {
@@ -92,6 +93,10 @@ describe('stores', () => {
               defaultPrevented: false,
               detail: 0,
               metaKey: false,
+              offsetX: 0,
+              offsetY: 0,
+              pageX: 0,
+              pageY: 0,
               relatedTarget: null,
               screenX: 0,
               screenY: 0,
@@ -235,7 +240,7 @@ describe('stores', () => {
 
       const update2 = {
         name: `${faker.lorem.word()}-4`,
-        value: faker.datatype.number()
+        value: faker.number.int(999)
       }
       window.dispatchEvent(
         new MessageEvent('message', {
@@ -256,7 +261,7 @@ describe('stores', () => {
 
       const update1 = {
         name: `${faker.lorem.word()}-5`,
-        value: faker.datatype.number()
+        value: faker.number.int(999)
       }
       window.dispatchEvent(
         new MessageEvent('message', {
@@ -445,12 +450,12 @@ describe('stores', () => {
     })
 
     it('ignores message from a different origin', () => {
-      const data = faker.datatype.uuid()
+      const data = faker.string.uuid()
       expect(get(currentTool)).not.toBeDefined()
 
       window.dispatchEvent(
         new MessageEvent('message', {
-          origin: faker.internet.url(),
+          origin: faker.internet.url({ appendSlash: false }),
           data: { type: 'selectTool', data }
         })
       )
@@ -458,7 +463,7 @@ describe('stores', () => {
     })
 
     it('ignores message with unsupported types', () => {
-      const data = faker.datatype.uuid()
+      const data = faker.string.uuid()
       expect(get(currentTool)).not.toBeDefined()
 
       window.dispatchEvent(
@@ -471,7 +476,7 @@ describe('stores', () => {
     })
 
     it('updates when receiving selectTool message', () => {
-      const data = faker.datatype.uuid()
+      const data = faker.string.uuid()
       expect(get(currentTool)).not.toBeDefined()
 
       window.dispatchEvent(
@@ -482,7 +487,7 @@ describe('stores', () => {
       )
       expect(get(currentTool)).toEqual(data)
 
-      const data2 = faker.datatype.uuid()
+      const data2 = faker.string.uuid()
       window.dispatchEvent(
         new MessageEvent('message', {
           origin,
