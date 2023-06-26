@@ -28,14 +28,17 @@
 
 <ul>
   {#each tools as tool}
+    {@const selected = selectedPath === tool?.fullName}
     <li
       class:isCurrent
+      role="treeitem"
+      aria-selected={selected}
       on:keydown|stopPropagation={makeKeyHandler(tool)}
       on:click|stopPropagation={() => navigateTo(tool)}
     >
       {#if isCurrent}
         <div
-          class:current={selectedPath === tool?.fullName}
+          class:current={selected}
           class:folder={isFolder(tool)}
           in:fly={{ x: moveForward ? 200 : -200, duration: 350 }}
         >

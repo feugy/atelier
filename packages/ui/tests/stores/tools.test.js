@@ -24,11 +24,11 @@ describe('tools store', () => {
   })
 
   it('ignores frame messages with wrong origin', () => {
-    const src = faker.internet.url()
+    const src = faker.internet.url({ appendSlash: false })
     setWorkbenchFrame({ src })
     window.dispatchEvent(
       new MessageEvent('message', {
-        origin: faker.internet.url(),
+        origin: faker.internet.url({ appendSlash: false }),
         data: { type: 'registerTool', data: {} }
       })
     )
@@ -38,7 +38,7 @@ describe('tools store', () => {
   })
 
   it('ignores unsupported frame messages', () => {
-    const src = faker.internet.url()
+    const src = faker.internet.url({ appendSlash: false })
     setWorkbenchFrame({ src })
     window.dispatchEvent(
       new MessageEvent('message', {
@@ -52,7 +52,7 @@ describe('tools store', () => {
   })
 
   it('registers new tools', () => {
-    const src = faker.internet.url()
+    const src = faker.internet.url({ appendSlash: false })
     const tool1 = { fullName: faker.commerce.productName() }
     const tool2 = { fullName: faker.commerce.productName() }
     const tool3 = { fullName: faker.commerce.productName() }
@@ -91,16 +91,18 @@ describe('tools store', () => {
   })
 
   it('records last error', () => {
-    const src = faker.internet.url()
+    const src = faker.internet.url({ appendSlash: false })
     const error1 = new Error('first error')
     const error2 = new Error('second error')
     setWorkbenchFrame({ src })
     let error
-    lastError.subscribe({
-      next(value) {
-        error = value
-      }
-    })
+    subscriptions.push(
+      lastError.subscribe({
+        next(value) {
+          error = value
+        }
+      })
+    )
 
     expect(error).toBeUndefined()
 
@@ -132,11 +134,13 @@ describe('tools store', () => {
   it('catches UI errors', () => {
     const error1 = new Error('first error')
     let error
-    lastError.subscribe({
-      next(value) {
-        error = value
-      }
-    })
+    subscriptions.push(
+      lastError.subscribe({
+        next(value) {
+          error = value
+        }
+      })
+    )
 
     expect(error).toBeUndefined()
 
@@ -154,7 +158,7 @@ describe('tools store', () => {
     let eventLog = []
     subscriptions.push(events.subscribe(value => (eventLog = value)))
 
-    const src = faker.internet.url()
+    const src = faker.internet.url({ appendSlash: false })
     setWorkbenchFrame({ src })
     window.dispatchEvent(
       new MessageEvent('message', {
@@ -197,7 +201,7 @@ describe('tools store', () => {
     let eventLog = []
     subscriptions.push(events.subscribe(value => (eventLog = value)))
 
-    const src = faker.internet.url()
+    const src = faker.internet.url({ appendSlash: false })
     setWorkbenchFrame({ src })
     window.dispatchEvent(
       new MessageEvent('message', {
@@ -224,10 +228,10 @@ describe('tools store', () => {
 
   it('does not send properties updates without current tool', () => {
     const name = faker.lorem.words()
-    const value = faker.datatype.number()
+    const value = faker.number.int(999)
     const postMessage = vi.fn()
 
-    const src = faker.internet.url()
+    const src = faker.internet.url({ appendSlash: false })
     setWorkbenchFrame({ src, contentWindow: { postMessage } })
     postMessage.mockReset()
 
@@ -236,7 +240,7 @@ describe('tools store', () => {
   })
 
   it('ignores removal of unknown tools', () => {
-    const src = faker.internet.url()
+    const src = faker.internet.url({ appendSlash: false })
     window.history.pushState('', 'http://localhost')
     setWorkbenchFrame({ src, contentWindow: { postMessage } })
     window.dispatchEvent(
@@ -251,7 +255,7 @@ describe('tools store', () => {
 
   describe('given some registered tools', () => {
     const postMessage = vi.fn()
-    const src = faker.internet.url()
+    const src = faker.internet.url({ appendSlash: false })
     const tool1 = { fullName: faker.commerce.productName() }
     const tool2 = { fullName: faker.commerce.productName() }
     const tool3 = { fullName: faker.commerce.productName() }
@@ -437,7 +441,7 @@ describe('tools store', () => {
 
     it('sends properties updates on current tool', () => {
       const name = faker.lorem.words()
-      const value = faker.datatype.number()
+      const value = faker.number.int(999)
 
       updateProperty({ detail: { name, value } })
       expect(postMessage).toHaveBeenCalledWith(

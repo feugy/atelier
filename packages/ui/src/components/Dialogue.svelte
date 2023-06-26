@@ -8,6 +8,7 @@
 <Portal>
   <div class="filter" class:open />
   <div class="backdrop" class:open>
+    <!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
     <article role="dialog" on:click|stopPropagation on:keydown|stopPropagation>
       <header role="heading" aria-level="1">{title}</header>
       <div class="content">

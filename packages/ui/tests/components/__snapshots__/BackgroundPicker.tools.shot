@@ -2,30 +2,26 @@
 
 exports[`Custom colors 1`] = `
 HTMLCollection [
-  <ul
-    class="svelte-1xwg7nr"
+  <div
+    class="svelte-kbw3ps"
     role="toolbar"
   >
-    <li
-      class="svelte-1xwg7nr"
-      role="button"
+    <button
+      class="svelte-kbw3ps"
     />
-    <li
-      class="svelte-1xwg7nr"
-      role="button"
+    <button
+      class="svelte-kbw3ps"
       style="--background: #e879f9;"
     />
-    <li
-      class="svelte-1xwg7nr"
-      role="button"
+    <button
+      class="svelte-kbw3ps"
       style="--background: rgba(150, 75, 50, 0.5);"
     />
-    <li
-      class="svelte-1xwg7nr"
-      role="button"
+    <button
+      class="svelte-kbw3ps"
       style="--background: linear-gradient(to right, red, orange);"
     />
-  </ul>,
+  </div>,
   <span
     class="svelte-178aoja"
   />,
@@ -34,35 +30,30 @@ HTMLCollection [
 
 exports[`Default colors 1`] = `
 HTMLCollection [
-  <ul
-    class="svelte-1xwg7nr"
+  <div
+    class="svelte-kbw3ps"
     role="toolbar"
   >
-    <li
-      class="svelte-1xwg7nr"
-      role="button"
+    <button
+      class="svelte-kbw3ps"
     />
-    <li
-      class="svelte-1xwg7nr"
-      role="button"
+    <button
+      class="svelte-kbw3ps"
       style="--background: white;"
     />
-    <li
-      class="svelte-1xwg7nr"
-      role="button"
+    <button
+      class="svelte-kbw3ps"
       style="--background: #e0e0e0;"
     />
-    <li
-      class="svelte-1xwg7nr"
-      role="button"
+    <button
+      class="svelte-kbw3ps"
       style="--background: #a0a0a0;"
     />
-    <li
-      class="svelte-1xwg7nr"
-      role="button"
+    <button
+      class="svelte-kbw3ps"
       style="--background: black;"
     />
-  </ul>,
+  </div>,
   <span
     class="svelte-178aoja"
   />,

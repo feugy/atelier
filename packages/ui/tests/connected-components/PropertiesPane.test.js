@@ -65,7 +65,7 @@ describe('PropertiesPane connected component', () => {
     expect(input).toHaveValue(value)
     expect(updateProperty).not.toHaveBeenCalled()
 
-    const newValue = faker.datatype.number()
+    const newValue = faker.number.int(999)
     await fireEvent.change(input, { target: { value: newValue } })
     expect(updateProperty).toHaveBeenCalledWith(
       expect.objectContaining({ detail: { name, value: newValue } })
@@ -127,7 +127,7 @@ describe('PropertiesPane connected component', () => {
     const props = {
       booleanProp: true,
       textProp: faker.lorem.words(),
-      numberProp: faker.datatype.number()
+      numberProp: faker.number.int(999)
     }
     currentTool.next({ props })
     render(html`<${PropertiesPane} />`)
