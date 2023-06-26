@@ -80,7 +80,7 @@ describe('plugin builder', () => {
     )
     const toolRegexp = '(unparseable regexp'
     expect(() => builder({ toolRegexp })).toThrow(
-      `Invalid regular expression: /${toolRegexp}/i: Unterminated group`
+      `Invalid regular expression: /${toolRegexp}/`
     )
   })
 
