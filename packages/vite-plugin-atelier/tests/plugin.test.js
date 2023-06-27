@@ -40,13 +40,13 @@ async function configureAndStartServer(options) {
   }
 }
 
-function preparePlugin(
+async function preparePlugin(
   options = {},
   viteEnv = { command: 'serve' },
   skipValidation = false
 ) {
   const plugin = builder(options, skipValidation)
-  plugin.config({ root: '' }, viteEnv)
+  await plugin.config({ root: '' }, viteEnv)
   return plugin
 }
 
@@ -146,7 +146,7 @@ describe('plugin builder', () => {
 
   describe('given some files', () => {
     it('does not handle other ids than workframeId', async () => {
-      const plugin = preparePlugin()
+      const plugin = await preparePlugin()
       expect(plugin.resolveId(faker.lorem.word())).not.toBeDefined()
       expect(await plugin.load(faker.lorem.word())).not.toBeDefined()
       expect(plugin.resolveId(`${defaultUrl}${defaultWorkframeId}`)).toEqual(
@@ -156,7 +156,7 @@ describe('plugin builder', () => {
 
     it('supports custom workframeId', async () => {
       const workframeId = faker.lorem.word()
-      const plugin = preparePlugin({ workframeId })
+      const plugin = await preparePlugin({ workframeId })
       expect(plugin.resolveId(faker.lorem.word())).not.toBeDefined()
       expect(await plugin.load(faker.lorem.word())).not.toBeDefined()
       expect(plugin.resolveId(`${defaultUrl}${workframeId}`)).toEqual(
@@ -166,7 +166,7 @@ describe('plugin builder', () => {
 
     it('throws on unavailbable framework bindings', async () => {
       const framework = 'jquery'
-      const plugin = preparePlugin({ path, framework }, undefined, true)
+      const plugin = await preparePlugin({ path, framework }, undefined, true)
       await expect(
         plugin.load(`${defaultUrl}${defaultWorkframeId}`)
       ).rejects.toThrow(
@@ -175,7 +175,7 @@ describe('plugin builder', () => {
     })
 
     it('finds tool files and generates workframe content', async () => {
-      const plugin = preparePlugin({ path })
+      const plugin = await preparePlugin({ path })
       expect(await plugin.load(`${defaultUrl}${defaultWorkframeId}`))
         .toEqual(`import { Workbench } from '@atelier-wb/svelte'
 
@@ -195,7 +195,10 @@ new Workbench({
 
     it('finds tool files with custom regexp', async () => {
       const path = resolve(__dirname, 'fixtures', 'nested').replace(/\\/g, '/')
-      const plugin = preparePlugin({ path, toolRegexp: '\\.custom\\.svelte$' })
+      const plugin = await preparePlugin({
+        path,
+        toolRegexp: '\\.custom\\.svelte$'
+      })
       expect(await plugin.load(`${defaultUrl}${defaultWorkframeId}`))
         .toEqual(`import { Workbench } from '@atelier-wb/svelte'
 
@@ -213,7 +216,7 @@ new Workbench({
 
     it('allows setup import from node_modules', async () => {
       const setupPath = faker.lorem.word()
-      const plugin = preparePlugin({ path, setupPath })
+      const plugin = await preparePlugin({ path, setupPath })
       expect(await plugin.load(`${defaultUrl}${defaultWorkframeId}`))
         .toEqual(`import { Workbench } from '@atelier-wb/svelte'
 
@@ -234,7 +237,7 @@ new Workbench({
 
     it('allows relative setup import', async () => {
       const setupPath = faker.lorem.word()
-      const plugin = preparePlugin({ path, setupPath: `./${setupPath}` })
+      const plugin = await preparePlugin({ path, setupPath: `./${setupPath}` })
       expect(await plugin.load(`${defaultUrl}${defaultWorkframeId}`))
         .toEqual(`import { Workbench } from '@atelier-wb/svelte'
 
@@ -255,7 +258,7 @@ new Workbench({
 
     it('allows absolute setup import', async () => {
       const setupPath = resolve(path, faker.lorem.word()).replace(/\\/g, '/')
-      const plugin = preparePlugin({ path, setupPath })
+      const plugin = await preparePlugin({ path, setupPath })
       expect(await plugin.load(`${defaultUrl}${defaultWorkframeId}`))
         .toEqual(`import { Workbench } from '@atelier-wb/svelte'
 
@@ -277,7 +280,8 @@ new Workbench({
     it('adds atelier paths to default project', async () => {
       const plugin = builder({})
       expect(
-        plugin.config({ root: '' }, { command: 'serve' })?.server?.fs?.allow
+        (await plugin.config({ root: '' }, { command: 'serve' }))?.server?.fs
+          ?.allow
       ).toEqual([
         resolve(__dirname, '../../..'),
         resolve(__dirname, '../atelier'),
@@ -289,9 +293,11 @@ new Workbench({
       const allow = [faker.system.directoryPath(), faker.system.directoryPath()]
       const plugin = builder({})
       expect(
-        plugin.config(
-          { root: '', server: { fs: { allow } } },
-          { command: 'serve' }
+        (
+          await plugin.config(
+            { root: '', server: { fs: { allow } } },
+            { command: 'serve' }
+          )
         )?.server?.fs?.allow
       ).toEqual([
         ...allow,

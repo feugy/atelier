@@ -153,11 +153,16 @@ export default function AtelierPlugin(
   return {
     name: pluginName,
 
-    config(configuration, { command, mode }) {
+    // Atelier has to come after sveltekit to remove SSR from build configuration
+    enforce: 'post',
+
+    async config(configuration, { command, mode }) {
       isExporting = command === 'build' && mode === exportMode
 
       options.path = resolve(configuration.root ?? '.', options.path)
       return {
+        // when building for Atelier export, we need to undo Sveltekit customizations
+        ...(isExporting ? { build: { ssr: false, copyPublicDir: true } } : {}),
         server: {
           fs: {
             allow: [
@@ -182,13 +187,13 @@ export default function AtelierPlugin(
         await buildStaticWorkframe(entryFile, options)
         viteConfig.build.rollupOptions = { input: entryFile }
         viteConfig.build.outDir = outDir
-        // exclude sveltekit plugin and disable ssr option they set
+        // exclude sveltekit plugin to avoid:
+        // Error: ENOENT: no such file or directory, open '.svelte-kit/output/server/vite-manifest.json'
         viteConfig.plugins = viteConfig.plugins.filter(
           ({ name }) =>
-            !name.includes('svelte-kit') && !name.includes('sveltekit')
+            !name.includes('vite-plugin-sveltekit-compile') &&
+            !name.includes('vite-plugin-svelte-kit')
         )
-        viteConfig.build.ssr = false
-        viteConfig.build.manifest = false
       }
     },
 

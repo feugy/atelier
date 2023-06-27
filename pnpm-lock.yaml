@@ -110,6 +110,40 @@ importers:
         specifier: latest
         version: 4.3.9(@types/node@20.3.1)
 
+  examples/sveltekit:
+    dependencies:
+      format-message:
+        specifier: ^6.2.4
+        version: 6.2.4
+      svelte-intl:
+        specifier: ^1.1.4
+        version: 1.1.4(format-message@6.2.4)(svelte@4.0.0)
+    devDependencies:
+      '@atelier-wb/vite-plugin-atelier':
+        specifier: workspace:*
+        version: link:../../packages/vite-plugin-atelier
+      '@sveltejs/adapter-auto':
+        specifier: latest
+        version: 2.1.0(@sveltejs/kit@1.20.5)
+      '@sveltejs/kit':
+        specifier: latest
+        version: 1.20.5(svelte@4.0.0)(vite@4.3.9)
+      serve:
+        specifier: latest
+        version: 14.2.0
+      svelte:
+        specifier: latest
+        version: 4.0.0
+      svelte-check:
+        specifier: latest
+        version: 3.4.4(svelte@4.0.0)
+      typescript:
+        specifier: latest
+        version: 5.1.3
+      vite:
+        specifier: latest
+        version: 4.3.9(@types/node@20.3.1)
+
   packages/svelte:
     devDependencies:
       '@sveltejs/vite-plugin-svelte':
@@ -1237,6 +1271,15 @@ packages:
     dependencies:
       '@sveltejs/kit': 1.20.5(svelte@4.0.0)(vite@4.3.9)
       import-meta-resolve: 2.2.2
+    dev: true
+
+  /@sveltejs/adapter-auto@2.1.0(@sveltejs/kit@1.20.5):
+    resolution: {integrity: sha512-o2pZCfATFtA/Gw/BB0Xm7k4EYaekXxaPGER3xGSY3FvzFJGTlJlZjBseaXwYSM94lZ0HniOjTokN3cWaLX6fow==}
+    peerDependencies:
+      '@sveltejs/kit': ^1.0.0
+    dependencies:
+      '@sveltejs/kit': 1.20.5(svelte@4.0.0)(vite@4.3.9)
+      import-meta-resolve: 3.0.0
     dev: true
 
   /@sveltejs/kit@1.20.5(svelte@4.0.0)(vite@4.3.9):
@@ -2984,18 +3027,15 @@ packages:
 
   /format-message-formats@6.2.4:
     resolution: {integrity: sha512-smT/fAqBLqusWfWCKRAx6QBDAAbmYznWsIyTyk66COmvwt2Byiqd7SJe2ma9a5oV0kwRaOJpN/F4lr4YK/n6qQ==}
-    dev: true
 
   /format-message-interpret@6.2.4:
     resolution: {integrity: sha512-dRvz9mXhITApyOtfuFEb/XqvCe1u6RMkQW49UJHXS8w2S8cAHCqq5LNDFK+QK6XVzcofROycLb/k1uybTAKt2w==}
     dependencies:
       format-message-formats: 6.2.4
       lookup-closest-locale: 6.2.0
-    dev: true
 
   /format-message-parse@6.2.4:
     resolution: {integrity: sha512-k7WqXkEzgXkW4wkHdS6Cv2Ou0rIFtiDelZjgoe1saW4p7FT7zS8OeAUpAekhormqzpeecR97e4vBft1zMsfFOQ==}
-    dev: true
 
   /format-message@6.2.4:
     resolution: {integrity: sha512-/24zYeSRy2ZlEO2OIctm7jOHvMpoWf+uhqFCaqqyZKi1C229zAAy2E5vF4lSSaMH0a2kewPrOzq6xN4Yy7cQrw==}
@@ -3004,7 +3044,6 @@ packages:
       format-message-interpret: 6.2.4
       format-message-parse: 6.2.4
       lookup-closest-locale: 6.2.0
-    dev: true
 
   /fs-extra@7.0.1:
     resolution: {integrity: sha512-YJDaCJZEnBmcbw13fvdAM9AwNOJwOzrE4pqMqBq5nFiEqXUqHwlK4B+3pUw6JNvfSPtX05xFHtYy/1ni01eGCw==}
@@ -3290,6 +3329,10 @@ packages:
 
   /import-meta-resolve@2.2.2:
     resolution: {integrity: sha512-f8KcQ1D80V7RnqVm+/lirO9zkOxjGxhaTC1IPrBGd3MEfNgmNG67tSUO9gTi2F3Blr2Az6g1vocaxzkVnWl9MA==}
+    dev: true
+
+  /import-meta-resolve@3.0.0:
+    resolution: {integrity: sha512-4IwhLhNNA8yy445rPjD/lWh++7hMDOml2eHtd58eG7h+qK3EryMuuRbsHGPikCoAgIkkDnckKfWSk2iDla/ejg==}
     dev: true
 
   /imurmurhash@0.1.4:
@@ -3933,7 +3976,6 @@ packages:
 
   /lookup-closest-locale@6.2.0:
     resolution: {integrity: sha512-/c2kL+Vnp1jnV6K6RpDTHK3dgg0Tu2VVp+elEiJpjfS1UyY7AjOYHohRug6wT0OpoX2qFgNORndE9RqesfVxWQ==}
-    dev: true
 
   /loupe@2.3.6:
     resolution: {integrity: sha512-RaPMZKiMy8/JruncMU5Bt6na1eftNoo++R4Y+N2FrxkDVTrGvcyzFTsaGif4QTeKESheMGegbhw6iUAq+5A8zA==}
@@ -5143,6 +5185,33 @@ packages:
       - sugarss
     dev: true
 
+  /svelte-check@3.4.4(svelte@4.0.0):
+    resolution: {integrity: sha512-Uys9+R65cj8TmP8f5UpS7B2xKpNLYNxEWJsA5ZoKcWq/uwvABFF7xS6iPQGLoa7hxz0DS6xU60YFpmq06E4JxA==}
+    hasBin: true
+    peerDependencies:
+      svelte: ^3.55.0 || ^4.0.0-next.0 || ^4.0.0
+    dependencies:
+      '@jridgewell/trace-mapping': 0.3.18
+      chokidar: 3.5.3
+      fast-glob: 3.2.12
+      import-fresh: 3.3.0
+      picocolors: 1.0.0
+      sade: 1.8.1
+      svelte: 4.0.0
+      svelte-preprocess: 5.0.4(svelte@4.0.0)(typescript@5.1.3)
+      typescript: 5.1.3
+    transitivePeerDependencies:
+      - '@babel/core'
+      - coffeescript
+      - less
+      - postcss
+      - postcss-load-config
+      - pug
+      - sass
+      - stylus
+      - sugarss
+    dev: true
+
   /svelte-fragment-component@1.2.0(svelte@4.0.0):
     resolution: {integrity: sha512-rRstmz2oAy2Y/7X57tRaIAJdMYsa2K/MOx/YJN/ETb7Bj9U3vjgioz27dMG1hl2vAKFTtQpxDhC31ur7ECwpog==}
     engines: {node: '>=10'}
@@ -5191,7 +5260,6 @@ packages:
     dependencies:
       format-message: 6.2.4
       svelte: 4.0.0
-    dev: true
 
   /svelte-portal@2.2.0:
     resolution: {integrity: sha512-jhtZWtD6cUE2nMw46dJ5VXWYiqnER+JH+V/BmNBQ5fNP/YdsJCpJi+DemUy9msklqGb0f+wLhJPBtKHLWQvzjg==}

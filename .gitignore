@@ -3,3 +3,4 @@ dist/
 dist-atelier/
 node_modules/
 .eslintcache
+.svelte-kit
