@@ -1,5 +1,11 @@
 # @atelier-wb/vite-plugin-atelier
 
+## 0.11.1
+
+### Patch Changes
+
+- df06759: Fix Atelier export on sveltekit applications
+
 ## 0.11.0
 
 ### Minor Changes

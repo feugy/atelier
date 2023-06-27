@@ -1,6 +1,6 @@
 {
   "name": "@atelier-wb/vite-plugin-atelier",
-  "version": "0.11.0",
+  "version": "0.11.1",
   "description": "Helps you buildind Component Driven UIs with Atelier and Vite",
   "main": "src/index.js",
   "type": "module",
