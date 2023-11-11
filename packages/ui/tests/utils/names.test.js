@@ -1,6 +1,8 @@
+import { beforeEach, describe, expect, it, vi } from 'vitest'
+
 import { groupByName } from '../../src/utils'
 
-beforeEach(vi.resetAllMocks)
+beforeEach(() => vi.resetAllMocks())
 
 describe('groupByName() utility', () => {
   it('handles no tools', () => {

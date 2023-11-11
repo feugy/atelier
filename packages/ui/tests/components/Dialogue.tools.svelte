@@ -1,5 +1,6 @@
 <script>
   import { Tool } from '@atelier-wb/svelte'
+
   import Dialogue from '../../src/components/Dialogue.svelte'
   import { lorem } from '../test-utils.js'
 </script>

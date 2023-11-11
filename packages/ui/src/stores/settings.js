@@ -1,5 +1,5 @@
-import { BehaviorSubject, map, tap } from 'rxjs'
 import Ajv from 'ajv'
+import { BehaviorSubject, map, tap } from 'rxjs'
 
 const ajv = new Ajv()
 const settings$ = new BehaviorSubject()

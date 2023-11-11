@@ -1,11 +1,13 @@
 import { render, screen, waitFor, within } from '@testing-library/svelte'
 import html from 'svelte-htm'
-import { translate } from '../test-utils'
+import { beforeEach, describe, expect, it, vi } from 'vitest'
+
 import { App } from '../../src/connected-components'
 import { reloadSettings } from '../../src/stores'
+import { translate } from '../test-utils'
 
 describe('App connected component', () => {
-  beforeEach(vi.resetAllMocks)
+  beforeEach(() => vi.resetAllMocks())
 
   it('displays explorer, pane container with default pickers and loader', () => {
     const { container } = render(html`<${App} />`)

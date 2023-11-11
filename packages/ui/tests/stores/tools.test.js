@@ -1,20 +1,22 @@
 import { faker } from '@faker-js/faker'
 import { get } from 'svelte/store'
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
+
 import {
   clearEvents,
-  events,
-  tools,
   currentTool,
+  events,
   lastError,
   selectTool,
   setWorkbenchFrame,
+  tools,
   updateProperty
 } from '../../src/stores'
 
 describe('tools store', () => {
   const subscriptions = []
 
-  beforeEach(vi.resetAllMocks)
+  beforeEach(() => vi.resetAllMocks())
 
   afterEach(() => {
     for (const subscription of subscriptions) {
@@ -32,7 +34,7 @@ describe('tools store', () => {
         data: { type: 'registerTool', data: {} }
       })
     )
-    expect(get(currentTool)).not.toBeDefined()
+    expect(get(currentTool)).toBeUndefined()
     expect(get(tools)).toEqual([])
     expect(get(events)).toEqual([])
   })
@@ -46,7 +48,7 @@ describe('tools store', () => {
         data: { type: faker.lorem.word(), data: {} }
       })
     )
-    expect(get(currentTool)).not.toBeDefined()
+    expect(get(currentTool)).toBeUndefined()
     expect(get(tools)).toEqual([])
     expect(get(events)).toEqual([])
   })
@@ -57,7 +59,7 @@ describe('tools store', () => {
     const tool2 = { fullName: faker.commerce.productName() }
     const tool3 = { fullName: faker.commerce.productName() }
     setWorkbenchFrame({ src })
-    expect(get(currentTool)).not.toBeDefined()
+    expect(get(currentTool)).toBeUndefined()
 
     window.dispatchEvent(
       new MessageEvent('message', {

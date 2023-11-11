@@ -1,5 +1,6 @@
-import path from 'path'
 import { SnapshotState, toMatchSnapshot } from 'jest-snapshot'
+import path from 'path'
+import { afterAll } from 'vitest'
 
 const snapshotsStateMap = new Map()
 let commonSnapshotState
@@ -24,39 +25,33 @@ afterAll(() => {
   }
 })
 
-expect.extend({
-  toMatchFileSnapshot: function toMatchFileSnapshot(
-    received,
-    snapshotFile,
-    hint
-  ) {
-    const absoluteSnapshotFile = getAbsolutePathToSnapshot(
-      this.testPath,
-      snapshotFile
+export function toMatchToolshot(received, snapshotFile, hint) {
+  const absoluteSnapshotFile = getAbsolutePathToSnapshot(
+    this.testPath,
+    snapshotFile
+  )
+
+  // store the common state to re-use it in "afterAll" hook.
+  commonSnapshotState = this.snapshotState
+
+  if (!snapshotsStateMap.has(absoluteSnapshotFile)) {
+    snapshotsStateMap.set(
+      absoluteSnapshotFile,
+      new SnapshotState(absoluteSnapshotFile, {
+        updateSnapshot: commonSnapshotState._updateSnapshot,
+        snapshotPath: absoluteSnapshotFile
+      })
     )
-
-    // store the common state to re-use it in "afterAll" hook.
-    commonSnapshotState = this.snapshotState
-
-    if (!snapshotsStateMap.has(absoluteSnapshotFile)) {
-      snapshotsStateMap.set(
-        absoluteSnapshotFile,
-        new SnapshotState(absoluteSnapshotFile, {
-          updateSnapshot: commonSnapshotState._updateSnapshot,
-          snapshotPath: absoluteSnapshotFile
-        })
-      )
-    }
-    const newThis = {
-      ...this,
-      currentTestName: hint,
-      snapshotState: snapshotsStateMap.get(absoluteSnapshotFile)
-    }
-    const patchedToMatchSnapshot = toMatchSnapshot.bind(newThis)
-
-    return patchedToMatchSnapshot(received)
   }
-})
+  const newThis = {
+    ...this,
+    currentTestName: hint,
+    snapshotState: snapshotsStateMap.get(absoluteSnapshotFile)
+  }
+  const patchedToMatchSnapshot = toMatchSnapshot.bind(newThis)
+
+  return patchedToMatchSnapshot(received)
+}
 
 function getAbsolutePathToSnapshot(testPath, snapshotFile) {
   return path.isAbsolute(snapshotFile)

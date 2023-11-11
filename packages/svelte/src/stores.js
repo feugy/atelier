@@ -1,4 +1,4 @@
-import { writable, derived } from 'svelte/store'
+import { derived, writable } from 'svelte/store'
 
 const isJsdom = navigator.userAgent?.includes('jsdom') ?? false
 

@@ -1,5 +1,6 @@
 <script>
   import { _ } from 'svelte-intl'
+
   import { Dialogue } from '../components'
   import { lastError } from '../stores'
 </script>

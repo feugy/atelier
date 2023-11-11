@@ -1,12 +1,13 @@
 import { fireEvent, render, screen } from '@testing-library/svelte'
 import { tick } from 'svelte'
 import html from 'svelte-htm'
+import { beforeEach, describe, expect, it, vi } from 'vitest'
+
 import { SizePicker } from '../../src/components'
 
 describe('SizePicker component', () => {
   const viewport = {
     // we're not testing DOM elements, but assignments to mock object.
-    /* eslint-disable jest-dom/prefer-to-have-style */
     style: {},
     parentElement: { classList: { add: vi.fn(), remove: vi.fn() } }
   }
@@ -61,8 +62,8 @@ describe('SizePicker component', () => {
       const rank = 1
       fireEvent.click(screen.getAllByRole('button')[rank])
       await tick()
-      expect(viewport.style.width).toEqual(`${sizes[rank].width}px`)
-      expect(viewport.style.height).toEqual(`${sizes[rank].height}px`)
+      expect(viewport.style.width).toBe(`${sizes[rank].width}px`)
+      expect(viewport.style.height).toBe(`${sizes[rank].height}px`)
       expect(viewport.parentElement.classList.add).toHaveBeenCalledWith('frame')
       let buttons = screen.getAllByRole('button')
       expect(buttons).toHaveLength(sizes.length + 2)
@@ -79,8 +80,8 @@ describe('SizePicker component', () => {
       for (const [i, { icon }] of sizes.entries()) {
         expect(buttons[i]).toHaveTextContent(icon)
       }
-      expect(viewport.style.width).toEqual('100%')
-      expect(viewport.style.height).toEqual('100%')
+      expect(viewport.style.width).toBe('100%')
+      expect(viewport.style.height).toBe('100%')
       expect(viewport.parentElement.classList.remove).toHaveBeenCalledWith(
         'frame'
       )
@@ -97,8 +98,8 @@ describe('SizePicker component', () => {
       let rank = 0
       fireEvent.click(screen.getAllByRole('button')[rank])
       await tick()
-      expect(viewport.style.width).toEqual(`${sizes[rank].width}px`)
-      expect(viewport.style.height).toEqual(`${sizes[rank].height}px`)
+      expect(viewport.style.width).toBe(`${sizes[rank].width}px`)
+      expect(viewport.style.height).toBe(`${sizes[rank].height}px`)
       expect(viewport.parentElement.classList.add).toHaveBeenNthCalledWith(
         1,
         'frame'
@@ -106,14 +107,14 @@ describe('SizePicker component', () => {
 
       fireEvent.click(screen.getAllByRole('button')[1])
       await tick()
-      expect(viewport.style.width).toEqual(`${sizes[rank].height}px`)
-      expect(viewport.style.height).toEqual(`${sizes[rank].width}px`)
+      expect(viewport.style.width).toBe(`${sizes[rank].height}px`)
+      expect(viewport.style.height).toBe(`${sizes[rank].width}px`)
 
       rank = 1
       fireEvent.click(screen.getAllByRole('button')[rank + 2])
       await tick()
-      expect(viewport.style.width).toEqual(`${sizes[rank].height}px`)
-      expect(viewport.style.height).toEqual(`${sizes[rank].width}px`)
+      expect(viewport.style.width).toBe(`${sizes[rank].height}px`)
+      expect(viewport.style.height).toBe(`${sizes[rank].width}px`)
       expect(viewport.parentElement.classList.add).toHaveBeenNthCalledWith(
         2,
         'frame'

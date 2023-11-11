@@ -1,6 +1,6 @@
 import Ajv from 'ajv'
 import { createReadStream } from 'fs'
-import { cp, readdir, readFile, rm, writeFile, stat } from 'fs/promises'
+import { cp, readdir, readFile, rm, stat, writeFile } from 'fs/promises'
 import { createRequire } from 'module'
 import { dirname, resolve } from 'path'
 import sirv from 'sirv'

@@ -1,6 +1,7 @@
 import { faker } from '@faker-js/faker'
 import { get } from 'svelte/store'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
+
 import {
   currentTool,
   recordError,
@@ -19,7 +20,7 @@ describe('stores', () => {
   const postMessage = vi.spyOn(window.parent, 'postMessage')
   const origin = new URL(window.parent.location.href).origin
 
-  beforeEach(vi.resetAllMocks)
+  beforeEach(() => vi.resetAllMocks())
 
   describe('recordVisibility()', () => {
     it('records visibility change through postMessage', () => {
@@ -446,12 +447,12 @@ describe('stores', () => {
 
   describe('currentTool', () => {
     it('is empty by default', () => {
-      expect(get(currentTool)).not.toBeDefined()
+      expect(get(currentTool)).toBeUndefined()
     })
 
     it('ignores message from a different origin', () => {
       const data = faker.string.uuid()
-      expect(get(currentTool)).not.toBeDefined()
+      expect(get(currentTool)).toBeUndefined()
 
       window.dispatchEvent(
         new MessageEvent('message', {
@@ -459,12 +460,12 @@ describe('stores', () => {
           data: { type: 'selectTool', data }
         })
       )
-      expect(get(currentTool)).not.toBeDefined()
+      expect(get(currentTool)).toBeUndefined()
     })
 
     it('ignores message with unsupported types', () => {
       const data = faker.string.uuid()
-      expect(get(currentTool)).not.toBeDefined()
+      expect(get(currentTool)).toBeUndefined()
 
       window.dispatchEvent(
         new MessageEvent('message', {
@@ -472,12 +473,12 @@ describe('stores', () => {
           data: { type: faker.lorem.word(), data }
         })
       )
-      expect(get(currentTool)).not.toBeDefined()
+      expect(get(currentTool)).toBeUndefined()
     })
 
     it('updates when receiving selectTool message', () => {
       const data = faker.string.uuid()
-      expect(get(currentTool)).not.toBeDefined()
+      expect(get(currentTool)).toBeUndefined()
 
       window.dispatchEvent(
         new MessageEvent('message', {

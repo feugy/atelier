@@ -1,5 +1,8 @@
 # Features
 
+bug: toolshot name do not include the toolbox's name
+bug: how to inject unocss global styles?
+
 ## UI
 
 - warn on tool name collisions

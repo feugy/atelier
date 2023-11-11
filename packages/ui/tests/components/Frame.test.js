@@ -1,6 +1,8 @@
 import { render, screen, waitFor } from '@testing-library/svelte'
-import html from 'svelte-htm'
 import { get, writable } from 'svelte/store'
+import html from 'svelte-htm'
+import { describe, expect, it } from 'vitest'
+
 import { Frame } from '../../src/components'
 
 describe('Frame components', () => {

@@ -1,10 +1,13 @@
 import { faker } from '@faker-js/faker'
 import { fireEvent, render, screen, within } from '@testing-library/svelte'
+import { tick } from 'svelte'
 import { readable } from 'svelte/store'
 import html from 'svelte-htm'
-import { translate } from '../test-utils'
-import { Pane1, Pane2, Pane3 } from '../test-components'
+import { describe, expect, it } from 'vitest'
+
 import { PaneContainer } from '../../src/components'
+import { Pane1, Pane2, Pane3 } from '../test-components'
+import { translate } from '../test-utils'
 
 describe('PaneContainer component', () => {
   it('display tabs and can switch between them', async () => {
@@ -40,7 +43,8 @@ describe('PaneContainer component', () => {
     const main = screen.getByRole('main')
     expect(main).toHaveTextContent('This is pane #1')
 
-    await fireEvent.click(tabItems[2])
+    fireEvent.click(tabItems[2])
+    await tick()
     expect(main).toHaveTextContent('This is pane #3')
   })
 
@@ -75,7 +79,8 @@ describe('PaneContainer component', () => {
     const main = screen.getByRole('main')
     expect(main).toHaveTextContent('This is pane #2')
 
-    await fireEvent.click(tabItems[1])
+    fireEvent.click(tabItems[1])
+    await tick()
     expect(main).toHaveTextContent('This is pane #3')
   })
 
@@ -122,16 +127,20 @@ describe('PaneContainer component', () => {
     const main = screen.getByRole('main')
     expect(main).not.toHaveClass('collapsed')
 
-    await fireEvent.click(collapseButton)
+    fireEvent.click(collapseButton)
+    await tick()
     expect(main).toHaveClass('collapsed')
 
-    await fireEvent.click(collapseButton)
+    fireEvent.click(collapseButton)
+    await tick()
     expect(main).not.toHaveClass('collapsed')
 
-    await fireEvent.dblClick(tabBar)
+    fireEvent.dblClick(tabBar)
+    await tick()
     expect(main).toHaveClass('collapsed')
 
-    await fireEvent.dblClick(tabBar)
+    fireEvent.dblClick(tabBar)
+    await tick()
     expect(main).not.toHaveClass('collapsed')
   })
 })

@@ -1,5 +1,6 @@
 <script>
   import { Tool, ToolBox } from '@atelier-wb/svelte'
+
   import EventLogger from '../../src/components/EventLogger.svelte'
   import { eventData } from './EventLogger.testdata'
 </script>

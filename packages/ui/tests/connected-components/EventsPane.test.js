@@ -1,12 +1,14 @@
 import { faker } from '@faker-js/faker'
 import { fireEvent, render, screen } from '@testing-library/svelte'
 import html from 'svelte-htm'
-import { translate } from '../test-utils'
+import { beforeEach, describe, expect, it, vi } from 'vitest'
+
 import {
   default as EventsPane,
   isEnabled
 } from '../../src/connected-components/EventsPane.svelte'
-import { events, clearEvents } from '../../src/stores'
+import { clearEvents, events } from '../../src/stores'
+import { translate } from '../test-utils'
 
 vi.mock('../../src/stores/tools', () => ({
   events: new (require('rxjs').BehaviorSubject)(),
@@ -14,7 +16,7 @@ vi.mock('../../src/stores/tools', () => ({
 }))
 
 describe('EventLogger connected component', () => {
-  beforeEach(vi.resetAllMocks)
+  beforeEach(() => vi.resetAllMocks())
 
   it('handles no events', () => {
     events.next([])
@@ -52,7 +54,7 @@ describe('EventLogger connected component', () => {
     render(html`<${EventsPane} />`)
     expect(clearEvents).not.toHaveBeenCalled()
 
-    await fireEvent.click(screen.queryByRole('button'))
+    fireEvent.click(screen.queryByRole('button'))
     expect(clearEvents).toHaveBeenCalledTimes(1)
   })
 

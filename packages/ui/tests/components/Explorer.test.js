@@ -1,5 +1,8 @@
 import { fireEvent, render, screen, within } from '@testing-library/svelte'
+import { tick } from 'svelte'
 import html from 'svelte-htm'
+import { describe, expect, it, vi } from 'vitest'
+
 import { Explorer } from '../../src/components'
 import { groupByName } from '../../src/utils'
 
@@ -40,7 +43,8 @@ describe('Explorer components', () => {
     expect(within(breadcrumb).queryByText('home')).not.toBeInTheDocument()
     expect(within(breadcrumb).queryByText('a')).not.toBeInTheDocument()
 
-    await fireEvent.click(within(tree).getByText('a'))
+    fireEvent.click(within(tree).getByText('a'))
+    await tick()
     expect(within(tree).getByText('tool1')).toBeInTheDocument()
     expect(within(tree).getByText('c')).toBeInTheDocument()
 
@@ -49,7 +53,8 @@ describe('Explorer components', () => {
     expect(within(breadcrumb).queryByText('c')).not.toBeInTheDocument()
     expect(within(tree).queryByText('a')).not.toBeInTheDocument()
 
-    await fireEvent.click(within(tree).getByText('c'))
+    fireEvent.click(within(tree).getByText('c'))
+    await tick()
     expect(within(tree).getByText('tool3')).toBeInTheDocument()
 
     expect(within(breadcrumb).getByText('home')).toBeInTheDocument()
@@ -64,8 +69,10 @@ describe('Explorer components', () => {
     const breadcrumb = screen.getByRole('navigation')
     const tree = screen.getAllByRole('list')[1]
 
-    await fireEvent.click(within(tree).getByText('a'))
-    await fireEvent.click(within(tree).getByText('c'))
+    fireEvent.click(within(tree).getByText('a'))
+    await tick()
+    fireEvent.click(within(tree).getByText('c'))
+    await tick()
     expect(within(tree).getByText('tool3')).toBeInTheDocument()
     expect(within(tree).queryByText('tool1')).not.toBeInTheDocument()
     expect(within(tree).queryByText('c')).not.toBeInTheDocument()
@@ -73,7 +80,8 @@ describe('Explorer components', () => {
     expect(within(breadcrumb).getByText('a')).toBeInTheDocument()
     expect(within(breadcrumb).getByText('c')).toBeInTheDocument()
 
-    await fireEvent.click(within(breadcrumb).getByText('a'))
+    fireEvent.click(within(breadcrumb).getByText('a'))
+    await tick()
     expect(within(tree).getByText('tool1')).toBeInTheDocument()
     expect(within(tree).getByText('c')).toBeInTheDocument()
     expect(within(tree).queryByText('a')).not.toBeInTheDocument()
@@ -81,7 +89,8 @@ describe('Explorer components', () => {
     expect(within(tree).queryByText('b')).not.toBeInTheDocument()
     expect(within(breadcrumb).queryByText('c')).not.toBeInTheDocument()
 
-    await fireEvent.click(within(breadcrumb).getByText('home'))
+    fireEvent.click(within(breadcrumb).getByText('home'))
+    await tick()
     expect(screen.getByText('a')).toBeInTheDocument()
     expect(screen.getByText('tool2')).toBeInTheDocument()
     expect(screen.getByText('b')).toBeInTheDocument()
@@ -93,8 +102,10 @@ describe('Explorer components', () => {
     const breadcrumb = screen.getByRole('navigation')
     const tree = screen.getAllByRole('list')[1]
 
-    await fireEvent.click(within(tree).getByText('a'))
-    await fireEvent.click(within(tree).getByText('c'))
+    fireEvent.click(within(tree).getByText('a'))
+    await tick()
+    fireEvent.click(within(tree).getByText('c'))
+    await tick()
     expect(within(tree).getByText('tool3')).toBeInTheDocument()
     expect(within(tree).queryByText('tool1')).not.toBeInTheDocument()
     expect(within(tree).queryByText('c')).not.toBeInTheDocument()
@@ -102,7 +113,8 @@ describe('Explorer components', () => {
     expect(within(breadcrumb).getByText('a')).toBeInTheDocument()
     expect(within(breadcrumb).getByText('c')).toBeInTheDocument()
 
-    await fireEvent.click(within(breadcrumb).getByText('home'))
+    fireEvent.click(within(breadcrumb).getByText('home'))
+    await tick()
     expect(screen.getByText('a')).toBeInTheDocument()
     expect(screen.getByText('tool2')).toBeInTheDocument()
     expect(screen.getByText('b')).toBeInTheDocument()
@@ -136,18 +148,21 @@ describe('Explorer components', () => {
 
   it('selects a different tool', async () => {
     const handleSelect = vi.fn()
-    render(html`<${Explorer}
-      tools=${groupByName(tools)}
-      current=${tools[3]}
-      on:select=${handleSelect}
-    />`)
+    render(
+      html`<${Explorer}
+        tools=${groupByName(tools)}
+        current=${tools[3]}
+        on:select=${handleSelect}
+      />`
+    )
 
     const tree = screen.getAllByRole('list')[1]
     expect(within(tree).getByText('tool4')).toHaveClass('current')
     expect(within(tree).getByText('tool5')).not.toHaveClass('current')
     expect(handleSelect).not.toHaveBeenCalled()
 
-    await fireEvent.click(within(tree).getByText('tool5'))
+    fireEvent.click(within(tree).getByText('tool5'))
+    await tick()
     expect(handleSelect).toHaveBeenCalledWith(
       expect.objectContaining({ detail: tools[4] })
     )
@@ -204,8 +219,10 @@ describe('Explorer components', () => {
     const { component } = render(Explorer, {
       props: { current: tools[2], tools: groupByName(tools) }
     })
-    await fireEvent.click(screen.getByText('home'))
-    await fireEvent.click(screen.getByText('b'))
+    fireEvent.click(screen.getByText('home'))
+    await tick()
+    fireEvent.click(screen.getByText('b'))
+    await tick()
     expect(screen.getByText('tool4')).toBeInTheDocument()
     expect(screen.getByText('tool5')).toBeInTheDocument()
 

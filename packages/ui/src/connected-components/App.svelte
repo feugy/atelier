@@ -1,19 +1,18 @@
 <script>
+  import '../common'
+
   import { onMount } from 'svelte'
   import { _ } from 'svelte-intl'
-  import * as EventsPane from './EventsPane.svelte'
-  import * as PropertiesPane from './PropertiesPane.svelte'
-  import ErrorDialogue from './ErrorDialogue.svelte'
-  import '../common'
+
   import {
     Aside,
     BackgroundPicker,
+    backgroundsSchema,
     Explorer,
     Frame,
     PaneContainer,
     SizePicker,
-    sizesSchema,
-    backgroundsSchema
+    sizesSchema
   } from '../components'
   import {
     currentTool,
@@ -23,6 +22,9 @@
     setWorkbenchFrame,
     tools
   } from '../stores'
+  import ErrorDialogue from './ErrorDialogue.svelte'
+  import * as EventsPane from './EventsPane.svelte'
+  import * as PropertiesPane from './PropertiesPane.svelte'
 
   let frame
   let viewport

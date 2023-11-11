@@ -1,6 +1,7 @@
 <script>
   import { createEventDispatcher } from 'svelte'
   import { fly } from 'svelte/transition'
+
   import { getName, getParentName, isFolder } from './utils.js'
 
   export let tools

@@ -1,5 +1,6 @@
 <script>
   import { Tool, ToolBox } from '@atelier-wb/svelte'
+
   import Explorer from '../../src/components/Explorer/Explorer.svelte'
 </script>
 

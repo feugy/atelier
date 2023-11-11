@@ -1,6 +1,7 @@
 <script>
   import { Tool, ToolBox } from '@atelier-wb/svelte'
   import { writable } from 'svelte/store'
+
   import PaneContainer from '../../src/components/PaneContainer.svelte'
   import { Pane1, Pane2, Pane3 } from '../test-components'
 

@@ -2,6 +2,7 @@
   import { Tool, ToolBox } from '@atelier-wb/svelte'
   import { tick } from 'svelte'
   import { _ } from 'svelte-intl'
+
   import SizePicker from '../../src/components/SizePicker.svelte'
 
   let viewport

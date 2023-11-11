@@ -5,7 +5,7 @@
 
 <script>
   import { EventLogger } from '../components'
-  import { events, clearEvents } from '../stores'
+  import { clearEvents, events } from '../stores'
 </script>
 
 <EventLogger events={$events} on:clear-events={clearEvents} />

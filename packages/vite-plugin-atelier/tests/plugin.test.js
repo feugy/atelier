@@ -17,6 +17,7 @@ import {
   it,
   vi
 } from 'vitest'
+
 import builder from '../src'
 
 const defaultWorkframeId = '@atelier-wb/workframe'
@@ -51,7 +52,7 @@ async function preparePlugin(
 }
 
 describe('plugin builder', () => {
-  beforeEach(vi.resetAllMocks)
+  beforeEach(() => vi.resetAllMocks())
 
   it('validates path option', () => {
     expect(() => builder({ path: true })).toThrow(
@@ -147,9 +148,9 @@ describe('plugin builder', () => {
   describe('given some files', () => {
     it('does not handle other ids than workframeId', async () => {
       const plugin = await preparePlugin()
-      expect(plugin.resolveId(faker.lorem.word())).not.toBeDefined()
-      expect(await plugin.load(faker.lorem.word())).not.toBeDefined()
-      expect(plugin.resolveId(`${defaultUrl}${defaultWorkframeId}`)).toEqual(
+      expect(plugin.resolveId(faker.lorem.word())).toBeUndefined()
+      expect(await plugin.load(faker.lorem.word())).toBeUndefined()
+      expect(plugin.resolveId(`${defaultUrl}${defaultWorkframeId}`)).toBe(
         `${defaultUrl}${defaultWorkframeId}`
       )
     })
@@ -157,9 +158,9 @@ describe('plugin builder', () => {
     it('supports custom workframeId', async () => {
       const workframeId = faker.lorem.word()
       const plugin = await preparePlugin({ workframeId })
-      expect(plugin.resolveId(faker.lorem.word())).not.toBeDefined()
-      expect(await plugin.load(faker.lorem.word())).not.toBeDefined()
-      expect(plugin.resolveId(`${defaultUrl}${workframeId}`)).toEqual(
+      expect(plugin.resolveId(faker.lorem.word())).toBeUndefined()
+      expect(await plugin.load(faker.lorem.word())).toBeUndefined()
+      expect(plugin.resolveId(`${defaultUrl}${workframeId}`)).toBe(
         `${defaultUrl}${workframeId}`
       )
     })
@@ -177,7 +178,7 @@ describe('plugin builder', () => {
     it('finds tool files and generates workframe content', async () => {
       const plugin = await preparePlugin({ path })
       expect(await plugin.load(`${defaultUrl}${defaultWorkframeId}`))
-        .toEqual(`import { Workbench } from '@atelier-wb/svelte'
+        .toBe(`import { Workbench } from '@atelier-wb/svelte'
 
 import tool1 from '${path}/a.tools.svelte'
 import tool2 from '${path}/b.tools.svelte'
@@ -200,7 +201,7 @@ new Workbench({
         toolRegexp: '\\.custom\\.svelte$'
       })
       expect(await plugin.load(`${defaultUrl}${defaultWorkframeId}`))
-        .toEqual(`import { Workbench } from '@atelier-wb/svelte'
+        .toBe(`import { Workbench } from '@atelier-wb/svelte'
 
 import tool1 from '${path}/c.custom.svelte'
 import tool2 from '${path}/folder1/a.custom.svelte'
@@ -218,7 +219,7 @@ new Workbench({
       const setupPath = faker.lorem.word()
       const plugin = await preparePlugin({ path, setupPath })
       expect(await plugin.load(`${defaultUrl}${defaultWorkframeId}`))
-        .toEqual(`import { Workbench } from '@atelier-wb/svelte'
+        .toBe(`import { Workbench } from '@atelier-wb/svelte'
 
 import '${setupPath}'
 import tool1 from '${path}/a.tools.svelte'
@@ -239,7 +240,7 @@ new Workbench({
       const setupPath = faker.lorem.word()
       const plugin = await preparePlugin({ path, setupPath: `./${setupPath}` })
       expect(await plugin.load(`${defaultUrl}${defaultWorkframeId}`))
-        .toEqual(`import { Workbench } from '@atelier-wb/svelte'
+        .toBe(`import { Workbench } from '@atelier-wb/svelte'
 
 import '${resolve(path, setupPath).replace(/\\/g, '/')}'
 import tool1 from '${path}/a.tools.svelte'
@@ -260,7 +261,7 @@ new Workbench({
       const setupPath = resolve(path, faker.lorem.word()).replace(/\\/g, '/')
       const plugin = await preparePlugin({ path, setupPath })
       expect(await plugin.load(`${defaultUrl}${defaultWorkframeId}`))
-        .toEqual(`import { Workbench } from '@atelier-wb/svelte'
+        .toBe(`import { Workbench } from '@atelier-wb/svelte'
 
 import '${setupPath}'
 import tool1 from '${path}/a.tools.svelte'
@@ -307,7 +308,7 @@ new Workbench({
     })
   })
 
-  describe('given a configured and started server', () => {
+  describe('given a started server', () => {
     let server
 
     afterEach(() => server?.close())
@@ -326,11 +327,11 @@ new Workbench({
       }))
 
       const response = await fetch(`${address}${url}ui-settings.js`)
-      expect(response.status).toEqual(200)
-      expect(response.headers.get('content-type')).toEqual(
+      expect(response.status).toBe(200)
+      expect(response.headers.get('content-type')).toBe(
         'application/javascript;charset=utf-8'
       )
-      expect(await response.text()).toEqual(
+      expect(await response.text()).toBe(
         `window.uiSettings = ${JSON.stringify(uiSettings)};`
       )
     })
@@ -357,8 +358,8 @@ new Workbench({
 
     it(`serves atelier's main html file`, async () => {
       const response = await fetch(`${address}${url}`)
-      expect(response.status).toEqual(200)
-      expect(response.headers.get('content-type')).toEqual(
+      expect(response.status).toBe(200)
+      expect(response.headers.get('content-type')).toBe(
         'text/html;charset=utf-8'
       )
       const body = await response.text()
@@ -368,56 +369,59 @@ new Workbench({
         )
       )
       expect(body).toEqual(
-        expect.stringContaining('<link rel="stylesheet" href="./assets/index-')
+        expect.stringContaining(
+          '<link rel="stylesheet" crossorigin href="./assets/index-'
+        )
       )
     })
 
     it(`serves script with empty ui settings`, async () => {
       const response = await fetch(`${address}${url}ui-settings.js`)
-      expect(response.status).toEqual(200)
-      expect(response.headers.get('content-type')).toEqual(
+      expect(response.status).toBe(200)
+      expect(response.headers.get('content-type')).toBe(
         'application/javascript;charset=utf-8'
       )
-      expect(await response.text()).toEqual('window.uiSettings = {};')
+      expect(await response.text()).toBe('window.uiSettings = {};')
     })
 
     it(`serves files from public dir`, async () => {
       let response = await fetch(`${address}${url}icon-256x256.png`)
-      expect(response.status).toEqual(200)
-      expect(response.headers.get('content-type')).toEqual('image/png')
+      expect(response.status).toBe(200)
+      expect(response.headers.get('content-type')).toBe('image/png')
       response = await fetch(`${address}${url}favicon.ico`)
-      expect(response.status).toEqual(200)
-      expect(response.headers.get('content-length')).toEqual('1150')
+      expect(response.status).toBe(200)
+      expect(response.headers.get('content-length')).toBe('1150')
       response = await fetch(`${address}${url}unknown.jpeg`)
-      expect(response.status).toEqual(404)
+      expect(response.status).toBe(404)
     })
 
     it(`redirects to atelier's main html file without trailing /`, async () => {
       const response = await fetch(`${address}${url.slice(0, -1)}`, {
         redirect: 'manual'
       })
-      expect(response.status).toEqual(301)
+      expect(response.status).toBe(301)
       expect(response.headers.get('location')).toEqual(url)
     })
 
     it(`serves atelier's workframe`, async () => {
       const response = await fetch(`${address}${url}workframe.html`)
-      expect(response.status).toEqual(200)
-      expect(response.headers.get('content-type')).toEqual('text/html')
+      expect(response.status).toBe(200)
+      expect(response.headers.get('content-type')).toBe('text/html')
       expect(await response.text()).toMatchInlineSnapshot(`
         "<!DOCTYPE html>
         <html lang=\\"en\\">
-          <head>
-            <meta charset=\\"utf-8\\" />
-            <meta name=\\"viewport\\" content=\\"width=device-width, initial-scale=1\\" />
-            <script type=\\"module\\" src=\\"/@vite/client\\"></script>
-          </head>
 
-          <body>
-            <script type=\\"module\\" src=\\"@atelier-wb/workframe\\"></script>
-          </body>
-        </html>
-        "
+        <head>
+          <meta charset=\\"utf-8\\" />
+          <meta name=\\"viewport\\" content=\\"width=device-width, initial-scale=1\\" />
+          <script type=\\"module\\" src=\\"/@vite/client\\"></script>
+        </head>
+
+        <body>
+          <script type=\\"module\\" src=\\"@atelier-wb/workframe\\"></script>
+        </body>
+
+        </html>"
       `)
     })
 
@@ -486,10 +490,12 @@ new Workbench({
       })
     })
 
+    // eslint-disable-next-line vitest/expect-expect -- expectWorkframeAndAssets contains expectations
     it(`generated workframe file with its assets`, async () => {
       await expectWorkframeAndAssets(atelierOut)
     })
 
+    // eslint-disable-next-line vitest/expect-expect -- expectWorkframeAndAssets contains expectations
     it(`included ui distribution`, async () => {
       await expectUiDistribution(atelierOut)
     })
@@ -497,7 +503,7 @@ new Workbench({
     it(`generated ui-settings file`, async () => {
       const settingsPath = resolve(atelierOut, 'ui-settings.js')
       await expect(stat(settingsPath)).resolves.toBeDefined()
-      expect(await readFile(settingsPath, 'utf-8')).toEqual(
+      expect(await readFile(settingsPath, 'utf-8')).toBe(
         `window.uiSettings = ${JSON.stringify(uiSettings)};`
       )
     })
@@ -517,10 +523,12 @@ new Workbench({
       })
     })
 
+    // eslint-disable-next-line vitest/expect-expect -- expectWorkframeAndAssets contains expectations
     it(`generated workframe file with its assets`, async () => {
       await expectWorkframeAndAssets(atelierOut)
     })
 
+    // eslint-disable-next-line vitest/expect-expect -- expectWorkframeAndAssets contains expectations
     it(`included ui distribution`, async () => {
       await expectUiDistribution(atelierOut)
     })
@@ -540,10 +548,12 @@ new Workbench({
       })
     })
 
+    // eslint-disable-next-line vitest/expect-expect -- expectWorkframeAndAssets contains expectations
     it(`generated workframe file with its assets`, async () => {
       await expectWorkframeAndAssets(atelierOut)
     })
 
+    // eslint-disable-next-line vitest/expect-expect -- expectWorkframeAndAssets contains expectations
     it(`included ui distribution`, async () => {
       await expectUiDistribution(atelierOut)
     })
@@ -563,10 +573,12 @@ new Workbench({
       })
     })
 
+    // eslint-disable-next-line vitest/expect-expect -- expectWorkframeAndAssets contains expectations
     it(`generated workframe file with its assets`, async () => {
       await expectWorkframeAndAssets(atelierOut)
     })
 
+    // eslint-disable-next-line vitest/expect-expect -- expectWorkframeAndAssets contains expectations
     it(`included ui distribution`, async () => {
       await expectUiDistribution(atelierOut)
     })
@@ -627,9 +639,9 @@ new Workbench({
 async function expectWorkframeAndAssets(atelierOut) {
   const workframeHtmlPath = resolve(atelierOut, 'workframe.html')
   const workframeJsRegExp =
-    /<script type="module" crossorigin src="\/(.+\/workframe-\w+\.js)">/
+    /<script type="module" crossorigin src="\/(.+\/workframe-.+\.js)">/
   const workframeCssRegExp =
-    /<link rel="stylesheet" href="\/(.+\/workframe-\w+\.css)">/
+    /<link rel="stylesheet" crossorigin href="\/(.+\/workframe-.+\.css)">/
 
   await expect(stat(workframeHtmlPath)).resolves.toBeDefined()
   const content = await readFile(workframeHtmlPath, 'utf-8')
@@ -656,9 +668,9 @@ async function expectWorkframeAndAssets(atelierOut) {
 async function expectUiDistribution(atelierOut) {
   const indexHtmlPath = resolve(atelierOut, 'index.html')
   const indexJsRegExp =
-    /<script type="module" crossorigin src="\.\/(assets\/index-\w+\.js)">/
+    /<script type="module" crossorigin src="\.\/(assets\/index-.+\.js)">/
   const indexCssRegExp =
-    /<link rel="stylesheet" href="\.\/(assets\/index-\w+\.css)">/
+    /<link rel="stylesheet" crossorigin href="\.\/(assets\/index-.+\.css)">/
 
   await expect(stat(indexHtmlPath)).resolves.toBeDefined()
   const content = await readFile(indexHtmlPath, 'utf-8')

@@ -1,7 +1,9 @@
 import { faker } from '@faker-js/faker'
 import { firstValueFrom } from 'rxjs'
 import { get } from 'svelte/store'
-import { reloadSettings, getSettings } from '../../src/stores'
+import { beforeEach, describe, expect, it, vi } from 'vitest'
+
+import { getSettings, reloadSettings } from '../../src/stores'
 
 describe('settings store', () => {
   beforeEach(() => {
@@ -26,8 +28,8 @@ describe('settings store', () => {
     window.uiSettings = { foo: 'enabled', bar: 10, [key]: value }
     reloadSettings()
 
-    expect(get(getSettings('foo'))).toEqual('enabled')
-    expect(get(getSettings('bar'))).toEqual(10)
+    expect(get(getSettings('foo'))).toBe('enabled')
+    expect(get(getSettings('bar'))).toBe(10)
     expect(get(getSettings(key))).toEqual(value)
   })
 

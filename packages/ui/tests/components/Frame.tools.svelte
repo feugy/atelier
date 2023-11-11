@@ -1,5 +1,6 @@
 <script>
   import { Tool } from '@atelier-wb/svelte'
+
   import Frame from '../../src/components/Frame.svelte'
 
   let frame

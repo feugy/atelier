@@ -2,6 +2,7 @@
   import { createEventDispatcher } from 'svelte'
   import { fade } from 'svelte/transition'
   import { _ } from 'svelte-intl'
+
   import Button from './Button.svelte'
   import PaneDisclaimer from './PaneDisclaimer.svelte'
 

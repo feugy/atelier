@@ -1,5 +1,7 @@
 import { fireEvent, render, screen } from '@testing-library/svelte'
 import html from 'svelte-htm'
+import { beforeEach, describe, expect, it } from 'vitest'
+
 import { BackgroundPicker } from '../../src/components'
 
 describe('BackgroundPicker component', () => {
@@ -35,7 +37,7 @@ describe('BackgroundPicker component', () => {
       for (const [i, background] of backgrounds.entries()) {
         if (background) {
           // we're not testing DOM elements, but svelte bindings.
-          expect(items[i].style.cssText).toEqual(`--background: ${background};`) // eslint-disable-line jest-dom/prefer-to-have-style
+          expect(items[i].style.cssText).toBe(`--background: ${background};`)
         }
       }
     })

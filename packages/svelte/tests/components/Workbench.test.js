@@ -1,6 +1,7 @@
 import { cleanup, render, screen } from '@testing-library/svelte'
 import html from 'svelte-htm'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
+
 import { Workbench } from '../../src'
 import { currentTool } from '../../src/stores'
 import { Button } from '../test-components'
@@ -13,7 +14,7 @@ vi.mock('../../src/stores', async () => {
 })
 
 describe('Workbench component', () => {
-  beforeEach(vi.resetAllMocks)
+  beforeEach(() => vi.resetAllMocks())
   afterEach(cleanup)
 
   it('can handle no tools', () => {

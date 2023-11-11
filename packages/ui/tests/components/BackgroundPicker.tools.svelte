@@ -1,5 +1,6 @@
 <script>
   import { Tool, ToolBox } from '@atelier-wb/svelte'
+
   import BackgroundPicker from '../../src/components/BackgroundPicker.svelte'
 
   let viewport

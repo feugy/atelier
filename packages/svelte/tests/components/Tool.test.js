@@ -7,9 +7,10 @@ import {
   waitFor
 } from '@testing-library/svelte'
 import { tick } from 'svelte'
-import html from 'svelte-htm'
 import { get, writable } from 'svelte/store'
+import html from 'svelte-htm'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
+
 import { Tool, ToolBox } from '../../src'
 import {
   currentTool,
@@ -32,7 +33,7 @@ vi.mock('../../src/stores', async () => {
 })
 
 describe('Tool component', () => {
-  beforeEach(vi.resetAllMocks)
+  beforeEach(() => vi.resetAllMocks())
   afterEach(cleanup)
 
   describe('given no toolbox', () => {
@@ -285,10 +286,10 @@ describe('Tool component', () => {
       expect(button).toBeInTheDocument()
       expect(recordEvent).not.toHaveBeenCalled()
 
-      await fireEvent.click(button)
+      fireEvent.click(button)
       expect(recordEvent).toHaveBeenCalledWith('click', expect.any(MouseEvent))
 
-      await fireEvent.mouseEnter(button)
+      fireEvent.mouseEnter(button)
       expect(recordEvent).toHaveBeenCalledWith('enter', expect.any(CustomEvent))
       expect(recordEvent).toHaveBeenCalledTimes(2)
     })
@@ -557,8 +558,7 @@ describe('Tool component', () => {
       })
       expect(registerTool).toHaveBeenCalledTimes(1)
       expect(recordEvent).not.toHaveBeenCalled()
-      const tool = screen.getByRole('button').parentElement
-      expect(tool).toHaveClass('tool')
+      expect(screen.getByRole('button').parentElement).toHaveClass('tool')
     })
 
     it('registers tool and renders nothing', async () => {
@@ -769,10 +769,10 @@ describe('Tool component', () => {
       expect(button).toBeInTheDocument()
       expect(recordEvent).not.toHaveBeenCalled()
 
-      await fireEvent.click(button)
+      fireEvent.click(button)
       expect(recordEvent).toHaveBeenCalledWith('click', expect.any(MouseEvent))
 
-      await fireEvent.mouseEnter(button)
+      fireEvent.mouseEnter(button)
       expect(recordEvent).toHaveBeenCalledWith('enter', expect.any(CustomEvent))
       expect(recordEvent).toHaveBeenCalledTimes(2)
     })
@@ -807,8 +807,8 @@ describe('Tool component', () => {
         setup=${setup}
       >
         <${Tool} name=${name} props=${{
-        disabled: props.disabled
-      }} setup=${toolSetup} />
+          disabled: props.disabled
+        }} setup=${toolSetup} />
       </${ToolBox}>`)
       await tick()
 
@@ -850,8 +850,8 @@ describe('Tool component', () => {
         setup=${setup}
       >
         <${Tool} name=${name} props=${{
-        disabled: props.disabled
-      }} setup=${toolSetup} />
+          disabled: props.disabled
+        }} setup=${toolSetup} />
       </${ToolBox}>`)
       await waitFor(() =>
         expect(recordVisibility).toHaveBeenCalledWith({
@@ -891,11 +891,11 @@ describe('Tool component', () => {
         setup=${setup}
       >
         <${Tool} name=${name1} props=${{
-        disabled: props1.disabled
-      }} setup=${toolSetup1} />
+          disabled: props1.disabled
+        }} setup=${toolSetup1} />
         <${Tool} name=${name2} props=${{
-        disabled: props2.disabled
-      }} setup=${toolSetup2} />
+          disabled: props2.disabled
+        }} setup=${toolSetup2} />
       </${ToolBox}>`)
       await tick()
 

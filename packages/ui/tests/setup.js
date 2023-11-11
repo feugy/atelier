@@ -1,8 +1,8 @@
-import matchers from '@testing-library/jest-dom/matchers'
-import formatMessage from 'format-message'
-import { expect } from 'vitest'
+import 'vitest-dom/extend-expect'
 
-expect.extend(matchers)
+import { cleanup } from '@testing-library/svelte'
+import formatMessage from 'format-message'
+import { afterEach } from 'vitest'
 
 const { date, time } = formatMessage.setup().formats
 for (const key in date) {
@@ -11,3 +11,5 @@ for (const key in date) {
 for (const key in time) {
   time[key].timeZone = 'UTC'
 }
+
+afterEach(() => cleanup())

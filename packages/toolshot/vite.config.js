@@ -6,8 +6,13 @@ export default defineConfig({
   test: {
     // https://github.com/vitest-dev/vitest/issues/2834
     alias: [{ find: /^svelte$/, replacement: 'svelte/internal' }],
-    deps: { inline: ['svelte-hyperscript'] },
-    globals: true,
+    deps: {
+      optimizer: {
+        web: {
+          include: ['svelte-hyperscript']
+        }
+      }
+    },
     environment: 'jsdom'
   }
 })

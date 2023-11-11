@@ -2,10 +2,17 @@
   "$schema": "https://unpkg.com/@changesets/config@2.2.0/schema.json",
   "changelog": "@changesets/cli/changelog",
   "commit": false,
-  "fixed": [],
+  "fixed": [
+    [
+      "@atelier-wb/svelte",
+      "@atelier-wb/ui",
+      "@atelier-wb/toolshot",
+      "@atelier-wb/vite-plugin-atelier"
+    ]
+  ],
   "linked": [],
   "access": "restricted",
   "baseBranch": "main",
   "updateInternalDependencies": "patch",
-  "ignore": []
+  "ignore": ["@atelier-wb/example-svelte", "@atelier-wb/example-sveltekit"]
 }

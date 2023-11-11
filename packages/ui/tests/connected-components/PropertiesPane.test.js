@@ -1,6 +1,8 @@
 import { faker } from '@faker-js/faker'
 import { fireEvent, render, screen } from '@testing-library/svelte'
 import html from 'svelte-htm'
+import { beforeEach, describe, expect, it, vi } from 'vitest'
+
 import { PropertiesPane } from '../../src/connected-components'
 import { currentTool, updateProperty } from '../../src/stores'
 
@@ -13,7 +15,7 @@ vi.mock('../../src/stores/tools', () => {
 })
 
 describe('PropertiesPane connected component', () => {
-  beforeEach(vi.resetAllMocks)
+  beforeEach(() => vi.resetAllMocks())
 
   it('can edit a text property', async () => {
     const name = faker.lorem.word()
@@ -26,7 +28,7 @@ describe('PropertiesPane connected component', () => {
     expect(updateProperty).not.toHaveBeenCalled()
 
     const newValue = faker.lorem.words()
-    await fireEvent.input(input, { target: { value: newValue } })
+    fireEvent.input(input, { target: { value: newValue } })
     expect(updateProperty).toHaveBeenCalledWith(
       expect.objectContaining({ detail: { name, value: newValue } })
     )
@@ -43,12 +45,12 @@ describe('PropertiesPane connected component', () => {
     expect(input).toBeChecked(value)
     expect(updateProperty).not.toHaveBeenCalled()
 
-    await fireEvent.change(input, { target: { checked: false } })
+    fireEvent.change(input, { target: { checked: false } })
     expect(updateProperty).toHaveBeenCalledWith(
       expect.objectContaining({ detail: { name, value: false } })
     )
 
-    await fireEvent.change(input, { target: { checked: true } })
+    fireEvent.change(input, { target: { checked: true } })
     expect(updateProperty).toHaveBeenCalledWith(
       expect.objectContaining({ detail: { name, value: true } })
     )
@@ -66,7 +68,7 @@ describe('PropertiesPane connected component', () => {
     expect(updateProperty).not.toHaveBeenCalled()
 
     const newValue = faker.number.int(999)
-    await fireEvent.change(input, { target: { value: newValue } })
+    fireEvent.change(input, { target: { value: newValue } })
     expect(updateProperty).toHaveBeenCalledWith(
       expect.objectContaining({ detail: { name, value: newValue } })
     )
@@ -83,13 +85,13 @@ describe('PropertiesPane connected component', () => {
     expect(input).toHaveValue(JSON.stringify(value, null, 2))
     expect(updateProperty).not.toHaveBeenCalled()
 
-    await fireEvent.input(input, {
+    fireEvent.input(input, {
       target: { value: `does not parse as array` }
     })
     expect(updateProperty).not.toHaveBeenCalled()
 
     const newValue = [4, 6]
-    await fireEvent.input(input, {
+    fireEvent.input(input, {
       target: { value: JSON.stringify(newValue) }
     })
     expect(updateProperty).toHaveBeenCalledWith(
@@ -108,13 +110,13 @@ describe('PropertiesPane connected component', () => {
     expect(input).toHaveValue(JSON.stringify(value, null, 2))
     expect(updateProperty).not.toHaveBeenCalled()
 
-    await fireEvent.input(input, {
+    fireEvent.input(input, {
       target: { value: `does not parse as object` }
     })
     expect(updateProperty).not.toHaveBeenCalled()
 
     const newValue = { baz: { bar: 'foo' } }
-    await fireEvent.input(input, {
+    fireEvent.input(input, {
       target: { value: JSON.stringify(newValue) }
     })
     expect(updateProperty).toHaveBeenCalledWith(

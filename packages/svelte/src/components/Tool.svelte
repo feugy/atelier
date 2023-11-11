@@ -7,14 +7,15 @@
     onMount,
     tick
   } from 'svelte'
-  import * as ToolBox from './ToolBox.svelte'
+
   import {
-    registerTool,
+    currentTool,
     recordError,
     recordEvent,
-    currentTool,
-    recordVisibility
+    recordVisibility,
+    registerTool
   } from '../stores'
+  import * as ToolBox from './ToolBox.svelte'
 
   export let name = ''
   export let props = {}
@@ -141,14 +142,14 @@
 {:else if !usesSlot}
   <span
     class="tool"
-    class:visible
+    class:current={visible}
     data-full-name={encodeURIComponent(fullName)}
     bind:this={target}
   />
 {:else}
   <span
     class="tool"
-    class:visible
+    class:current={visible}
     data-full-name={encodeURIComponent(fullName)}
   >
     {#if visible}
@@ -162,7 +163,7 @@
     display: none;
     flex-direction: column;
   }
-  .tool.visible {
+  .tool.current {
     display: flex;
   }
 </style>

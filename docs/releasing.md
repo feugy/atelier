@@ -28,7 +28,7 @@ Since the tool is not opinionated, here are the conventions we use.
 
 ## How to
 
-1. At root level, `npm run release:bump`
+1. At root level, `pnpm release`
 
    It generates CHANGELOG.md, bumps versions in packages.json files, creates a git tag.
 

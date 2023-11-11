@@ -1,5 +1,6 @@
 <script>
   import { _ } from 'svelte-intl'
+
   import Button from './Button.svelte'
   import PaneDisclaimer from './PaneDisclaimer.svelte'
 

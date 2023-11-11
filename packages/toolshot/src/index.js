@@ -2,7 +2,11 @@ import { render } from '@testing-library/svelte'
 import klaw from 'klaw-sync'
 import { basename, dirname, extname, join, relative } from 'path'
 import html from 'svelte-htm'
-import './matcher.js'
+import { describe, expect, it } from 'vitest'
+
+import * as matcher from './matcher.js'
+
+expect.extend(matcher)
 
 /**
  * @typedef {object} ToolshotOptions - toolshot options, including:
@@ -39,19 +43,8 @@ export function configureToolshot({
   snapshotFolder = '__snapshots__',
   timeout = 5000
 } = {}) {
-  if (
-    typeof describe !== 'function' ||
-    typeof test !== 'function' ||
-    typeof afterAll !== 'function' ||
-    typeof expect?.extend !== 'function'
-  ) {
-    throw new Error(
-      'configureToolshot() needs global describe(), afterAll(), test() and expect.extend() functions'
-    )
-  }
-
   const includeRegExp = new RegExp(include, 'i')
-  // Jest needs describe() and tests() to be called synchronously, so we must find tool files synchronously as well
+  // Jest/vitest needs describe() and its() to be called synchronously, so we must find tool files synchronously as well
   const toolboxes = klaw(folder, {
     nodir: true,
     filter({ path, stats }) {
@@ -59,13 +52,15 @@ export function configureToolshot({
     }
   })
 
+  // eslint-disable-next-line vitest/valid-title
   describe(suite, () => {
     for (const toolbox of toolboxes) {
       const toolboxPath = relative(folder, toolbox.path)
       const toolboxFolder = dirname(toolbox.path)
       const toolboxName = basename(toolbox.path, extname(toolbox.path))
 
-      test(
+      it(
+        // eslint-disable-next-line vitest/valid-title
         toolboxPath,
         async () => {
           const registered = []
@@ -100,7 +95,7 @@ export function configureToolshot({
               )
               expect(
                 children.length > 1 ? children : children[0]
-              ).toMatchFileSnapshot(
+              ).toMatchToolshot(
                 join(toolboxFolder, `${snapshotFolder}/${toolboxName}.shot`),
                 tool.name
               )

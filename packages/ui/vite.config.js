@@ -1,9 +1,10 @@
-import { svelte } from '@sveltejs/vite-plugin-svelte'
 import yaml from '@rollup/plugin-yaml'
-import atelier from '../vite-plugin-atelier'
+import { svelte } from '@sveltejs/vite-plugin-svelte'
 import sveltePreprocess from 'svelte-preprocess'
 import { defineConfig } from 'vite'
 import windi from 'vite-plugin-windicss'
+
+import atelier from '../vite-plugin-atelier'
 
 export default defineConfig(({ mode }) => {
   return {
@@ -36,8 +37,13 @@ export default defineConfig(({ mode }) => {
     test: {
       // https://github.com/vitest-dev/vitest/issues/2834
       alias: [{ find: /^svelte$/, replacement: 'svelte/internal' }],
-      deps: { inline: ['svelte-hyperscript'] },
-      globals: true,
+      deps: {
+        optimizer: {
+          web: {
+            include: ['svelte-hyperscript']
+          }
+        }
+      },
       environment: 'jsdom',
       setupFiles: 'tests/setup'
     }
