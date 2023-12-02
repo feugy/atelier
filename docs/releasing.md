@@ -28,16 +28,12 @@ Since the tool is not opinionated, here are the conventions we use.
 
 ## How to
 
-1. At root level, `pnpm release`
+1. On every new PR, run `pnpm changeset` to add a change set for your modifications.
 
-   It generates CHANGELOG.md, bumps versions in packages.json files, creates a git tag.
+2. To create a version run `pnpm changeset version && pnpm i`
 
-2. Includes automatically formatted files: `git add -A`
+3. Review changes and commit.
 
-3. Push commit and tags: `git push --follow-tags origin main`
-
-4. Using CLI, log into NPM, `npm login`
-
-5. Get your NPM OTP ready, then publish all packages: `npm publish --workspaces ---access public -otp $OTP`
+4. Now publish your packages: `pnpm publish -r`, which will offer to log into NPM and provide your TOTP.
 
 [mono-repo]: https://en.wikipedia.org/wiki/Monorepo

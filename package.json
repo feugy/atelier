@@ -1,6 +1,7 @@
 {
   "name": "atelier",
   "version": "0.12.0",
+  "private": true,
   "description": "Your vite-powered UI component explorer",
   "author": {
     "name": "Damien Simonin Feugas",

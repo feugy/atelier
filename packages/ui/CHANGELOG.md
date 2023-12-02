@@ -1,5 +1,11 @@
 # @atelier-wb/ui
 
+## 0.13.0-beta.0
+
+### Minor Changes
+
+- update all dependencies, migrate to vitest
+
 ## 0.11.0
 
 ### Minor Changes

@@ -1,5 +1,16 @@
 # @atelier-wb/vite-plugin-atelier
 
+## 0.13.0-beta.0
+
+### Minor Changes
+
+- update all dependencies, migrate to vitest
+
+### Patch Changes
+
+- Updated dependencies
+  - @atelier-wb/ui@0.13.0-beta.0
+
 ## 0.11.1
 
 ### Patch Changes

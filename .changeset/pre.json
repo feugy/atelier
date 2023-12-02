@@ -1,0 +1,13 @@
+{
+  "mode": "pre",
+  "tag": "beta",
+  "initialVersions": {
+    "@atelier-wb/example-svelte": "1.0.0",
+    "@atelier-wb/example-sveltekit": "0.0.1",
+    "@atelier-wb/svelte": "0.12.0",
+    "@atelier-wb/toolshot": "0.12.0",
+    "@atelier-wb/ui": "0.12.0",
+    "@atelier-wb/vite-plugin-atelier": "0.12.0"
+  },
+  "changesets": ["wet-ways-film"]
+}
